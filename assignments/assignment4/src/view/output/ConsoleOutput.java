@@ -15,10 +15,10 @@ public class ConsoleOutput implements UserOutput {
 
   @Override
   public void displayMessage(String message) throws DisplayException {
-    try{
+    try {
       this.output.append(message).append("\n");
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error displaying message:%s", message), e);
+      throw new DisplayException(String.format("Error displaying message:%s", message), e);
     }
   }
 }

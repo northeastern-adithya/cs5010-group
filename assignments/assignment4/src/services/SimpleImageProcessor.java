@@ -2,7 +2,7 @@ package services;
 
 import exception.ImageProcessorException;
 
-public class SimpleImageProcessor implements ImageProcessor{
+public class SimpleImageProcessor implements ImageProcessor {
 
 
   public SimpleImageProcessor() {
@@ -19,32 +19,32 @@ public class SimpleImageProcessor implements ImageProcessor{
   }
 
   @Override
-  public void redComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createRedComponent(String imageName, String destinationImageName) throws ImageProcessorException {
 
   }
 
   @Override
-  public void greenComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createGreenComponent(String imageName, String destinationImageName) throws ImageProcessorException {
 
   }
 
   @Override
-  public void blueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createBlueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
 
   }
 
   @Override
-  public void valueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createValueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
 
   }
 
   @Override
-  public void lumaComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createLumaComponent(String imageName, String destinationImageName) throws ImageProcessorException {
 
   }
 
   @Override
-  public void intensityComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createIntensityComponent(String imageName, String destinationImageName) throws ImageProcessorException {
 
   }
 
@@ -69,7 +69,7 @@ public class SimpleImageProcessor implements ImageProcessor{
   }
 
   @Override
-  public void rgbCombine(String imageName, String greenImageName, String blueImageName) throws ImageProcessorException {
+  public void rgbCombine(String imageName, String redImageName, String greenImageName, String blueImageName) throws ImageProcessorException {
 
   }
 

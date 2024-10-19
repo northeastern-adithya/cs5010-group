@@ -1,6 +1,6 @@
 package exception;
 
-public class ImageProcessorException extends Exception{
+public class ImageProcessorException extends Exception {
   public ImageProcessorException(String message) {
     super(message);
   }

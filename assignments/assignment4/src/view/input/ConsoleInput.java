@@ -1,13 +1,16 @@
 package view.input;
 
+import java.io.InputStream;
+
 public class ConsoleInput implements UserInput {
 
-  private final Readable input;
-  public ConsoleInput(Readable input) {
+  private final InputStream input;
+
+  public ConsoleInput(InputStream input) {
     this.input = input;
   }
 
-  public Readable getUserInput(){
+  public InputStream getUserInput() {
     return this.input;
   }
 

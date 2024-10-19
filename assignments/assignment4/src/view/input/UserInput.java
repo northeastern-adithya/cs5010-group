@@ -1,6 +1,8 @@
 package view.input;
 
+import java.io.InputStream;
+
 public interface UserInput {
 
-  Readable getUserInput();
+  InputStream getUserInput();
 }
