@@ -14,7 +14,7 @@ public class ImageBuilderLocalTest {
     @Test
     public void testReadLocalImage() {
         try {
-            File file = new File("/Users/ishanrai/Desktop/Repos/CS5010/cs5010-group/assignments/assignment4/src/resource/manhattan-small.png");
+            File file = new File("test_resources/manhattan-small.png");
             BufferedImage expectedImage = ImageIO.read(file);
 
             ImageBuilder imageBuilder = new ImageBuilder();
