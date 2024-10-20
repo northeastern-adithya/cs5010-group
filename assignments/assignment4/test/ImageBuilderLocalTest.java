@@ -3,7 +3,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import org.junit.Test;
 
-import app.ImageBuilder;
+import model.ImageBuilder;
+import model.color.Pixel;
+import model.visual.Image;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +18,7 @@ public class ImageBuilderLocalTest {
             BufferedImage expectedImage = ImageIO.read(file);
 
             ImageBuilder imageBuilder = new ImageBuilder();
-            app.visual.Image actualImage = imageBuilder.buildImageFromPath(file.getPath());
+            Image actualImage = imageBuilder.buildImageFromPath(file.getPath());
 
             int width = expectedImage.getWidth();
             int height = expectedImage.getHeight();
@@ -28,7 +30,7 @@ public class ImageBuilderLocalTest {
                     int expectedGreen = (expectedPixel >> 8) & 0xff;
                     int expectedBlue = expectedPixel & 0xff;
 
-                    app.color.Pixel actualPixel = actualImage.getPixel(x, y);
+                    Pixel actualPixel = actualImage.getPixel(x, y);
                     assertEquals(expectedRed, actualPixel.getRed());
                     assertEquals(expectedGreen, actualPixel.getGreen());
                     assertEquals(expectedBlue, actualPixel.getBlue());

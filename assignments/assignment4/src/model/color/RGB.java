@@ -1,4 +1,4 @@
-package app.color;
+package model.color;
 
 public class RGB extends AbstractPixel {
   private final int red;

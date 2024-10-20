@@ -2,8 +2,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import app.color.Pixel;
-import app.color.RGB;
+import model.color.Pixel;
+import model.color.RGB;
 
 public class RGBTest {
 

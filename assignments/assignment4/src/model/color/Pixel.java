@@ -1,4 +1,4 @@
-package app.color;
+package model.color;
 
 public interface Pixel {
   /**

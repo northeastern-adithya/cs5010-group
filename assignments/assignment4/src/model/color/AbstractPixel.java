@@ -1,4 +1,4 @@
-package app.color;
+package model.color;
 
 public abstract class AbstractPixel implements Pixel {
   protected int bits;

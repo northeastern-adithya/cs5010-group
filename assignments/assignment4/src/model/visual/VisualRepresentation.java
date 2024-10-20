@@ -1,6 +1,6 @@
-package app.visual;
+package model.visual;
 
-import app.color.Pixel;
+import model.color.Pixel;
 
 public interface VisualRepresentation {
   /**

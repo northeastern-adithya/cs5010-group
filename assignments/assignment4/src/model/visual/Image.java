@@ -1,7 +1,6 @@
-package app.visual;
+package model.visual;
 
-import app.color.Pixel;
-import app.color.RGB;
+import model.color.Pixel;
 
 
 public class Image implements VisualRepresentation {
