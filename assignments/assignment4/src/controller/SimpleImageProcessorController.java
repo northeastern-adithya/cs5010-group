@@ -8,7 +8,7 @@ import exception.DisplayException;
 import exception.ImageProcessorException;
 import exception.QuitException;
 import model.UserCommand;
-import services.ImageProcessor;
+import services.ImageProcessingService;
 import view.input.UserInput;
 import view.output.UserOutput;
 
@@ -16,9 +16,9 @@ public class SimpleImageProcessorController implements ImageProcessorController 
 
   private final UserInput input;
   private final UserOutput output;
-  private final ImageProcessor imageProcessor;
+  private final ImageProcessingService imageProcessor;
 
-  public SimpleImageProcessorController(UserInput input, UserOutput userOutput, ImageProcessor imageProcessor) {
+  public SimpleImageProcessorController(UserInput input, UserOutput userOutput, ImageProcessingService imageProcessor) {
     validateInput(input, userOutput, imageProcessor);
     this.input = input;
     this.output = userOutput;
@@ -26,7 +26,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     displayCommands();
   }
 
-  void validateInput(UserInput input, UserOutput output, ImageProcessor imageProcessor) throws QuitException {
+  void validateInput(UserInput input, UserOutput output, ImageProcessingService imageProcessor) throws QuitException {
     if (Objects.isNull(input) || Objects.isNull(output) || Objects.isNull(imageProcessor)) {
       throw new QuitException("Invalid input provided.");
     }

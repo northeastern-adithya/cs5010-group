@@ -2,13 +2,13 @@ package factories;
 
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
-import services.ImageProcessor;
+import services.ImageProcessingService;
 import view.input.UserInput;
 import view.output.UserOutput;
 
 public class ControllerFactory {
 
-  public static ImageProcessorController createController(UserInput input, UserOutput output, ImageProcessor processor) {
+  public static ImageProcessorController createController(UserInput input, UserOutput output, ImageProcessingService processor) {
     return new SimpleImageProcessorController(input, output, processor);
   }
 }

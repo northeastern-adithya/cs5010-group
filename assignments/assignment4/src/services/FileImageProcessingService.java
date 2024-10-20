@@ -1,16 +1,25 @@
 package services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import exception.ImageProcessorException;
+import model.ImageMemory;
+import model.visual.Image;
+import utility.ImageUtility;
 
-public class SimpleImageProcessor implements ImageProcessor {
+public class FileImageProcessingService implements ImageProcessingService {
 
+  private final ImageMemory memory;
 
-  public SimpleImageProcessor() {
+  public FileImageProcessingService(ImageMemory memory) {
+    this.memory = memory;
   }
 
   @Override
   public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
-
+    Image imageToLoad = ImageUtility.loadImage(imagePath);
+    memory.addImage(imageName, imageToLoad);
   }
 
   @Override
