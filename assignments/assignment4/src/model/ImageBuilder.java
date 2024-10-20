@@ -8,14 +8,14 @@ import java.io.IOException;
 
 import model.color.Pixel;
 import model.color.RGB;
-import model.visual.Image;
+import model.visual.RenderedImage;
 
 public class ImageBuilder {
 
   public ImageBuilder() {
   }
 
-  public Image buildImageFromPath(String imagePath) {
+  public RenderedImage buildImageFromPath(String imagePath) {
     try {
       // Load the image file (PNG or JPEG)
       File file = new File(imagePath); // Provide the correct path to the image file
@@ -42,7 +42,7 @@ public class ImageBuilder {
           pixelArray[x][y] = new RGB(red, green, blue, 24);
         }
       }
-      return new Image(width, height, pixelArray);
+      return new RenderedImage(width, height, pixelArray);
     } catch (IOException e) {
       System.out.println("Error reading the image file: " + e.getMessage());
       return null;

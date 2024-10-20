@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import model.ImageBuilder;
 import model.color.Pixel;
-import model.visual.Image;
+import model.visual.RenderedImage;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +18,7 @@ public class ImageBuilderLocalTest {
             BufferedImage expectedImage = ImageIO.read(file);
 
             ImageBuilder imageBuilder = new ImageBuilder();
-            Image actualImage = imageBuilder.buildImageFromPath(file.getPath());
+            RenderedImage actualImage = imageBuilder.buildImageFromPath(file.getPath());
 
             int width = expectedImage.getWidth();
             int height = expectedImage.getHeight();

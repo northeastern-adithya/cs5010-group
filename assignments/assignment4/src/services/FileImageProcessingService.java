@@ -2,10 +2,10 @@ package services;
 
 import exception.ImageProcessorException;
 
-public class SimpleImageProcessor implements ImageProcessor {
+public class FileImageProcessingService implements ImageProcessingService {
 
 
-  public SimpleImageProcessor() {
+  public FileImageProcessingService() {
   }
 
   @Override

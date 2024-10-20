@@ -2,7 +2,7 @@ package services;
 
 import exception.ImageProcessorException;
 
-public interface ImageProcessor {
+public interface ImageProcessingService {
 
   void loadImage(String imagePath, String imageName) throws ImageProcessorException;
 

@@ -3,7 +3,7 @@ package app;
 import controller.ImageProcessorController;
 import exception.QuitException;
 import factories.ControllerFactory;
-import factories.ImageProcessorFactory;
+import factories.ImageProcessingServiceFactory;
 import factories.UserInputFactory;
 import factories.UserOutputFactory;
 
@@ -12,7 +12,7 @@ public class ImageProcessorApp {
     ImageProcessorController controller = ControllerFactory.createController(
             UserInputFactory.createUserInput(System.in),
             UserOutputFactory.createUserOutput(System.out),
-            ImageProcessorFactory.createImageProcessor()
+            ImageProcessingServiceFactory.createImageProcessor()
     );
     while (true) {
       try {
