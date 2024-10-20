@@ -4,15 +4,13 @@ public class RGB extends AbstractPixel {
   private final int red;
   private final int green;
   private final int blue;
-  private final int maxValue;
 
 
-  public RGB(int red, int green, int blue, int bits) {
+  public RGB(int red, int green, int blue) {
     super(24);
     this.red = red;
     this.green = green;
     this.blue = blue;
-    this.maxValue = (1 << (this.getBits()/3)) - 1;
   }
 
   @Override
@@ -28,11 +26,6 @@ public class RGB extends AbstractPixel {
   @Override
   public double getIntensity() {
     return (red + green + blue) / 3.0;
-  }
-
-  @Override
-  public int getBits() {
-    return bits;
   }
 
   @Override
@@ -56,10 +49,11 @@ public class RGB extends AbstractPixel {
     int newRed = red + factor;
     int newGreen = green + factor;
     int newBlue = blue + factor;
+    int maxValue = computeMaxValue();
     newRed = Math.max(0, Math.min(newRed, maxValue));
     newGreen = Math.max(0, Math.min(newGreen, maxValue));
     newBlue = Math.max(0, Math.min(newBlue, maxValue));
-    return new RGB(newRed, newGreen, newBlue, maxValue);
+    return new RGB(newRed, newGreen, newBlue);
   }
 
   @Override
@@ -67,14 +61,14 @@ public class RGB extends AbstractPixel {
     if (this == obj) {
       return true;
     }
-    if (!(obj instanceof AbstractPixel)) {
+    if (!(obj instanceof RGB)) {
       return false;
     }
-    AbstractPixel rgb = (AbstractPixel) obj;
+    RGB rgb = (RGB) obj;
     return rgb.equalsRGB(this);
   }
 
-  @Override
+
   protected boolean equalsRGB(RGB rgb) {
     return red == rgb.getRed() && green == rgb.getGreen() && blue == rgb.getBlue();
   }

@@ -23,13 +23,6 @@ public interface Pixel {
   double getIntensity();
 
   /**
-   * Gets the bits of the pixel.
-   *
-   * @return the bits of the pixel
-   */
-  int getBits();
-
-  /**
    * Adjusts the brightness of the pixel.
    *
    * @param factor the factor by which to adjust the brightness (positive to brighten, negative to darken)
@@ -38,6 +31,9 @@ public interface Pixel {
   Pixel adjustBrightness(int factor);
 
   int getRed();
+
   int getGreen();
+
   int getBlue();
+
 }

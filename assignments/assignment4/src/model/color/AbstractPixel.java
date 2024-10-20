@@ -1,11 +1,14 @@
 package model.color;
 
 public abstract class AbstractPixel implements Pixel {
-  protected int bits;
+  protected final int bits;
 
-  public AbstractPixel(int bits) {
+  protected AbstractPixel(int bits) {
     this.bits = bits;
   }
 
-  protected abstract boolean equalsRGB(RGB rgb);
+
+  protected int computeMaxValue() {
+    return (1 << (this.bits / 3)) - 1;
+  }
 }

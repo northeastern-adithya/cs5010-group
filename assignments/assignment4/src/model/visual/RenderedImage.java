@@ -5,12 +5,8 @@ import model.color.Pixel;
 
 public class RenderedImage implements Image {
   private final Pixel[][] pixels;
-  private final int width;
-  private final int height;
 
-  public RenderedImage(int width, int height, Pixel[][] pixels) {
-    this.width = width;
-    this.height = height;
+  public RenderedImage(Pixel[][] pixels) {
     this.pixels = pixels;
   }
 
@@ -19,15 +15,25 @@ public class RenderedImage implements Image {
     return pixels[x][y];
   }
 
+
+  private int getWidth() {
+    return pixels.length;
+  }
+
+  private int getHeight() {
+    return pixels[0].length;
+  }
+
   @Override
   public Image adjustImageBrightness(int factor) {
-
+    int height = getHeight();
+    int width = getWidth();
     Pixel[][] newPixelArray = new Pixel[width][height];
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         newPixelArray[x][y] = getPixel(x, y).adjustBrightness(factor);
       }
     }
-    return new RenderedImage(width, height, newPixelArray);
+    return new RenderedImage(newPixelArray);
   }
 }
