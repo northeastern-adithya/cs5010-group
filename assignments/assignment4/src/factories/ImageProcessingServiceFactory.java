@@ -1,6 +1,6 @@
 package factories;
 
-import model.ImageMemory;
+import model.memory.ImageMemory;
 import services.ImageProcessingService;
 import services.FileImageProcessingService;
 

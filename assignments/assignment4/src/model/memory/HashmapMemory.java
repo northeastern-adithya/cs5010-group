@@ -1,4 +1,4 @@
-package model;
+package model.memory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,14 +7,14 @@ import java.util.Optional;
 
 import model.visual.Image;
 
-public class ImageMemory {
+public class HashmapMemory  implements ImageMemory{
   private final Map<String, Image> memory;
 
-  public ImageMemory() {
+  public HashmapMemory() {
     this(new HashMap<>());
   }
 
-  public ImageMemory(Map<String, Image> memory) {
+  public HashmapMemory(Map<String, Image> memory) {
     if (Objects.isNull(memory)) {
       memory = new HashMap<>();
     }
@@ -37,5 +37,4 @@ public class ImageMemory {
   public boolean containsImage(String imageName) {
     return memory.containsKey(imageName);
   }
-
 }

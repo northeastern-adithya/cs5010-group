@@ -1,10 +1,7 @@
 package services;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import exception.ImageProcessorException;
-import model.ImageMemory;
+import model.memory.ImageMemory;
 import model.visual.Image;
 import utility.ImageUtility;
 
