@@ -3,6 +3,7 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import model.visual.Image;
 
@@ -24,8 +25,8 @@ public class ImageMemory {
     memory.put(imageName, image);
   }
 
-  public Image getImage(String imageName) {
-    return memory.get(imageName);
+  public Optional<Image> getImage(String imageName) {
+    return Optional.ofNullable(memory.get(imageName));
   }
 
 
