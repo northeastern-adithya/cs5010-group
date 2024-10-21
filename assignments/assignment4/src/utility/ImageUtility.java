@@ -35,6 +35,42 @@ public class ImageUtility {
     }
   }
 
+  public static Image createRedComponent(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, y).createRedComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image createGreenComponent(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, y).createGreenComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image createBlueComponent(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, y).createBlueComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
 //  public static void saveImage(java.awt.Image image, String imagePath) {
 //    try {
 //      // Determine the format from the file extension

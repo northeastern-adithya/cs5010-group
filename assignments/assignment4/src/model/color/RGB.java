@@ -57,6 +57,22 @@ public class RGB extends AbstractPixel {
   }
 
   @Override
+  public Pixel createRedComponent() {
+    return new RGB(red, red, red);
+  }
+
+  @Override
+  public Pixel createGreenComponent() {
+    return new RGB(green, green, green);
+  }
+
+  @Override
+  public Pixel createBlueComponent() {
+    return new RGB(blue, blue, blue);
+  }
+
+
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;

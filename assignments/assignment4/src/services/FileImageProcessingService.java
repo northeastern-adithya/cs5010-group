@@ -1,9 +1,11 @@
 package services;
 
 import exception.ImageProcessorException;
+import exception.NotFoundException;
 import model.memory.ImageMemory;
 import model.visual.Image;
 import utility.ImageUtility;
+import utility.StringUtils;
 
 public class FileImageProcessingService implements ImageProcessingService {
 
@@ -15,6 +17,7 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
+    validateStringParams(imagePath, imageName);
     Image imageToLoad = ImageUtility.loadImage(imagePath);
     memory.addImage(imageName, imageToLoad);
   }
@@ -26,17 +29,32 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void createRedComponent(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName).orElseThrow(
+            () -> new NotFoundException(String.format(
+                    "Image with name %s not found in memory", imageName))
+    );
+    memory.addImage(destinationImageName, ImageUtility.createRedComponent(image));
   }
 
   @Override
   public void createGreenComponent(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName).orElseThrow(
+            () -> new NotFoundException(String.format(
+                    "Image with name %s not found in memory", imageName))
+    );
+    memory.addImage(destinationImageName, ImageUtility.createGreenComponent(image));
   }
 
   @Override
   public void createBlueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName).orElseThrow(
+            () -> new NotFoundException(String.format(
+                    "Image with name %s not found in memory", imageName))
+    );
+    memory.addImage(destinationImageName, ImageUtility.createBlueComponent(image));
   }
 
   @Override
@@ -92,5 +110,11 @@ public class FileImageProcessingService implements ImageProcessingService {
   @Override
   public void sepiaImage(String imageName, String destinationImageName) throws ImageProcessorException {
 
+  }
+
+  private void validateStringParams(String... strings) throws ImageProcessorException {
+    if (StringUtils.isNullOrEmpty(strings)) {
+      throw new ImageProcessorException("Received input as null or empty");
+    }
   }
 }

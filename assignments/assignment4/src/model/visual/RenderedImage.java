@@ -16,11 +16,12 @@ public class RenderedImage implements Image {
   }
 
 
-  private int getWidth() {
+  @Override
+  public int getWidth() {
     return pixels.length;
   }
 
-  private int getHeight() {
+  public int getHeight() {
     return pixels[0].length;
   }
 
