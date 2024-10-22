@@ -1,4 +1,4 @@
-package model.reader;
+package reader;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

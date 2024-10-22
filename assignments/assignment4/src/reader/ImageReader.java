@@ -1,4 +1,4 @@
-package model.reader;
+package reader;
 
 import exception.ImageProcessorException;
 import model.visual.Image;

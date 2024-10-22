@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.ImageReaderFactory;
+import factories.ImageWriterFactory;
 import factories.PixelFactory;
 import model.ImageType;
 import model.color.Pixel;
@@ -21,12 +22,20 @@ public class ImageUtility {
 
   public static Image loadImage(String imagePath) throws ImageProcessorException {
     ImageType imageType = getExtensionFromPath(imagePath);
-   return ImageReaderFactory.createImageReader(imageType).read(imagePath);
+    return ImageReaderFactory.createImageReader(imageType).read(imagePath);
+  }
+
+  public static void saveImage(Image image, String imagePath) throws ImageProcessorException {
+    ImageType imageType = getExtensionFromPath(imagePath);
+    ImageWriterFactory.createImageWriter(imageType).write(image, imagePath);
   }
 
   private static ImageType getExtensionFromPath(String path) {
-    String extension = path.substring(path.lastIndexOf('.') + 1);
-    return ImageType.fromExtension(extension);
+    return ImageType.fromExtension(getExtension(path));
+  }
+
+  public static String getExtension(String imagePath) {
+    return imagePath.substring(imagePath.lastIndexOf('.') + 1);
   }
 
   public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
@@ -70,25 +79,5 @@ public class ImageUtility {
       }
     }
     return ImageFactory.createImage(newPixelArray);
-  }
-
-  public static void saveImage(Image image, String imagePath) throws ImageProcessorException {
-    try {
-      String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
-      BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-      for (int y = 0; y < image.getHeight(); y++) {
-        for (int x = 0; x < image.getWidth(); x++) {
-          Pixel pixel = image.getPixel(x, y);
-          int rgb = (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-          bufferedImage.setRGB(x, y, rgb);
-        }
-      }
-      File outputFile = new File(imagePath);
-      if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
-        throw new ImageProcessorException("No appropriate writer found for format: " + formatName);
-      }
-    } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error saving the image file to path: %s", imagePath), e);
-    }
   }
 }

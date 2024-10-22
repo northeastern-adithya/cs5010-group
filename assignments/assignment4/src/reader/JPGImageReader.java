@@ -1,4 +1,4 @@
-package model.reader;
+package reader;
 
 public class JPGImageReader extends AbstractImageReader {
 
