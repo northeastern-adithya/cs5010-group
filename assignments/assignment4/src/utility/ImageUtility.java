@@ -38,6 +38,7 @@ public class ImageUtility {
   }
 
   public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+    validateRGBComponents(redComponent, greenComponent, blueComponent);
     int height = redComponent.getHeight();
     int width = redComponent.getWidth();
     Pixel[][] newPixelArray = new Pixel[width][height];
@@ -47,6 +48,12 @@ public class ImageUtility {
       }
     }
     return ImageFactory.createImage(newPixelArray);
+  }
+
+  private static void validateRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+    if (redComponent.getWidth() != greenComponent.getWidth() || redComponent.getWidth() != blueComponent.getWidth() || redComponent.getHeight() != greenComponent.getHeight() || redComponent.getHeight() != blueComponent.getHeight()) {
+      throw new ImageProcessorException("The RGB components must have the same dimensions");
+    }
   }
 
   public static Image horizontalFlip(Image image) {
