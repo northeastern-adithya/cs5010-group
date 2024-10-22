@@ -1,5 +1,7 @@
 package filters;
 
-public interface Filter {
+import model.visual.Image;
 
+public interface Filter {
+  Image applyFilter(Image image);
 }

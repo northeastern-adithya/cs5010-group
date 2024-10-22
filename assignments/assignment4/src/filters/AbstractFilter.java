@@ -5,11 +5,12 @@ import model.color.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
 
-public class AbstractFilter {
+public class AbstractFilter implements Filter {
 
-  private int[][] kernel;
+  protected double[][] kernel;
 
-  public Image applyMatrixFilter(Image image) {
+  @Override
+  public Image applyFilter(Image image) {
     int width = image.getWidth();
     int height = image.getHeight();
     int radius = kernel.length / 2;
@@ -17,9 +18,9 @@ public class AbstractFilter {
 
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        int redSum = 0;
-        int greenSum = 0;
-        int blueSum = 0;
+        double redSum = 0;
+        double greenSum = 0;
+        double blueSum = 0;
 
         // Apply kernel multiplication for each channel
         for (int ky = -radius; ky <= radius; ky++) {
@@ -30,7 +31,7 @@ public class AbstractFilter {
             // Only process if pixel is within image bounds
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
               Pixel pixel = image.getPixel(pixelX, pixelY);
-              int kernelValue = kernel[ky + radius][kx + radius];
+              double kernelValue = kernel[ky + radius][kx + radius];
 
               redSum += pixel.getRed() * kernelValue;
               greenSum += pixel.getGreen() * kernelValue;
@@ -38,7 +39,7 @@ public class AbstractFilter {
             }
           }
         }
-        newPixelArray[x][y] = new RGB(redSum, greenSum, blueSum); // Pixel Factory
+        newPixelArray[x][y] = new RGB((int) redSum, (int) greenSum, (int) blueSum); // Pixel Factory
       }
     }
 

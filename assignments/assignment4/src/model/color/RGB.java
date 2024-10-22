@@ -83,15 +83,15 @@ public class RGB extends AbstractPixel {
 
   @Override
   public Pixel getLuma() {
-    int channelMatrix[] = {getRed(), getGreen(), getBlue()};
-    int multiplicationResult[] = PixelTransformUtility.getLuma(channelMatrix);
+    int[] channelMatrix = {getRed(), getGreen(), getBlue()};
+    int[] multiplicationResult = PixelTransformUtility.getLuma(channelMatrix);
     return new RGB(multiplicationResult[0], multiplicationResult[1], multiplicationResult[2]);
   }
 
   @Override
   public Pixel getSepia() {
-    int channelMatrix[] = {getRed(), getGreen(), getBlue()};
-    int multiplicationResult[] = PixelTransformUtility.getSepia(channelMatrix);
+    int[] channelMatrix = {getRed(), getGreen(), getBlue()};
+    int[] multiplicationResult = PixelTransformUtility.getSepia(channelMatrix);
     return new RGB(multiplicationResult[0], multiplicationResult[1], multiplicationResult[2]);
   }
 }

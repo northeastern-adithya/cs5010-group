@@ -5,6 +5,9 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import filters.Blur;
+import filters.Filter;
+import filters.Sharpen;
 import model.color.Pixel;
 import model.visual.Image;
 
@@ -193,6 +196,76 @@ public class ImageUtilityTest {
 
       // Load the expected result image
       String resultPath = "test_resources/expected_results/manhattan-small-value-greyscale.png";
+      File expectedFile = new File(resultPath);
+      BufferedImage expectedImage = ImageIO.read(expectedFile);
+
+      // Compare the expected result and saved images
+      assertEquals(expectedImage.getWidth(), savedImage.getWidth());
+      assertEquals(expectedImage.getHeight(), savedImage.getHeight());
+
+      for (int y = 0; y < expectedImage.getHeight(); y++) {
+        for (int x = 0; x < expectedImage.getWidth(); x++) {
+          assertEquals(expectedImage.getRGB(x, y), savedImage.getRGB(x, y));
+        }
+      }
+    } catch (Exception e) {
+      fail("Exception should not be thrown: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testSaveBlurImage() {
+    try {
+      // Load an image from the test resources
+      File inputFile = new File("test_resources/manhattan-small.png");
+      Image image = ImageUtility.loadImage(inputFile.getPath());
+
+      // Save the image to a new file
+      String outputPath = "test_resources/manhattan-small-blur.png";
+      Filter blurFilter = new Blur();
+      ImageUtility.saveImage(blurFilter.applyFilter(blurFilter.applyFilter(image)), outputPath);
+
+      // Load the saved image
+      File outputFile = new File(outputPath);
+      BufferedImage savedImage = ImageIO.read(outputFile);
+
+      // Load the expected result image
+      String resultPath = "test_resources/expected_results/manhattan-small-blur-2.png";
+      File expectedFile = new File(resultPath);
+      BufferedImage expectedImage = ImageIO.read(expectedFile);
+
+      // Compare the expected result and saved images
+      assertEquals(expectedImage.getWidth(), savedImage.getWidth());
+      assertEquals(expectedImage.getHeight(), savedImage.getHeight());
+
+      for (int y = 0; y < expectedImage.getHeight(); y++) {
+        for (int x = 0; x < expectedImage.getWidth(); x++) {
+          assertEquals(expectedImage.getRGB(x, y), savedImage.getRGB(x, y));
+        }
+      }
+    } catch (Exception e) {
+      fail("Exception should not be thrown: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testSaveSharpenImage() {
+    try {
+      // Load an image from the test resources
+      File inputFile = new File("test_resources/manhattan-small.png");
+      Image image = ImageUtility.loadImage(inputFile.getPath());
+
+      // Save the image to a new file
+      String outputPath = "test_resources/manhattan-small-sharpen.png";
+      Filter sharpenFilter = new Sharpen();
+      ImageUtility.saveImage(sharpenFilter.applyFilter(sharpenFilter.applyFilter(image)), outputPath);
+
+      // Load the saved image
+      File outputFile = new File(outputPath);
+      BufferedImage savedImage = ImageIO.read(outputFile);
+
+      // Load the expected result image
+      String resultPath = "test_resources/expected_results/manhattan-small-sharpen-2.png";
       File expectedFile = new File(resultPath);
       BufferedImage expectedImage = ImageIO.read(expectedFile);
 
