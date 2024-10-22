@@ -2,6 +2,8 @@ package model.visual;
 
 import java.util.function.Function;
 
+import factories.FilterFactory;
+import filters.FilterOptions;
 import model.color.Pixel;
 import utility.PixelTransformUtility;
 

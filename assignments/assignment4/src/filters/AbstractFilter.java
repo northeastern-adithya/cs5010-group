@@ -1,8 +1,8 @@
 package filters;
 
+import factories.ImageFactory;
 import factories.PixelFactory;
 import model.color.Pixel;
-import model.color.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
 
@@ -20,7 +20,6 @@ public class AbstractFilter implements Filter {
     int height = image.getHeight();
     int radius = filterOption.getKernel().length / 2;
     Pixel[][] newPixelArray = new Pixel[width][height];
-
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         double redSum = 0;
@@ -44,10 +43,10 @@ public class AbstractFilter implements Filter {
             }
           }
         }
-        newPixelArray[x][y] = PixelFactory.createRGBPixel((int) redSum, (int) greenSum, (int) blueSum); // Pixel Factory
+        newPixelArray[x][y] = image.getPixel(x,y).createPixel((int) redSum,(int) greenSum,(int) blueSum); // Pixel Factory
       }
     }
 
-    return new RenderedImage(newPixelArray);
+    return ImageFactory.createImage(newPixelArray);
   }
 }

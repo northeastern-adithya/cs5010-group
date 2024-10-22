@@ -1,6 +1,8 @@
 package services;
 
 import exception.ImageProcessorException;
+import factories.FilterFactory;
+import filters.FilterOptions;
 import model.memory.ImageMemory;
 import model.visual.Image;
 import utility.ImageUtility;
@@ -111,16 +113,25 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void blurImage(String imageName, String destinationImageName) throws ImageProcessorException {
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName);
+    Image filteredImage = FilterFactory.getFilter(FilterOptions.GAUSSIAN_BLUR).applyFilter(image);
+    memory.addImage(destinationImageName, filteredImage);
   }
 
   @Override
   public void sharpenImage(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName);
+    Image filteredImage = FilterFactory.getFilter(FilterOptions.SHARPEN).applyFilter(image);
+    memory.addImage(destinationImageName, filteredImage);
   }
 
   @Override
   public void sepiaImage(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName);
+    memory.addImage(destinationImageName, image.getSepia());
   }
 
   private void validateStringParams(String... strings) throws ImageProcessorException {

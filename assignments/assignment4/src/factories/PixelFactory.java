@@ -13,7 +13,7 @@ public class PixelFactory {
 
   }
 
-  public static Pixel createPixel(int pixel, PixelType type) throws ImageProcessorException {
+  public static Pixel createPixel(int pixel, PixelType type){
     switch (type) {
       case RGB:
         return createRGBPixel(pixel);

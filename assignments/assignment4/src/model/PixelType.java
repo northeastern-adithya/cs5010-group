@@ -2,7 +2,7 @@ package model;
 
 import java.awt.image.BufferedImage;
 
-import exception.ImageProcessorException;
+
 import exception.NotImplementedException;
 
 public enum PixelType {
@@ -10,7 +10,7 @@ public enum PixelType {
   RGB;
 
 
-  public static PixelType fromBufferedImageType(int type) throws ImageProcessorException {
+  public static PixelType fromBufferedImageType(int type) {
     switch (type) {
       case BufferedImage.TYPE_INT_RGB:
       case BufferedImage.TYPE_INT_ARGB:

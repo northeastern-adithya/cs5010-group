@@ -29,4 +29,6 @@ public interface Pixel {
 
   int getBlue();
 
+  Pixel createPixel(int red, int green, int blue);
+
 }
