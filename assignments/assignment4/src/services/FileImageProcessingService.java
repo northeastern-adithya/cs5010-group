@@ -1,7 +1,6 @@
 package services;
 
 import exception.ImageProcessorException;
-import exception.NotFoundException;
 import model.memory.ImageMemory;
 import model.visual.Image;
 import utility.ImageUtility;
@@ -30,30 +29,21 @@ public class FileImageProcessingService implements ImageProcessingService {
   @Override
   public void createRedComponent(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName).orElseThrow(
-            () -> new NotFoundException(String.format(
-                    "Image with name %s not found in memory", imageName))
-    );
+    Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, ImageUtility.createRedComponent(image));
   }
 
   @Override
   public void createGreenComponent(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName).orElseThrow(
-            () -> new NotFoundException(String.format(
-                    "Image with name %s not found in memory", imageName))
-    );
+    Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, ImageUtility.createGreenComponent(image));
   }
 
   @Override
   public void createBlueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName).orElseThrow(
-            () -> new NotFoundException(String.format(
-                    "Image with name %s not found in memory", imageName))
-    );
+    Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, ImageUtility.createBlueComponent(image));
   }
 
@@ -89,12 +79,21 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void rgbSplit(String imageName, String destinationImageNameRed, String destinationImageNameGreen, String destinationImageNameBlue) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageNameRed, destinationImageNameGreen, destinationImageNameBlue);
+    Image image = memory.getImage(imageName);
+    memory.addImage(destinationImageNameRed, ImageUtility.createRedComponent(image));
+    memory.addImage(destinationImageNameGreen, ImageUtility.createGreenComponent(image));
+    memory.addImage(destinationImageNameBlue, ImageUtility.createBlueComponent(image));
   }
 
   @Override
   public void rgbCombine(String imageName, String redImageName, String greenImageName, String blueImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, redImageName, greenImageName, blueImageName);
+    Image redImage = memory.getImage(redImageName);
+    Image greenImage = memory.getImage(greenImageName);
+    Image blueImage = memory.getImage(blueImageName);
+    Image combinedImage = ImageUtility.combineRGBComponents(redImage, greenImage, blueImage);
+    memory.addImage(imageName, combinedImage);
   }
 
   @Override

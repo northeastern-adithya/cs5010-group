@@ -3,13 +3,16 @@ package model.memory;
 
 import java.util.Optional;
 
+import exception.NotFoundException;
 import model.visual.Image;
 
 public interface ImageMemory {
 
    void addImage(String imageName, Image image);
 
-   Optional<Image> getImage(String imageName) ;
+   Image getImage(String imageName) throws NotFoundException;
+
+
 
 
    void removeImage(String imageName);

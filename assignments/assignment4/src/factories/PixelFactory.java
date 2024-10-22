@@ -37,4 +37,8 @@ public class PixelFactory {
     int blue = pixel & 0xff;
     return new RGB(red, green, blue);
   }
+
+  public static Pixel createRGBPixel(int red, int green, int blue) {
+    return new RGB(red, green, blue);
+  }
 }

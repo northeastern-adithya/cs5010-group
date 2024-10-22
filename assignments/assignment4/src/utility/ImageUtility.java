@@ -10,6 +10,7 @@ import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.PixelFactory;
 import model.color.Pixel;
+import model.color.RGB;
 import model.visual.Image;
 
 public class ImageUtility {
@@ -66,6 +67,18 @@ public class ImageUtility {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         newPixelArray[x][y] = image.getPixel(x, y).createBlueComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+    int height = redComponent.getHeight();
+    int width = redComponent.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = PixelFactory.createRGBPixel(redComponent.getPixel(x, y).getRed(), greenComponent.getPixel(x, y).getGreen(), blueComponent.getPixel(x, y).getBlue());
       }
     }
     return ImageFactory.createImage(newPixelArray);
