@@ -84,6 +84,30 @@ public class ImageUtility {
     return ImageFactory.createImage(newPixelArray);
   }
 
+  public static Image horizontalFlip(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(width - x - 1, y);
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image verticalFlip(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, height - y - 1);
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
 //  public static void saveImage(java.awt.Image image, String imagePath) {
 //    try {
 //      // Determine the format from the file extension

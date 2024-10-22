@@ -64,12 +64,17 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void horizontalFlip(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName);
+    memory.addImage(destinationImageName, ImageUtility.horizontalFlip(image));
   }
+
 
   @Override
   public void verticalFlip(String imageName, String destinationImageName) throws ImageProcessorException {
-
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName);
+    memory.addImage(destinationImageName, ImageUtility.verticalFlip(image));
   }
 
   @Override
