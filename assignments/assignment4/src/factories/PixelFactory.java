@@ -1,7 +1,7 @@
 package factories;
 
 
-import exception.ImageProcessorException;
+
 import exception.NotImplementedException;
 import model.PixelType;
 import model.color.Pixel;

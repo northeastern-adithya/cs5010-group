@@ -1,10 +1,8 @@
 package filters;
 
 import factories.ImageFactory;
-import factories.PixelFactory;
 import model.color.Pixel;
 import model.visual.Image;
-import model.visual.RenderedImage;
 
 public class AbstractFilter implements Filter {
 
@@ -26,13 +24,10 @@ public class AbstractFilter implements Filter {
         double greenSum = 0;
         double blueSum = 0;
 
-        // Apply kernel multiplication for each channel
         for (int ky = -radius; ky <= radius; ky++) {
           for (int kx = -radius; kx <= radius; kx++) {
             int pixelX = x + kx;
             int pixelY = y + ky;
-
-            // Only process if pixel is within image bounds
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
               Pixel pixel = image.getPixel(pixelX, pixelY);
               double kernelValue = filterOption.getKernel()[ky + radius][kx + radius];

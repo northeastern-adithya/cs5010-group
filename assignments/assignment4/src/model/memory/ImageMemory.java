@@ -1,8 +1,5 @@
 package model.memory;
 
-
-import java.util.Optional;
-
 import exception.NotFoundException;
 import model.visual.Image;
 

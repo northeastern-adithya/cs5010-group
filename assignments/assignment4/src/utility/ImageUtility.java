@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 
 import exception.ImageProcessorException;
 import factories.ImageFactory;
+import factories.ImageReaderFactory;
 import factories.PixelFactory;
-import model.PixelType;
+import model.ImageType;
 import model.color.Pixel;
-import model.color.RGB;
 import model.visual.Image;
 
 public class ImageUtility {
@@ -20,21 +20,13 @@ public class ImageUtility {
   }
 
   public static Image loadImage(String imagePath) throws ImageProcessorException {
-    try {
-      File file = new File(imagePath);
-      BufferedImage image = ImageIO.read(file);
-      int width = image.getWidth();
-      int height = image.getHeight();
-      Pixel[][] pixelArray = new Pixel[width][height];
-      for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-          pixelArray[x][y] = PixelFactory.createPixel(image.getRGB(x, y), PixelType.fromBufferedImageType(image.getType()));
-        }
-      }
-      return ImageFactory.createImage(pixelArray);
-    } catch (IOException e) {
-      throw new ImageProcessorException("Error loading the image file", e);
-    }
+    ImageType imageType = getExtensionFromPath(imagePath);
+   return ImageReaderFactory.createImageReader(imageType).read(imagePath);
+  }
+
+  private static ImageType getExtensionFromPath(String path) {
+    String extension = path.substring(path.lastIndexOf('.') + 1);
+    return ImageType.fromExtension(extension);
   }
 
   public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
@@ -82,11 +74,7 @@ public class ImageUtility {
 
   public static void saveImage(Image image, String imagePath) throws ImageProcessorException {
     try {
-      // Determine the format from the file extension
       String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
-
-
-      // Create a BufferedImage from the Image object
       BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
       for (int y = 0; y < image.getHeight(); y++) {
         for (int x = 0; x < image.getWidth(); x++) {
@@ -95,8 +83,6 @@ public class ImageUtility {
           bufferedImage.setRGB(x, y, rgb);
         }
       }
-
-      // Write the BufferedImage to the specified file
       File outputFile = new File(imagePath);
       if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
         throw new ImageProcessorException("No appropriate writer found for format: " + formatName);
