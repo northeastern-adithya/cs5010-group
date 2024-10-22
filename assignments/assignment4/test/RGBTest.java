@@ -8,21 +8,21 @@ import model.color.RGB;
 public class RGBTest {
 
   @Test
-  public void testGetValue() {
-    RGB pixel = new RGB(100, 150, 200);
-    assertEquals(200, pixel.getValue());
-  }
-
-  @Test
   public void testGetLuma() {
     RGB pixel = new RGB(100, 150, 200);
-    assertEquals(142.98, pixel.getLuma(), 0.1);
+    Pixel luma = pixel.getLuma();
+    assertEquals(142, luma.getRed());
+    assertEquals(142, luma.getRed());
+    assertEquals(142, luma.getRed());
   }
 
   @Test
   public void testGetIntensity() {
     RGB pixel = new RGB(100, 150, 200);
-    assertEquals(150.0, pixel.getIntensity(), 0.1);
+    Pixel intensity = pixel.getIntensity();
+    assertEquals(150, intensity.getRed());
+    assertEquals(150, intensity.getGreen());
+    assertEquals(150, intensity.getBlue());
   }
 
 

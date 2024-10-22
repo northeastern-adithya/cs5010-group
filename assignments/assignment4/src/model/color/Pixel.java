@@ -6,28 +6,14 @@ public interface Pixel {
    *
    * @return the value of the pixel
    */
-  int getValue();
+  Pixel getValue();
 
-  /**
-   * Gets the luma of the pixel.
-   *
-   * @return the luma of the pixel
-   */
-  double getLuma();
+  Pixel getLuma();
 
-  /**
-   * Gets the intensity of the pixel.
-   *
-   * @return the intensity of the pixel
-   */
-  double getIntensity();
+  Pixel getSepia();
 
-  /**
-   * Adjusts the brightness of the pixel.
-   *
-   * @param factor the factor by which to adjust the brightness (positive to brighten, negative to darken)
-   * @return a new Pixel with adjusted brightness
-   */
+  Pixel getIntensity();
+
   Pixel adjustBrightness(int factor);
 
 
@@ -42,5 +28,7 @@ public interface Pixel {
   int getGreen();
 
   int getBlue();
+
+  Pixel createPixel(int red, int green, int blue);
 
 }

@@ -8,15 +8,13 @@ import model.visual.Image;
 
 public interface ImageMemory {
 
-   void addImage(String imageName, Image image);
+  void addImage(String imageName, Image image);
 
-   Image getImage(String imageName) throws NotFoundException;
-
-
+  Image getImage(String imageName) throws NotFoundException;
 
 
-   void removeImage(String imageName);
+  void removeImage(String imageName);
 
-   boolean containsImage(String imageName);
+  boolean containsImage(String imageName);
 
 }

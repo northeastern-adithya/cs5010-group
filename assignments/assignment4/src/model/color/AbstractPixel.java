@@ -7,7 +7,6 @@ public abstract class AbstractPixel implements Pixel {
     this.bits = bits;
   }
 
-
   protected int computeMaxValue() {
     return (1 << (this.bits / 3)) - 1;
   }

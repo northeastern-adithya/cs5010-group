@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import model.visual.Image;
 import model.visual.RenderedImage;
 import model.color.Pixel;
 import model.color.RGB;
@@ -32,9 +33,12 @@ public class ImageTest {
     pixels[1][1] = new RGB(250, 250, 250);
 
     RenderedImage image = new RenderedImage(pixels);
-    RenderedImage brightenedImage = (RenderedImage) image.adjustImageBrightness(50);
+    Image brightenedImage = image.adjustImageBrightness(50);
 
     assertEquals(new RGB(150, 150, 150), brightenedImage.getPixel(0, 0));
+    assertEquals(new RGB(200, 200, 200), brightenedImage.getPixel(0, 1));
+    assertEquals(new RGB(250, 250, 250), brightenedImage.getPixel(1, 0));
+    assertEquals(new RGB(255, 255, 255), brightenedImage.getPixel(1, 1));
   }
 
   @Test
@@ -46,7 +50,7 @@ public class ImageTest {
     pixels[1][1] = new RGB(250, 250, 250);
 
     RenderedImage image = new RenderedImage(pixels);
-    RenderedImage darkenedImage = (RenderedImage) image.adjustImageBrightness(-50);
+    Image darkenedImage = (RenderedImage) image.adjustImageBrightness(-50);
 
     assertEquals(new RGB(50, 50, 50), darkenedImage.getPixel(0, 0));
     assertEquals(new RGB(100, 100, 100), darkenedImage.getPixel(0, 1));

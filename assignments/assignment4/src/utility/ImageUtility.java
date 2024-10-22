@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.PixelFactory;
+import model.PixelType;
 import model.color.Pixel;
 import model.color.RGB;
 import model.visual.Image;
@@ -27,7 +28,7 @@ public class ImageUtility {
       Pixel[][] pixelArray = new Pixel[width][height];
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-          pixelArray[x][y] = PixelFactory.createPixel(image.getRGB(x, y), image.getType());
+          pixelArray[x][y] = PixelFactory.createPixel(image.getRGB(x, y), PixelType.fromBufferedImageType(image.getType()));
         }
       }
       return ImageFactory.createImage(pixelArray);
@@ -36,43 +37,8 @@ public class ImageUtility {
     }
   }
 
-  public static Image createRedComponent(Image image) {
-    int height = image.getHeight();
-    int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = image.getPixel(x, y).createRedComponent();
-      }
-    }
-    return ImageFactory.createImage(newPixelArray);
-  }
-
-  public static Image createGreenComponent(Image image) {
-    int height = image.getHeight();
-    int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = image.getPixel(x, y).createGreenComponent();
-      }
-    }
-    return ImageFactory.createImage(newPixelArray);
-  }
-
-  public static Image createBlueComponent(Image image) {
-    int height = image.getHeight();
-    int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = image.getPixel(x, y).createBlueComponent();
-      }
-    }
-    return ImageFactory.createImage(newPixelArray);
-  }
-
   public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+    validateRGBComponents(redComponent, greenComponent, blueComponent);
     int height = redComponent.getHeight();
     int width = redComponent.getWidth();
     Pixel[][] newPixelArray = new Pixel[width][height];
@@ -82,6 +48,12 @@ public class ImageUtility {
       }
     }
     return ImageFactory.createImage(newPixelArray);
+  }
+
+  private static void validateRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+    if (redComponent.getWidth() != greenComponent.getWidth() || redComponent.getWidth() != blueComponent.getWidth() || redComponent.getHeight() != greenComponent.getHeight() || redComponent.getHeight() != blueComponent.getHeight()) {
+      throw new ImageProcessorException("The RGB components must have the same dimensions");
+    }
   }
 
   public static Image horizontalFlip(Image image) {
@@ -108,29 +80,29 @@ public class ImageUtility {
     return ImageFactory.createImage(newPixelArray);
   }
 
-//  public static void saveImage(java.awt.Image image, String imagePath) {
-//    try {
-//      // Determine the format from the file extension
-//      String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
-//
-//
-//      // Create a BufferedImage from the Image object
-//      BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-//      for (int y = 0; y < image.getHeight(); y++) {
-//        for (int x = 0; x < image.getWidth(); x++) {
-//          Pixel pixel = image.getPixel(x, y);
-//          int rgb = (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-//          bufferedImage.setRGB(x, y, rgb);
-//        }
-//      }
-//
-//      // Write the BufferedImage to the specified file
-//      File outputFile = new File(imagePath);
-//      if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
-//        throw new IOException("No appropriate writer found for format: " + formatName);
-//      }
-//    } catch (IOException e) {
-//      System.out.println("Error saving the image file: " + e.getMessage());
-//    }
-//  }
+  public static void saveImage(Image image, String imagePath) throws ImageProcessorException {
+    try {
+      // Determine the format from the file extension
+      String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
+
+
+      // Create a BufferedImage from the Image object
+      BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+      for (int y = 0; y < image.getHeight(); y++) {
+        for (int x = 0; x < image.getWidth(); x++) {
+          Pixel pixel = image.getPixel(x, y);
+          int rgb = (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
+          bufferedImage.setRGB(x, y, rgb);
+        }
+      }
+
+      // Write the BufferedImage to the specified file
+      File outputFile = new File(imagePath);
+      if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
+        throw new ImageProcessorException("No appropriate writer found for format: " + formatName);
+      }
+    } catch (IOException e) {
+      throw new ImageProcessorException(String.format("Error saving the image file to path: %s", imagePath), e);
+    }
+  }
 }
