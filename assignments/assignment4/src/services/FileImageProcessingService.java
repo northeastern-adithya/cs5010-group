@@ -24,8 +24,10 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void saveImage(String imagePath, String imageName) {
-
+  public void saveImage(String imagePath, String imageName) throws ImageProcessorException {
+    validateStringParams(imagePath, imageName);
+    Image imageToSave = memory.getImage(imageName);
+    ImageUtility.saveImage(imageToSave, imagePath);
   }
 
   @Override

@@ -80,7 +80,7 @@ public class ImageUtility {
     return ImageFactory.createImage(newPixelArray);
   }
 
-  public static void saveImage(Image image, String imagePath) {
+  public static void saveImage(Image image, String imagePath) throws ImageProcessorException {
     try {
       // Determine the format from the file extension
       String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
@@ -99,10 +99,10 @@ public class ImageUtility {
       // Write the BufferedImage to the specified file
       File outputFile = new File(imagePath);
       if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
-        throw new IOException("No appropriate writer found for format: " + formatName);
+        throw new ImageProcessorException("No appropriate writer found for format: " + formatName);
       }
     } catch (IOException e) {
-      System.out.println("Error saving the image file: " + e.getMessage());
+      throw new ImageProcessorException(String.format("Error saving the image file to path: %s", imagePath), e);
     }
   }
 }
