@@ -13,4 +13,8 @@ public interface Image {
   Pixel getPixel(int x, int y);
 
   Image adjustImageBrightness(int factor);
+
+  int getWidth();
+
+  int getHeight();
 }

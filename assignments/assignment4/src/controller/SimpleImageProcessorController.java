@@ -1,5 +1,8 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
@@ -39,6 +42,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   @Override
   public void processCommands() throws QuitException {
     Scanner scan = new Scanner(input.getUserInput());
+    processCommands(scan);
+  }
+
+  private void processCommands(Scanner scan) {
     String userInput = scan.next();
     Optional<UserCommand> command = UserCommand.getCommand(userInput);
     command.ifPresentOrElse(
@@ -244,7 +251,20 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   }
 
   private void run(Scanner scan) throws ImageProcessorException {
-    // TODO: Implement this method
+    String scriptFile = scan.next();
+    try (BufferedReader reader = new BufferedReader(new FileReader(scriptFile))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        processCommandLine(line);
+      }
+    } catch (IOException e) {
+      throw new ImageProcessorException(String.format("Error reading script file: %s", scriptFile), e);
+    }
+  }
+
+  private void processCommandLine(String line) {
+    Scanner lineScanner = new Scanner(line);
+    processCommands(lineScanner);
   }
 
 

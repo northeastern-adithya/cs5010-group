@@ -10,6 +10,7 @@ import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.PixelFactory;
 import model.color.Pixel;
+import model.color.RGB;
 import model.visual.Image;
 
 public class ImageUtility {
@@ -33,6 +34,78 @@ public class ImageUtility {
     } catch (IOException e) {
       throw new ImageProcessorException("Error loading the image file", e);
     }
+  }
+
+  public static Image createRedComponent(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, y).createRedComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image createGreenComponent(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, y).createGreenComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image createBlueComponent(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, y).createBlueComponent();
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+    int height = redComponent.getHeight();
+    int width = redComponent.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = PixelFactory.createRGBPixel(redComponent.getPixel(x, y).getRed(), greenComponent.getPixel(x, y).getGreen(), blueComponent.getPixel(x, y).getBlue());
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image horizontalFlip(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(width - x - 1, y);
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  public static Image verticalFlip(Image image) {
+    int height = image.getHeight();
+    int width = image.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = image.getPixel(x, height - y - 1);
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
   }
 
 //  public static void saveImage(java.awt.Image image, String imagePath) {

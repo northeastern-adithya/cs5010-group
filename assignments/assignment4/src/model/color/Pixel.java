@@ -30,6 +30,13 @@ public interface Pixel {
    */
   Pixel adjustBrightness(int factor);
 
+
+  Pixel createRedComponent();
+
+  Pixel createGreenComponent();
+
+  Pixel createBlueComponent();
+
   int getRed();
 
   int getGreen();
