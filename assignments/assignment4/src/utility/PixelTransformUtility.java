@@ -28,6 +28,6 @@ public class PixelTransformUtility {
     double rPrime = matrix[0][0] * r + matrix[0][1] * g + matrix[0][2] * b;
     double gPrime = matrix[1][0] * r + matrix[1][1] * g + matrix[1][2] * b;
     double bPrime = matrix[2][0] * r + matrix[2][1] * g + matrix[2][2] * b;
-    return new int[] {(int) rPrime, (int) gPrime, (int) bPrime};
+    return new int[]{(int) rPrime, (int) gPrime, (int) bPrime};
   }
 }

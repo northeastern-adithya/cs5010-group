@@ -29,6 +29,21 @@ public class RenderedImage implements Image {
   }
 
   @Override
+  public Image createRedComponent() {
+    return transformImage(Pixel::createRedComponent);
+  }
+
+  @Override
+  public Image createGreenComponent() {
+    return transformImage(Pixel::createGreenComponent);
+  }
+
+  @Override
+  public Image createBlueComponent() {
+    return transformImage(Pixel::createBlueComponent);
+  }
+
+  @Override
   public Image adjustImageBrightness(int factor) {
     return transformImage(pixel -> pixel.adjustBrightness(factor));
   }

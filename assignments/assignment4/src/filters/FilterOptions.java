@@ -16,11 +16,11 @@ public enum FilterOptions {
   });
   private final double[][] kernel;
 
-   FilterOptions(double[][] kernel) {
+  FilterOptions(double[][] kernel) {
     this.kernel = kernel;
   }
 
-    public double[][] getKernel() {
-      return kernel;
-    }
+  public double[][] getKernel() {
+    return kernel;
+  }
 }

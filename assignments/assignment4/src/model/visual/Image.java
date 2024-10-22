@@ -11,6 +11,12 @@ public interface Image {
 
   int getHeight();
 
+  Image createRedComponent();
+
+  Image createGreenComponent();
+
+  Image createBlueComponent();
+
   Image getLuma();
 
   Image getSepia();

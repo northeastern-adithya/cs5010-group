@@ -17,7 +17,6 @@ public interface Pixel {
   Pixel adjustBrightness(int factor);
 
 
-
   Pixel createRedComponent();
 
   Pixel createGreenComponent();

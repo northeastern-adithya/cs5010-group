@@ -1,16 +1,15 @@
 package factories;
 
-import model.memory.HashmapMemory;
+import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 
 public class ImageMemoryFactory {
 
-  private ImageMemoryFactory(){
-
+  private ImageMemoryFactory() {
   }
 
 
-  public static ImageMemory getImageMemory(){
-    return new HashmapMemory();
+  public static ImageMemory getImageMemory() {
+    return new HashMapMemory();
   }
 }

@@ -1,5 +1,6 @@
 package filters;
 
+import factories.PixelFactory;
 import model.color.Pixel;
 import model.color.RGB;
 import model.visual.Image;
@@ -7,13 +8,17 @@ import model.visual.RenderedImage;
 
 public class AbstractFilter implements Filter {
 
-  protected double[][] kernel;
+  protected final FilterOptions filterOption;
+
+  protected AbstractFilter(FilterOptions filterOption) {
+    this.filterOption = filterOption;
+  }
 
   @Override
   public Image applyFilter(Image image) {
     int width = image.getWidth();
     int height = image.getHeight();
-    int radius = kernel.length / 2;
+    int radius = filterOption.getKernel().length / 2;
     Pixel[][] newPixelArray = new Pixel[width][height];
 
     for (int y = 0; y < height; y++) {
@@ -31,7 +36,7 @@ public class AbstractFilter implements Filter {
             // Only process if pixel is within image bounds
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
               Pixel pixel = image.getPixel(pixelX, pixelY);
-              double kernelValue = kernel[ky + radius][kx + radius];
+              double kernelValue = filterOption.getKernel()[ky + radius][kx + radius];
 
               redSum += pixel.getRed() * kernelValue;
               greenSum += pixel.getGreen() * kernelValue;
@@ -39,7 +44,7 @@ public class AbstractFilter implements Filter {
             }
           }
         }
-        newPixelArray[x][y] = new RGB((int) redSum, (int) greenSum, (int) blueSum); // Pixel Factory
+        newPixelArray[x][y] = PixelFactory.createRGBPixel((int) redSum, (int) greenSum, (int) blueSum); // Pixel Factory
       }
     }
 

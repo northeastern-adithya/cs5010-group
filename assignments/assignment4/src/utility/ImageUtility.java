@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.PixelFactory;
+import model.PixelType;
 import model.color.Pixel;
 import model.color.RGB;
 import model.visual.Image;
@@ -27,49 +28,13 @@ public class ImageUtility {
       Pixel[][] pixelArray = new Pixel[width][height];
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-          pixelArray[x][y] = PixelFactory.createPixel(image.getRGB(x, y), image.getType());
+          pixelArray[x][y] = PixelFactory.createPixel(image.getRGB(x, y), PixelType.fromBufferedImageType(image.getType()));
         }
       }
       return ImageFactory.createImage(pixelArray);
     } catch (IOException e) {
       throw new ImageProcessorException("Error loading the image file", e);
     }
-  }
-
-  public static Image createRedComponent(Image image) {
-    int height = image.getHeight();
-    int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = image.getPixel(x, y).createRedComponent();
-      }
-    }
-    return ImageFactory.createImage(newPixelArray);
-  }
-
-  public static Image createGreenComponent(Image image) {
-    int height = image.getHeight();
-    int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = image.getPixel(x, y).createGreenComponent();
-      }
-    }
-    return ImageFactory.createImage(newPixelArray);
-  }
-
-  public static Image createBlueComponent(Image image) {
-    int height = image.getHeight();
-    int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = image.getPixel(x, y).createBlueComponent();
-      }
-    }
-    return ImageFactory.createImage(newPixelArray);
   }
 
   public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
