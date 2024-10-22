@@ -1,7 +1,9 @@
 package model.visual;
 
-import model.color.Pixel;
+import java.util.function.Function;
 
+import model.color.Pixel;
+import utility.PixelTransformUtility;
 
 public class RenderedImage implements Image {
   private final Pixel[][] pixels;
@@ -21,18 +23,44 @@ public class RenderedImage implements Image {
     return pixels.length;
   }
 
+  @Override
   public int getHeight() {
     return pixels[0].length;
   }
 
   @Override
   public Image adjustImageBrightness(int factor) {
-    int height = getHeight();
-    int width = getWidth();
+    return transformImage(pixel -> pixel.adjustBrightness(factor));
+  }
+
+  @Override
+  public Image getLuma() {
+    return transformImage(Pixel::getLuma);
+  }
+
+  @Override
+  public Image getSepia() {
+    return transformImage(Pixel::getSepia);
+  }
+
+  @Override
+  public Image getIntensity() {
+    return transformImage(Pixel::getIntensity);
+  }
+
+  @Override
+  public Image getValue() {
+    return transformImage(Pixel::getValue);
+  }
+
+  private Image transformImage(Function<Pixel, Pixel> transformation) {
+    int height = this.getHeight();
+    int width = this.getWidth();
     Pixel[][] newPixelArray = new Pixel[width][height];
+
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = getPixel(x, y).adjustBrightness(factor);
+        newPixelArray[x][y] = transformation.apply(this.getPixel(x, y));
       }
     }
     return new RenderedImage(newPixelArray);

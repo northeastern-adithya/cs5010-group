@@ -108,29 +108,29 @@ public class ImageUtility {
     return ImageFactory.createImage(newPixelArray);
   }
 
-//  public static void saveImage(java.awt.Image image, String imagePath) {
-//    try {
-//      // Determine the format from the file extension
-//      String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
-//
-//
-//      // Create a BufferedImage from the Image object
-//      BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-//      for (int y = 0; y < image.getHeight(); y++) {
-//        for (int x = 0; x < image.getWidth(); x++) {
-//          Pixel pixel = image.getPixel(x, y);
-//          int rgb = (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-//          bufferedImage.setRGB(x, y, rgb);
-//        }
-//      }
-//
-//      // Write the BufferedImage to the specified file
-//      File outputFile = new File(imagePath);
-//      if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
-//        throw new IOException("No appropriate writer found for format: " + formatName);
-//      }
-//    } catch (IOException e) {
-//      System.out.println("Error saving the image file: " + e.getMessage());
-//    }
-//  }
+  public static void saveImage(Image image, String imagePath) {
+    try {
+      // Determine the format from the file extension
+      String formatName = imagePath.substring(imagePath.lastIndexOf('.') + 1);
+
+
+      // Create a BufferedImage from the Image object
+      BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+      for (int y = 0; y < image.getHeight(); y++) {
+        for (int x = 0; x < image.getWidth(); x++) {
+          Pixel pixel = image.getPixel(x, y);
+          int rgb = (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
+          bufferedImage.setRGB(x, y, rgb);
+        }
+      }
+
+      // Write the BufferedImage to the specified file
+      File outputFile = new File(imagePath);
+      if (!ImageIO.write(bufferedImage, formatName, outputFile)) {
+        throw new IOException("No appropriate writer found for format: " + formatName);
+      }
+    } catch (IOException e) {
+      System.out.println("Error saving the image file: " + e.getMessage());
+    }
+  }
 }
