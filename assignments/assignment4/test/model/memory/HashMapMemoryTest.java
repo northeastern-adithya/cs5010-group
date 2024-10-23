@@ -3,7 +3,7 @@ package model.memory;
 import org.junit.Before;
 import org.junit.Test;
 
-import exception.NotFoundException;
+import exception.ImageProcessorException;
 import model.pixels.Pixel;
 import model.visual.Image;
 import model.visual.RenderedImage;
@@ -28,19 +28,19 @@ public class HashMapMemoryTest {
   }
 
   @Test
-  public void testAddAndRetrieveImage() throws NotFoundException {
+  public void testAddAndRetrieveImage() throws ImageProcessorException.NotFoundException {
     memory.addImage("testImage", testImage);
     assertEquals(testImage, memory.getImage("testImage"));
   }
 
-  @Test(expected=NotFoundException.class)
-  public void testAddNullImage() throws NotFoundException {
+  @Test(expected= ImageProcessorException.NotFoundException.class)
+  public void testAddNullImage() throws ImageProcessorException.NotFoundException {
     memory.addImage("nullImage", null);
     assertNull(memory.getImage("nullImage"));
   }
 
-  @Test(expected = NotFoundException.class)
-  public void testRetrieveNonExistentImage() throws NotFoundException {
+  @Test(expected = ImageProcessorException.NotFoundException.class)
+  public void testRetrieveNonExistentImage() throws ImageProcessorException.NotFoundException {
     memory.getImage("nonExistentImage");
   }
 }

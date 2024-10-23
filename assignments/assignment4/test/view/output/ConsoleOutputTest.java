@@ -4,7 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import java.io.IOException;
 import java.io.StringWriter;
-import exception.DisplayException;
+
+import exception.ImageProcessingRunTimeException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,7 +21,7 @@ public class ConsoleOutputTest {
   }
 
   @Test
-  public void testDisplayMessage() throws DisplayException {
+  public void testDisplayMessage() throws ImageProcessingRunTimeException.DisplayException {
     String message = "Hello, World!";
     consoleOutput.displayMessage(message);
     assertEquals("Hello, World!\n", stringWriter.toString());
@@ -31,8 +32,8 @@ public class ConsoleOutputTest {
     new ConsoleOutput(null);
   }
 
-  @Test(expected = DisplayException.class)
-  public void testDisplayMessageThrowsDisplayException() throws DisplayException {
+  @Test(expected = ImageProcessingRunTimeException.DisplayException.class)
+  public void testDisplayMessageThrowsDisplayException() throws ImageProcessingRunTimeException.DisplayException {
     Appendable failingAppendable = new Appendable() {
       @Override
       public Appendable append(CharSequence csq) throws IOException {

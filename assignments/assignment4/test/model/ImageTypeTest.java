@@ -1,6 +1,7 @@
 package model;
 
-import exception.NotImplementedException;
+import exception.ImageProcessingRunTimeException;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +32,7 @@ public class ImageTypeTest {
     assertEquals(ImageType.JPEG, imageType);
   }
 
-  @Test(expected = NotImplementedException.class)
+  @Test(expected = ImageProcessingRunTimeException.NotImplementedException.class)
   public void testFromExtension_unsupported() {
     ImageType.fromExtension("gif");
   }

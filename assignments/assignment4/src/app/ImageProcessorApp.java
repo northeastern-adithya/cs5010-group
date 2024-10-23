@@ -4,7 +4,7 @@ package app;
 import java.io.InputStreamReader;
 
 import controller.ImageProcessorController;
-import exception.QuitException;
+import exception.ImageProcessingRunTimeException;
 import factories.Factory;
 
 /**
@@ -28,7 +28,7 @@ public class ImageProcessorApp {
     while (true) {
       try {
         controller.processCommands();
-      } catch (QuitException e) {
+      } catch (ImageProcessingRunTimeException.QuitException e) {
         break;
       }
     }

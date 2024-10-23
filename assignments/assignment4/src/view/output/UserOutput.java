@@ -1,6 +1,6 @@
 package view.output;
 
-import exception.DisplayException;
+import exception.ImageProcessingRunTimeException;
 
 /**
  * Represents the output to the user.
@@ -12,7 +12,7 @@ public interface UserOutput {
    * Displays the message to the user.
    *
    * @param message the message to be displayed
-   * @throws DisplayException if there is an error displaying the message
+   * @throws ImageProcessingRunTimeException.DisplayException if there is an error displaying the message
    */
-  void displayMessage(String message) throws DisplayException;
+  void displayMessage(String message) throws ImageProcessingRunTimeException.DisplayException;
 }

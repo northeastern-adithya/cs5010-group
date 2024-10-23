@@ -3,7 +3,7 @@ package view.output;
 import java.io.IOException;
 import java.util.Objects;
 
-import exception.DisplayException;
+import exception.ImageProcessingRunTimeException;
 
 /**
  * Represents the output to the user.
@@ -29,11 +29,11 @@ public class ConsoleOutput implements UserOutput {
   }
 
   @Override
-  public void displayMessage(String message) throws DisplayException {
+  public void displayMessage(String message) throws ImageProcessingRunTimeException.DisplayException {
     try {
       this.output.append(message).append("\n");
     } catch (IOException e) {
-      throw new DisplayException(String.format("Error displaying message:%s", message), e);
+      throw new ImageProcessingRunTimeException.DisplayException(String.format("Error displaying message:%s", message), e);
     }
   }
 }

@@ -25,4 +25,51 @@ public class ImageProcessingRunTimeException extends RuntimeException {
   public ImageProcessingRunTimeException(String message, Throwable cause) {
     super(message, cause);
   }
+
+  /**
+   * An exception that is thrown when there is an error displaying an image.
+   */
+  public static class DisplayException extends ImageProcessingRunTimeException {
+
+    /**
+     * Constructs a new DisplayException with the given message
+     * and the cause of this exception.
+     *
+     * @param message the message of this DisplayException
+     * @param cause   the cause of this DisplayException
+     */
+    public DisplayException(String message, Throwable cause) {
+      super(message, cause);
+    }
+  }
+
+  /**
+   * An exception that is thrown when a method is not implemented.
+   */
+  public static class NotImplementedException extends ImageProcessingRunTimeException {
+
+    /**
+     * Constructs a new NotImplementedException with the given message.
+     *
+     * @param message the message of this NotImplementedException
+     */
+    public NotImplementedException(String message) {
+      super(message);
+    }
+  }
+
+  /**
+   * An exception that is thrown when the user wants to quit the program.
+   */
+  public static class QuitException extends ImageProcessingRunTimeException {
+
+    /**
+     * Constructs a new QuitException with the given message.
+     *
+     * @param message the message of this QuitException
+     */
+    public QuitException(String message) {
+      super(message);
+    }
+  }
 }

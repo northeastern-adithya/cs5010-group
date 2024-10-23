@@ -9,7 +9,7 @@ public class NotImplementedExceptionTest {
   @Test
   public void testConstructorWithMessage() {
     String message = "Test message";
-    NotImplementedException exception = new NotImplementedException(message);
+    ImageProcessingRunTimeException.NotImplementedException exception = new ImageProcessingRunTimeException.NotImplementedException(message);
     assertEquals(message, exception.getMessage());
   }
 }

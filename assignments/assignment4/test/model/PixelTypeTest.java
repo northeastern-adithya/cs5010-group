@@ -1,6 +1,7 @@
 package model;
 
-import exception.NotImplementedException;
+import exception.ImageProcessingRunTimeException;
+
 import java.awt.image.BufferedImage;
 import org.junit.Test;
 
@@ -21,12 +22,12 @@ public class PixelTypeTest {
     assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_555_RGB));
   }
 
-  @Test(expected = NotImplementedException.class)
+  @Test(expected = ImageProcessingRunTimeException.NotImplementedException.class)
   public void testFromBufferedImageTypeUnsupportedType() {
     PixelType.fromBufferedImageType(BufferedImage.TYPE_BYTE_BINARY);
   }
 
-  @Test(expected = NotImplementedException.class)
+  @Test(expected = ImageProcessingRunTimeException.NotImplementedException.class)
   public void testFromBufferedImageTypeInvalidType() {
     PixelType.fromBufferedImageType(-1);
   }

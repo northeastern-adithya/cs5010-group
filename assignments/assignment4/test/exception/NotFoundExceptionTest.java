@@ -9,7 +9,7 @@ public class NotFoundExceptionTest {
   @Test
   public void testNotFoundExceptionMessage() {
     String errorMessage = "Error processing image";
-    NotFoundException exception = new NotFoundException(errorMessage);
+    ImageProcessorException.NotFoundException exception = new ImageProcessorException.NotFoundException(errorMessage);
     assertEquals(errorMessage, exception.getMessage());
   }
 

@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import controller.model.ExecutionStatus;
+import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import exception.QuitException;
 import factories.Factory;
 import model.UserCommand;
 import services.ImageProcessingService;
@@ -67,7 +67,7 @@ public class ImageOperationCommand implements Command {
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution
    * @throws ImageProcessorException if an error occurs while executing the command
-   * @throws QuitException           if the user wants to quit the application
+   * @throws ImageProcessingRunTimeException.QuitException           if the user wants to quit the application
    */
   private ExecutionStatus executeCommand(UserCommand command, Scanner scanner) throws ImageProcessorException {
     switch (command) {
@@ -106,7 +106,7 @@ public class ImageOperationCommand implements Command {
       case RUN:
         return executeRunCommand(scanner);
       case QUIT:
-        throw new QuitException("Shutting down application");
+        throw new ImageProcessingRunTimeException.QuitException("Shutting down application");
       default:
         return new ExecutionStatus(false, "Invalid command.");
     }

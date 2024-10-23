@@ -10,7 +10,7 @@ public class DisplayExceptionTest {
   public void testDisplayExceptionMessage() {
     String message = "Error displaying image";
     Throwable cause = new Throwable("Cause of the error");
-    DisplayException exception = new DisplayException(message, cause);
+    ImageProcessingRunTimeException.DisplayException exception = new ImageProcessingRunTimeException.DisplayException(message, cause);
     assertEquals(message, exception.getMessage());
   }
 
@@ -18,7 +18,7 @@ public class DisplayExceptionTest {
   public void testDisplayExceptionMessageAndCause() {
     String message = "Error displaying image";
     Throwable cause = new Throwable("Cause of the error");
-    DisplayException exception = new DisplayException(message, cause);
+    ImageProcessingRunTimeException.DisplayException exception = new ImageProcessingRunTimeException.DisplayException(message, cause);
     assertEquals(message, exception.getMessage());
     assertEquals(cause, exception.getCause());
   }

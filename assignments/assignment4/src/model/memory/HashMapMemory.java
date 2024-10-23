@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import exception.NotFoundException;
+import exception.ImageProcessorException;
 import model.visual.Image;
 import utility.StringUtils;
 
@@ -36,9 +36,9 @@ public class HashMapMemory implements ImageMemory {
   }
 
   @Override
-  public Image getImage(String imageName) throws NotFoundException {
+  public Image getImage(String imageName) throws ImageProcessorException.NotFoundException {
     return Optional.ofNullable(memory.get(imageName)).orElseThrow(
-            () -> new NotFoundException(String.format("Image with name %s not found in memory", imageName))
+            () -> new ImageProcessorException.NotFoundException(String.format("Image with name %s not found in memory", imageName))
     );
   }
 

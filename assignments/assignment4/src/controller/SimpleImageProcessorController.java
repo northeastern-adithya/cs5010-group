@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import controller.executors.ImageOperationCommand;
 import controller.model.ExecutionStatus;
-import exception.QuitException;
+import exception.ImageProcessingRunTimeException;
 import factories.Factory;
 import model.UserCommand;
 import services.ImageProcessingService;
@@ -61,7 +61,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @param imageProcessor ImageProcessingService object
    * @throws NullPointerException if input, output or imageProcessor is null
    */
-  private void validateInput(UserInput input, UserOutput output, ImageProcessingService imageProcessor) throws QuitException {
+  private void validateInput(UserInput input, UserOutput output, ImageProcessingService imageProcessor) throws ImageProcessingRunTimeException.QuitException {
     Objects.requireNonNull(input, "UserInput cannot be null");
     Objects.requireNonNull(output, "UserOutput cannot be null");
     Objects.requireNonNull(imageProcessor, "ImageProcessor cannot be null");
@@ -75,7 +75,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   }
 
   @Override
-  public void processCommands() throws QuitException {
+  public void processCommands() throws ImageProcessingRunTimeException.QuitException {
     ExecutionStatus executionStatus = this.imageOperationCommand.execute(input);
     displayMessage(executionStatus.getMessage());
   }

@@ -8,7 +8,7 @@ public class QuitExceptionTest {
   @Test
   public void testConstructorWithMessage() {
     String message = "Test message";
-    QuitException exception = new QuitException(message);
+    ImageProcessingRunTimeException.QuitException exception = new ImageProcessingRunTimeException.QuitException(message);
     assertEquals(message, exception.getMessage());
   }
 }

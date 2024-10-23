@@ -1,6 +1,6 @@
 package model.memory;
 
-import exception.NotFoundException;
+import exception.ImageProcessorException;
 import model.visual.Image;
 
 /**
@@ -21,8 +21,8 @@ public interface ImageMemory {
    * Retrieves an image from the memory.
    * @param imageName the name of the image to retrieve
    * @return the image with the given name
-   * @throws NotFoundException if the image with the given name is not found
+   * @throws ImageProcessorException.NotFoundException if the image with the given name is not found
    */
-  Image getImage(String imageName) throws NotFoundException;
+  Image getImage(String imageName) throws ImageProcessorException.NotFoundException;
 
 }

@@ -25,4 +25,17 @@ public class ImageProcessorException extends Exception {
     super(message, cause);
   }
 
+  /**
+   * An exception that is thrown when an image is not found.
+   */
+  public static class NotFoundException extends ImageProcessorException {
+    /**
+     * Constructs a new NotFoundException with the given message.
+     *
+     * @param message the message of this NotFoundException
+     */
+    public NotFoundException(String message) {
+      super(message);
+    }
+  }
 }

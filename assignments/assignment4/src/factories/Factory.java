@@ -4,8 +4,8 @@ import java.util.Objects;
 
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
+import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import exception.NotImplementedException;
 import filters.Blur;
 import filters.Filter;
 import filters.FilterOption;
@@ -58,16 +58,16 @@ public class Factory {
    *
    * @param options the options to create the filter
    * @return the filter based on the given options
-   * @throws NotImplementedException if the filter is not implemented
+   * @throws ImageProcessingRunTimeException.NotImplementedException if the filter is not implemented
    */
-  public static Filter getFilter(FilterOption options) throws NotImplementedException {
+  public static Filter getFilter(FilterOption options) throws ImageProcessingRunTimeException.NotImplementedException {
     switch (options) {
       case SHARPEN:
         return new Sharpen();
       case GAUSSIAN_BLUR:
         return new Blur();
       default:
-        throw new NotImplementedException(String.format("Received an unsupported filter type: %s", options));
+        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported filter type: %s", options));
     }
   }
 
@@ -148,9 +148,9 @@ public class Factory {
    *
    * @param type the type of image to read
    * @return the image reader based on the given image type
-   * @throws NotImplementedException if the image type is not implemented
+   * @throws ImageProcessingRunTimeException.NotImplementedException if the image type is not implemented
    */
-  public static ImageReader createImageReader(ImageType type) throws NotImplementedException {
+  public static ImageReader createImageReader(ImageType type) throws ImageProcessingRunTimeException.NotImplementedException {
     switch (type) {
       case PPM:
         return new PPMImageReader();
@@ -160,7 +160,7 @@ public class Factory {
       case PNG:
         return new PNGImageReader();
       default:
-        throw new NotImplementedException(String.format("Received an unsupported image type: %s", type));
+        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
     }
   }
 
@@ -169,7 +169,7 @@ public class Factory {
    *
    * @param type the type of image to write
    * @return the image writer based on the given image type
-   * @throws NotImplementedException if the image type is not implemented
+   * @throws ImageProcessingRunTimeException.NotImplementedException if the image type is not implemented
    */
   public static ImageWriter createImageWriter(ImageType type) {
     switch (type) {
@@ -181,7 +181,7 @@ public class Factory {
       case PNG:
         return new PNGImageWriter();
       default:
-        throw new NotImplementedException(String.format("Received an unsupported image type: %s", type));
+        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
     }
   }
 
@@ -191,14 +191,14 @@ public class Factory {
    * @param pixel the pixel to create the pixel
    * @param type  the type of the pixel
    * @return the pixel based on the given pixel and type
-   * @throws NotImplementedException if the pixel is not implemented
+   * @throws ImageProcessingRunTimeException.NotImplementedException if the pixel is not implemented
    */
   public static Pixel createPixel(int pixel, PixelType type) {
     switch (type) {
       case RGB:
         return createRGBPixel(pixel);
       default:
-        throw new NotImplementedException(String.format("Received an unsupported image type: %s", type));
+        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
     }
   }
 
