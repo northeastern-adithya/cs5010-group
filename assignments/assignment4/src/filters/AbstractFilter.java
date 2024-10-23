@@ -28,7 +28,8 @@ public class AbstractFilter implements Filter {
 
 
   @Override
-  public Image applyFilter(Image image) {
+  public Image applyFilter(Image image) throws NullPointerException {
+    validateImage(image);
     int width = image.getWidth();
     int height = image.getHeight();
     int radius = filterOption.getKernel().length / 2;
@@ -58,5 +59,9 @@ public class AbstractFilter implements Filter {
     }
 
     return ImageFactory.createImage(newPixelArray);
+  }
+
+  protected void validateImage(Image image) throws NullPointerException {
+    Objects.requireNonNull(image);
   }
 }

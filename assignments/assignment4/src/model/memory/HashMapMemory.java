@@ -27,7 +27,9 @@ public class HashMapMemory implements ImageMemory {
 
   @Override
   public void addImage(String imageName, Image image) {
-    memory.put(imageName, image);
+    if(image != null) {
+      memory.put(imageName, image);
+    }
   }
 
   @Override
