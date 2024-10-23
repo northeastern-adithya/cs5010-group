@@ -24,7 +24,9 @@ public class SepiaCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String imageName = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.sepiaImage(imageName, destinationImageName);
     return new ExecutionStatus(true, "Successfully converted the image to sepia.");

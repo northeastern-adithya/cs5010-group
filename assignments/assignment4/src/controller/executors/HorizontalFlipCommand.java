@@ -24,7 +24,10 @@ public class HorizontalFlipCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+
+    validateScanner(scanner);
     String path = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.horizontalFlip(path, destinationImageName);
     return new ExecutionStatus(true, "Successfully flipped the image horizontally.");

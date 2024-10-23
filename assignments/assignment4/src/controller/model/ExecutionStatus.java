@@ -30,4 +30,21 @@ public class ExecutionStatus {
   public String getMessage() {
     return message;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof ExecutionStatus)) {
+      return false;
+    }
+    ExecutionStatus other = (ExecutionStatus) obj;
+    return success == other.success && message.equals(other.message);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(success, message);
+  }
 }

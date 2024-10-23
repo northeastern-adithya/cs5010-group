@@ -18,7 +18,9 @@ public class LoadCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String path = scanner.next();
+    validateScanner(scanner);
     String imageName = scanner.next();
     imageProcessor.loadImage(path, imageName);
     return new ExecutionStatus(true, String.format("Successfully loaded: %s from path: %s", imageName, path));

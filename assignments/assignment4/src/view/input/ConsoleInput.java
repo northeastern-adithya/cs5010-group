@@ -12,7 +12,7 @@ public class ConsoleInput implements UserInput {
   /**
    * The input stream from which the user is communicating.
    */
-  private final InputStream input;
+  private final Readable input;
 
   /**
    * Constructs a ConsoleInput object with the given input stream.
@@ -20,13 +20,13 @@ public class ConsoleInput implements UserInput {
    * @param input the input stream from which the user is communicating.
    * @throws NullPointerException if the input stream is null.
    */
-  public ConsoleInput(InputStream input) {
+  public ConsoleInput(Readable input) {
     Objects.requireNonNull(input, "Input cannot be null");
     this.input = input;
   }
 
 
-  public InputStream getUserInput() {
+  public Readable getUserInput() {
     return this.input;
   }
 

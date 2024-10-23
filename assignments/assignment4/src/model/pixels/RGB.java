@@ -1,5 +1,7 @@
 package model.pixels;
 
+import java.util.Objects;
+
 import model.LinearColorTransformationType;
 
 /**
@@ -103,6 +105,16 @@ public class RGB extends AbstractPixel {
 
   protected boolean equalsRGB(RGB rgb) {
     return red == rgb.getRed() && green == rgb.getGreen() && blue == rgb.getBlue();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(red, green, blue);
+  }
+
+  @Override
+  public String toString() {
+    return "RGB(" + red + ", " + green + ", " + blue + ")";
   }
 
   @Override

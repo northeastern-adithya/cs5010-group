@@ -48,5 +48,30 @@ public abstract class AbstractCommand implements Command {
     }
   }
 
+
+
+  /**
+   * Executes the command given by user and does the required operations.
+   *
+   * @param scanner Scanner object to read the input
+   * @return execution status of the command containing if
+   * the command was successful and the message
+   * @throws ImageProcessorException if any error occurs during image processing
+   */
   protected abstract ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException;
+
+
+  /**
+   * Validates the scanner object to check if it has the required number of arguments.
+   *
+   * @param scanner Scanner object to read the input
+   * @throws ImageProcessorException if the scanner does not have the required number of arguments
+   */
+  protected void validateScanner(Scanner scanner) throws ImageProcessorException{
+    if(!scanner.hasNext()){
+      throw new ImageProcessorException("Invalid command parameters.");
+    }
+  }
+
+
 }

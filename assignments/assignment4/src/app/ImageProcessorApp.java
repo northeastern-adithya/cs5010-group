@@ -1,6 +1,8 @@
 package app;
 
 
+import java.io.InputStreamReader;
+
 import controller.ImageProcessorController;
 import exception.QuitException;
 import factories.ControllerFactory;
@@ -23,7 +25,7 @@ public class ImageProcessorApp {
    */
   public static void main(String[] args) {
     ImageProcessorController controller = ControllerFactory.createController(
-            UserInputFactory.createUserInput(System.in),
+            UserInputFactory.createUserInput(new InputStreamReader(System.in)),
             UserOutputFactory.createUserOutput(System.out),
             ImageProcessingServiceFactory.createImageProcessor(ImageMemoryFactory.getImageMemory())
     );

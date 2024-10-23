@@ -24,7 +24,9 @@ public class IntensityComponentCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String path = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.createIntensityComponent(path, destinationImageName);
     return new ExecutionStatus(true, "Successfully created intensity component.");

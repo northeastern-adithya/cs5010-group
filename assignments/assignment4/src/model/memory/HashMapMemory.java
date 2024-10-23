@@ -36,4 +36,21 @@ public class HashMapMemory implements ImageMemory {
             () -> new NotFoundException(String.format("Image with name %s not found in memory", imageName))
     );
   }
+
+  @Override
+  public  boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if(!(obj instanceof HashMapMemory)) {
+      return false;
+    }
+    HashMapMemory that = (HashMapMemory) obj;
+    return memory.equals(that.memory);
+  }
+
+  @Override
+  public int hashCode() {
+    return memory.hashCode();
+  }
 }

@@ -24,7 +24,9 @@ public class BlurCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String imageName = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.blurImage(imageName, destinationImageName);
     return new ExecutionStatus(true, "Successfully blurred the image.");

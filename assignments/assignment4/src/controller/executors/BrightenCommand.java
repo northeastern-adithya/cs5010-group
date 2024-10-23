@@ -28,7 +28,9 @@ public class BrightenCommand extends AbstractCommand {
       throw new ImageProcessorException("Invalid factor provided for brightening the image.");
     }
     int factor = scanner.nextInt();
+    validateScanner(scanner);
     String imageName = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.brighten(imageName, destinationImageName, factor);
     return new ExecutionStatus(true, String.format("Successfully brightened the image at factor:%s", factor));
