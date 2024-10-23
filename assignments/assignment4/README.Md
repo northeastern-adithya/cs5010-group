@@ -13,7 +13,7 @@ To segregate the provided code into packages and MVC structure, we can organize 
 - **Classes**:
   - `SimpleImageProcessorController`
     - **Purpose**: A simple implementation of the `ImageProcessorController` interface that processes user commands.
-- ### `command` Package
+- ##### `command` Package
   - **Interfaces**:
     - `Command`
       - **Purpose**: Interface for user commands. 
@@ -58,7 +58,7 @@ To segregate the provided code into packages and MVC structure, we can organize 
       - **Purpose**: Concrete command class that adjusts the value (or brightness) component of the image's colors.
     - `VerticalFlipCommand`
       - **Purpose**: Concrete command class that flips the image vertically, creating an upside-down version of the image.
-- ### `model` Package
+- ##### `model` Package
   - **Classes**:
     - `ExecutionStatus`
       - **Purpose**: Represents the execution statistics of a command.
@@ -126,14 +126,14 @@ To segregate the provided code into packages and MVC structure, we can organize 
     - **Purpose**: Enum that represents different types of pixels.
   - `UserCommand`
     - **Purpose**: Enum that represents different user commands.
-- ### `visual` Package
+- ##### `visual` Package
   - **Interfaces**:
     - `Image`
       - **Purpose**: Interface for image processing.
   - **Classes**:
     - `RenderedImage`
       - **Purpose**: Concrete class that represents a rendered image.
-- ### `pixels` Package
+- ##### `pixels` Package
   - **Interfaces**:
     - `Pixel`
       - **Purpose**: Interface for pixel processing.
@@ -142,7 +142,7 @@ To segregate the provided code into packages and MVC structure, we can organize 
       - **Purpose**: Abstract class that provides common functionality for all pixel classes.
     - `Pixel`
       - **Purpose**: Represents a pixel in an image.
-- ### `memory` Package
+- ##### `memory` Package
   - **Interfaces**:
     - `ImageMemory`
       - **Purpose**: Interface for managing image memory.
@@ -182,14 +182,14 @@ To segregate the provided code into packages and MVC structure, we can organize 
     - **Purpose**: Utility class for string manipulation operations.
 
 #### `view` Package
-- ### `input` Package
+- ##### `input` Package
   - **Interfaces**:
     - `UserInput`
       - **Purpose**: Interface for user input.
   - **Classes**:
     - `ConsoleInput`
       - **Purpose**: Concrete class that implements the `UserInput` interface and provides console-based user input.
-- ### `output` Package
+- ##### `output` Package
   - **Interfaces**:
     - `UserOutput`
       - **Purpose**: Interface for user output.
