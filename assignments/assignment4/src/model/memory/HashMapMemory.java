@@ -2,10 +2,12 @@ package model.memory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import exception.NotFoundException;
 import model.visual.Image;
+import utility.StringUtils;
 
 /**
  * A class that represents a memory that stores images in a HashMap.
@@ -27,7 +29,7 @@ public class HashMapMemory implements ImageMemory {
 
   @Override
   public void addImage(String imageName, Image image) {
-    if(image != null) {
+    if (Objects.isNull(imageName) || StringUtils.isNullOrEmpty(imageName)) {
       memory.put(imageName, image);
     }
   }
@@ -40,11 +42,11 @@ public class HashMapMemory implements ImageMemory {
   }
 
   @Override
-  public  boolean equals(Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
-    if(!(obj instanceof HashMapMemory)) {
+    if (!(obj instanceof HashMapMemory)) {
       return false;
     }
     HashMapMemory that = (HashMapMemory) obj;
