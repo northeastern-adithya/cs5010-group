@@ -625,6 +625,123 @@ public class ControllerIntegrationTest {
   }
 
 
+  // LUMA COMPONENT TESTS
+  @Test
+  public void testCreateLumaComponentWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {3552822, 3552822},
+            {3552822, 3552822}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {1184274, 1184274},
+            {1184274, 1184274}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {11974326, 11974326},
+            {11974326, 11974326}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16711422, 16711422},
+            {16711422, 16711422}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testLumaComponentCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("luma-component invalidImageName lumaComponent", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testLumaComponentCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created luma component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {3552822, 1184274},
+            {11974326, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("lumaComponent"));
+  }
+
+  @Test
+  public void testCreateLumaComponentWithoutImageName() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("luma-component", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+
   private Image redImage() {
     int[][] redArray = new int[][]{
             {16711680, 16711680},
