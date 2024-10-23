@@ -5,9 +5,13 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import factories.ImageFactory;
+import factories.ImageReaderFactory;
+import factories.ImageWriterFactory;
 import filters.Blur;
 import filters.Filter;
 import filters.Sharpen;
+import model.ImageType;
 import model.pixels.Pixel;
 import model.visual.Image;
 
@@ -24,7 +28,7 @@ public class ImageUtilityTest {
         File file = new File("test_resources/download.jpeg");
         BufferedImage expectedImage = ImageIO.read(file);
 
-        Image actualImage = ImageUtility.loadImage(file.getPath());
+        Image actualImage = ImageReaderFactory.createImageReader(ImageType.JPEG).read(file.getPath());
 
         int width = expectedImage.getWidth();
         int height = expectedImage.getHeight();
@@ -52,11 +56,11 @@ public class ImageUtilityTest {
         try {
             // Load an image from the test resources
             File inputFile = new File("test_resources/download.jpeg");
-            Image image = ImageUtility.loadImage(inputFile.getPath());
+            Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
 
             // Save the image to a new file
             String outputPath = "test_resources/download-output.png";
-            ImageUtility.saveImage(image, outputPath);
+            ImageWriterFactory.createImageWriter(ImageType.PNG).write(image,outputPath);
 
             // Load the saved image
             File outputFile = new File(outputPath);
@@ -82,11 +86,11 @@ public class ImageUtilityTest {
     try {
       // Load an image from the test resources
       File inputFile = new File("test_resources/manhattan-small.png");
-      Image image = ImageUtility.loadImage(inputFile.getPath());
+      Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
 
       // Save the image to a new file
       String outputPath = "test_resources/manhattan-small-sepia-output.png";
-      ImageUtility.saveImage(image.getSepia(), outputPath);
+      ImageWriterFactory.createImageWriter(ImageType.PNG).write(image.getSepia(),outputPath);
 
       // Load the saved image
       File outputFile = new File(outputPath);
@@ -116,11 +120,11 @@ public class ImageUtilityTest {
     try {
       // Load an image from the test resources
       File inputFile = new File("test_resources/manhattan-small.png");
-      Image image = ImageUtility.loadImage(inputFile.getPath());
+      Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
 
       // Save the image to a new file
       String outputPath = "test_resources/manhattan-small-luma.png";
-      ImageUtility.saveImage(image.getLuma(), outputPath);
+      ImageWriterFactory.createImageWriter(ImageType.PNG).write(image.getLuma(),outputPath);
 
       // Load the saved image
       File outputFile = new File(outputPath);
@@ -150,11 +154,11 @@ public class ImageUtilityTest {
     try {
       // Load an image from the test resources
       File inputFile = new File("test_resources/manhattan-small.png");
-      Image image = ImageUtility.loadImage(inputFile.getPath());
+      Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
 
       // Save the image to a new file
       String outputPath = "test_resources/manhattan-small-intensity.png";
-      ImageUtility.saveImage(image.getIntensity(), outputPath);
+      ImageWriterFactory.createImageWriter(ImageType.PNG).write(image.getIntensity(),outputPath);
 
       // Load the saved image
       File outputFile = new File(outputPath);
@@ -184,11 +188,10 @@ public class ImageUtilityTest {
     try {
       // Load an image from the test resources
       File inputFile = new File("test_resources/manhattan-small.png");
-      Image image = ImageUtility.loadImage(inputFile.getPath());
-
+      Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
       // Save the image to a new file
       String outputPath = "test_resources/manhattan-small-value.png";
-      ImageUtility.saveImage(image.getValue(), outputPath);
+      ImageWriterFactory.createImageWriter(ImageType.PNG).write(image.getValue(),outputPath);
 
       // Load the saved image
       File outputFile = new File(outputPath);
@@ -218,12 +221,12 @@ public class ImageUtilityTest {
     try {
       // Load an image from the test resources
       File inputFile = new File("test_resources/manhattan-small.png");
-      Image image = ImageUtility.loadImage(inputFile.getPath());
+      Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
 
       // Save the image to a new file
       String outputPath = "test_resources/manhattan-small-blur.png";
       Filter blurFilter = new Blur();
-      ImageUtility.saveImage(blurFilter.applyFilter(blurFilter.applyFilter(image)), outputPath);
+      ImageWriterFactory.createImageWriter(ImageType.PNG).write(blurFilter.applyFilter(image),outputPath);
 
       // Load the saved image
       File outputFile = new File(outputPath);
@@ -253,12 +256,12 @@ public class ImageUtilityTest {
     try {
       // Load an image from the test resources
       File inputFile = new File("test_resources/manhattan-small.png");
-      Image image = ImageUtility.loadImage(inputFile.getPath());
+      Image image = ImageReaderFactory.createImageReader(ImageType.JPEG).read(inputFile.getPath());
 
       // Save the image to a new file
       String outputPath = "test_resources/manhattan-small-sharpen.png";
       Filter sharpenFilter = new Sharpen();
-      ImageUtility.saveImage(sharpenFilter.applyFilter(sharpenFilter.applyFilter(image)), outputPath);
+      ImageWriterFactory.createImageWriter(ImageType.PNG).write(sharpenFilter.applyFilter(sharpenFilter.applyFilter(image)), outputPath);
 
       // Load the saved image
       File outputFile = new File(outputPath);
