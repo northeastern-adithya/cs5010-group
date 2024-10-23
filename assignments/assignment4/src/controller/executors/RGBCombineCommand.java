@@ -24,9 +24,13 @@ public class RGBCombineCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String imageName = scanner.next();
+    validateScanner(scanner);
     String redImageName = scanner.next();
+    validateScanner(scanner);
     String greenImageName = scanner.next();
+    validateScanner(scanner);
     String blueImageName = scanner.next();
     imageProcessor.rgbCombine(imageName, redImageName, greenImageName, blueImageName);
     return new ExecutionStatus(true, "Successfully combined the RGB components.");

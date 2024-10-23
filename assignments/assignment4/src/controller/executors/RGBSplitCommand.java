@@ -24,9 +24,13 @@ public class RGBSplitCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String imageName = scanner.next();
+    validateScanner(scanner);
     String destinationImageNameRed = scanner.next();
+    validateScanner(scanner);
     String destinationImageNameGreen = scanner.next();
+    validateScanner(scanner);
     String destinationImageNameBlue = scanner.next();
     imageProcessor.rgbSplit(imageName, destinationImageNameRed, destinationImageNameGreen, destinationImageNameBlue);
     return new ExecutionStatus(true, "Successfully split the image into RGB components.");

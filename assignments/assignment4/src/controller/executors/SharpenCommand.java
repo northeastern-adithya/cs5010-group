@@ -24,7 +24,9 @@ public class SharpenCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String imageName = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.sharpenImage(imageName, destinationImageName);
     return new ExecutionStatus(true, "Successfully sharpened the image.");

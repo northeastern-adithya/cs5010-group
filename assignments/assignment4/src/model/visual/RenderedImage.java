@@ -1,5 +1,6 @@
 package model.visual;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -121,5 +122,29 @@ public class RenderedImage implements Image {
       }
     }
     return new RenderedImage(newPixelArray);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof Image)) {
+      return false;
+    }
+    if (obj instanceof RenderedImage) {
+      RenderedImage that = (RenderedImage) obj;
+      return that.equalsRenderedImage(this);
+    }
+    return obj.equals(this);
+  }
+
+  protected boolean equalsRenderedImage(RenderedImage that) {
+    return Arrays.deepEquals(this.pixels, that.pixels);
+  }
+
+  @Override
+  public int hashCode() {
+    return Arrays.deepHashCode(pixels);
   }
 }

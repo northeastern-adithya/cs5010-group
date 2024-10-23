@@ -24,7 +24,9 @@ public class SaveCommand extends AbstractCommand {
 
   @Override
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
+    validateScanner(scanner);
     String path = scanner.next();
+    validateScanner(scanner);
     String imageName = scanner.next();
     imageProcessor.saveImage(path, imageName);
     return new ExecutionStatus(true, String.format("Successfully saved: %s to path: %s", imageName, path));
