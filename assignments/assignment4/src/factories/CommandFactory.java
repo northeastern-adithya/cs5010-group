@@ -20,9 +20,7 @@ import controller.command.SepiaCommand;
 import controller.command.SharpenCommand;
 import controller.command.ValueComponentCommand;
 import controller.command.VerticalFlipCommand;
-import exception.ImageProcessorException;
 import exception.NotImplementedException;
-import exception.QuitException;
 import model.UserCommand;
 import services.ImageProcessingService;
 

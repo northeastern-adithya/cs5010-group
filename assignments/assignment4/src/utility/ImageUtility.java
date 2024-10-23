@@ -1,18 +1,12 @@
 package utility;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.ImageReaderFactory;
 import factories.ImageWriterFactory;
 import factories.PixelFactory;
 import model.ImageType;
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 
 public class ImageUtility {

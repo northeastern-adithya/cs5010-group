@@ -1,5 +1,7 @@
 package services;
 
+import java.util.Objects;
+
 import exception.ImageProcessorException;
 import factories.FilterFactory;
 import filters.FilterOptions;
@@ -13,6 +15,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   private final ImageMemory memory;
 
   public FileImageProcessingService(ImageMemory memory) {
+    Objects.requireNonNull(memory, "Memory cannot be null");
     this.memory = memory;
   }
 

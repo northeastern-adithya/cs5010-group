@@ -4,13 +4,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
-import controller.command.ExecutionStatus;
+import controller.model.ExecutionStatus;
 import controller.command.HelpCommand;
-import exception.DisplayException;
 import exception.QuitException;
 import factories.CommandFactory;
 import model.UserCommand;
 import services.ImageProcessingService;
+import utility.StringUtils;
 import view.input.UserInput;
 import view.output.UserOutput;
 
@@ -21,6 +21,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private final ImageProcessingService imageProcessor;
 
   public SimpleImageProcessorController(UserInput input, UserOutput userOutput, ImageProcessingService imageProcessor) {
+
     validateInput(input, userOutput, imageProcessor);
     this.input = input;
     this.output = userOutput;
@@ -29,9 +30,9 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   }
 
   void validateInput(UserInput input, UserOutput output, ImageProcessingService imageProcessor) throws QuitException {
-    if (Objects.isNull(input) || Objects.isNull(output) || Objects.isNull(imageProcessor)) {
-      throw new QuitException("Invalid input provided.");
-    }
+    Objects.requireNonNull(input, "UserInput cannot be null");
+    Objects.requireNonNull(output, "UserOutput cannot be null");
+    Objects.requireNonNull(imageProcessor, "ImageProcessor cannot be null");
   }
 
   private void displayCommands() {
@@ -45,6 +46,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   }
 
   private void processCommands(Scanner scan) {
+    Objects.requireNonNull(scan, "Scanner cannot be null");
     String userInput = scan.next();
     Optional<UserCommand> command = UserCommand.getCommand(userInput);
     command.ifPresentOrElse(
@@ -64,10 +66,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
 
 
   private void displayMessage(String message) {
-    try {
+    if (StringUtils.isNotNullOrEmpty(message)) {
       this.output.displayMessage(message);
-    } catch (DisplayException e) {
-      throw new QuitException(String.format("Error displaying message:%s", message), e);
     }
   }
 

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
 
+import controller.model.ExecutionStatus;
 import exception.ImageProcessorException;
 import factories.CommandFactory;
 import model.UserCommand;

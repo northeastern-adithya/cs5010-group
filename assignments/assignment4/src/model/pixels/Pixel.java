@@ -1,4 +1,4 @@
-package model.color;
+package model.pixels;
 
 public interface Pixel {
   Pixel getValue();

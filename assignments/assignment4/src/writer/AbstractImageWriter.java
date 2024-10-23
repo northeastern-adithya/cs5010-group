@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import exception.ImageProcessorException;
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 import utility.ImageUtility;
 

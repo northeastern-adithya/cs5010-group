@@ -9,9 +9,4 @@ public interface ImageMemory {
 
   Image getImage(String imageName) throws NotFoundException;
 
-
-  void removeImage(String imageName);
-
-  boolean containsImage(String imageName);
-
 }

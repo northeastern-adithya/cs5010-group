@@ -1,7 +1,9 @@
 package filters;
 
+import java.util.Objects;
+
 import factories.ImageFactory;
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 
 public class AbstractFilter implements Filter {
@@ -9,6 +11,7 @@ public class AbstractFilter implements Filter {
   protected final FilterOptions filterOption;
 
   protected AbstractFilter(FilterOptions filterOption) {
+    Objects.requireNonNull(filterOption);
     this.filterOption = filterOption;
   }
 

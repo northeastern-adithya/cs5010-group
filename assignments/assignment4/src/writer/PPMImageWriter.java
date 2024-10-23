@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import exception.ImageProcessorException;
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 
 public class PPMImageWriter extends AbstractImageWriter {

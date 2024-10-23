@@ -2,8 +2,8 @@ package controller.command;
 
 import java.util.Scanner;
 
+import controller.model.ExecutionStatus;
 import exception.ImageProcessorException;
-import exception.QuitException;
 import model.UserCommand;
 import services.ImageProcessingService;
 

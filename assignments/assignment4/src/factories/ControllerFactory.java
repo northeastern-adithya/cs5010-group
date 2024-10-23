@@ -8,6 +8,9 @@ import view.output.UserOutput;
 
 public class ControllerFactory {
 
+  private ControllerFactory() {
+  }
+
   public static ImageProcessorController createController(UserInput input, UserOutput output, ImageProcessingService processor) {
     return new SimpleImageProcessorController(input, output, processor);
   }

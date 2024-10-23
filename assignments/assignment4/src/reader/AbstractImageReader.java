@@ -10,7 +10,7 @@ import exception.ImageProcessorException;
 import factories.ImageFactory;
 import factories.PixelFactory;
 import model.PixelType;
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 
 public abstract class AbstractImageReader implements ImageReader {

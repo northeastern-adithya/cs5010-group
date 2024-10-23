@@ -1,7 +1,7 @@
 package model.visual;
 
 import java.util.function.Function;
-import model.color.Pixel;
+import model.pixels.Pixel;
 
 public class RenderedImage implements Image {
   private final Pixel[][] pixels;

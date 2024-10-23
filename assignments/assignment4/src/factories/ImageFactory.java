@@ -1,6 +1,6 @@
 package factories;
 
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 import model.visual.RenderedImage;
 
