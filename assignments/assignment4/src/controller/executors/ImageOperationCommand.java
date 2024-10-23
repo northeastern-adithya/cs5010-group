@@ -66,8 +66,8 @@ public class ImageOperationCommand implements Command {
    * @param command command to be executed
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution
-   * @throws ImageProcessorException if an error occurs while executing the command
-   * @throws ImageProcessingRunTimeException.QuitException           if the user wants to quit the application
+   * @throws ImageProcessorException                       if an error occurs while executing the command
+   * @throws ImageProcessingRunTimeException.QuitException if the user wants to quit the application
    */
   private ExecutionStatus executeCommand(UserCommand command, Scanner scanner) throws ImageProcessorException {
     switch (command) {
@@ -105,6 +105,8 @@ public class ImageOperationCommand implements Command {
         return executeSepiaCommand(scanner);
       case RUN:
         return executeRunCommand(scanner);
+      case HELP:
+        return executeHelpCommand();
       case QUIT:
         throw new ImageProcessingRunTimeException.QuitException("Shutting down application");
       default:
@@ -382,5 +384,15 @@ public class ImageOperationCommand implements Command {
       arguments.add(scanner.next());
     }
     return arguments;
+  }
+
+
+  /**
+   * Executes the help command.
+   *
+   * @return ExecutionStatus information of the execution.
+   */
+  private ExecutionStatus executeHelpCommand() {
+    return new ExecutionStatus(true, UserCommand.getUserCommands());
   }
 }
