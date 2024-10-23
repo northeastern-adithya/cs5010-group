@@ -24,4 +24,8 @@ public interface Image {
   Image getIntensity();
 
   Image getValue();
+
+  Image horizontalFlip();
+
+  Image verticalFlip();
 }

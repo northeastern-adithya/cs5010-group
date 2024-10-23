@@ -4,7 +4,11 @@ import java.util.Objects;
 
 import exception.ImageProcessorException;
 import factories.FilterFactory;
+import factories.ImageFactory;
+import factories.ImageReaderFactory;
+import factories.ImageWriterFactory;
 import filters.FilterOptions;
+import model.ImageType;
 import model.memory.ImageMemory;
 import model.visual.Image;
 import utility.ImageUtility;
@@ -22,7 +26,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   @Override
   public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
     validateStringParams(imagePath, imageName);
-    Image imageToLoad = ImageUtility.loadImage(imagePath);
+    ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
+    Image imageToLoad = ImageReaderFactory.createImageReader(imageType).read(imagePath);
     memory.addImage(imageName, imageToLoad);
   }
 
@@ -30,7 +35,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void saveImage(String imagePath, String imageName) throws ImageProcessorException {
     validateStringParams(imagePath, imageName);
     Image imageToSave = memory.getImage(imageName);
-    ImageUtility.saveImage(imageToSave, imagePath);
+    ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
+    ImageWriterFactory.createImageWriter(imageType).write(imageToSave, imagePath);
   }
 
   @Override
@@ -79,7 +85,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void horizontalFlip(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, ImageUtility.horizontalFlip(image));
+    memory.addImage(destinationImageName, image.horizontalFlip());
   }
 
 
@@ -87,7 +93,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void verticalFlip(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, ImageUtility.verticalFlip(image));
+    memory.addImage(destinationImageName, image.verticalFlip());
   }
 
   @Override
@@ -112,7 +118,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     Image redImage = memory.getImage(redImageName);
     Image greenImage = memory.getImage(greenImageName);
     Image blueImage = memory.getImage(blueImageName);
-    Image combinedImage = ImageUtility.combineRGBComponents(redImage, greenImage, blueImage);
+    Image combinedImage = ImageFactory.combineRGBComponents(redImage, greenImage, blueImage);
     memory.addImage(imageName, combinedImage);
   }
 
