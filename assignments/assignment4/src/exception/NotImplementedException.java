@@ -1,6 +1,6 @@
 package exception;
 
-public class NotImplementedException extends RuntimeException {
+public class NotImplementedException extends ImageProcessingRunTimeException {
 
   public NotImplementedException(String message) {
     super(message);

@@ -1,6 +1,6 @@
 package exception;
 
-public class QuitException extends RuntimeException {
+public class QuitException extends ImageProcessingRunTimeException {
 
   public QuitException(String message) {
     super(message);
