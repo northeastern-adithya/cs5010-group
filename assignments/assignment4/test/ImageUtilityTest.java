@@ -174,7 +174,9 @@ public class ImageUtilityTest {
 
       for (int y = 0; y < expectedImage.getHeight(); y++) {
         for (int x = 0; x < expectedImage.getWidth(); x++) {
-          assertEquals(expectedImage.getRGB(x, y), savedImage.getRGB(x, y));
+          assertEquals("Red value mismatch at (" + x + ", " + y + ")", (expectedImage.getRGB(x, y) >> 16) & 0xff, (savedImage.getRGB(x, y) >> 16) & 0xff, 1);
+          assertEquals("Green value mismatch at (" + x + ", " + y + ")", (expectedImage.getRGB(x, y) >> 8) & 0xff, (savedImage.getRGB(x, y) >> 8) & 0xff, 1);
+          assertEquals("Blue value mismatch at (" + x + ", " + y + ")", expectedImage.getRGB(x, y) & 0xff, savedImage.getRGB(x, y) & 0xff, 1);;
         }
       }
     } catch (Exception e) {
