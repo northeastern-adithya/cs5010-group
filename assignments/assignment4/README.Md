@@ -7,15 +7,17 @@ To segregate the provided code into packages and MVC structure, we can organize 
   - **Purpose**: The entry point of the application.
 
 #### `controller` Package
-- **Classes**: 
+- **Interfaces**:
   - `ImageProcessorController`
-    - **Purpose**: Handles user commands and coordinates the image processing tasks.
+    - **Purpose**: Interface for the controller that processes user commands.
+- **Classes**:
   - `SimpleImageProcessorController`
     - **Purpose**: A simple implementation of the `ImageProcessorController` interface that processes user commands.
 - ### `command` Package
-  - **Classes**:
+  - **Interfaces**:
     - `Command`
-      - **Purpose**: Interface for user commands.
+      - **Purpose**: Interface for user commands. 
+  - **Classes**:
     - `AbstractCommand`
       - **Purpose**: Provides a common structure for all command classes to implement.
     - `BlueComponentCommand`
@@ -61,7 +63,6 @@ To segregate the provided code into packages and MVC structure, we can organize 
     - `ExecutionStatus`
       - **Purpose**: Represents the execution statistics of a command.
 
-  
 #### `exception` Package
 - **Classes**:
   - `DisplayException`
@@ -103,53 +104,131 @@ To segregate the provided code into packages and MVC structure, we can organize 
     - **Purpose**: Factory class for creating instances of user output.
 
 #### `filters` Package
-- **Classes**:
+- **Enumerable**:
+  - `FilterOptions`
+    - **Purpose**: Enum that represents different types of filters.
+- **Interfaces**:
   - `Filter`
     - **Purpose**: Interface for image filters.
+- **Classes**:
   - `AbstractFilter`
     - **Purpose**: Abstract class that implements the `Filter` interface and provides common functionality for all filters.
   - `Blur`
     - **Purpose**: Concrete filter class that applies a Gaussian blur to an image.
   - `Sharpen`
     - **Purpose**: Concrete filter class that sharpens an image.
-  - `FilterOptions`
-    - **Purpose**: Enum or class that provides various filter options and their corresponding convolution kernels.
 
-#### `model.visual` Package
-- **Class**: `Image`
-  - **Purpose**: Represents an image.
+#### `model` Package
+- **Enumerable**:
+  - `ImageType`
+    - **Purpose**: Enum that represents different types of images.
+  - `PixelType`
+    - **Purpose**: Enum that represents different types of pixels.
+  - `UserCommand`
+    - **Purpose**: Enum that represents different user commands.
+- ### `visual` Package
+  - **Interfaces**:
+    - `Image`
+      - **Purpose**: Interface for image processing.
+  - **Classes**:
+    - `RenderedImage`
+      - **Purpose**: Concrete class that represents a rendered image.
+- ### `pixels` Package
+  - **Interfaces**:
+    - `Pixel`
+      - **Purpose**: Interface for pixel processing.
+  - **Classes**:
+    - `AbstractPixel`
+      - **Purpose**: Abstract class that provides common functionality for all pixel classes.
+    - `Pixel`
+      - **Purpose**: Represents a pixel in an image.
+- ### `memory` Package
+  - **Interfaces**:
+    - `ImageMemory`
+      - **Purpose**: Interface for managing image memory.
+  - **Classes**:
+    - `SimpleImageMemory`
+      - **Purpose**: Concrete class that implements the `ImageMemory` interface and manages image memory.
 
-#### `model.pixels` Package
-- **Class**: `Pixel`
-  - **Purpose**: Represents a pixel in an image.
+#### `reader` Package
+- **Interfaces**:
+  - `ImageReader`
+    - **Purpose**: Interface for reading images from a file.
+- **Classes**:
+  - `AbstractImageReader`
+    - **Purpose**: Abstract class that provides common functionality for all image readers.
+  - `JPGImageReader`
+    - **Purpose**: Concrete class that reads JPG images from a file.
+  - `PNGImageReader`
+    - **Purpose**: Concrete class that reads PNG images from a file.
+  - `PPMImageReader`
+    - **Purpose**: Concrete class that reads PPM images from a file.
 
-### Example Directory Structure
+#### `services` Package
+- **Interfaces**:
+  - `ImageProcessingService`
+    - **Purpose**: Interface for image processing services.
+- **Classes**:
+  - `SimpleImageProcessingService`
+    - **Purpose**: Concrete class that implements the `ImageProcessingService` interface and provides image processing services.
 
-```
-src/
-├── app/
-│   └── ImageProcessorApp.java
-├── controller/
-│   └── ImageProcessorController.java
-├── exception/
-│   └── QuitException.java
-├── factories/
-│   ├── ControllerFactory.java
-│   ├── ImageMemoryFactory.java
-│   ├── ImageProcessingServiceFactory.java
-│   ├── UserInputFactory.java
-│   ├── UserOutputFactory.java
-│   └── ImageFactory.java
-├── filters/
-│   ├── Filter.java
-│   ├── AbstractFilter.java
-│   ├── Blur.java
-│   └── FilterOptions.java
-├── model/
-│   ├── visual/
-│   │   └── Image.java
-│   └── pixels/
-│       └── Pixel.java
-```
+#### `utility` Package
+- **Classes**:
+  - `ImageUtility`
+    - **Purpose**: Utility class for image processing operations.
+  - `PixelTranformUtility`
+    - **Purpose**: Utility class for pixel transformation operations.
+  - `StringUtils`
+    - **Purpose**: Utility class for string manipulation operations.
 
-This structure organizes the code into appropriate packages and follows the MVC pattern. The `app` package contains the main application class, the `controller` package contains the controller class, the `exception` package contains custom exceptions, the `factories` package contains factory classes, the `filters` package contains filter classes, and the `model` package contains classes related to the data model. This structure helps in maintaining a clean and organized codebase.
+#### `view` Package
+- ### `input` Package
+  - **Interfaces**:
+    - `UserInput`
+      - **Purpose**: Interface for user input.
+  - **Classes**:
+    - `ConsoleInput`
+      - **Purpose**: Concrete class that implements the `UserInput` interface and provides console-based user input.
+- ### `output` Package
+  - **Interfaces**:
+    - `UserOutput`
+      - **Purpose**: Interface for user output.
+    - `ConsoleOutput`
+      - **Purpose**: Concrete class that implements the `UserOutput` interface and provides console-based user output.
+
+#### `writer` Package
+- **Interfaces**:
+  - `ImageWriter`
+    - **Purpose**: Interface for writing images to a file.
+- **Classes**:
+  - `AbstractImageWriter`
+    - **Purpose**: Abstract class that provides common functionality for all image writers.
+  - `JPGImageWriter`
+    - **Purpose**: Concrete class that writes JPG images to a file.
+  - `PNGImageWriter`
+    - **Purpose**: Concrete class that writes PNG images to a file.
+  - `PPMImageWriter`
+    - **Purpose**: Concrete class that writes PPM images to a file.
+
+### MVC Architecture
+
+This project follows the Model-View-Controller (MVC) architecture, which helps in organizing the codebase into three main components:
+
+1. **Model**:
+  - **Purpose**: Represents the data and the business logic of the application.
+  - **Packages**:
+    - `model`: Contains classes like `ExecutionStatus` that represent the state and data of the application.
+    - `memory`: Manages image memory through interfaces like `ImageMemory` and classes like `SimpleImageMemory`.
+    - `utility`: Provides utility classes for image and pixel processing operations.
+
+2. **View**:
+  - **Purpose**: Handles the presentation layer and user interface.
+  - **Packages**:
+    - `view.input`: Contains interfaces and classes for user input, such as `UserInput` and `ConsoleInput`.
+    - `view.output`: Contains interfaces and classes for user output, such as `UserOutput` and `ConsoleOutput`.
+
+3. **Controller**:
+  - **Purpose**: Manages the flow of the application, processes user commands, and updates the model and view.
+  - **Packages**:
+    - `controller`: Contains interfaces and classes for the controller logic, such as `ImageProcessorController` and `SimpleImageProcessorController`.
+    - `controller.command`: Contains command classes that execute specific actions, such as `LoadCommand`, `BlurCommand`, and `SaveCommand`.
