@@ -9,13 +9,24 @@ import exception.ImageProcessorException;
 import model.pixels.Pixel;
 import model.visual.Image;
 
+/**
+ * Class for reading a PPM image from a file.
+ */
 public class PPMImageWriter extends AbstractImageWriter {
 
+  /**
+   * Constructs a PPMImageWriter.
+   */
   public PPMImageWriter() {
     super();
   }
 
-
+  /**
+   * Write a PPM image from a file.
+   * Custom implementation for writing PPM images.
+   * @param path the path to the file.
+   * @throws ImageProcessorException if the image cannot be written.
+   */
   @Override
   public void write(Image image, String path) throws ImageProcessorException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
