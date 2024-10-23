@@ -27,4 +27,5 @@ replay_pid*
 .idea/
 cs5010-group.iml
 **.DS_Store
+out/
 
