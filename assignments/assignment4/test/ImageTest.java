@@ -2,8 +2,8 @@ import org.junit.Test;
 
 import model.visual.Image;
 import model.visual.RenderedImage;
-import model.color.Pixel;
-import model.color.RGB;
+import model.pixels.Pixel;
+import model.pixels.RGB;
 
 import static org.junit.Assert.*;
 

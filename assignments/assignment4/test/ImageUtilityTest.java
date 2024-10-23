@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import filters.Blur;
 import filters.Filter;
 import filters.Sharpen;
-import model.color.Pixel;
+import model.pixels.Pixel;
 import model.visual.Image;
 
 import static org.junit.Assert.*;

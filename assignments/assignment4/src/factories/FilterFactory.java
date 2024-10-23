@@ -1,6 +1,6 @@
 package factories;
 
-import exception.ImageProcessorException;
+
 import exception.NotImplementedException;
 import filters.Blur;
 import filters.Filter;

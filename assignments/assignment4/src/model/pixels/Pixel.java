@@ -1,11 +1,6 @@
-package model.color;
+package model.pixels;
 
 public interface Pixel {
-  /**
-   * Gets the value of the pixel.
-   *
-   * @return the value of the pixel
-   */
   Pixel getValue();
 
   Pixel getLuma();

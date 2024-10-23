@@ -1,16 +1,16 @@
 package model.visual;
 
+import java.util.Objects;
 import java.util.function.Function;
 
-import factories.FilterFactory;
-import filters.FilterOptions;
-import model.color.Pixel;
-import utility.PixelTransformUtility;
+import factories.ImageFactory;
+import model.pixels.Pixel;
 
 public class RenderedImage implements Image {
   private final Pixel[][] pixels;
 
   public RenderedImage(Pixel[][] pixels) {
+    Objects.requireNonNull(pixels, "Pixel array cannot be null");
     this.pixels = pixels;
   }
 
@@ -68,6 +68,32 @@ public class RenderedImage implements Image {
   @Override
   public Image getValue() {
     return transformImage(Pixel::getValue);
+  }
+
+  @Override
+  public Image horizontalFlip() {
+    int height = this.getHeight();
+    int width = this.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = this.getPixel(width - x - 1, y);
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
+  }
+
+  @Override
+  public Image verticalFlip() {
+    int height = this.getHeight();
+    int width = this.getWidth();
+    Pixel[][] newPixelArray = new Pixel[width][height];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        newPixelArray[x][y] = this.getPixel(x, height - y - 1);
+      }
+    }
+    return ImageFactory.createImage(newPixelArray);
   }
 
   private Image transformImage(Function<Pixel, Pixel> transformation) {

@@ -1,6 +1,6 @@
 package model.visual;
 
-import model.color.Pixel;
+import model.pixels.Pixel;
 
 public interface Image {
   Pixel getPixel(int x, int y);
@@ -24,4 +24,8 @@ public interface Image {
   Image getIntensity();
 
   Image getValue();
+
+  Image horizontalFlip();
+
+  Image verticalFlip();
 }

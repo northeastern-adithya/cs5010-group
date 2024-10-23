@@ -3,7 +3,6 @@ package model;
 import java.util.Arrays;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
 
 public enum UserCommand {
 
