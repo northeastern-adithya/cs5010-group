@@ -1,6 +1,6 @@
 package model.pixels;
 
-import utility.PixelTransformUtility;
+import model.LinearColorTransformationType;
 
 /**
  * Represents a pixel in the RGB color space.
@@ -35,6 +35,25 @@ public class RGB extends AbstractPixel {
     this.blue = Math.max(0, Math.min(blue, computeMaxValue()));
   }
 
+  /**
+   * Matrix operation to multiply a kernel with RGB values
+   * to get a new RGB pixel.
+   *
+   * @param pixel  the pixel to be multiplied with the kernel
+   * @param colorTransformationType the type of color transformation to be applied
+   * @return the new RGB pixel after the matrix operation.
+   */
+  private static Pixel matrixOperation(RGB pixel, LinearColorTransformationType colorTransformationType) {
+    int r = pixel.getRed();
+    int g = pixel.getGreen();
+    int b = pixel.getBlue();
+    double[][] kernel = colorTransformationType.getKernel();
+    double rPrime = kernel[0][0] * r + kernel[0][1] * g + kernel[0][2] * b;
+    double gPrime = kernel[1][0] * r + kernel[1][1] * g + kernel[1][2] * b;
+    double bPrime = kernel[2][0] * r + kernel[2][1] * g + kernel[2][2] * b;
+    return new RGB((int) rPrime, (int) gPrime, (int) bPrime);
+  }
+
   @Override
   public int getRed() {
     return red;
@@ -49,7 +68,6 @@ public class RGB extends AbstractPixel {
   public int getBlue() {
     return blue;
   }
-
 
   @Override
   public Pixel createPixel(int red, int green, int blue) {
@@ -70,7 +88,6 @@ public class RGB extends AbstractPixel {
   public Pixel createBlueComponent() {
     return this.createPixel(this.blue, this.blue, this.blue);
   }
-
 
   @Override
   public boolean equals(Object obj) {
@@ -110,15 +127,11 @@ public class RGB extends AbstractPixel {
 
   @Override
   public Pixel getLuma() {
-    int[] channelMatrix = {getRed(), getGreen(), getBlue()};
-    int[] multiplicationResult = PixelTransformUtility.getLuma(channelMatrix);
-    return this.createPixel(multiplicationResult[0], multiplicationResult[1], multiplicationResult[2]);
+    return matrixOperation(this, LinearColorTransformationType.LUMA);
   }
 
   @Override
   public Pixel getSepia() {
-    int[] channelMatrix = {getRed(), getGreen(), getBlue()};
-    int[] multiplicationResult = PixelTransformUtility.getSepia(channelMatrix);
-    return this.createPixel(multiplicationResult[0], multiplicationResult[1], multiplicationResult[2]);
+    return matrixOperation(this, LinearColorTransformationType.SEPIA);
   }
 }

@@ -14,10 +14,24 @@ import model.visual.Image;
 import utility.ImageUtility;
 import utility.StringUtils;
 
+/**
+ * FileImageProcessingService class that implements the ImageProcessingService interface
+ * and provides the implementation for the methods to process images.
+ * It uses the ImageMemory object to store and retrieve images.
+ */
 public class FileImageProcessingService implements ImageProcessingService {
 
+  /**
+   * ImageMemory object to store and retrieve images.
+   */
   private final ImageMemory memory;
 
+  /**
+   * Constructor to initialize the FileImageProcessingService.
+   *
+   * @param memory ImageMemory object
+   * @throws NullPointerException if memory is null
+   */
   public FileImageProcessingService(ImageMemory memory) {
     Objects.requireNonNull(memory, "Memory cannot be null");
     this.memory = memory;
@@ -145,6 +159,12 @@ public class FileImageProcessingService implements ImageProcessingService {
     memory.addImage(destinationImageName, image.getSepia());
   }
 
+  /**
+   * Validates the input string parameters.
+   *
+   * @param strings the input string parameters
+   * @throws ImageProcessorException if the input string parameters are null or empty
+   */
   private void validateStringParams(String... strings) throws ImageProcessorException {
     if (StringUtils.isNullOrEmpty(strings)) {
       throw new ImageProcessorException("Received input as null or empty");
