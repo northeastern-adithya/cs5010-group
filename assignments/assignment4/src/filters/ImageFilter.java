@@ -15,7 +15,7 @@ public class ImageFilter implements Filter {
   /**
    * The filter option to apply.
    */
-  protected final FilterOption filterOption;
+  private final FilterOption filterOption;
 
   /**
    * Constructs a filter with the given filter option.
