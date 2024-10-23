@@ -2,6 +2,7 @@ package writer;
 
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -30,6 +31,8 @@ public class PPMImageWriter extends AbstractImageWriter {
   @Override
   public void write(Image image, String path) throws ImageProcessorException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+      File outputFile = new File(path);
+      createDirectoryIfNotPresent(path);
       writer.write("P3\n");
       writer.write(image.getWidth() + " " + image.getHeight() + "\n");
       writer.write("255\n");
