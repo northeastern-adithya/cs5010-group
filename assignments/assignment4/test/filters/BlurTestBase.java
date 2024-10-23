@@ -8,12 +8,12 @@ import org.junit.Test;
  * Base test class for Blur filter tests containing common setup and utilities.
  */
 public abstract class BlurTestBase {
-  protected Blur blurFilter;
+  protected Filter blurFilter;
   protected static final double DELTA = 0.0001;
 
   @Before
   public void setUp() {
-    blurFilter = new Blur();
+    blurFilter = new ImageFilter(FilterOption.GAUSSIAN_BLUR);
   }
 
   @Test
@@ -21,7 +21,7 @@ public abstract class BlurTestBase {
     assertNotNull("Blur filter should not be null", blurFilter);
     assertEquals("Filter option should be GAUSSIAN_BLUR",
             FilterOption.GAUSSIAN_BLUR,
-            ((AbstractFilter) blurFilter).filterOption);
+            ((ImageFilter) blurFilter).filterOption);
   }
 
   @Test

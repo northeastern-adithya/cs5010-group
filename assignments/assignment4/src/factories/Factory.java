@@ -6,10 +6,8 @@ import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import filters.Blur;
 import filters.Filter;
 import filters.FilterOption;
-import filters.Sharpen;
 import model.ImageType;
 import model.PixelType;
 import model.memory.HashMapMemory;
@@ -53,23 +51,6 @@ public class Factory {
     return new SimpleImageProcessorController(input, output, processor);
   }
 
-  /**
-   * Creates a filter based on the given options.
-   *
-   * @param options the options to create the filter
-   * @return the filter based on the given options
-   * @throws ImageProcessingRunTimeException.NotImplementedException if the filter is not implemented
-   */
-  public static Filter getFilter(FilterOption options) throws ImageProcessingRunTimeException.NotImplementedException {
-    switch (options) {
-      case SHARPEN:
-        return new Sharpen();
-      case GAUSSIAN_BLUR:
-        return new Blur();
-      default:
-        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported filter type: %s", options));
-    }
-  }
 
   /**
    * Creates an Image object with the given pixel array.

@@ -7,10 +7,10 @@ import model.pixels.Pixel;
 import model.visual.Image;
 
 /**
- * Abstract class for applying filters to an image.
+ * Class for applying filters to an image.
  * Provides a method to apply a filter to an image.
  */
-public class AbstractFilter implements Filter {
+public class ImageFilter implements Filter {
 
   /**
    * The filter option to apply.
@@ -18,10 +18,10 @@ public class AbstractFilter implements Filter {
   protected final FilterOption filterOption;
 
   /**
-   * Constructs an abstract filter with the given filter option.
+   * Constructs a filter with the given filter option.
    * @param filterOption the filter option to apply
    */
-  protected AbstractFilter(FilterOption filterOption) {
+  public ImageFilter(FilterOption filterOption) {
     Objects.requireNonNull(filterOption);
     this.filterOption = filterOption;
   }

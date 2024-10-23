@@ -4,7 +4,9 @@ import java.util.Objects;
 
 import exception.ImageProcessorException;
 import factories.Factory;
+import filters.Filter;
 import filters.FilterOption;
+import filters.ImageFilter;
 import model.ImageType;
 import model.memory.ImageMemory;
 import model.visual.Image;
@@ -137,7 +139,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void blurImage(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = Factory.getFilter(FilterOption.GAUSSIAN_BLUR).applyFilter(image);
+    Image filteredImage = new ImageFilter(FilterOption.GAUSSIAN_BLUR).applyFilter(image);
     memory.addImage(destinationImageName, filteredImage);
   }
 
@@ -145,7 +147,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void sharpenImage(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = Factory.getFilter(FilterOption.SHARPEN).applyFilter(image);
+    Image filteredImage = new ImageFilter(FilterOption.SHARPEN).applyFilter(image);
     memory.addImage(destinationImageName, filteredImage);
   }
 
