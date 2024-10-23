@@ -6,9 +6,19 @@ import java.util.function.Function;
 import factories.ImageFactory;
 import model.pixels.Pixel;
 
+/**
+ * RenderedImage class that implements Image interface
+ * and represents an image containing pixels.
+ */
 public class RenderedImage implements Image {
   private final Pixel[][] pixels;
 
+  /**
+   * Constructs a RenderedImage object with the given pixel array.
+   *
+   * @param pixels the pixel array of the image
+   * @throws NullPointerException if the pixel array is null.
+   */
   public RenderedImage(Pixel[][] pixels) {
     Objects.requireNonNull(pixels, "Pixel array cannot be null");
     this.pixels = pixels;
@@ -96,6 +106,10 @@ public class RenderedImage implements Image {
     return ImageFactory.createImage(newPixelArray);
   }
 
+  /**
+   * Helper method to transform the image using the given transformation.
+   * Transformation is applied to each pixel in the image.
+   */
   private Image transformImage(Function<Pixel, Pixel> transformation) {
     int height = this.getHeight();
     int width = this.getWidth();

@@ -2,11 +2,32 @@ package model.pixels;
 
 import utility.PixelTransformUtility;
 
+/**
+ * Represents a pixel in the RGB color space.
+ * It has three channels: red, green, and blue.
+ * Each channel has a value between 0 and 255(8*3 bits).
+ */
 public class RGB extends AbstractPixel {
+  /**
+   * The red channel of the pixel.
+   */
   private final int red;
+  /**
+   * The green channel of the pixel.
+   */
   private final int green;
+  /**
+   * The blue channel of the pixel.
+   */
   private final int blue;
 
+  /**
+   * Constructs an RGB pixel with the given red, green, and blue values.
+   *
+   * @param red   the red channel of the pixel
+   * @param green the green channel of the pixel
+   * @param blue  the blue channel of the pixel
+   */
   public RGB(int red, int green, int blue) {
     super(24);
     this.red = Math.max(0, Math.min(red, computeMaxValue()));
@@ -28,6 +49,7 @@ public class RGB extends AbstractPixel {
   public int getBlue() {
     return blue;
   }
+
 
   @Override
   public Pixel createPixel(int red, int green, int blue) {

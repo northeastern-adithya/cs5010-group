@@ -4,7 +4,7 @@ package factories;
 import exception.NotImplementedException;
 import filters.Blur;
 import filters.Filter;
-import filters.FilterOptions;
+import filters.FilterOption;
 import filters.Sharpen;
 
 /**
@@ -23,7 +23,7 @@ public class FilterFactory {
    * @return the filter based on the given options
    * @throws NotImplementedException if the filter is not implemented
    */
-  public static Filter getFilter(FilterOptions options) throws NotImplementedException {
+  public static Filter getFilter(FilterOption options) throws NotImplementedException {
     switch (options) {
       case SHARPEN:
         return new Sharpen();

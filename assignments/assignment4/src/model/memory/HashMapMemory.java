@@ -7,12 +7,23 @@ import java.util.Optional;
 import exception.NotFoundException;
 import model.visual.Image;
 
+/**
+ * A class that represents a memory that stores images in a HashMap.
+ */
 public class HashMapMemory implements ImageMemory {
+  /**
+   * A map that stores images.
+   */
   private final Map<String, Image> memory;
 
+  /**
+   * Constructs a HashMapMemory object.
+   * By default, creates an empty HashMap.
+   */
   public HashMapMemory() {
     this.memory = new HashMap<>();
   }
+
 
   @Override
   public void addImage(String imageName, Image image) {
