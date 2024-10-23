@@ -11,8 +11,8 @@ public interface UserInput {
   /**
    * Get the user input
    * which the user is communicating.
-   * @return the inputstream
+   * @return the readable
    * which the user has communicating.
    */
-  InputStream getUserInput();
+  Readable getUserInput();
 }

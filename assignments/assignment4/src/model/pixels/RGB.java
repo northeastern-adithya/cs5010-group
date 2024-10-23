@@ -113,6 +113,11 @@ public class RGB extends AbstractPixel {
   }
 
   @Override
+  public String toString() {
+    return "RGB(" + red + ", " + green + ", " + blue + ")";
+  }
+
+  @Override
   public Pixel adjustBrightness(int factor) {
     int newRed = getRed() + factor;
     int newGreen = getGreen() + factor;

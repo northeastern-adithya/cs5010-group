@@ -82,6 +82,13 @@ public class RenderedImage implements Image {
   }
 
   @Override
+  public String toString() {
+    return "RenderedImage{" +
+            "pixels=" + Arrays.deepToString(pixels) +
+            '}';
+  }
+
+  @Override
   public Image horizontalFlip() {
     int height = this.getHeight();
     int width = this.getWidth();

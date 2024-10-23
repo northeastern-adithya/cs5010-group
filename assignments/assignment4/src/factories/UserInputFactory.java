@@ -1,6 +1,6 @@
 package factories;
 
-import java.io.InputStream;
+
 
 import view.input.ConsoleInput;
 import view.input.UserInput;
@@ -19,10 +19,10 @@ public class UserInputFactory {
    * Creates a UserInput object to read user input.
    * Inputs are read from the given input stream.
    *
-   * @param input the input stream to read the user input
+   * @param input the readable object to read the user input
    * @return the UserInput object
    */
-  public static UserInput createUserInput(InputStream input) {
+  public static UserInput createUserInput(Readable input) {
     return new ConsoleInput(input);
   }
 }

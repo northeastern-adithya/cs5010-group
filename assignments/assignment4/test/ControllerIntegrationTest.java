@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
 import controller.ImageProcessorController;
@@ -34,7 +35,7 @@ public class ControllerIntegrationTest {
   private ImageMemory imageMemory;
 
   private void initialiseController(String input, StringBuilder output, Image initialImage) {
-    userInput = UserInputFactory.createUserInput(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+    userInput = UserInputFactory.createUserInput(new StringReader(input));
     userOutput = UserOutputFactory.createUserOutput(output);
     imageMemory = ImageMemoryFactory.getImageMemory();
     processingService = ImageProcessingServiceFactory.createImageProcessor(imageMemory);
@@ -973,6 +974,600 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
+
+  // Brighten tests
+  @Test
+  public void testBrightenWithPositiveFactor() throws ImageProcessorException{
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("brighten 1 %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully brightened the image at factor:1"));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16711937, 66047},
+            {130817, 8487297}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("brighten"));
+  }
+
+  @Test
+  public void testBrightenWithNegativeFactor() throws ImageProcessorException{
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("brighten -1 %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully brightened the image at factor:-1"));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16646144, 254},
+            {65024, 8355711}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("brighten"));
+  }
+
+  @Test
+  public void testBrightenWithZeroFactor() throws ImageProcessorException{
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("brighten 0 %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully brightened the image at factor:0"));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16711680, 255},
+            {65280, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("brighten"));
+  }
+
+  @Test
+  public  void testBrightenWithInvalidFactor(){
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("brighten invalidFactor %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid factor provided for brightening the image."));
+  }
+
+  @Test
+  public void testBrightenCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("brighten 1 invalidImageName brighten", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testBrightenCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("brighten 1 %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testBrightenCommandWithoutImageName(){
+    StringBuilder output = new StringBuilder();
+    initialiseController("brighten 1", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+
+  // RGB Split tests
+  @Test
+  public void testRGBSplitOfPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    Image redImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    Image greenImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    Image blueImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(redImage, imageMemory.getImage("redImage"));
+    assertEquals(greenImage, imageMemory.getImage("greenImage"));
+    assertEquals(blueImage, imageMemory.getImage("blueImage"));
+  }
+
+  @Test
+  public void testRGBSplitOfPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    Image redImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    Image greenImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    Image blueImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(redImage, imageMemory.getImage("redImage"));
+    assertEquals(greenImage, imageMemory.getImage("greenImage"));
+    assertEquals(blueImage, imageMemory.getImage("blueImage"));
+  }
+
+  @Test
+  public void testRGBSplitOfPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    Image redImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    Image greenImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    Image blueImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(redImage, imageMemory.getImage("redImage"));
+    assertEquals(greenImage, imageMemory.getImage("greenImage"));
+    assertEquals(blueImage, imageMemory.getImage("blueImage"));
+  }
+
+  @Test
+  public void testRGBSplitOfPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    Image redImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    Image greenImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    Image blueImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    assertEquals(redImage, imageMemory.getImage("redImage"));
+    assertEquals(greenImage, imageMemory.getImage("greenImage"));
+    assertEquals(blueImage, imageMemory.getImage("blueImage"));
+  }
+
+  @Test
+  public void testRGBSplitOfPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    Image redImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    Image greenImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    Image blueImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(redImage, imageMemory.getImage("redImage"));
+    assertEquals(greenImage, imageMemory.getImage("greenImage"));
+    assertEquals(blueImage, imageMemory.getImage("blueImage"));
+  }
+
+  @Test
+  public void testRGBSplitOfPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    Image redImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    Image greenImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    Image blueImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(redImage, imageMemory.getImage("redImage"));
+    assertEquals(greenImage, imageMemory.getImage("greenImage"));
+    assertEquals(blueImage, imageMemory.getImage("blueImage"));
+  }
+
+  @Test
+  public void testRGBSplitCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("rgb-split invalidImageName redImage greenImage blueImage", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testRGBSplitCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("rgb-split %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testRGBSplitWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("rgb-split", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+
+  // Blur tests
+  @Test
+  public void testBlurImageWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {9371648,9371648},
+            {9371648,9371648}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurImageWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {143,143},
+            {143,143}
+  }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurImageWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {36608,36608},
+            {36608,36608}
+  }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurImageWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {4737096,4737096},
+            {4737096,4737096}
+  }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurImageWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {9408399,9408399},
+            {9408399,9408399}
+  }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurImageWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0,0},
+            {0,0}
+  }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("blur invalidImageName blurImage", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testBlurCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testBlurImageWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully blurred the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {4663079, 3088207},
+            {3100447, 3096383}
+
+  }));
+    assertEquals(expectedImage, imageMemory.getImage("blurImage"));
+  }
+
+  @Test
+  public void testBlurImageWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("blur", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+
+  // Sharpen tests
+
+  @Test
+  public void testSharpenImageWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16711680,16711680},
+            {16711680,16711680}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenImageWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {255,255},
+            {255,255}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenImageWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {65280,65280},
+            {65280,65280}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenImageWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {14737632,14737632},
+            {14737632,14737632}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenImageWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215,16777215},
+            {16777215,16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenImageWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0,0},
+            {0,0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("sharpen invalidImageName sharpenImage", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testSharpenCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testSharpenImageWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully sharpened the image."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16736095,6250495},
+            {6291295,12566463}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
+  }
+
+  @Test
+  public void testSharpenImageWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("sharpen", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  // Sepia tests
+  @Test
+  public void testSepiaImageWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {6576197, 6576197},
+            {6576197, 6576197}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaImageWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaImageWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaImageWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaImageWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777198, 16777198},
+            {16777198, 16777198}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaImageWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("sepia invalidImageName sepiaImage", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testSepiaCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testSepiaImageWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
+  }
+
+  @Test
+  public void testSepiaImageWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("sepia", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+
+
+
+
+
 
 
 
