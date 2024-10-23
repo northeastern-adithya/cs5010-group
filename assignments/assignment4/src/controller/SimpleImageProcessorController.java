@@ -4,10 +4,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
+import controller.executors.ConsoleCommand;
 import controller.model.ExecutionStatus;
-import controller.executors.HelpCommand;
 import exception.QuitException;
-import factories.CommandFactory;
 import model.UserCommand;
 import services.ImageProcessingService;
 import utility.StringUtils;
@@ -34,6 +33,9 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    */
   private final ImageProcessingService imageProcessor;
 
+
+  private final ConsoleCommand consoleCommand;
+
   /**
    * Constructor to initialize the SimpleImageProcessorController.
    *
@@ -43,11 +45,11 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @throws NullPointerException if input, userOutput or imageProcessor is null
    */
   public SimpleImageProcessorController(UserInput input, UserOutput userOutput, ImageProcessingService imageProcessor) {
-
     validateInput(input, userOutput, imageProcessor);
     this.input = input;
     this.output = userOutput;
     this.imageProcessor = imageProcessor;
+    this.consoleCommand = new ConsoleCommand(imageProcessor);
     displayCommands();
   }
 
@@ -69,7 +71,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    displayMessage(new HelpCommand(imageProcessor).execute(new Scanner("")).getMessage());
+    displayMessage(this.consoleCommand.execute(new Scanner(UserCommand.HELP.getCommand())).getMessage());
   }
 
   @Override
@@ -78,28 +80,16 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     processCommands(scan);
   }
 
+  /**
+   * Processes the commands entered by the user
+   * using executors.
+   *
+   * @param scan Scanner object
+   */
   private void processCommands(Scanner scan) {
     Objects.requireNonNull(scan, "Scanner cannot be null");
-    String userInput = scan.next();
-    Optional<UserCommand> command = UserCommand.getCommand(userInput);
-    command.ifPresentOrElse(
-            userCommand -> {
-              ExecutionStatus executionStatus = CommandFactory.createCommand(userCommand, this.imageProcessor).execute(scan);
-              displayMessage(executionStatus.getMessage());
-            },
-            () -> handleInvalidCommand(userInput)
-
-    );
-  }
-
-  /**
-   * Handles the invalid command entered by the user.
-   *
-   * @param command command entered by the user
-   */
-  private void handleInvalidCommand(String command) {
-    displayMessage(String.format("Invalid command: %s received.Please try again.", command));
-    displayCommands();
+    ExecutionStatus executionStatus = this.consoleCommand.execute(scan);
+    displayMessage(executionStatus.getMessage());
   }
 
 

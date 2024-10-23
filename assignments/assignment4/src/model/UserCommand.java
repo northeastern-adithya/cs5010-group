@@ -60,6 +60,15 @@ public enum UserCommand {
             userCommand -> userCommand.command.equals(command)).findFirst();
   }
 
+  /**
+   * Gets the command value from command type.
+   *
+   * @return the command value
+   */
+  public String getCommand() {
+    return command;
+  }
+
 
   /**
    * Gets all possible list of the user commands.
