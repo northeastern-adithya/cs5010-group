@@ -10,6 +10,7 @@ import filters.ImageFilter;
 import model.ImageType;
 import model.memory.ImageMemory;
 import model.visual.Image;
+import utility.IOUtility;
 import utility.ImageUtility;
 import utility.StringUtils;
 
@@ -40,7 +41,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
     validateStringParams(imagePath, imageName);
     ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
-    Image imageToLoad = Factory.createImageReader(imageType).read(imagePath);
+    Image imageToLoad = IOUtility.read(imagePath, imageType);
     memory.addImage(imageName, imageToLoad);
   }
 
@@ -49,7 +50,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(imagePath, imageName);
     Image imageToSave = memory.getImage(imageName);
     ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
-    Factory.createImageWriter(imageType).write(imageToSave, imagePath);
+    IOUtility.write(imageToSave, imagePath, imageType);
   }
 
   @Override

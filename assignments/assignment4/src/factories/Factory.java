@@ -6,9 +6,6 @@ import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import filters.Filter;
-import filters.FilterOption;
-import model.ImageType;
 import model.PixelType;
 import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
@@ -16,20 +13,12 @@ import model.pixels.Pixel;
 import model.pixels.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
-import reader.ImageReader;
-import reader.JPGImageReader;
-import reader.PNGImageReader;
-import reader.PPMImageReader;
 import services.FileImageProcessingService;
 import services.ImageProcessingService;
 import view.input.ConsoleInput;
 import view.input.UserInput;
 import view.output.ConsoleOutput;
 import view.output.UserOutput;
-import writer.ImageWriter;
-import writer.JPGImageWriter;
-import writer.PNGImageWriter;
-import writer.PPMImageWriter;
 
 /**
  * Factory class to create objects for the Image Processor application.
@@ -124,47 +113,6 @@ public class Factory {
     return new FileImageProcessingService(memory);
   }
 
-  /**
-   * Creates an image reader based on the given image type.
-   *
-   * @param type the type of image to read
-   * @return the image reader based on the given image type
-   * @throws ImageProcessingRunTimeException.NotImplementedException if the image type is not implemented
-   */
-  public static ImageReader createImageReader(ImageType type) throws ImageProcessingRunTimeException.NotImplementedException {
-    switch (type) {
-      case PPM:
-        return new PPMImageReader();
-      case JPEG:
-      case JPG:
-        return new JPGImageReader();
-      case PNG:
-        return new PNGImageReader();
-      default:
-        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
-    }
-  }
-
-  /**
-   * Creates an image writer based on the given image type.
-   *
-   * @param type the type of image to write
-   * @return the image writer based on the given image type
-   * @throws ImageProcessingRunTimeException.NotImplementedException if the image type is not implemented
-   */
-  public static ImageWriter createImageWriter(ImageType type) {
-    switch (type) {
-      case PPM:
-        return new PPMImageWriter();
-      case JPEG:
-      case JPG:
-        return new JPGImageWriter();
-      case PNG:
-        return new PNGImageWriter();
-      default:
-        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
-    }
-  }
 
   /**
    * Creates a pixel based on the given pixel and type.
