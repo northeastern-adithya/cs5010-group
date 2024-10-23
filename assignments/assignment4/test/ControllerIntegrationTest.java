@@ -742,6 +742,244 @@ public class ControllerIntegrationTest {
   }
 
 
+ // HORIZONTAL FLIP TESTS
+  @Test
+  public void testHorizontalFlipWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16711680, 16711680},
+            {16711680, 16711680}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {255, 255},
+            {255, 255}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {65280, 65280},
+            {65280, 65280}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("horizontal-flip invalidImageName horizontalFlip", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testHorizontalFlipCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testHorizontalFlipWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {65280, 8421504},
+            {16711680,255}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("horizontal-flip", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  // VERTICAL FLIP TESTS
+  @Test
+  public void testVerticalFlipWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16711680, 16711680},
+            {16711680, 16711680}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {255, 255},
+            {255, 255}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {65280, 65280},
+            {65280, 65280}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("vertical-flip invalidImageName verticalFlip", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testVerticalFlipCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testVerticalFlipWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {255,16711680},
+            {8421504,65280}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
+  }
+
+  @Test
+  public void testVerticalFlipWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("vertical-flip", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+
+
+
+
+
+
   private Image redImage() {
     int[][] redArray = new int[][]{
             {16711680, 16711680},
@@ -790,13 +1028,6 @@ public class ControllerIntegrationTest {
     return ImageFactory.createImage(createPixels(blackArray));
   }
 
-  private Image yellowImage() {
-    int[][] yellowArray = new int[][]{
-            {16776960, 16776960},
-            {16776960, 16776960}
-    };
-    return ImageFactory.createImage(createPixels(yellowArray));
-  }
 
   private Image randomImage() {
     int[][] randomArray = new int[][]{
