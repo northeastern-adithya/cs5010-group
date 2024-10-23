@@ -7,8 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import exception.ImageProcessorException;
-import factories.ImageFactory;
-import factories.PixelFactory;
+import factories.Factory;
 import model.PixelType;
 import model.pixels.Pixel;
 import model.visual.Image;
@@ -41,10 +40,10 @@ public abstract class AbstractImageReader implements ImageReader {
       Pixel[][] pixelArray = new Pixel[width][height];
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-          pixelArray[x][y] = PixelFactory.createPixel(image.getRGB(x, y), PixelType.fromBufferedImageType(image.getType()));
+          pixelArray[x][y] = Factory.createPixel(image.getRGB(x, y), PixelType.fromBufferedImageType(image.getType()));
         }
       }
-      return ImageFactory.createImage(pixelArray);
+      return Factory.createImage(pixelArray);
     } catch (IOException e) {
       throw new ImageProcessorException("Error loading the image file", e);
     }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
 
-import factories.ImageFactory;
+import factories.Factory;
 import model.pixels.Pixel;
 
 /**
@@ -98,7 +98,7 @@ public class RenderedImage implements Image {
         newPixelArray[x][y] = this.getPixel(width - x - 1, y);
       }
     }
-    return ImageFactory.createImage(newPixelArray);
+    return Factory.createImage(newPixelArray);
   }
 
   @Override
@@ -111,7 +111,7 @@ public class RenderedImage implements Image {
         newPixelArray[x][y] = this.getPixel(x, height - y - 1);
       }
     }
-    return ImageFactory.createImage(newPixelArray);
+    return Factory.createImage(newPixelArray);
   }
 
   /**

@@ -3,6 +3,7 @@ package controller.executors;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,31 +13,47 @@ import java.util.Scanner;
 import controller.model.ExecutionStatus;
 import exception.ImageProcessorException;
 import exception.QuitException;
+import factories.Factory;
 import model.UserCommand;
 import services.ImageProcessingService;
+import view.input.UserInput;
 
-public class ConsoleCommand implements Command {
+
+/**
+ * This class executes command to process the image
+ * based on the user input.
+ */
+public class ImageOperationCommand implements Command {
 
   /**
    * Prefix for the command in the script file.
    */
-  private static final String COMMAND_PREFIX = "#";
+  private static final String COMMENT_PREFIX = "#";
   private final ImageProcessingService imageProcessingService;
 
-  public ConsoleCommand(
+  /**
+   * Constructor to initialize the ImageOperationCommand.
+   * Used to validate user inputs and process the image.
+   *
+   * @param imageProcessingService service to help in operations.
+   * @throws NullPointerException if imageProcessingService is null
+   */
+  public ImageOperationCommand(
           ImageProcessingService imageProcessingService) {
+    Objects.requireNonNull(imageProcessingService);
     this.imageProcessingService = imageProcessingService;
   }
 
   @Override
-  public ExecutionStatus execute(Scanner scanner) {
+  public ExecutionStatus execute(UserInput input) {
     try {
+      Scanner scanner = new Scanner(input.getUserInput());
       String userInput = scanner.next();
       Optional<UserCommand> command = UserCommand.getCommand(userInput);
       if (command.isPresent()) {
         return executeCommand(command.get(), scanner);
       } else {
-        return new ExecutionStatus(false, String.format("Invalid command: %s", userInput));
+        return new ExecutionStatus(false, String.format("Invalid command: %s", input));
       }
     } catch (ImageProcessorException e) {
       return new ExecutionStatus(false, e.getMessage());
@@ -325,7 +342,7 @@ public class ConsoleCommand implements Command {
         if (shouldSkipLine(line)) {
           continue;
         }
-        ExecutionStatus status = execute(new Scanner(line));
+        ExecutionStatus status = execute(Factory.createUserInput(new StringReader(line)));
         if (!status.isSuccess()) {
           return status;
         }
@@ -344,7 +361,7 @@ public class ConsoleCommand implements Command {
    * @return true if the line should be skipped, false otherwise
    */
   private boolean shouldSkipLine(String line) {
-    return line.trim().startsWith(COMMAND_PREFIX) || line.trim().isEmpty();
+    return line.trim().startsWith(COMMENT_PREFIX) || line.trim().isEmpty();
   }
 
 

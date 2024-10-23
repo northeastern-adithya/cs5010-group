@@ -3,8 +3,7 @@ package filters;
 import org.junit.Before;
 import org.junit.Test;
 
-import factories.ImageFactory;
-import factories.PixelFactory;
+import factories.Factory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
@@ -23,10 +22,10 @@ public class SharpenBlackImageTest extends SharpenTestBase {
     Pixel[][] pixels = new Pixel[5][5];
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 5; j++) {
-        pixels[i][j] = PixelFactory.createRGBPixel(0, 0, 0);
+        pixels[i][j] = Factory.createRGBPixel(0, 0, 0);
       }
     }
-    blackImage = ImageFactory.createImage(pixels);
+    blackImage = Factory.createImage(pixels);
   }
 
   @Test

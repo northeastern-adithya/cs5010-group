@@ -3,10 +3,6 @@ package filters;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import model.pixels.Pixel;
-import model.visual.Image;
-import factories.ImageFactory;
-import factories.PixelFactory;
 
 /**
  * Base test class for Blur filter tests containing common setup and utilities.

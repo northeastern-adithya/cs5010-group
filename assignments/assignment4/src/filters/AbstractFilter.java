@@ -2,7 +2,7 @@ package filters;
 
 import java.util.Objects;
 
-import factories.ImageFactory;
+import factories.Factory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
@@ -58,7 +58,7 @@ public class AbstractFilter implements Filter {
       }
     }
 
-    return ImageFactory.createImage(newPixelArray);
+    return Factory.createImage(newPixelArray);
   }
 
   protected void validateImage(Image image) throws NullPointerException {

@@ -3,10 +3,7 @@ package services;
 import java.util.Objects;
 
 import exception.ImageProcessorException;
-import factories.FilterFactory;
-import factories.ImageFactory;
-import factories.ImageReaderFactory;
-import factories.ImageWriterFactory;
+import factories.Factory;
 import filters.FilterOption;
 import model.ImageType;
 import model.memory.ImageMemory;
@@ -41,7 +38,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
     validateStringParams(imagePath, imageName);
     ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
-    Image imageToLoad = ImageReaderFactory.createImageReader(imageType).read(imagePath);
+    Image imageToLoad = Factory.createImageReader(imageType).read(imagePath);
     memory.addImage(imageName, imageToLoad);
   }
 
@@ -50,7 +47,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(imagePath, imageName);
     Image imageToSave = memory.getImage(imageName);
     ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
-    ImageWriterFactory.createImageWriter(imageType).write(imageToSave, imagePath);
+    Factory.createImageWriter(imageType).write(imageToSave, imagePath);
   }
 
   @Override
@@ -132,7 +129,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     Image redImage = memory.getImage(redImageName);
     Image greenImage = memory.getImage(greenImageName);
     Image blueImage = memory.getImage(blueImageName);
-    Image combinedImage = ImageFactory.combineRGBComponents(redImage, greenImage, blueImage);
+    Image combinedImage = Factory.combineRGBComponents(redImage, greenImage, blueImage);
     memory.addImage(imageName, combinedImage);
   }
 
@@ -140,7 +137,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void blurImage(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = FilterFactory.getFilter(FilterOption.GAUSSIAN_BLUR).applyFilter(image);
+    Image filteredImage = Factory.getFilter(FilterOption.GAUSSIAN_BLUR).applyFilter(image);
     memory.addImage(destinationImageName, filteredImage);
   }
 
@@ -148,7 +145,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void sharpenImage(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = FilterFactory.getFilter(FilterOption.SHARPEN).applyFilter(image);
+    Image filteredImage = Factory.getFilter(FilterOption.SHARPEN).applyFilter(image);
     memory.addImage(destinationImageName, filteredImage);
   }
 

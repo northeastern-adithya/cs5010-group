@@ -1,12 +1,12 @@
 package controller;
 
+import java.io.StringReader;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Scanner;
 
-import controller.executors.ConsoleCommand;
+import controller.executors.ImageOperationCommand;
 import controller.model.ExecutionStatus;
 import exception.QuitException;
+import factories.Factory;
 import model.UserCommand;
 import services.ImageProcessingService;
 import utility.StringUtils;
@@ -34,7 +34,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private final ImageProcessingService imageProcessor;
 
 
-  private final ConsoleCommand consoleCommand;
+  private final ImageOperationCommand imageOperationCommand;
 
   /**
    * Constructor to initialize the SimpleImageProcessorController.
@@ -49,7 +49,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     this.input = input;
     this.output = userOutput;
     this.imageProcessor = imageProcessor;
-    this.consoleCommand = new ConsoleCommand(imageProcessor);
+    this.imageOperationCommand = new ImageOperationCommand(imageProcessor);
     displayCommands();
   }
 
@@ -71,24 +71,12 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    displayMessage(this.consoleCommand.execute(new Scanner(UserCommand.HELP.getCommand())).getMessage());
+    displayMessage(this.imageOperationCommand.execute(Factory.createUserInput(new StringReader(UserCommand.HELP.getCommand()))).getMessage());
   }
 
   @Override
   public void processCommands() throws QuitException {
-    Scanner scan = new Scanner(input.getUserInput());
-    processCommands(scan);
-  }
-
-  /**
-   * Processes the commands entered by the user
-   * using executors.
-   *
-   * @param scan Scanner object
-   */
-  private void processCommands(Scanner scan) {
-    Objects.requireNonNull(scan, "Scanner cannot be null");
-    ExecutionStatus executionStatus = this.consoleCommand.execute(scan);
+    ExecutionStatus executionStatus = this.imageOperationCommand.execute(input);
     displayMessage(executionStatus.getMessage());
   }
 

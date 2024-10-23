@@ -5,11 +5,7 @@ import java.io.InputStreamReader;
 
 import controller.ImageProcessorController;
 import exception.QuitException;
-import factories.ControllerFactory;
-import factories.ImageMemoryFactory;
-import factories.ImageProcessingServiceFactory;
-import factories.UserInputFactory;
-import factories.UserOutputFactory;
+import factories.Factory;
 
 /**
  * The main class for the Image Processor application.
@@ -24,10 +20,10 @@ public class ImageProcessorApp {
    * @param args The command line arguments.
    */
   public static void main(String[] args) {
-    ImageProcessorController controller = ControllerFactory.createController(
-            UserInputFactory.createUserInput(new InputStreamReader(System.in)),
-            UserOutputFactory.createUserOutput(System.out),
-            ImageProcessingServiceFactory.createImageProcessor(ImageMemoryFactory.getImageMemory())
+    ImageProcessorController controller = Factory.createController(
+            Factory.createUserInput(new InputStreamReader(System.in)),
+            Factory.createUserOutput(System.out),
+            Factory.createImageProcessor(Factory.getImageMemory())
     );
     while (true) {
       try {

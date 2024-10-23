@@ -3,9 +3,7 @@ package filters;
 import org.junit.Before;
 import org.junit.Test;
 
-import factories.ImageFactory;
-import factories.PixelFactory;
-import filters.BlurTestBase;
+import factories.Factory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
@@ -24,10 +22,10 @@ public class BlurWhiteImageTest extends BlurTestBase {
     Pixel[][] pixels = new Pixel[3][3];
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        pixels[i][j] = PixelFactory.createRGBPixel(255, 255, 255);
+        pixels[i][j] = Factory.createRGBPixel(255, 255, 255);
       }
     }
-    whiteImage = ImageFactory.createImage(pixels);
+    whiteImage = Factory.createImage(pixels);
   }
 
   @Test
@@ -36,9 +34,9 @@ public class BlurWhiteImageTest extends BlurTestBase {
     Pixel centerPixel = blurredImage.getPixel(1, 1);
 
     Pixel[][] expectedPixels = {
-            {PixelFactory.createRGBPixel(143, 143, 143), PixelFactory.createRGBPixel(191, 191, 191), PixelFactory.createRGBPixel(143, 143, 143)},
-            {PixelFactory.createRGBPixel(191, 191, 191), PixelFactory.createRGBPixel(255, 255, 255), PixelFactory.createRGBPixel(191, 191, 191)},
-            {PixelFactory.createRGBPixel(143, 143, 143), PixelFactory.createRGBPixel(191, 191, 191), PixelFactory.createRGBPixel(143, 143, 143)}
+            {Factory.createRGBPixel(143, 143, 143), Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(143, 143, 143)},
+            {Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(255, 255, 255), Factory.createRGBPixel(191, 191, 191)},
+            {Factory.createRGBPixel(143, 143, 143), Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(143, 143, 143)}
     };
 
     for (int i = 0; i < 3; i++) {

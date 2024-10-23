@@ -5,8 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import exception.ImageProcessorException;
-import factories.ImageFactory;
-import factories.PixelFactory;
+import factories.Factory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
@@ -44,11 +43,11 @@ public class PPMImageReader extends AbstractImageReader {
           int red = Integer.parseInt(reader.readLine());
           int green = Integer.parseInt(reader.readLine());
           int blue = Integer.parseInt(reader.readLine());
-          pixelArray[x][y] = PixelFactory.createRGBPixel(red, green, blue);
+          pixelArray[x][y] = Factory.createRGBPixel(red, green, blue);
         }
       }
 
-      return ImageFactory.createImage(pixelArray);
+      return Factory.createImage(pixelArray);
     } catch (IOException e) {
       throw new ImageProcessorException(String.format("Error reading PPM file: %s", path), e);
     }

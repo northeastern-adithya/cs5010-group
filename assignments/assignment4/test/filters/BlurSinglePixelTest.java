@@ -3,9 +3,7 @@ package filters;
 import org.junit.Before;
 import org.junit.Test;
 
-import factories.ImageFactory;
-import factories.PixelFactory;
-import filters.BlurTestBase;
+import factories.Factory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
@@ -22,8 +20,8 @@ public class BlurSinglePixelTest extends BlurTestBase {
   public void setUp() {
     super.setUp();
     Pixel[][] pixel = new Pixel[1][1];
-    pixel[0][0] = PixelFactory.createRGBPixel(100, 100, 100);
-    singlePixelImage = ImageFactory.createImage(pixel);
+    pixel[0][0] = Factory.createRGBPixel(100, 100, 100);
+    singlePixelImage = Factory.createImage(pixel);
   }
 
   @Test

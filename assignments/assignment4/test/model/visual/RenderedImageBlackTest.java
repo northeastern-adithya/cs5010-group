@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import model.pixels.Pixel;
 import model.pixels.RGB;
-import factories.ImageFactory;
 
 public class RenderedImageBlackTest {
   private RenderedImage blackImage;
