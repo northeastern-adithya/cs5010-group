@@ -26,6 +26,7 @@ public class ValueComponentCommand extends AbstractCommand {
   protected ExecutionStatus executeCommand(Scanner scanner) throws ImageProcessorException {
     validateScanner(scanner);
     String path = scanner.next();
+    validateScanner(scanner);
     String destinationImageName = scanner.next();
     imageProcessor.createValueComponent(path, destinationImageName);
     return new ExecutionStatus(true, "Successfully created value component.");

@@ -150,6 +150,14 @@ public class ControllerIntegrationTest {
     assertEquals(expectedImage, imageMemory.getImage("redComponent"));
   }
 
+  @Test
+  public void testCreateRedComponentWithoutImageName() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("red-component", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
 
   // GREEN COMPONENT TESTS
   @Test
@@ -257,6 +265,14 @@ public class ControllerIntegrationTest {
             {16777215, 8421504}
     }));
     assertEquals(expectedImage, imageMemory.getImage("greenComponent"));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithoutImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("green-component", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
 
@@ -368,6 +384,245 @@ public class ControllerIntegrationTest {
     assertEquals(expectedImage, imageMemory.getImage("blueComponent"));
   }
 
+  @Test
+  public void testCreateBlueComponentWithoutImageName() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("blue-component", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  // VALUE COMPONENT TESTS
+  @Test
+  public void testCreateValueComponentWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testCreateValueComponentWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testCreateValueComponentWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testCreateValueComponentWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testCreateValueComponentWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testCreateValueComponentWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testValueComponentCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("value-component invalidImageName valueComponent", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testValueComponentCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testCreateValueComponentWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created value component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("valueComponent"));
+  }
+
+  @Test
+  public void testCreateValueComponentWithoutImageName() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("value-component", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  // INTENSITY COMPONENT TESTS
+  @Test
+  public void testCreateIntensityComponentWithPureRedImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {5592405, 5592405},
+            {5592405, 5592405}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithPureBlueImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {5592405, 5592405},
+            {5592405, 5592405}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithPureGreenImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {5592405, 5592405},
+            {5592405, 5592405}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithPureGreyImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {8421504, 8421504},
+            {8421504, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithPureWhiteImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithPureBlackImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testIntensityComponentCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("intensity-component invalidImageName intensityComponent", output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+  }
+
+  @Test
+  public void testIntensityComponentCommandWithInvalidDestinationImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully created intensity component."));
+    Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
+            {5592405, 5592405},
+            {5592405, 8421504}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("intensityComponent"));
+  }
+
+  @Test
+  public void testCreateIntensityComponentWithoutImageName() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("intensity-component", output, blueImage());
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
 
 
   private Image redImage() {
