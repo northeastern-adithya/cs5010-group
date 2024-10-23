@@ -43,11 +43,27 @@ public abstract class AbstractImageWriter implements ImageWriter {
         }
       }
       File outputFile = new File(path);
+      createDirectoryIfNotPresent(path);
       if (!ImageIO.write(bufferedImage, extension, outputFile)) {
         throw new ImageProcessorException(String.format("No appropriate writer found for format: %s", extension));
       }
     } catch (IOException e) {
       throw new ImageProcessorException(String.format("Error saving the image file to path: %s", path), e);
+    }
+  }
+
+  /**
+   * Creates the directory for the given path if it does not exist.
+   *
+   * @param path the path to the file.
+   * @throws ImageProcessorException if the directory cannot be created.
+   */
+  protected void createDirectoryIfNotPresent(String path) throws ImageProcessorException {
+    File file = new File(path);
+    if (file.getParentFile() != null && !file.getParentFile().exists()) {
+      if (!file.getParentFile().mkdirs()) {
+        throw new ImageProcessorException("Error creating directory for path: " + path);
+      }
     }
   }
 }
