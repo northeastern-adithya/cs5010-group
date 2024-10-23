@@ -4,15 +4,26 @@ package factories;
 import exception.NotImplementedException;
 import filters.Blur;
 import filters.Filter;
-import filters.FilterOptions;
+import filters.FilterOption;
 import filters.Sharpen;
 
+/**
+ * A factory that creates filters.
+ */
 public class FilterFactory {
 
   private FilterFactory() {
-
+    //Empty private constructor to prevent instantiation.
   }
-  public static Filter getFilter(FilterOptions options){
+
+  /**
+   * Creates a filter based on the given options.
+   *
+   * @param options the options to create the filter
+   * @return the filter based on the given options
+   * @throws NotImplementedException if the filter is not implemented
+   */
+  public static Filter getFilter(FilterOption options) throws NotImplementedException {
     switch (options) {
       case SHARPEN:
         return new Sharpen();

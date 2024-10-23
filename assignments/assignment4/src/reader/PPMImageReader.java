@@ -10,6 +10,9 @@ import factories.PixelFactory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
+/**
+ * Class for reading a PPM image from a file.
+ */
 public class PPMImageReader extends AbstractImageReader {
 
   public PPMImageReader() {
@@ -17,6 +20,13 @@ public class PPMImageReader extends AbstractImageReader {
   }
 
 
+  /**
+   * Reads a PPM image from a file.
+   * Custom implementation for reading PPM images.
+   * @param path the path to the file.
+   * @return the image read from the file.
+   * @throws ImageProcessorException if the image cannot be read.
+   */
   @Override
   public Image read(String path) throws ImageProcessorException {
     try (BufferedReader reader = new BufferedReader(new FileReader(path))) {

@@ -5,11 +5,21 @@ import java.awt.image.BufferedImage;
 
 import exception.NotImplementedException;
 
+/**
+ * Enum representing the type of pixel.
+ */
 public enum PixelType {
 
   RGB;
 
 
+  /**
+   * Get the pixel type from the BufferedImage type.
+   *
+   * @param type BufferedImage type.
+   * @return PixelType object.
+   * @throws NotImplementedException if the pixel type is not supported.
+   */
   public static PixelType fromBufferedImageType(int type) {
     switch (type) {
       case BufferedImage.TYPE_INT_RGB:

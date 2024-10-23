@@ -1,37 +1,46 @@
 package factories;
 
-import controller.command.BlueComponentCommand;
-import controller.command.BlurCommand;
-import controller.command.BrightenCommand;
-import controller.command.Command;
-import controller.command.GreenComponentCommand;
-import controller.command.HelpCommand;
-import controller.command.HorizontalFlipCommand;
-import controller.command.IntensityComponentCommand;
-import controller.command.LoadCommand;
-import controller.command.LumaComponentCommand;
-import controller.command.QuitCommand;
-import controller.command.RGBCombineCommand;
-import controller.command.RGBSplitCommand;
-import controller.command.RedComponentCommand;
-import controller.command.RunCommand;
-import controller.command.SaveCommand;
-import controller.command.SepiaCommand;
-import controller.command.SharpenCommand;
-import controller.command.ValueComponentCommand;
-import controller.command.VerticalFlipCommand;
+import controller.executors.BlueComponentCommand;
+import controller.executors.BlurCommand;
+import controller.executors.BrightenCommand;
+import controller.executors.Command;
+import controller.executors.GreenComponentCommand;
+import controller.executors.HelpCommand;
+import controller.executors.HorizontalFlipCommand;
+import controller.executors.IntensityComponentCommand;
+import controller.executors.LoadCommand;
+import controller.executors.LumaComponentCommand;
+import controller.executors.QuitCommand;
+import controller.executors.RGBCombineCommand;
+import controller.executors.RGBSplitCommand;
+import controller.executors.RedComponentCommand;
+import controller.executors.RunCommand;
+import controller.executors.SaveCommand;
+import controller.executors.SepiaCommand;
+import controller.executors.SharpenCommand;
+import controller.executors.ValueComponentCommand;
+import controller.executors.VerticalFlipCommand;
 import exception.NotImplementedException;
 import model.UserCommand;
 import services.ImageProcessingService;
 
+/**
+ * CommandFactory class that creates the command
+ * object based on the user command.
+ */
 public class CommandFactory {
 
   private CommandFactory() {
-
+    // private constructor to prevent instantiation
   }
 
-
-  public static Command createCommand(UserCommand command, ImageProcessingService imageProcessingService) {
+  /**
+   * Creates the command object based on the user command.
+   * @param command command type to be created
+   * @param imageProcessingService service to process the image.
+   * @throws NotImplementedException if the command is not implemented
+   */
+  public static Command createCommand(UserCommand command, ImageProcessingService imageProcessingService) throws NotImplementedException{
     switch (command) {
       case LOAD:
         return new LoadCommand(imageProcessingService);

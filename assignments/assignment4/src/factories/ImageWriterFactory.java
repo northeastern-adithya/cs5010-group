@@ -11,11 +11,23 @@ import writer.JPGImageWriter;
 import writer.PNGImageWriter;
 import writer.PPMImageWriter;
 
+/**
+ * A factory that creates image writers.
+ * Writers are responsible for writing images to files.
+ */
 public class ImageWriterFactory {
 
   private ImageWriterFactory() {
+    // Empty private constructor to prevent instantiation.
   }
 
+  /**
+   * Creates an image writer based on the given image type.
+   *
+   * @param type the type of image to write
+   * @return the image writer based on the given image type
+   * @throws NotImplementedException if the image type is not implemented
+   */
   public static ImageWriter createImageWriter(ImageType type) {
     switch (type) {
       case PPM:

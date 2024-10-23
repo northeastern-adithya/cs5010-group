@@ -2,7 +2,17 @@ package view.input;
 
 import java.io.InputStream;
 
+/**
+ * Represents the user input.
+ * This input can be from any source like console, file etc.
+ */
 public interface UserInput {
 
+  /**
+   * Get the user input
+   * which the user is communicating.
+   * @return the inputstream
+   * which the user has communicating.
+   */
   InputStream getUserInput();
 }

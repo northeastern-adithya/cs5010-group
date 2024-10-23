@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Optional;
 
 
+/**
+ * Enum representing the user commands.
+ * These are possible commands that the user can give to the program.
+ */
 public enum UserCommand {
 
   LOAD("load", "load image-path image-name: Load an image from the specified path and refer it to henceforth in the program by the given image name."),
@@ -26,20 +30,42 @@ public enum UserCommand {
   QUIT("quit", "quit: Quit the program."),
   HELP("help", "help: Print this help message.");
 
+  /**
+   * Command which the user can give.
+   */
   private final String command;
+  /**
+   * Description of the command.
+   */
   private final String description;
 
+  /**
+   * Constructor to initialize the UserCommand.
+   *
+   * @param command     the command
+   * @param description the description
+   */
   UserCommand(String command, String description) {
     this.command = command;
     this.description = description;
   }
 
+  /**
+   * Gets the command type from string
+   *
+   * @return the command type
+   */
   public static Optional<UserCommand> getCommand(String command) {
     return Arrays.stream(UserCommand.values()).filter(
             userCommand -> userCommand.command.equals(command)).findFirst();
   }
 
 
+  /**
+   * Gets all possible list of the user commands.
+   *
+   * @return the user commands
+   */
   public static String getUserCommands() {
     StringBuilder userCommands = new StringBuilder();
     for (UserCommand userCommand : UserCommand.values()) {

@@ -11,11 +11,25 @@ import model.pixels.Pixel;
 import model.visual.Image;
 import utility.ImageUtility;
 
+/**
+ * Abstract class for writing an image to a file.
+ */
 public abstract class AbstractImageWriter implements ImageWriter {
 
+  /**
+   * Constructs an instance of the writer.
+   */
   protected AbstractImageWriter() {
   }
 
+
+  /**
+   * Write an image from a file.
+   * Uses the ImageIO class to write the image.
+   *
+   * @param path the path to the file.
+   * @throws ImageProcessorException if the image cannot be read.
+   */
   @Override
   public void write(Image image, String path) throws ImageProcessorException {
     try {

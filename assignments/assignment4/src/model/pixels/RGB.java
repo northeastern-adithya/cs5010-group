@@ -1,17 +1,57 @@
 package model.pixels;
 
-import utility.PixelTransformUtility;
+import model.LinearColorTransformationType;
 
+/**
+ * Represents a pixel in the RGB color space.
+ * It has three channels: red, green, and blue.
+ * Each channel has a value between 0 and 255(8*3 bits).
+ */
 public class RGB extends AbstractPixel {
+  /**
+   * The red channel of the pixel.
+   */
   private final int red;
+  /**
+   * The green channel of the pixel.
+   */
   private final int green;
+  /**
+   * The blue channel of the pixel.
+   */
   private final int blue;
 
+  /**
+   * Constructs an RGB pixel with the given red, green, and blue values.
+   *
+   * @param red   the red channel of the pixel
+   * @param green the green channel of the pixel
+   * @param blue  the blue channel of the pixel
+   */
   public RGB(int red, int green, int blue) {
     super(24);
     this.red = Math.max(0, Math.min(red, computeMaxValue()));
     this.green = Math.max(0, Math.min(green, computeMaxValue()));
     this.blue = Math.max(0, Math.min(blue, computeMaxValue()));
+  }
+
+  /**
+   * Matrix operation to multiply a kernel with RGB values
+   * to get a new RGB pixel.
+   *
+   * @param pixel  the pixel to be multiplied with the kernel
+   * @param colorTransformationType the type of color transformation to be applied
+   * @return the new RGB pixel after the matrix operation.
+   */
+  private static Pixel matrixOperation(RGB pixel, LinearColorTransformationType colorTransformationType) {
+    int r = pixel.getRed();
+    int g = pixel.getGreen();
+    int b = pixel.getBlue();
+    double[][] kernel = colorTransformationType.getKernel();
+    double rPrime = kernel[0][0] * r + kernel[0][1] * g + kernel[0][2] * b;
+    double gPrime = kernel[1][0] * r + kernel[1][1] * g + kernel[1][2] * b;
+    double bPrime = kernel[2][0] * r + kernel[2][1] * g + kernel[2][2] * b;
+    return new RGB((int) rPrime, (int) gPrime, (int) bPrime);
   }
 
   @Override
@@ -48,7 +88,6 @@ public class RGB extends AbstractPixel {
   public Pixel createBlueComponent() {
     return this.createPixel(this.blue, this.blue, this.blue);
   }
-
 
   @Override
   public boolean equals(Object obj) {
@@ -88,15 +127,11 @@ public class RGB extends AbstractPixel {
 
   @Override
   public Pixel getLuma() {
-    int[] channelMatrix = {getRed(), getGreen(), getBlue()};
-    int[] multiplicationResult = PixelTransformUtility.getLuma(channelMatrix);
-    return this.createPixel(multiplicationResult[0], multiplicationResult[1], multiplicationResult[2]);
+    return matrixOperation(this, LinearColorTransformationType.LUMA);
   }
 
   @Override
   public Pixel getSepia() {
-    int[] channelMatrix = {getRed(), getGreen(), getBlue()};
-    int[] multiplicationResult = PixelTransformUtility.getSepia(channelMatrix);
-    return this.createPixel(multiplicationResult[0], multiplicationResult[1], multiplicationResult[2]);
+    return matrixOperation(this, LinearColorTransformationType.SEPIA);
   }
 }

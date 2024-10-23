@@ -13,11 +13,24 @@ import model.PixelType;
 import model.pixels.Pixel;
 import model.visual.Image;
 
+/**
+ * Abstract class for reading an image from a file.
+ */
 public abstract class AbstractImageReader implements ImageReader {
 
+  /**
+   * Constructs an instance of the reader.
+   */
   protected AbstractImageReader() {
   }
 
+  /**
+   * Reads an image from a file.
+   * Uses the ImageIO class to read the image.
+   * @param path the path to the file.
+   * @return the image read from the file.
+   * @throws ImageProcessorException if the image cannot be read.
+   */
   @Override
   public Image read(String path) throws ImageProcessorException {
     try {

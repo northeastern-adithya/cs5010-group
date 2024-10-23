@@ -6,14 +6,26 @@ import factories.ImageFactory;
 import model.pixels.Pixel;
 import model.visual.Image;
 
+/**
+ * Abstract class for applying filters to an image.
+ * Provides a method to apply a filter to an image.
+ */
 public class AbstractFilter implements Filter {
 
-  protected final FilterOptions filterOption;
+  /**
+   * The filter option to apply.
+   */
+  protected final FilterOption filterOption;
 
-  protected AbstractFilter(FilterOptions filterOption) {
+  /**
+   * Constructs an abstract filter with the given filter option.
+   * @param filterOption the filter option to apply
+   */
+  protected AbstractFilter(FilterOption filterOption) {
     Objects.requireNonNull(filterOption);
     this.filterOption = filterOption;
   }
+
 
   @Override
   public Image applyFilter(Image image) {
