@@ -7,12 +7,24 @@ import reader.JPGImageReader;
 import reader.PNGImageReader;
 import reader.PPMImageReader;
 
+/**
+ * A factory that creates image readers.
+ * Readers are responsible for reading images from files.
+ */
 public class ImageReaderFactory {
 
   private ImageReaderFactory() {
+    // Empty private constructor to prevent instantiation.
   }
 
-  public static ImageReader createImageReader(ImageType type) {
+  /**
+   * Creates an image reader based on the given image type.
+   *
+   * @param type the type of image to read
+   * @return the image reader based on the given image type
+   * @throws NotImplementedException if the image type is not implemented
+   */
+  public static ImageReader createImageReader(ImageType type) throws NotImplementedException {
     switch (type) {
       case PPM:
         return new PPMImageReader();
