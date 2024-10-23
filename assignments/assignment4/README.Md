@@ -1,4 +1,13 @@
-To segregate the provided code into packages and MVC structure, we can organize the classes as follows:
+# Image Processor Application
+
+## Setup
+### Prerequisites
+- Java version 11.0.24 
+
+### Steps to Run Script
+- Clone the repository.
+- run `src/app/ImageProcessorApp.java`
+- execute the command `run <path-to-script-file>` on the console.
 
 ## Packages and MVC Structure
 
@@ -21,41 +30,41 @@ To segregate the provided code into packages and MVC structure, we can organize 
     - `AbstractCommand`
       - **Purpose**: Provides a common structure for all command classes to implement.
     - `BlueComponentCommand`
-      - **Purpose**: Concrete command class that applies the blue component filter to an image, isolating and enhancing the blue tones.
+      - **Purpose**: Concrete command class that extracts the blue component of the image.
     - `BlurCommand`
       - **Purpose**: Concrete command class that applies a blur filter to an image.
     - `BrightenCommand`
-      - **Purpose**: Concrete command class that increases the brightness of the image by adjusting the light intensity.
+      - **Purpose**: Concrete command class that increases the brightness of the image.
     - `GreenComponentCommand`
-      - **Purpose**: Concrete command class that applies the green component filter, emphasizing the green tones in the image.
+      - **Purpose**: Concrete command class that extracts the green component of the image.
     - `HelpCommand`
       - **Purpose**: Concrete command class that displays help or usage instructions for the available commands.
     - `HorizontalFlipCommand`
       - **Purpose**: Concrete command class that flips the image horizontally, creating a mirrored version of the image.
     - `IntensityComponentCommand`
-      - **Purpose**: Concrete command class that adjusts the intensity component of the image's color, altering brightness and contrast.
+      - **Purpose**: Concrete command class that extracts the intensity component of the image.
     - `LoadCommand`
-      - **Purpose**: Concrete command class that loads an image from the specified source.
+      - **Purpose**: Concrete command class that loads an image from the specified path to memory.
     - `LumaComponentCommand`
-      - **Purpose**: Concrete command class that adjusts the luminance or brightness component of the image, affecting the grayscale intensity.
+      - **Purpose**: Concrete command class that extracts the Luma component of the image.
     - `QuitCommand`
       - **Purpose**: Concrete command class that exits the application safely.
     - `RedComponentCommand`
-      - **Purpose**: Concrete command class that applies the red component filter, isolating and enhancing red tones in the image.
+      - **Purpose**: Concrete command class that extracts the red component of the image.
     - `RGBCombineCommand`
       - **Purpose**: Concrete command class that combines the red, green, and blue components of separate images into one composite image.
     - `RGBSplitCommand`
       - **Purpose**: Concrete command class that splits an image into its red, green, and blue component images.
     - `RunCommand`
-      - **Purpose**: Concrete command class that executes a batch of predefined image processing commands.
+      - **Purpose**: Concrete command class that executes a predefined script image processing commands.
     - `SaveCommand`
       - **Purpose**: Concrete command class that saves the current state of the image to a file.
     - `SepiaCommand`
-      - **Purpose**: Concrete command class that applies a sepia filter to the image, giving it a warm, antique look.
+      - **Purpose**: Concrete command class that extracts the sepia value of an image.
     - `SharpenCommand`
       - **Purpose**: Concrete command class that sharpens the image, enhancing the edges and details.
     - `ValueComponentCommand`
-      - **Purpose**: Concrete command class that adjusts the value (or brightness) component of the image's colors.
+      - **Purpose**: Concrete command class that extracts the value component of the image's pixels.
     - `VerticalFlipCommand`
       - **Purpose**: Concrete command class that flips the image vertically, creating an upside-down version of the image.
 - #### `model` Package
@@ -129,14 +138,14 @@ To segregate the provided code into packages and MVC structure, we can organize 
 - #### `visual` Package
   - **Interfaces**:
     - `Image`
-      - **Purpose**: Interface for image processing.
+      - **Purpose**: Interface to represent an Image.
   - **Classes**:
     - `RenderedImage`
       - **Purpose**: Concrete class that represents a rendered image.
 - #### `pixels` Package
   - **Interfaces**:
     - `Pixel`
-      - **Purpose**: Interface for pixel processing.
+      - **Purpose**: Interface for to represent a Pixel.
   - **Classes**:
     - `AbstractPixel`
       - **Purpose**: Abstract class that provides common functionality for all pixel classes.
@@ -147,8 +156,8 @@ To segregate the provided code into packages and MVC structure, we can organize 
     - `ImageMemory`
       - **Purpose**: Interface for managing image memory.
   - **Classes**:
-    - `SimpleImageMemory`
-      - **Purpose**: Concrete class that implements the `ImageMemory` interface and manages image memory.
+    - `HashMapImageMemory`
+      - **Purpose**: Concrete class that implements the `ImageMemory` interface using a HashMap to store images.
 
 ### `reader` Package
 - **Interfaces**:
