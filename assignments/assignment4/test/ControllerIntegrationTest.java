@@ -1468,8 +1468,8 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully converted the image to sepia."));
     Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
+            {3156513, 3156513},
+            {3156513, 3156513}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
   }
@@ -1481,8 +1481,8 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully converted the image to sepia."));
     Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
+            {12889736, 12889736},
+            {12889736, 12889736}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
   }
@@ -1494,8 +1494,8 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully converted the image to sepia."));
     Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
+            {11311479, 11311479},
+            {11311479, 11311479}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
   }
@@ -1549,8 +1549,8 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully converted the image to sepia."));
     Image expectedImage = ImageFactory.createImage(createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
+            {6576197, 3156513},
+            {12889736, 11311479}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sepiaImage"));
   }
