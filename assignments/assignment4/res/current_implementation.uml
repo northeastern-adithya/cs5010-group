@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/adithya/Documents/neu/Sem 1/cs5010-group/assignments/assignment4/src</OriginalElement>
+  <nodes>
+    <node x="787.5" y="348.5">exception.ImageProcessingRunTimeException</node>
+    <node x="1064.5" y="2925.0">model.visual.RenderedImage</node>
+    <node x="757.0" y="2242.0">controller.SimpleImageProcessorController</node>
+    <node x="361.0" y="2032.5">exception.ImageProcessorException.NotFoundException</node>
+    <node x="-73.0" y="1081.0">model.pixels.Pixel</node>
+    <node x="1142.5" y="307.0">utility.StringUtils</node>
+    <node x="760.25" y="-14.0">view.input.UserInput</node>
+    <node x="465.5" y="3129.0">view.output.ConsoleOutput</node>
+    <node x="701.5" y="1608.0">controller.ImageProcessorController</node>
+    <node x="905.0" y="644.5">exception.ImageProcessingRunTimeException.DisplayException</node>
+    <node x="760.25" y="188.0">view.input.ConsoleInput</node>
+    <node x="667.125" y="1230.5">exception.ImageProcessorException</node>
+    <node x="404.5" y="489.5">exception.ImageProcessingRunTimeException.QuitException</node>
+    <node x="1056.5" y="460.0">model.memory.ImageMemory</node>
+    <node x="62.5" y="1428.0">services.ImageProcessingService</node>
+    <node x="511.25" y="164.0">model.enumeration.FilterOption</node>
+    <node x="592.5" y="448.0">model.enumeration.LinearColorTransformationType</node>
+    <node x="467.5" y="307.0">model.enumeration.PixelType</node>
+    <node x="721.0" y="2032.5">exception.ImageProcessorException.NotImplementedException</node>
+    <node x="558.0" y="579.0">model.enumeration.ImageType</node>
+    <node x="1056.5" y="842.0">model.memory.HashMapMemory</node>
+    <node x="198.0" y="1129.0">utility.IOUtils</node>
+    <node x="62.5" y="2350.0">services.FileImageProcessingService</node>
+    <node x="637.75" y="69.0">app.ImageProcessorApp</node>
+    <node x="1109.5" y="1871.0">model.visual.Image</node>
+    <node x="-163.0" y="2937.0">model.pixels.RGB</node>
+    <node x="185.0" y="579.0">model.enumeration.UserCommand</node>
+    <node x="446.5" y="1608.0">view.output.UserOutput</node>
+    <node x="-49.0" y="2015.0">model.pixels.AbstractPixel</node>
+    <node x="287.25" y="152.0">controller.ExecutionStatus</node>
+    <node x="435.5" y="758.0">factories.Factory</node>
+    <node x="155.5" y="331.0">utility.FilterUtils</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="exception.ImageProcessingRunTimeException.QuitException" target="exception.ImageProcessingRunTimeException" relationship="INNER_CLASS">
+      <point x="-39.5" y="-14.0" />
+      <point x="444.0" y="438.0" />
+      <point x="868.75" y="438.0" />
+      <point x="-81.25" y="14.0" />
+    </edge>
+    <edge source="exception.ImageProcessingRunTimeException.DisplayException" target="exception.ImageProcessingRunTimeException" relationship="GENERALIZATION">
+      <point x="45.5" y="-14.0" />
+      <point x="1041.5" y="428.0" />
+      <point x="1031.25" y="428.0" />
+      <point x="81.25" y="14.0" />
+    </edge>
+    <edge source="exception.ImageProcessorException.NotFoundException" target="exception.ImageProcessorException" relationship="INNER_CLASS">
+      <point x="-50.5" y="-14.0" />
+      <point x="411.5" y="1418.0" />
+      <point x="431.5" y="1418.0" />
+      <point x="431.5" y="1370.0" />
+      <point x="729.875" y="1370.0" />
+      <point x="-62.75" y="14.0" />
+    </edge>
+    <edge source="exception.ImageProcessorException.NotImplementedException" target="exception.ImageProcessorException" relationship="INNER_CLASS">
+      <point x="-63.5" y="-14.0" />
+      <point x="784.5" y="2022.5" />
+      <point x="431.5" y="2022.5" />
+      <point x="431.5" y="1370.0" />
+      <point x="729.875" y="1370.0" />
+      <point x="-62.75" y="14.0" />
+    </edge>
+    <edge source="controller.SimpleImageProcessorController" target="controller.ImageProcessorController" relationship="REALIZATION">
+      <point x="0.0" y="-331.5" />
+      <point x="990.0" y="2022.5" />
+      <point x="828.0" y="2022.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="view.input.ConsoleInput" target="view.input.UserInput" relationship="REALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="view.output.ConsoleOutput" target="view.output.UserOutput" relationship="REALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="578.0" y="2012.5" />
+      <point x="559.0" y="2012.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="model.pixels.RGB" target="model.pixels.AbstractPixel" relationship="GENERALIZATION">
+      <point x="0.0" y="-223.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="model.visual.RenderedImage" target="model.visual.Image" relationship="REALIZATION">
+      <point x="0.0" y="-235.5" />
+      <point x="0.0" y="175.5" />
+    </edge>
+    <edge source="exception.ImageProcessorException.NotImplementedException" target="exception.ImageProcessorException" relationship="GENERALIZATION">
+      <point x="63.5" y="-14.0" />
+      <point x="911.5" y="2012.5" />
+      <point x="989.5" y="2012.5" />
+      <point x="989.5" y="1598.0" />
+      <point x="969.5" y="1598.0" />
+      <point x="969.5" y="1273.5" />
+      <point x="855.375" y="1273.5" />
+      <point x="62.75" y="14.0" />
+    </edge>
+    <edge source="exception.ImageProcessorException.NotFoundException" target="exception.ImageProcessorException" relationship="GENERALIZATION">
+      <point x="50.5" y="-14.0" />
+      <point x="512.5" y="2002.5" />
+      <point x="969.5" y="2002.5" />
+      <point x="969.5" y="1273.5" />
+      <point x="855.375" y="1273.5" />
+      <point x="62.75" y="14.0" />
+    </edge>
+    <edge source="model.pixels.AbstractPixel" target="model.pixels.Pixel" relationship="REALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="163.5" />
+    </edge>
+    <edge source="exception.ImageProcessingRunTimeException.QuitException" target="exception.ImageProcessingRunTimeException" relationship="GENERALIZATION">
+      <point x="39.5" y="-14.0" />
+      <point x="523.0" y="428.0" />
+      <point x="1031.25" y="428.0" />
+      <point x="81.25" y="14.0" />
+    </edge>
+    <edge source="model.memory.HashMapMemory" target="model.memory.ImageMemory" relationship="REALIZATION">
+      <point x="0.0" y="-67.5" />
+      <point x="0.0" y="43.5" />
+    </edge>
+    <edge source="services.FileImageProcessingService" target="services.ImageProcessingService" relationship="REALIZATION">
+      <point x="0.0" y="-223.5" />
+      <point x="0.0" y="211.5" />
+    </edge>
+    <edge source="exception.ImageProcessingRunTimeException.DisplayException" target="exception.ImageProcessingRunTimeException" relationship="INNER_CLASS">
+      <point x="-45.5" y="-14.0" />
+      <point x="950.5" y="438.0" />
+      <point x="868.75" y="438.0" />
+      <point x="-81.25" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.49086105279583175" showDependencies="false" x="595.4398669141042" y="2579.0802969883594" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

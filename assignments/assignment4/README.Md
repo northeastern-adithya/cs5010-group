@@ -149,3 +149,7 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
 - **Purpose**: Manages the flow of the application, processes user commands, and updates the model and view.
 - **Packages**:
     - `controller`: Contains interfaces and classes for controlling the application, such as `ImageProcessorController`, `SimpleImageProcessorController`, and `ExecutionStatus`.
+
+
+4. **Class Diagram**:
+- The class diagram for Image Processing Application: [current_implementation.uml](res/current_implementation.uml)
