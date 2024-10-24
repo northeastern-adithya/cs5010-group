@@ -153,3 +153,4 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
 
 4. **Class Diagram**:
 - The class diagram for Image Processing Application: [current_implementation.uml](res/current_implementation.uml)
+- Image can be viewed at [current_implementation.png](res/current_implementation.png)
