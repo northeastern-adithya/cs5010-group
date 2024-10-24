@@ -36,7 +36,8 @@ public class Factory {
    * @param processor The processor service to perform operations on the image.
    * @return the controller to control the view and model
    */
-  public static ImageProcessorController createController(UserInput input, UserOutput output, ImageProcessingService processor) {
+  public static ImageProcessorController createController(UserInput input, UserOutput output,
+                                                          ImageProcessingService processor) {
     return new SimpleImageProcessorController(input, output, processor);
   }
 
@@ -61,14 +62,18 @@ public class Factory {
    * @return the new image with the combined RGB components
    * @throws ImageProcessorException if the RGB components do not have the same dimensions
    */
-  public static Image combineRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException {
+  public static Image combineRGBComponents(Image redComponent, Image greenComponent,
+                                           Image blueComponent)
+          throws ImageProcessorException {
     validateRGBComponents(redComponent, greenComponent, blueComponent);
     int height = redComponent.getHeight();
     int width = redComponent.getWidth();
     Pixel[][] newPixelArray = new Pixel[width][height];
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = createRGBPixel(redComponent.getPixel(x, y).getRed(), greenComponent.getPixel(x, y).getGreen(), blueComponent.getPixel(x, y).getBlue());
+        newPixelArray[x][y] = createRGBPixel(redComponent.getPixel(x, y).getRed(),
+                greenComponent.getPixel(x, y).getGreen(),
+                blueComponent.getPixel(x, y).getBlue());
       }
     }
     return createImage(newPixelArray);
@@ -83,11 +88,16 @@ public class Factory {
    * @throws ImageProcessorException if the RGB components do not have the same dimensions
    * @throws NullPointerException    if any of the RGB components are null
    */
-  private static void validateRGBComponents(Image redComponent, Image greenComponent, Image blueComponent) throws ImageProcessorException, NullPointerException {
+  private static void validateRGBComponents(Image redComponent, Image greenComponent,
+                                            Image blueComponent)
+          throws ImageProcessorException, NullPointerException {
     Objects.requireNonNull(redComponent, "Red component cannot be null");
     Objects.requireNonNull(greenComponent, "Green component cannot be null");
     Objects.requireNonNull(blueComponent, "Blue component cannot be null");
-    if (redComponent.getWidth() != greenComponent.getWidth() || redComponent.getWidth() != blueComponent.getWidth() || redComponent.getHeight() != greenComponent.getHeight() || redComponent.getHeight() != blueComponent.getHeight()) {
+    if (redComponent.getWidth() != greenComponent.getWidth()
+            || redComponent.getWidth() != blueComponent.getWidth()
+            || redComponent.getHeight() != greenComponent.getHeight()
+            || redComponent.getHeight() != blueComponent.getHeight()) {
       throw new ImageProcessorException("The RGB components must have the same dimensions");
     }
   }
@@ -123,11 +133,12 @@ public class Factory {
    * @throws ImageProcessingRunTimeException.NotImplementedException if the pixel is not implemented
    */
   public static Pixel createPixel(int pixel, PixelType type) {
-    switch (type) {
-      case RGB:
-        return createRGBPixel(pixel);
-      default:
-        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
+    if (type == PixelType.RGB) {
+      return createRGBPixel(pixel);
+    } else {
+      throw new ImageProcessingRunTimeException.NotImplementedException(
+              String.format("Received an unsupported image type: %s", type)
+      );
     }
   }
 

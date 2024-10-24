@@ -52,49 +52,56 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void createRedComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createRedComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.createRedComponent());
   }
 
   @Override
-  public void createGreenComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createGreenComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.createGreenComponent());
   }
 
   @Override
-  public void createBlueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createBlueComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.createBlueComponent());
   }
 
   @Override
-  public void createValueComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createValueComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.getValue());
   }
 
   @Override
-  public void createLumaComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createLumaComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.getLuma());
   }
 
   @Override
-  public void createIntensityComponent(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void createIntensityComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.getIntensity());
   }
 
   @Override
-  public void horizontalFlip(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void horizontalFlip(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.horizontalFlip());
@@ -102,22 +109,33 @@ public class FileImageProcessingService implements ImageProcessingService {
 
 
   @Override
-  public void verticalFlip(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void verticalFlip(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.verticalFlip());
   }
 
   @Override
-  public void brighten(String imageName, String destinationImageName, int factor) throws ImageProcessorException {
+  public void brighten(String imageName, String destinationImageName, int factor)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.adjustImageBrightness(factor));
   }
 
   @Override
-  public void rgbSplit(String imageName, String destinationImageNameRed, String destinationImageNameGreen, String destinationImageNameBlue) throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageNameRed, destinationImageNameGreen, destinationImageNameBlue);
+  public void rgbSplit(
+          String imageName,
+          String destinationImageNameRed,
+          String destinationImageNameGreen,
+          String destinationImageNameBlue) throws ImageProcessorException {
+    validateStringParams(
+            imageName,
+            destinationImageNameRed,
+            destinationImageNameGreen,
+            destinationImageNameBlue
+    );
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageNameRed, image.createRedComponent());
     memory.addImage(destinationImageNameGreen, image.createGreenComponent());
@@ -125,7 +143,11 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void rgbCombine(String imageName, String redImageName, String greenImageName, String blueImageName) throws ImageProcessorException {
+  public void rgbCombine(
+          String imageName,
+          String redImageName,
+          String greenImageName,
+          String blueImageName) throws ImageProcessorException {
     validateStringParams(imageName, redImageName, greenImageName, blueImageName);
     Image redImage = memory.getImage(redImageName);
     Image greenImage = memory.getImage(greenImageName);
@@ -135,7 +157,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void blurImage(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void blurImage(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     Image filteredImage = FilterUtils.applyFilter(image, FilterOption.GAUSSIAN_BLUR);
@@ -143,7 +166,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void sharpenImage(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void sharpenImage(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     Image filteredImage = FilterUtils.applyFilter(image, FilterOption.SHARPEN);
@@ -151,7 +175,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void sepiaImage(String imageName, String destinationImageName) throws ImageProcessorException {
+  public void sepiaImage(String imageName, String destinationImageName)
+          throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
     memory.addImage(destinationImageName, image.getSepia());
@@ -163,7 +188,8 @@ public class FileImageProcessingService implements ImageProcessingService {
    * @param strings the input string parameters
    * @throws ImageProcessorException if the input string parameters are null or empty
    */
-  private void validateStringParams(String... strings) throws ImageProcessorException {
+  private void validateStringParams(String... strings)
+          throws ImageProcessorException {
     if (StringUtils.isNullOrEmpty(strings)) {
       throw new ImageProcessorException("Received input as null or empty");
     }

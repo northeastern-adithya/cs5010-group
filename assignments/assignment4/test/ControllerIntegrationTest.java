@@ -17,21 +17,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
+/**
+ * Integration tests from controller.
+ * Tests interactions between different packages starting from controller.
+ */
 public class ControllerIntegrationTest {
 
   private static final String INITIAL_IMAGE_NAME = "initialImage";
   private ImageProcessorController controller;
-  private UserInput userInput;
-  private UserOutput userOutput;
-  private ImageProcessingService processingService;
   private ImageMemory imageMemory;
 
-  private void initialiseController(String input, StringBuilder output, Image initialImage) {
-    userInput = Factory.createUserInput(new StringReader(input));
-    userOutput = Factory.createUserOutput(output);
+  private void initialiseController(String input, StringBuilder output,
+                                    Image initialImage) {
+    UserInput userInput = Factory.createUserInput(new StringReader(input));
+    UserOutput userOutput = Factory.createUserOutput(output);
     imageMemory = Factory.getImageMemory();
-    processingService = Factory.createImageProcessor(imageMemory);
-    controller = Factory.createController(userInput, userOutput, processingService);
+    ImageProcessingService processingService =
+            Factory.createImageProcessor(imageMemory);
+    controller = Factory.createController(userInput, userOutput,
+            processingService);
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);
   }
 
@@ -39,9 +43,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -52,9 +60,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -65,9 +77,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -78,9 +94,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -91,9 +111,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -104,9 +128,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -117,15 +145,22 @@ public class ControllerIntegrationTest {
   @Test
   public void testRedComponentCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("red-component invalidImageName redComponent", output, redImage());
+    initialiseController(
+            "red-component invalidImageName redComponent",
+            output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testRedComponentCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(
+            String.format("red-component %s", INITIAL_IMAGE_NAME),
+            output,
+            redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -133,9 +168,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateRedComponentWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("red-component %s redComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(
+            String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
+            output,
+            randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 0},
             {0, 8421504}
@@ -144,7 +183,7 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithoutImageName() throws ImageProcessorException {
+  public void testCreateRedComponentWithoutImageName() {
     StringBuilder output = new StringBuilder();
     initialiseController("red-component", output, blueImage());
     controller.processCommands();
@@ -156,9 +195,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -169,9 +213,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -182,9 +231,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -195,9 +249,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -208,9 +267,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -221,9 +285,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -234,15 +303,22 @@ public class ControllerIntegrationTest {
   @Test
   public void testGreenComponentCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("green-component invalidImageName greenComponent", output, greenImage());
+    initialiseController(
+            "green-component invalidImageName greenComponent",
+            output,
+            blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testGreenComponentCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(
+            String.format("green-component %s", INITIAL_IMAGE_NAME),
+            output,
+            greenImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -250,9 +326,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateGreenComponentWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("green-component %s greenComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(
+            String.format("green-component %s greenComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created green component."));
+    assertTrue(output.toString().contains("Successfully created green "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {16777215, 8421504}
@@ -273,9 +354,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(
+            String.format("blue-component %s blueComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -286,9 +372,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(
+            String.format("blue-component %s blueComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -299,9 +390,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(
+            String.format("blue-component %s blueComponent",
+                    INITIAL_IMAGE_NAME),
+            output,
+            greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -312,9 +408,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("blue-component %s blueComponent",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -325,9 +423,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("blue-component %s blueComponent",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -338,9 +438,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("blue-component %s blueComponent",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -351,15 +453,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testBlueComponentCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("blue-component invalidImageName blueComponent", output, blueImage());
+    initialiseController("blue-component invalidImageName blueComponent",
+            output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testBlueComponentCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("blue-component %s",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -367,9 +472,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateBlueComponentWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blue-component %s blueComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("blue-component %s blueComponent",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created blue component."));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 16777215},
             {0, 8421504}
@@ -389,9 +496,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -402,9 +511,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -415,9 +526,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -428,9 +541,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -441,9 +556,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -454,9 +571,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -467,15 +586,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testValueComponentCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("value-component invalidImageName valueComponent", output, redImage());
+    initialiseController("value-component invalidImageName valueComponent",
+            output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testValueComponentCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("value-component %s",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -483,9 +605,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateValueComponentWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("value-component %s valueComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("value-component %s valueComponent",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created value component."));
+    assertTrue(output.toString().contains("Successfully created value "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 8421504}
@@ -505,9 +629,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {5592405, 5592405},
             {5592405, 5592405}
@@ -518,9 +644,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {5592405, 5592405},
             {5592405, 5592405}
@@ -531,9 +659,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {5592405, 5592405},
             {5592405, 5592405}
@@ -544,9 +674,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -557,9 +689,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -570,9 +704,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -583,15 +719,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testIntensityComponentCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("intensity-component invalidImageName intensityComponent", output, redImage());
+    initialiseController("intensity-component invalidImageName "
+            + "intensityComponent", output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testIntensityComponentCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("intensity-component %s",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -599,9 +738,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateIntensityComponentWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("intensity-component %s intensityComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("intensity-component %s "
+            + "intensityComponent", INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created intensity component."));
+    assertTrue(output.toString().contains("Successfully created intensity "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {5592405, 5592405},
             {5592405, 8421504}
@@ -622,9 +763,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {3552822, 3552822},
             {3552822, 3552822}
@@ -635,9 +778,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {1184274, 1184274},
             {1184274, 1184274}
@@ -648,9 +793,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {11974326, 11974326},
             {11974326, 11974326}
@@ -661,9 +808,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -674,9 +823,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16711422, 16711422},
             {16711422, 16711422}
@@ -687,9 +838,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -700,15 +853,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testLumaComponentCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("luma-component invalidImageName lumaComponent", output, redImage());
+    initialiseController("luma-component invalidImageName lumaComponent",
+            output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testLumaComponentCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("luma-component %s",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -716,9 +872,12 @@ public class ControllerIntegrationTest {
   @Test
   public void testCreateLumaComponentWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("luma-component %s lumaComponent", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("luma-component %s lumaComponent",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully created luma component."));
+    assertTrue(output.toString().contains("Successfully created luma "
+
+            + "component."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {3552822, 1184274},
             {11974326, 8421504}
@@ -735,13 +894,15 @@ public class ControllerIntegrationTest {
   }
 
 
- // HORIZONTAL FLIP TESTS
+  // HORIZONTAL FLIP TESTS
   @Test
   public void testHorizontalFlipWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16711680, 16711680},
             {16711680, 16711680}
@@ -752,9 +913,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {255, 255},
             {255, 255}
@@ -765,9 +928,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {65280, 65280},
             {65280, 65280}
@@ -778,9 +943,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -791,9 +958,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -804,9 +973,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -817,15 +988,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("horizontal-flip invalidImageName horizontalFlip", output, redImage());
+    initialiseController("horizontal-flip invalidImageName horizontalFlip",
+            output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testHorizontalFlipCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("horizontal-flip %s",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -833,12 +1007,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testHorizontalFlipWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("horizontal-flip %s horizontalFlip", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("horizontal-flip %s horizontalFlip",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {65280, 8421504},
-            {16711680,255}
+            {16711680, 255}
     }));
     assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
   }
@@ -855,9 +1031,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16711680, 16711680},
             {16711680, 16711680}
@@ -868,9 +1046,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {255, 255},
             {255, 255}
@@ -881,9 +1061,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {65280, 65280},
             {65280, 65280}
@@ -894,9 +1076,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -907,9 +1091,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -920,9 +1106,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -933,15 +1121,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("vertical-flip invalidImageName verticalFlip", output, redImage());
+    initialiseController("vertical-flip invalidImageName verticalFlip",
+            output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testVerticalFlipCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("vertical-flip %s",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -949,12 +1140,14 @@ public class ControllerIntegrationTest {
   @Test
   public void testVerticalFlipWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("vertical-flip %s verticalFlip", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("vertical-flip %s verticalFlip",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully flipped the image vertically."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {255,16711680},
-            {8421504,65280}
+            {255, 16711680},
+            {8421504, 65280}
     }));
     assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
   }
@@ -969,11 +1162,13 @@ public class ControllerIntegrationTest {
 
   // Brighten tests
   @Test
-  public void testBrightenWithPositiveFactor() throws ImageProcessorException{
+  public void testBrightenWithPositiveFactor() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("brighten 1 %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("brighten 1 %s brighten",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully brightened the image at factor:1"));
+    assertTrue(output.toString().contains("Successfully brightened the image "
+            + "at factor:1"));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16711937, 66047},
             {130817, 8487297}
@@ -982,11 +1177,13 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenWithNegativeFactor() throws ImageProcessorException{
+  public void testBrightenWithNegativeFactor() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("brighten -1 %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("brighten -1 %s brighten",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully brightened the image at factor:-1"));
+    assertTrue(output.toString().contains("Successfully brightened the image "
+            + "at factor:-1"));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16646144, 254},
             {65024, 8355711}
@@ -995,11 +1192,13 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenWithZeroFactor() throws ImageProcessorException{
+  public void testBrightenWithZeroFactor() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("brighten 0 %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("brighten 0 %s brighten",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully brightened the image at factor:0"));
+    assertTrue(output.toString().contains("Successfully brightened the image "
+            + "at factor:0"));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16711680, 255},
             {65280, 8421504}
@@ -1008,31 +1207,36 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public  void testBrightenWithInvalidFactor(){
+  public void testBrightenWithInvalidFactor() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("brighten invalidFactor %s brighten", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("brighten invalidFactor %s brighten",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Invalid factor provided for brightening the image."));
+    assertTrue(output.toString().contains("Invalid factor provided for "
+            + "brightening the image."));
   }
 
   @Test
   public void testBrightenCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("brighten 1 invalidImageName brighten", output, redImage());
+    initialiseController("brighten 1 invalidImageName brighten", output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testBrightenCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("brighten 1 %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("brighten 1 %s", INITIAL_IMAGE_NAME),
+            output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
   @Test
-  public void testBrightenCommandWithoutImageName(){
+  public void testBrightenCommandWithoutImageName() {
     StringBuilder output = new StringBuilder();
     initialiseController("brighten 1", output, redImage());
     controller.processCommands();
@@ -1044,9 +1248,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitOfPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("rgb-split %s redImage greenImage "
+            + "blueImage", INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
     Image redImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -1067,9 +1273,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitOfPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("rgb-split %s redImage greenImage "
+            + "blueImage", INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
     Image redImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -1090,9 +1298,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitOfPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("rgb-split %s redImage greenImage "
+            + "blueImage", INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
     Image redImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -1113,9 +1323,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitOfPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("rgb-split %s redImage greenImage "
+            + "blueImage", INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
     Image redImage = Factory.createImage(createPixels(new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -1136,9 +1348,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitOfPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("rgb-split %s redImage greenImage "
+            + "blueImage", INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
     Image redImage = Factory.createImage(createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -1159,9 +1373,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitOfPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s redImage greenImage blueImage", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("rgb-split %s redImage greenImage "
+            + "blueImage", INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully split the image into RGB components."));
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
     Image redImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -1182,15 +1398,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testRGBSplitCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("rgb-split invalidImageName redImage greenImage blueImage", output, redImage());
+    initialiseController("rgb-split invalidImageName redImage greenImage "
+            + "blueImage", output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testRGBSplitCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("rgb-split %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("rgb-split %s", INITIAL_IMAGE_NAME),
+            output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -1208,12 +1427,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testBlurImageWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {9371648,9371648},
-            {9371648,9371648}
+            {9371648, 9371648},
+            {9371648, 9371648}
     }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
@@ -1221,65 +1441,70 @@ public class ControllerIntegrationTest {
   @Test
   public void testBlurImageWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {143,143},
-            {143,143}
-  }));
+            {143, 143},
+            {143, 143}
+    }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
 
   @Test
   public void testBlurImageWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {36608,36608},
-            {36608,36608}
-  }));
+            {36608, 36608},
+            {36608, 36608}
+    }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
 
   @Test
   public void testBlurImageWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {4737096,4737096},
-            {4737096,4737096}
-  }));
+            {4737096, 4737096},
+            {4737096, 4737096}
+    }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
 
   @Test
   public void testBlurImageWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {9408399,9408399},
-            {9408399,9408399}
-  }));
+            {9408399, 9408399},
+            {9408399, 9408399}
+    }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
 
   @Test
   public void testBlurImageWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {0,0},
-            {0,0}
-  }));
+            {0, 0},
+            {0, 0}
+    }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
 
@@ -1288,13 +1513,15 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController("blur invalidImageName blurImage", output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testBlurCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("blur %s", INITIAL_IMAGE_NAME), output,
+            redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -1302,14 +1529,15 @@ public class ControllerIntegrationTest {
   @Test
   public void testBlurImageWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("blur %s blurImage", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("blur %s blurImage",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully blurred the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {4663079, 3088207},
             {3100447, 3096383}
 
-  }));
+    }));
     assertEquals(expectedImage, imageMemory.getImage("blurImage"));
   }
 
@@ -1327,12 +1555,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {16711680,16711680},
-            {16711680,16711680}
+            {16711680, 16711680},
+            {16711680, 16711680}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1340,12 +1569,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {255,255},
-            {255,255}
+            {255, 255},
+            {255, 255}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1353,12 +1583,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {65280,65280},
-            {65280,65280}
+            {65280, 65280},
+            {65280, 65280}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1366,12 +1597,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {14737632,14737632},
-            {14737632,14737632}
+            {14737632, 14737632},
+            {14737632, 14737632}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1379,12 +1611,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {16777215,16777215},
-            {16777215,16777215}
+            {16777215, 16777215},
+            {16777215, 16777215}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1392,12 +1625,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {0,0},
-            {0,0}
+            {0, 0},
+            {0, 0}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1405,15 +1639,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("sharpen invalidImageName sharpenImage", output, redImage());
+    initialiseController("sharpen invalidImageName sharpenImage", output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testSharpenCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("sharpen %s", INITIAL_IMAGE_NAME),
+            output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -1421,12 +1658,13 @@ public class ControllerIntegrationTest {
   @Test
   public void testSharpenImageWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sharpen %s sharpenImage", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("sharpen %s sharpenImage",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully sharpened the image."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {16736095,6250495},
-            {6291295,12566463}
+            {16736095, 6250495},
+            {6291295, 12566463}
     }));
     assertEquals(expectedImage, imageMemory.getImage("sharpenImage"));
   }
@@ -1443,9 +1681,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithPureRedImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {6576197, 6576197},
             {6576197, 6576197}
@@ -1456,9 +1696,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithPureBlueImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, blueImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, blueImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {3156513, 3156513},
             {3156513, 3156513}
@@ -1469,9 +1711,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithPureGreenImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, greenImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, greenImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {12889736, 12889736},
             {12889736, 12889736}
@@ -1482,9 +1726,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithPureGreyImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, greyImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, greyImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {11311479, 11311479},
             {11311479, 11311479}
@@ -1495,9 +1741,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithPureWhiteImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, whiteImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, whiteImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {16777198, 16777198},
             {16777198, 16777198}
@@ -1508,9 +1756,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithPureBlackImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, blackImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, blackImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {0, 0},
             {0, 0}
@@ -1521,15 +1771,18 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaCommandWithInvalidImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController("sepia invalidImageName sepiaImage", output, redImage());
+    initialiseController("sepia invalidImageName sepiaImage", output,
+            redImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Image with name invalidImageName not found in memory"));
+    assertTrue(output.toString().contains("Image with name invalidImageName "
+            + "not found in memory"));
   }
 
   @Test
   public void testSepiaCommandWithInvalidDestinationImageName() {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s", INITIAL_IMAGE_NAME), output, redImage());
+    initialiseController(String.format("sepia %s", INITIAL_IMAGE_NAME),
+            output, redImage());
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
@@ -1537,9 +1790,11 @@ public class ControllerIntegrationTest {
   @Test
   public void testSepiaImageWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
-    initialiseController(String.format("sepia %s sepiaImage", INITIAL_IMAGE_NAME), output, randomImage());
+    initialiseController(String.format("sepia %s sepiaImage",
+            INITIAL_IMAGE_NAME), output, randomImage());
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully converted the image to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
             {6576197, 3156513},
             {12889736, 11311479}
@@ -1554,17 +1809,6 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
-
-
-
-
-
-
-
-
-
-
-
 
 
   private Image redImage() {

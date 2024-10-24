@@ -45,7 +45,10 @@ public class RGB extends AbstractPixel {
    * @param colorTransformationType the type of color transformation to be applied
    * @return the new RGB pixel after the matrix operation.
    */
-  private static Pixel matrixOperation(RGB pixel, LinearColorTransformationType colorTransformationType) {
+  private static Pixel matrixOperation(
+          RGB pixel,
+          LinearColorTransformationType colorTransformationType
+  ) {
     int r = pixel.getRed();
     int g = pixel.getGreen();
     int b = pixel.getBlue();

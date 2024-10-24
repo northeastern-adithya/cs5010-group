@@ -34,11 +34,14 @@ public enum ImageType {
    *
    * @param extension extension of the image type.
    * @return ImageType object.
-   * @throws ImageProcessingRunTimeException.NotImplementedException if the image type is not supported.
+   * @throws ImageProcessingRunTimeException.NotImplementedException if image type is unsupported.
    */
   public static ImageType fromExtension(String extension) {
-    return Arrays.stream(ImageType.values()).filter(imageType -> imageType.getExtension().equals(extension)).findFirst()
-            .orElseThrow(() -> new ImageProcessingRunTimeException.NotImplementedException(String.format("Image type with extension %s not supported", extension)));
+    return Arrays.stream(ImageType.values()).filter(
+        imageType -> imageType.getExtension().equals(extension)).findFirst()
+            .orElseThrow(() -> new ImageProcessingRunTimeException.NotImplementedException(
+                    String.format("Image type with extension %s not supported", extension))
+            );
   }
 
   /**

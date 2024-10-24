@@ -83,9 +83,9 @@ public class RenderedImage implements Image {
 
   @Override
   public String toString() {
-    return "RenderedImage{" +
-            "pixels=" + Arrays.deepToString(pixels) +
-            '}';
+    return "RenderedImage{"
+            + "pixels=" + Arrays.deepToString(pixels)
+            + '}';
   }
 
   @Override
