@@ -12,6 +12,12 @@ import model.pixels.Pixel;
  * and represents an image containing pixels.
  */
 public class RenderedImage implements Image {
+  /**
+   * The pixel array of the image.
+   * The first index represents the x-coordinate of the pixel.
+   * The second index represents the y-coordinate of the pixel.
+   * Images are a combination of pixels.
+   */
   private final Pixel[][] pixels;
 
   /**
@@ -19,9 +25,13 @@ public class RenderedImage implements Image {
    *
    * @param pixels the pixel array of the image
    * @throws NullPointerException if the pixel array is null.
+   * @throws IllegalArgumentException if the pixel array is empty.
    */
   public RenderedImage(Pixel[][] pixels) {
     Objects.requireNonNull(pixels, "Pixel array cannot be null");
+    if(pixels.length == 0 || pixels[0].length == 0) {
+      throw new IllegalArgumentException("Pixel array cannot be empty");
+    }
     this.pixels = pixels;
   }
 

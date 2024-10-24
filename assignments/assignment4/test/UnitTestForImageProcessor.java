@@ -312,7 +312,7 @@ public class UnitTestForImageProcessor {
     @Before
     public void setUp() {
       memory = new HashMapMemory();
-      Pixel[][] pixels = new Pixel[0][0];
+      Pixel[][] pixels = new Pixel[1][1];
       testImage = new RenderedImage(pixels);
     }
 
@@ -379,7 +379,7 @@ public class UnitTestForImageProcessor {
     public void testEqualsDifferentMemory() {
       HashMapMemory memory1 = new HashMapMemory();
       HashMapMemory memory2 = new HashMapMemory();
-      memory1.addImage("image1", new RenderedImage(new Pixel[0][0]));
+      memory1.addImage("image1", new RenderedImage(new Pixel[1][1]));
       assertFalse(memory1.equals(memory2));
     }
 
@@ -1553,6 +1553,11 @@ public class UnitTestForImageProcessor {
     @Test(expected = NullPointerException.class)
     public void testConstructorWithNull() {
       new RenderedImage(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorWithEmptyPixel() {
+      new RenderedImage(new Pixel[][]{});
     }
 
     @Test

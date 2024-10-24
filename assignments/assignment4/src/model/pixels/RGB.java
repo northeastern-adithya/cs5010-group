@@ -12,19 +12,28 @@ import model.enumeration.LinearColorTransformationType;
 public class RGB extends AbstractPixel {
   /**
    * The red channel of the pixel.
+   * Used integer to store the value of the red channel.
+   * This can have value between 0 and 255.
+   *
    */
   private final int red;
   /**
    * The green channel of the pixel.
+   * Used integer to store the value of the green channel.
+   * This can have value between 0 and 255.
    */
   private final int green;
   /**
    * The blue channel of the pixel.
+   * Used integer to store the value of the blue channel.
+   * This can have value between 0 and 255.
    */
   private final int blue;
 
   /**
    * Constructs an RGB pixel with the given red, green, and blue values.
+   * If the given values are less than 0, the value is set to 0.
+   * If the given values are greater than 255, the value is set to 255.
    *
    * @param red   the red channel of the pixel
    * @param green the green channel of the pixel

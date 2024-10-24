@@ -15,6 +15,8 @@ import utility.StringUtils;
 public class HashMapMemory implements ImageMemory {
   /**
    * A map that stores images.
+   * The key is the name of the image and the value is the image.
+   * Used hashmap for faster access of image.
    */
   private final Map<String, Image> memory;
 
