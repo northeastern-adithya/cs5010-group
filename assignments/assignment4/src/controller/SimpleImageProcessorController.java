@@ -46,6 +46,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
 
   /**
    * Constructor to initialize the SimpleImageProcessorController.
+   * Initializes and displays the commands to the user.
    *
    * @param userInput              input coming from user.
    * @param userOutput             output to be displayed to user.
@@ -61,7 +62,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   }
 
   /**
-   * Constructor to initialize the SimpleImageProcessorController.
+   * Validates the input given to the controller.
    *
    * @param input          UserInput object
    * @param output         UserOutput object
