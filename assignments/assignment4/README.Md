@@ -14,7 +14,7 @@
 - To test for a better image use `test_resources/input/dubai.png`
 
 ### Image Citation
-- Testing image `test_resources/input/sample_input.png` was taken from [dummyimage.com](https://dummyimage.com/)
+- Testing image for script `res/sample_input.png` was taken from [dummyimage.com](https://dummyimage.com/)
 - Testing image `test_resources/input/dubai.png` is our own photo and is authorized to be used in this project.
 - Testing images `test_resources/input/random.jpeg`,`test_resources/input/random.jpg`,`test_resources/input/random.png`,`test_resources/input/random.ppm` are generated from our own scripts and are authorized to be used in this project.
 

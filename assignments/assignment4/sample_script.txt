@@ -1,6 +1,6 @@
 # This script processes an image using various operations.
 # It loads a sample image, applies several transformations, and saves the results.
-load test_resources/input/sample_input.png sample-image
+load res/sample_input.png sample-image
 save res/saved_sample_image.png sample-image
 
 # Apply various transformations

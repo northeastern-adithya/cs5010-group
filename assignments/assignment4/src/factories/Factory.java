@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
-import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.enumeration.PixelType;
 import model.memory.HashMapMemory;
@@ -133,7 +132,7 @@ public class Factory {
    * @throws ImageProcessorException.NotImplementedException if the pixel is not implemented
    */
   public static Pixel createPixel(int pixel, PixelType type)
-          throws ImageProcessorException {
+          throws ImageProcessorException.NotImplementedException {
     if (type == PixelType.RGB) {
       return createRGBPixel(pixel);
     } else {

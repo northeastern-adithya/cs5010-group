@@ -3,7 +3,7 @@ package model.enumeration;
 import java.awt.image.BufferedImage;
 
 
-import exception.ImageProcessingRunTimeException;
+
 import exception.ImageProcessorException;
 
 /**
@@ -22,7 +22,8 @@ public enum PixelType {
    * @throws ImageProcessorException.NotImplementedException
    * if the pixel type is not supported.
    */
-  public static PixelType fromBufferedImageType(int type) throws ImageProcessorException {
+  public static PixelType fromBufferedImageType(int type)
+          throws ImageProcessorException.NotImplementedException {
     switch (type) {
       case BufferedImage.TYPE_INT_RGB:
       case BufferedImage.TYPE_INT_ARGB:

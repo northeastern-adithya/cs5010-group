@@ -2,7 +2,7 @@ package model.enumeration;
 
 import java.util.Arrays;
 
-import exception.ImageProcessingRunTimeException;
+
 import exception.ImageProcessorException;
 import utility.IOUtils;
 
@@ -37,7 +37,8 @@ public enum ImageType {
    * @return ImageType object.
    * @throws ImageProcessorException.NotImplementedException if image type is unsupported.
    */
-  public static ImageType fromExtension(String extension) throws ImageProcessorException {
+  public static ImageType fromExtension(String extension)
+          throws ImageProcessorException.NotImplementedException {
     return Arrays.stream(ImageType.values()).filter(
         imageType -> imageType.getExtension().equals(extension)).findFirst()
             .orElseThrow(() -> new ImageProcessorException.NotImplementedException(

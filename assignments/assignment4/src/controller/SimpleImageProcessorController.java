@@ -22,7 +22,8 @@ import view.output.UserOutput;
 
 /**
  * SimpleImageProcessorController class that implements the
- * ImageProcessorController interface and processes the commands entered by the user.
+ * ImageProcessorController interface and processes the commands entered by
+ * the user.
  * It handles communication with user along with controlling the model.
  */
 public class SimpleImageProcessorController implements ImageProcessorController {
@@ -89,18 +90,18 @@ public class SimpleImageProcessorController implements ImageProcessorController 
 
   @Override
   public void processCommands() throws ImageProcessingRunTimeException.QuitException {
-     execute(userInput);
+    execute(userInput);
   }
 
 
   private void execute(UserInput input) {
     try {
       Scanner scanner = new Scanner(input.getUserInput());
-      while(scanner.hasNext()){
+      while (scanner.hasNext()) {
         String userInput = scanner.next();
         Optional<UserCommand> command = UserCommand.getCommand(userInput);
         if (command.isPresent()) {
-          ExecutionStatus status =  executeCommand(command.get(), scanner);
+          ExecutionStatus status = executeCommand(command.get(), scanner);
           displayMessage(status.getMessage());
         } else {
           displayMessage(String.format("Invalid command: %s", userInput));
@@ -117,8 +118,11 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @param command command to be executed.
    * @param scanner scanner to read the command arguments.
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException              if an error occurs while executing the command.
-   * @throws ImageProcessingRunTimeException.QuitException if user wants to quit the application.
+   * @throws ImageProcessorException                       if an error occurs
+   *                                                       while executing
+   *                                                       the command.
+   * @throws ImageProcessingRunTimeException.QuitException if user wants to
+   *                                                       quit the application.
    */
   private ExecutionStatus executeCommand(UserCommand command, Scanner scanner)
           throws ImageProcessorException {
@@ -160,7 +164,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
       case HELP:
         return executeHelpCommand();
       case QUIT:
-        throw new ImageProcessingRunTimeException.QuitException("Shutting down application");
+        throw new ImageProcessingRunTimeException.QuitException("Shutting "
+                + "down application");
       default:
         return new ExecutionStatus(false, "Invalid command.");
     }
@@ -171,7 +176,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeLoadCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
@@ -184,7 +190,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeSaveCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
@@ -197,12 +204,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeRedComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createRedComponent(arguments.get(0), arguments.get(1));
+    imageProcessingService.createRedComponent(arguments.get(0),
+            arguments.get(1));
     return new ExecutionStatus(true, "Successfully created red component.");
   }
 
@@ -211,12 +220,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeBlueComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createBlueComponent(arguments.get(0), arguments.get(1));
+    imageProcessingService.createBlueComponent(arguments.get(0),
+            arguments.get(1));
     return new ExecutionStatus(true, "Successfully created blue component.");
   }
 
@@ -225,12 +236,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeGreenComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createGreenComponent(arguments.get(0), arguments.get(1));
+    imageProcessingService.createGreenComponent(arguments.get(0),
+            arguments.get(1));
     return new ExecutionStatus(true, "Successfully created green component.");
   }
 
@@ -239,12 +252,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeValueComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createValueComponent(arguments.get(0), arguments.get(1));
+    imageProcessingService.createValueComponent(arguments.get(0),
+            arguments.get(1));
     return new ExecutionStatus(true, "Successfully created value component.");
   }
 
@@ -253,12 +268,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeLumaComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createLumaComponent(arguments.get(0), arguments.get(1));
+    imageProcessingService.createLumaComponent(arguments.get(0),
+            arguments.get(1));
     return new ExecutionStatus(true, "Successfully created luma component.");
   }
 
@@ -267,13 +284,16 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeIntensityComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createIntensityComponent(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully created intensity component.");
+    imageProcessingService.createIntensityComponent(arguments.get(0),
+            arguments.get(1));
+    return new ExecutionStatus(true, "Successfully created intensity " +
+            "component.");
   }
 
   /**
@@ -281,13 +301,15 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeHorizontalFlipCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.horizontalFlip(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully flipped the image horizontally.");
+    return new ExecutionStatus(true, "Successfully flipped the image " +
+            "horizontally.");
   }
 
   /**
@@ -295,13 +317,15 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeVerticalFlipCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.verticalFlip(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully flipped the image vertically.");
+    return new ExecutionStatus(true, "Successfully flipped the image " +
+            "vertically.");
   }
 
   /**
@@ -309,18 +333,22 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeBrightenCommand(Scanner scanner)
           throws ImageProcessorException {
     if (!scanner.hasNextInt()) {
-      throw new ImageProcessorException("Invalid factor provided for brightening the image.");
+      throw new ImageProcessorException("Invalid factor provided for " +
+              "brightening the image.");
     }
     int brightness = scanner.nextInt();
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.brighten(arguments.get(0), arguments.get(1), brightness);
+    imageProcessingService.brighten(arguments.get(0), arguments.get(1),
+            brightness);
     return new ExecutionStatus(true,
-            String.format("Successfully brightened the image at factor:%s", brightness));
+            String.format("Successfully brightened the image at factor:%s",
+                    brightness));
   }
 
   /**
@@ -328,7 +356,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeRgbSplitCommand(Scanner scanner)
           throws ImageProcessorException {
@@ -344,14 +373,16 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeRgbCombineCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 4);
     imageProcessingService.rgbCombine(arguments.get(0), arguments.get(1),
             arguments.get(2), arguments.get(3));
-    return new ExecutionStatus(true, "Successfully combined the RGB components.");
+    return new ExecutionStatus(true, "Successfully combined the RGB " +
+            "components.");
   }
 
   /**
@@ -359,7 +390,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeBlurCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
@@ -372,7 +404,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeSharpenCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
@@ -385,12 +418,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution.
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeSepiaCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.sepiaImage(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully converted the image to sepia.");
+    return new ExecutionStatus(true, "Successfully converted the image to " +
+            "sepia.");
   }
 
   /**
@@ -398,7 +433,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param scanner scanner to read the command arguments
    * @return ExecutionStatus information of the execution
-   * @throws ImageProcessorException if an error occurs while executing the command
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
    */
   private ExecutionStatus executeRunCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 1);
@@ -406,7 +442,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     if (Objects.isNull(scriptFile)) {
       throw new ImageProcessorException("Script file path cannot be null.");
     }
-    try (BufferedReader reader = new BufferedReader(new FileReader(scriptFile))) {
+    try (BufferedReader reader =
+                 new BufferedReader(new FileReader(scriptFile))) {
       String line;
       while ((line = reader.readLine()) != null) {
         if (shouldSkipLine(line)) {
@@ -416,7 +453,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
       }
 
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error reading script file: %s",
+      throw new ImageProcessorException(String.format("Error reading script " +
+                      "file: %s",
               scriptFile), e);
     }
 

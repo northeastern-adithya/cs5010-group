@@ -372,7 +372,7 @@ public class UnitTestForImageProcessor {
     @Test
     public void testEqualsNull() {
       HashMapMemory memory1 = new HashMapMemory();
-      assertFalse(memory1.equals(null));
+      assertNotEquals(null, memory1);
     }
 
     @Test
@@ -938,8 +938,8 @@ public class UnitTestForImageProcessor {
     public void testGetImageTypeFromPath() throws ImageProcessorException {
       assertEquals(ImageType.JPG, ImageType.getImageTypeFromPath("image.jpg"));
       assertEquals(ImageType.PNG, ImageType.getImageTypeFromPath("image.png"));
-      assertEquals(ImageType.JPEG, ImageType.getImageTypeFromPath("image" +
-              ".jpeg"));
+      assertEquals(ImageType.JPEG, ImageType.getImageTypeFromPath("image"
+              + ".jpeg"));
       assertEquals(ImageType.PPM, ImageType.getImageTypeFromPath("image.ppm"));
     }
 
@@ -2443,6 +2443,10 @@ public class UnitTestForImageProcessor {
     }
   }
 
+  /**
+   * Test class for testing instantiation of various classes
+   * by factory.
+   */
   public static class FactoryTest {
     private Pixel[][] testPixels;
     private Image redComponent;
@@ -2493,8 +2497,8 @@ public class UnitTestForImageProcessor {
               Factory.createController(userInput, userOutput, processor);
 
       assertNotNull("Controller should not be null", controller);
-      assertTrue("Controller should be instance of " +
-                      "SimpleImageProcessorController",
+      assertTrue("Controller should be instance of "
+                      + "SimpleImageProcessorController",
               controller instanceof SimpleImageProcessorController);
     }
 
@@ -2572,8 +2576,8 @@ public class UnitTestForImageProcessor {
       ImageProcessingService processor = Factory.createImageProcessor(memory);
 
       assertNotNull("Image processor should not be null", processor);
-      assertTrue("Image processor should be instance of " +
-                      "FileImageProcessingService",
+      assertTrue("Image processor should be instance of "
+                      + "FileImageProcessingService",
               processor instanceof FileImageProcessingService);
     }
 
@@ -2612,6 +2616,9 @@ public class UnitTestForImageProcessor {
     }
   }
 
+  /**
+   * Test class for testing the FileImageProcessingService class.
+   */
   public static class FileImageProcessingServiceTest {
     private FileImageProcessingService service;
     private ImageMemory memory;
@@ -2860,8 +2867,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testSepia() throws ImageProcessorException {
       Image testImage =
-              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
-100)}});
+              Factory.createImage(new Pixel[][]{new Pixel[]{
+              new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage("original", "sepia");
@@ -2878,8 +2885,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testValueComponent() throws ImageProcessorException {
       Image testImage =
-              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
-100)}});
+              Factory.createImage(new Pixel[][]{new Pixel[]{
+              new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent("original", "value");
@@ -2937,7 +2944,7 @@ public class UnitTestForImageProcessor {
   }
 
   /**
-   * Test class for image processor app
+   * Test class for image processor app.
    */
   public static class TestImageProcessorApplication {
 

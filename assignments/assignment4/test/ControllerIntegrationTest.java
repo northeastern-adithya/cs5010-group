@@ -35,6 +35,9 @@ public class ControllerIntegrationTest {
   private ImageProcessorController controller;
   private ImageMemory imageMemory;
 
+  /**
+   * Cleans up output directory after test is run.
+   */
   @AfterClass
   public static void cleanUp() {
     try {
@@ -48,7 +51,7 @@ public class ControllerIntegrationTest {
     }
   }
 
-  public static void deleteDirectory(Path path) throws IOException {
+  private static void deleteDirectory(Path path) throws IOException {
     if (Files.exists(path)) {
       Files.walk(path)
               .sorted(Comparator.reverseOrder())
@@ -226,8 +229,8 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
-                    .append("load test_resources/input/random.jpeg " +
-                            "random-jpeg\n")
+                    .append("load test_resources/input/random.jpeg "
+                            + "random-jpeg\n")
                     .append("save test_resources/output/random-jpeg.jpeg"
                             + " random-jpeg\n")
                     .toString(),
@@ -244,8 +247,8 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
-                    .append("load test_resources/input/random.jpg " +
-                            "random-jpg\n")
+                    .append("load test_resources/input/random.jpg "
+                            + "random-jpg\n")
                     .append("save test_resources/output/random-jpg.jpg"
                             + " random-jpg\n")
                     .toString(),
@@ -2117,12 +2120,11 @@ public class ControllerIntegrationTest {
 
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
-    assertTrue(output.toString().contains("Successfully created red component" +
-            "."));
+    assertTrue(output.toString().contains("Successfully created red component."));
 
     assertTrue(new File("test_resources/output/saved_sample_image.png").exists());
-    assertTrue(new File("test_resources/output" +
-            "/saved_sample_image_red_component.png").exists());
+    assertTrue(new File("test_resources/output"
+            + "/saved_sample_image_red_component.png").exists());
   }
 
   @Test
@@ -2156,8 +2158,8 @@ public class ControllerIntegrationTest {
             null);
     controller.processCommands();
 
-    assertTrue(output.toString().contains("Successfully executed the script " +
-            "file"));
+    assertTrue(output.toString().contains("Successfully executed the script "
+            + "file"));
   }
 
   @Test
@@ -2182,10 +2184,10 @@ public class ControllerIntegrationTest {
                             INITIAL_IMAGE_NAME))
                     .append("vertical-flip horizontalFlip verticalFlip\n")
                     .append("horizontal-flip verticalFlip horizontalFlipNew\n")
-                    .append("vertical-flip horizontalFlipNew " +
-                            "verticalFlipNew\n")
-                    .toString()
-            , output, randomImage);
+                    .append("vertical-flip horizontalFlipNew "
+                            + "verticalFlipNew\n")
+                    .toString(),
+            output, randomImage);
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully flipped the image "
             + "horizontally."));
@@ -2240,19 +2242,19 @@ public class ControllerIntegrationTest {
                     .append("brighten 1 redImage redImage\n")
                     .append("brighten 1 greenImage greenImage\n")
                     .append("brighten 1 blueImage blueImage\n")
-                    .append("rgb-combine combinedImage redImage greenImage " +
-                            "blueImage\n")
-                    .toString()
-            , output, randomImage);
+                    .append("rgb-combine combinedImage redImage greenImage "
+                            + "blueImage\n")
+                    .toString(),
+            output, randomImage);
     controller.processCommands();
     assertTrue(output.toString().contains("Successfully split the image into "
             + "RGB components."));
     assertTrue(output.toString()
             .contains("Successfully combined the RGB components."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-                    {16711937, 66047},
-                    {130817, 8487297}
-            }
+        {16711937, 66047},
+        {130817, 8487297}
+    }
     ));
     assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
   }
