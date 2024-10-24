@@ -68,6 +68,19 @@ public class ControllerIntegrationTest {
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);
   }
 
+  // Save Tests
+  @Test
+  public void testSaveCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("save test_resources/output invalidImageName",
+            output, redImage());
+    controller.processCommands();
+    assertTrue(
+            output.toString()
+            .contains("Image with name invalidImageName "
+                    + "not found in memory"));
+  }
+
   // RED COMPONENT TESTS
   @Test
   public void testCreateRedComponentWithPureRedImage() throws ImageProcessorException {
