@@ -1,6 +1,13 @@
+import org.junit.AfterClass;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
 
 import controller.ImageProcessorController;
 import exception.ImageProcessorException;
@@ -26,6 +33,28 @@ public class ControllerIntegrationTest {
   private static final String INITIAL_IMAGE_NAME = "initialImage";
   private ImageProcessorController controller;
   private ImageMemory imageMemory;
+
+  @AfterClass
+  public static void cleanUp() {
+    try {
+      deleteDirectory(Paths.get("test_resources/output"));
+    } catch (IOException e) {
+      try {
+        deleteDirectory(Paths.get("test_resources/output"));
+      } catch (IOException e1) {
+        System.out.println("Error deleting output directory");
+      }
+    }
+  }
+
+  public static void deleteDirectory(Path path) throws IOException {
+    if (Files.exists(path)) {
+      Files.walk(path)
+              .sorted(Comparator.reverseOrder())
+              .map(Path::toFile)
+              .forEach(File::delete);
+    }
+  }
 
   private void initialiseController(String input, StringBuilder output,
                                     Image initialImage) {
@@ -190,7 +219,6 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
-
   // GREEN COMPONENT TESTS
   @Test
   public void testCreateGreenComponentWithPureRedImage() throws ImageProcessorException {
@@ -348,7 +376,6 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
-
 
   // BLUE COMPONENT TESTS
   @Test
@@ -758,7 +785,6 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
-
   // LUMA COMPONENT TESTS
   @Test
   public void testCreateLumaComponentWithPureRedImage() throws ImageProcessorException {
@@ -892,7 +918,6 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
-
 
   // HORIZONTAL FLIP TESTS
   @Test
@@ -1243,7 +1268,6 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
-
   // RGB Split tests
   @Test
   public void testRGBSplitOfPureRedImage() throws ImageProcessorException {
@@ -1422,7 +1446,6 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
-
   // Blur tests
   @Test
   public void testBlurImageWithPureRedImage() throws ImageProcessorException {
@@ -1526,6 +1549,9 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
+
+  // Sharpen tests
+
   @Test
   public void testBlurImageWithRandomImage() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
@@ -1548,9 +1574,6 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
-
-
-  // Sharpen tests
 
   @Test
   public void testSharpenImageWithPureRedImage() throws ImageProcessorException {
@@ -1810,6 +1833,142 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
+  // Tests for RGB combine
+  @Test
+  public void testRGBCombineWithPureRedGreenBlueImages() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("rgb-combine combinedImage redImage greenImage "
+            + "blueImage", output, redImage());
+    imageMemory.addImage("redImage", redImage());
+    imageMemory.addImage("greenImage", greenImage());
+    imageMemory.addImage("blueImage", blueImage());
+    controller.processCommands();
+    assertTrue(output.toString()
+            .contains("Successfully combined the RGB components."));
+    Image expectedImage = Factory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
+  }
+
+  @Test
+  public void testRGBCombineWithAllWhiteImages() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("rgb-combine combinedImage redImage greenImage "
+            + "blueImage", output, whiteImage());
+    imageMemory.addImage("redImage", whiteImage());
+    imageMemory.addImage("greenImage", whiteImage());
+    imageMemory.addImage("blueImage", whiteImage());
+    controller.processCommands();
+    assertTrue(output.toString()
+            .contains("Successfully combined the RGB components."));
+    Image expectedImage = Factory.createImage(createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
+  }
+
+  @Test
+  public void testRGBCombineWithAllBlackImages() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("rgb-combine combinedImage redImage greenImage "
+            + "blueImage", output, blackImage());
+    imageMemory.addImage("redImage", blackImage());
+    imageMemory.addImage("greenImage", blackImage());
+    imageMemory.addImage("blueImage", blackImage());
+    controller.processCommands();
+    assertTrue(output.toString()
+            .contains("Successfully combined the RGB components."));
+    Image expectedImage = Factory.createImage(createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
+  }
+
+  @Test
+  public void testRGBCombineWithRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController("rgb-combine combinedImage redImage greenImage "
+            + "blueImage", output, randomImage());
+    imageMemory.addImage("redImage", redImage());
+    imageMemory.addImage("greenImage", randomImage());
+    imageMemory.addImage("blueImage", blueImage());
+    controller.processCommands();
+    assertTrue(output.toString()
+            .contains("Successfully combined the RGB components."));
+    Image expectedImage = Factory.createImage(createPixels(new int[][]{
+            {16711935, 16711935},
+            {16777215, 16744703}
+    }));
+    assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
+  }
+
+  // RUN Command Tests
+  @Test
+  public void testRunCommandWithValidScriptFile() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("run test_resources/test_valid_script.txt",
+            output,
+            null);
+    controller.processCommands();
+
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+    assertTrue(output.toString().contains("Successfully created red component" +
+            "."));
+
+    assertTrue(new File("test_resources/output/saved_sample_image.png").exists());
+    assertTrue(new File("test_resources/output/saved_sample_image_red_component.png").exists());
+  }
+
+  @Test
+  public void testRunCommandWithInvalidScriptFile() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("run test_resources/test_invalid_script.txt",
+            output,
+            null);
+    controller.processCommands();
+
+    assertTrue(output.toString().contains("Invalid command"));
+  }
+
+  @Test
+  public void testRunCommandWithFileNotFound() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("run test_resources/invalid_file.txt",
+            output,
+            null);
+    controller.processCommands();
+
+    assertTrue(output.toString().contains("Error reading script file: "
+            + "test_resources/invalid_file.txt"));
+  }
+
+  @Test
+  public void testRunCommandWithEmptyScriptFile() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("run test_resources/test_empty_script.txt",
+            output,
+            null);
+    controller.processCommands();
+
+    assertTrue(output.toString().contains("Successfully executed the script " +
+            "file"));
+  }
+
+  @Test
+  public void testRunCommandWithInvalidCommandInScriptFile() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("run ",
+            output,
+            null);
+    controller.processCommands();
+
+    assertTrue(output.toString().contains("Invalid command parameters."));
+  }
 
   private Image redImage() {
     int[][] redArray = new int[][]{
@@ -1859,7 +2018,6 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(blackArray));
   }
 
-
   private Image randomImage() {
     int[][] randomArray = new int[][]{
             {16711680, 255},
@@ -1877,4 +2035,5 @@ public class ControllerIntegrationTest {
     }
     return pixels;
   }
+
 }

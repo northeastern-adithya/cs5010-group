@@ -400,7 +400,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @throws ImageProcessorException if an error occurs while executing the command
    */
   private ExecutionStatus executeRunCommand(Scanner scanner) throws ImageProcessorException {
-    String scriptFile = scanner.next();
+    List<String> arguments = extractArguments(scanner, 1);
+    String scriptFile = arguments.get(0);
     if (Objects.isNull(scriptFile)) {
       throw new ImageProcessorException("Script file path cannot be null.");
     }
