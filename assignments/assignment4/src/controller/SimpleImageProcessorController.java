@@ -83,30 +83,31 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    displayMessage(execute(Factory.createUserInput(
-            new StringReader(UserCommand.HELP.getCommand()))).getMessage()
-    );
+    execute(Factory.createUserInput(
+            new StringReader(UserCommand.HELP.getCommand())));
   }
 
   @Override
   public void processCommands() throws ImageProcessingRunTimeException.QuitException {
-    ExecutionStatus executionStatus = execute(userInput);
-    displayMessage(executionStatus.getMessage());
+     execute(userInput);
   }
 
 
-  private ExecutionStatus execute(UserInput input) {
+  private void execute(UserInput input) {
     try {
       Scanner scanner = new Scanner(input.getUserInput());
-      String userInput = scanner.next();
-      Optional<UserCommand> command = UserCommand.getCommand(userInput);
-      if (command.isPresent()) {
-        return executeCommand(command.get(), scanner);
-      } else {
-        return new ExecutionStatus(false, String.format("Invalid command: %s", input));
+      while(scanner.hasNext()){
+        String userInput = scanner.next();
+        Optional<UserCommand> command = UserCommand.getCommand(userInput);
+        if (command.isPresent()) {
+          ExecutionStatus status =  executeCommand(command.get(), scanner);
+          displayMessage(status.getMessage());
+        } else {
+          displayMessage(String.format("Invalid command: %s", userInput));
+        }
       }
     } catch (ImageProcessorException e) {
-      return new ExecutionStatus(false, e.getMessage());
+      displayMessage(e.getMessage());
     }
   }
 
@@ -411,18 +412,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
         if (shouldSkipLine(line)) {
           continue;
         }
-        ExecutionStatus status = execute(Factory.createUserInput(new StringReader(line)));
-        if (status.isSuccess()) {
-          displayMessage(status.getMessage());
-        } else {
-          return status;
-        }
+        execute(Factory.createUserInput(new StringReader(line)));
       }
 
     } catch (IOException e) {
       throw new ImageProcessorException(String.format("Error reading script file: %s",
               scriptFile), e);
     }
+
     return new ExecutionStatus(true, "Successfully executed the script file.");
   }
 

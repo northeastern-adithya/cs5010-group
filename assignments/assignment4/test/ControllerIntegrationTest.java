@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 import controller.ImageProcessorController;
+import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
 import model.enumeration.PixelType;
@@ -67,6 +68,187 @@ public class ControllerIntegrationTest {
             processingService);
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);
   }
+
+  // Save And Tests
+  @Test
+  public void testSaveCommandWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("save test_resources/output invalidImageName",
+            output, redImage());
+    controller.processCommands();
+    assertTrue(
+            output.toString()
+                    .contains("Image with name invalidImageName "
+                            + "not found in memory"));
+  }
+
+  @Test
+  public void testLoadWithInvalidPath() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("load invalidPath.png invalidImageName",
+            output, redImage());
+    controller.processCommands();
+    assertTrue(
+            output.toString()
+                    .contains("Error loading the image file"));
+
+    initialiseController("load invalidPath invalidImageName",
+            output, redImage());
+    controller.processCommands();
+    assertTrue(
+            output.toString()
+                    .contains("Error loading the image file"));
+  }
+
+
+  @Test
+  public void loadFromPngToPng() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            new StringBuilder()
+                    .append("load test_resources/input/random.png " +
+                            "random-png1\n")
+                    .append("save test_resources/output/random-png1.png"
+                            + " random-png1\n")
+                    .append("load test_resources/output/random-png1.png " +
+                            "random-png2\n")
+                    .toString(),
+            output, null);
+
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+
+
+    assertEquals(randomImage(), imageMemory.getImage("random-png1"));
+    assertEquals(randomImage(), imageMemory.getImage("random-png2"));
+    assertEquals(imageMemory.getImage("random-png1"),
+            imageMemory.getImage(
+                    "random-png2"));
+  }
+
+  @Test
+  public void loadAndSaveFromPPMToPPM() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            new StringBuilder()
+                    .append("load test_resources/input/random.ppm " +
+                            "random-ppm1\n")
+                    .append("save test_resources/output/random-ppm1.ppm"
+                            + " random-ppm1\n")
+                    .append("load test_resources/output/random-ppm1.ppm " +
+                            "random-ppm2\n")
+                    .toString(),
+            output, null);
+
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+
+
+    assertEquals(randomImage(), imageMemory.getImage("random-ppm1"));
+    assertEquals(randomImage(), imageMemory.getImage("random-ppm2"));
+    assertEquals(imageMemory.getImage("random-ppm1"),
+            imageMemory.getImage(
+                    "random-ppm2"));
+  }
+
+  @Test
+  public void loadAndSaveFromPPMToPNG() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            new StringBuilder()
+                    .append("load test_resources/input/random.ppm " +
+                            "random-ppm1\n")
+                    .append("save test_resources/output/random-ppm1.png"
+                            + " random-ppm1\n")
+                    .append("load test_resources/output/random-ppm1.png " +
+                            "random-png1\n")
+                    .toString(),
+            output, null);
+
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+
+
+    assertEquals(randomImage(), imageMemory.getImage("random-ppm1"));
+    assertEquals(randomImage(), imageMemory.getImage("random-png1"));
+    assertEquals(imageMemory.getImage("random-ppm1"),
+            imageMemory.getImage(
+                    "random-png1"));
+  }
+
+  @Test
+  public void loadAndSaveFromPNGToPPM() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            new StringBuilder()
+                    .append("load test_resources/input/random.png " +
+                            "random-png1\n")
+                    .append("save test_resources/output/random-png1.ppm"
+                            + " random-png1\n")
+                    .append("load test_resources/output/random-png1.ppm " +
+                            "random-ppm1\n")
+                    .toString(),
+            output, null);
+
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+
+
+    assertEquals(randomImage(), imageMemory.getImage("random-ppm1"));
+    assertEquals(randomImage(), imageMemory.getImage("random-png1"));
+    assertEquals(imageMemory.getImage("random-ppm1"),
+            imageMemory.getImage(
+                    "random-png1"));
+  }
+
+  @Test
+  public void loadAndSaveFromJPEG() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            new StringBuilder()
+                    .append("load test_resources/input/random.jpeg " +
+                            "random-jpeg\n")
+                    .append("save test_resources/output/random-jpeg.jpeg"
+                            + " random-jpeg\n")
+                    .toString(),
+            output, null);
+
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+  }
+
+  @Test
+  public void loadAndSaveFromJPG() {
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            new StringBuilder()
+                    .append("load test_resources/input/random.jpg " +
+                            "random-jpg\n")
+                    .append("save test_resources/output/random-jpg.jpg"
+                            + " random-jpg\n")
+                    .toString(),
+            output, null);
+
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully loaded the image."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
+  }
+
+
+  // Quit Command Tests
+
+  @Test(expected = ImageProcessingRunTimeException.QuitException.class)
+  public void testQUitCommand() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("quit", output, null);
+    controller.processCommands();
+  }
+
 
   // RED COMPONENT TESTS
   @Test
@@ -1921,7 +2103,8 @@ public class ControllerIntegrationTest {
             "."));
 
     assertTrue(new File("test_resources/output/saved_sample_image.png").exists());
-    assertTrue(new File("test_resources/output/saved_sample_image_red_component.png").exists());
+    assertTrue(new File("test_resources/output" +
+            "/saved_sample_image_red_component.png").exists());
   }
 
   @Test
@@ -1969,6 +2152,116 @@ public class ControllerIntegrationTest {
 
     assertTrue(output.toString().contains("Invalid command parameters."));
   }
+
+
+  @Test
+  public void testVerticalAndHorizontalFlipCombined() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomImage();
+    initialiseController(
+            new StringBuilder()
+                    .append(String.format("horizontal-flip %s horizontalFlip\n",
+                            INITIAL_IMAGE_NAME))
+                    .append("vertical-flip horizontalFlip verticalFlip\n")
+                    .append("horizontal-flip verticalFlip horizontalFlipNew\n")
+                    .append("vertical-flip horizontalFlipNew " +
+                            "verticalFlipNew\n")
+                    .toString()
+            , output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "horizontally."));
+    assertTrue(output.toString().contains("Successfully flipped the image "
+            + "vertically."));
+    assertEquals(
+            Factory.createImage(createPixels(
+                    new int[][]{
+                            {65280, 8421504},
+                            {16711680, 255}
+                    }
+            )),
+            imageMemory.getImage("horizontalFlip")
+
+    );
+
+    assertEquals(
+            Factory.createImage(createPixels(
+                    new int[][]{
+                            {8421504, 65280},
+                            {255, 16711680}
+                    }
+            )),
+            imageMemory.getImage("verticalFlip")
+
+    );
+
+    assertEquals(
+            Factory.createImage(createPixels(
+                    new int[][]{
+                            {255, 16711680},
+                            {8421504, 65280}
+                    }
+            )),
+            imageMemory.getImage("horizontalFlipNew")
+
+    );
+
+    assertEquals(randomImage, imageMemory.getImage("verticalFlipNew"));
+  }
+
+
+  @Test
+  public void rgbSplitAndCombineCombined() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomImage();
+    initialiseController(
+            new StringBuilder()
+                    .append("rgb-split ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" redImage greenImage blueImage\n")
+                    .append("brighten 1 redImage redImage\n")
+                    .append("brighten 1 greenImage greenImage\n")
+                    .append("brighten 1 blueImage blueImage\n")
+                    .append("rgb-combine combinedImage redImage greenImage " +
+                            "blueImage\n")
+                    .toString()
+            , output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Successfully split the image into "
+            + "RGB components."));
+    assertTrue(output.toString()
+            .contains("Successfully combined the RGB components."));
+    Image expectedImage = Factory.createImage(createPixels(new int[][]{
+                    {16711937, 66047},
+                    {130817, 8487297}
+            }
+    ));
+    assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
+  }
+
+
+  @Test
+  public void performMultipleOperationsOntheSameImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image blackImage = blackImage();
+    initialiseController(
+            new StringBuilder()
+                    .append("brighten 1 ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("brighten 0 ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("brighten -1 ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .toString(),
+            output, blackImage);
+
+    controller.processCommands();
+    assertEquals(blackImage, imageMemory.getImage(INITIAL_IMAGE_NAME));
+  }
+
 
   private Image redImage() {
     int[][] redArray = new int[][]{
@@ -2027,13 +2320,18 @@ public class ControllerIntegrationTest {
   }
 
   private Pixel[][] createPixels(int[][] array) {
-    Pixel[][] pixels = new Pixel[array.length][array[0].length];
-    for (int i = 0; i < array.length; i++) {
-      for (int j = 0; j < array[0].length; j++) {
-        pixels[i][j] = Factory.createPixel(array[i][j], PixelType.RGB);
+    try {
+      Pixel[][] pixels = new Pixel[array.length][array[0].length];
+      for (int i = 0; i < array.length; i++) {
+        for (int j = 0; j < array[0].length; j++) {
+          pixels[i][j] = Factory.createPixel(array[i][j], PixelType.RGB);
+        }
       }
+      return pixels;
+    } catch (ImageProcessorException e) {
+      throw new ImageProcessingRunTimeException("Invalid pixel type");
     }
-    return pixels;
   }
+
 
 }

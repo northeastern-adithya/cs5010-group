@@ -43,20 +43,6 @@ public class ImageProcessingRunTimeException extends RuntimeException {
     }
   }
 
-  /**
-   * An exception that is thrown when a method is not implemented.
-   */
-  public static class NotImplementedException extends ImageProcessingRunTimeException {
-
-    /**
-     * Constructs a new NotImplementedException with the given message.
-     *
-     * @param message the message of this NotImplementedException
-     */
-    public NotImplementedException(String message) {
-      super(message);
-    }
-  }
 
   /**
    * An exception that is thrown when the user wants to quit the program.

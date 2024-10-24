@@ -4,11 +4,15 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Optional;
 
+import app.ImageProcessorApp;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
@@ -137,8 +141,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testConstructorWithMessage() {
       String message = "Test message";
-      ImageProcessingRunTimeException.NotImplementedException exception =
-              new ImageProcessingRunTimeException.NotImplementedException(message);
+      ImageProcessorException.NotImplementedException exception =
+              new ImageProcessorException.NotImplementedException(message);
       assertEquals(message, exception.getMessage());
     }
   }
@@ -839,32 +843,32 @@ public class UnitTestForImageProcessor {
   public static class ImageTypeTest {
 
     @Test
-    public void testFromExtension_png() {
+    public void testFromExtension_png() throws ImageProcessorException{
       ImageType imageType = ImageType.fromExtension("png");
       assertEquals(ImageType.PNG, imageType);
     }
 
     @Test
-    public void testFromExtension_ppm() {
+    public void testFromExtension_ppm() throws ImageProcessorException{
       ImageType imageType = ImageType.fromExtension("ppm");
       assertEquals(ImageType.PPM, imageType);
     }
 
     @Test
-    public void testFromExtension_jpg() {
+    public void testFromExtension_jpg() throws ImageProcessorException{
       ImageType imageType = ImageType.fromExtension("jpg");
       assertEquals(ImageType.JPG, imageType);
     }
 
     @Test
-    public void testFromExtension_jpeg() {
+    public void testFromExtension_jpeg() throws ImageProcessorException {
       ImageType imageType = ImageType.fromExtension("jpeg");
       assertEquals(ImageType.JPEG, imageType);
     }
 
     @Test(expected =
-            ImageProcessingRunTimeException.NotImplementedException.class)
-    public void testFromExtension_unsupported() {
+            ImageProcessorException.NotImplementedException.class)
+    public void testFromExtension_unsupported() throws ImageProcessorException {
       ImageType.fromExtension("gif");
     }
 
@@ -910,7 +914,7 @@ public class UnitTestForImageProcessor {
   public static class PixelTypeTest {
 
     @Test
-    public void testFromBufferedImageTypeSupportedTypes() {
+    public void testFromBufferedImageTypeSupportedTypes() throws ImageProcessorException{
       assertEquals(PixelType.RGB,
               PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_RGB));
       assertEquals(PixelType.RGB,
@@ -932,14 +936,14 @@ public class UnitTestForImageProcessor {
     }
 
     @Test(expected =
-            ImageProcessingRunTimeException.NotImplementedException.class)
-    public void testFromBufferedImageTypeUnsupportedType() {
+            ImageProcessorException.NotImplementedException.class)
+    public void testFromBufferedImageTypeUnsupportedType() throws ImageProcessorException {
       PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_GRAY);
     }
 
     @Test(expected =
-            ImageProcessingRunTimeException.NotImplementedException.class)
-    public void testFromBufferedImageTypeInvalidType() {
+            ImageProcessorException.NotImplementedException.class)
+    public void testFromBufferedImageTypeInvalidType() throws ImageProcessorException {
       PixelType.fromBufferedImageType(-1);
     }
   }
@@ -2334,6 +2338,27 @@ public class UnitTestForImageProcessor {
               1, sharpenedImage.getWidth());
       assertEquals("Image height should remain 1",
               1, sharpenedImage.getHeight());
+    }
+  }
+
+
+  /**
+   * Test class for image processor app
+   */
+  public static class TestImageProcessorApplication{
+
+
+    @Test
+    public void testMain(){
+      ByteArrayInputStream inContent = new ByteArrayInputStream("quit\n".getBytes());
+      System.setIn(inContent);
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      String[] args = new String[0];
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString().contains(UserCommand.getUserCommands()));
+      System.setIn(System.in);
+      System.setOut(System.out);
     }
   }
 

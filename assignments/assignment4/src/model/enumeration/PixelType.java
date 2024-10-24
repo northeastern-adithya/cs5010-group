@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 
 import exception.ImageProcessingRunTimeException;
+import exception.ImageProcessorException;
 
 /**
  * Enum representing the type of pixel.
@@ -18,10 +19,10 @@ public enum PixelType {
    *
    * @param type BufferedImage type.
    * @return PixelType object.
-   * @throws ImageProcessingRunTimeException.NotImplementedException
+   * @throws ImageProcessorException.NotImplementedException
    * if the pixel type is not supported.
    */
-  public static PixelType fromBufferedImageType(int type) {
+  public static PixelType fromBufferedImageType(int type) throws ImageProcessorException {
     switch (type) {
       case BufferedImage.TYPE_INT_RGB:
       case BufferedImage.TYPE_INT_ARGB:
@@ -36,7 +37,7 @@ public enum PixelType {
       case BufferedImage.TYPE_BYTE_BINARY:
         return RGB;
       default:
-        throw new ImageProcessingRunTimeException.NotImplementedException(
+        throw new ImageProcessorException.NotImplementedException(
                 String.format("Received an unsupported image type: %s", type)
         );
     }
