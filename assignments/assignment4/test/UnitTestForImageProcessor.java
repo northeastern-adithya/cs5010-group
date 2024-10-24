@@ -4,7 +4,6 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.renderable.RenderedImageFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Optional;
-import java.util.SimpleTimeZone;
 
 import controller.ExecutionStatus;
 import controller.ImageProcessorController;
@@ -45,8 +43,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -2595,15 +2591,10 @@ public class UnitTestForImageProcessor {
       assertEquals("Blue component should match", blue, pixel.getBlue());
     }
 
-    @Test
-    public void testCreatePixelRGB() throws ImageProcessorException {
+    @Test( expected = ImageProcessorException.NotImplementedException.class)
+    public void testCreateInvalidPixel() throws ImageProcessorException {
       int pixelValue = 0xFF9966; // RGB(255, 153, 102)
-      Pixel pixel = Factory.createPixel(pixelValue, PixelType.RGB);
-
-      assertNotNull("Pixel should not be null", pixel);
-      assertEquals("Red component should match", 255, pixel.getRed());
-      assertEquals("Green component should match", 153, pixel.getGreen());
-      assertEquals("Blue component should match", 102, pixel.getBlue());
+      Pixel pixel = Factory.createPixel(pixelValue, null);
     }
 
     @Test

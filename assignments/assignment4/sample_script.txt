@@ -26,6 +26,7 @@ save res/saved_sample_image_v_flip.png sample-image-v-flip
 
 # 6. Brighten the image by 20 and save
 brighten 20 sample-image sample-image-brightened
+save res/saved_sample_image_brightened.png sample-image-brightened
 
 # 7. Darken the image by 20 and save
 brighten -20 sample-image sample-image-darkened
@@ -41,12 +42,14 @@ save res/saved_sample_image_b_split.png sample-image-b-split
 rgb-combine combined-rgb-sample sample-image-r-split sample-image-g-split sample-image-b-split
 save res/saved_combined_rgb_sample_image.png combined-rgb-sample
 
-# 10. Blur the image and save
+# 10. Blur the image twice and save
 blur sample-image sample-image-blurred
+blur sample-image-blurred sample-image-blurred
 save res/saved_sample_image_blurred.png sample-image-blurred
 
-# 11. Sharpen the image and save
+# 11. Sharpen the image twice and save
 sharpen sample-image sample-image-sharpened
+sharpen sample-image-sharpened sample-image-sharpened
 save res/saved_sample_image_sharpened.png sample-image-sharpened
 
 # 12. extract edges and save
