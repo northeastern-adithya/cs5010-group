@@ -31,6 +31,8 @@ public enum PixelType {
       case BufferedImage.TYPE_4BYTE_ABGR_PRE:
       case BufferedImage.TYPE_USHORT_565_RGB:
       case BufferedImage.TYPE_USHORT_555_RGB:
+      case BufferedImage.TYPE_BYTE_INDEXED:
+      case BufferedImage.TYPE_BYTE_BINARY:
         return RGB;
       default:
         throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));

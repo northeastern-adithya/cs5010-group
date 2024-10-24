@@ -389,10 +389,13 @@ public class SimpleImageProcessorController implements ImageProcessorController 
           continue;
         }
         ExecutionStatus status = execute(Factory.createUserInput(new StringReader(line)));
-        if (!status.isSuccess()) {
+        if (status.isSuccess()) {
+          displayMessage(status.getMessage());
+        } else {
           return status;
         }
       }
+
     } catch (IOException e) {
       throw new ImageProcessorException(String.format("Error reading script file: %s", scriptFile), e);
     }
