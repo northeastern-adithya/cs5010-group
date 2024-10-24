@@ -3,6 +3,7 @@ package model.enumeration;
 import java.util.Arrays;
 
 import exception.ImageProcessingRunTimeException;
+import exception.ImageProcessorException;
 import utility.IOUtils;
 
 /**
@@ -34,12 +35,12 @@ public enum ImageType {
    *
    * @param extension extension of the image type.
    * @return ImageType object.
-   * @throws ImageProcessingRunTimeException.NotImplementedException if image type is unsupported.
+   * @throws ImageProcessorException.NotImplementedException if image type is unsupported.
    */
-  public static ImageType fromExtension(String extension) {
+  public static ImageType fromExtension(String extension) throws ImageProcessorException {
     return Arrays.stream(ImageType.values()).filter(
         imageType -> imageType.getExtension().equals(extension)).findFirst()
-            .orElseThrow(() -> new ImageProcessingRunTimeException.NotImplementedException(
+            .orElseThrow(() -> new ImageProcessorException.NotImplementedException(
                     String.format("Image type with extension %s not supported", extension))
             );
   }
@@ -59,7 +60,7 @@ public enum ImageType {
    * @param path the path of the image.
    * @return the type of the image.
    */
-  public static ImageType getImageTypeFromPath(String path) {
+  public static ImageType getImageTypeFromPath(String path) throws ImageProcessorException {
     return ImageType.fromExtension(IOUtils.getExtensionFromPath(path));
   }
 }

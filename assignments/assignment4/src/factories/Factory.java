@@ -130,13 +130,14 @@ public class Factory {
    * @param pixel the pixel to create the pixel
    * @param type  the type of the pixel
    * @return the pixel based on the given pixel and type
-   * @throws ImageProcessingRunTimeException.NotImplementedException if the pixel is not implemented
+   * @throws ImageProcessorException.NotImplementedException if the pixel is not implemented
    */
-  public static Pixel createPixel(int pixel, PixelType type) {
+  public static Pixel createPixel(int pixel, PixelType type)
+          throws ImageProcessorException {
     if (type == PixelType.RGB) {
       return createRGBPixel(pixel);
     } else {
-      throw new ImageProcessingRunTimeException.NotImplementedException(
+      throw new ImageProcessorException.NotImplementedException(
               String.format("Received an unsupported image type: %s", type)
       );
     }
