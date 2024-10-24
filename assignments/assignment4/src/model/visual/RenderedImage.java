@@ -24,12 +24,12 @@ public class RenderedImage implements Image {
    * Constructs a RenderedImage object with the given pixel array.
    *
    * @param pixels the pixel array of the image
-   * @throws NullPointerException if the pixel array is null.
+   * @throws NullPointerException     if the pixel array is null.
    * @throws IllegalArgumentException if the pixel array is empty.
    */
   public RenderedImage(Pixel[][] pixels) {
     Objects.requireNonNull(pixels, "Pixel array cannot be null");
-    if(pixels.length == 0 || pixels[0].length == 0) {
+    if (pixels.length == 0 || pixels[0].length == 0) {
       throw new IllegalArgumentException("Pixel array cannot be empty");
     }
     this.pixels = pixels;
