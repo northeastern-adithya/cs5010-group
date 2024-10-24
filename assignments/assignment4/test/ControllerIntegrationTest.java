@@ -83,6 +83,19 @@ public class ControllerIntegrationTest {
   }
 
   @Test
+  public void testLoadCommandWithInvalidExtension() {
+    StringBuilder output = new StringBuilder();
+    initialiseController("load test_resources.txt invalidImageName",
+            output, redImage());
+    controller.processCommands();
+    assertTrue(
+            output.toString()
+                    .contains("Image type with extension txt not supported"));
+
+
+  }
+
+  @Test
   public void testLoadWithInvalidPath() {
     StringBuilder output = new StringBuilder();
     initialiseController("load invalidPath.png invalidImageName",
@@ -119,6 +132,8 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
 
+    assertTrue(new File("test_resources/output/random-png1.png").exists());
+
 
     assertEquals(randomImage(), imageMemory.getImage("random-png1"));
     assertEquals(randomImage(), imageMemory.getImage("random-png2"));
@@ -145,7 +160,7 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
 
-
+    assertTrue(new File("test_resources/output/random-ppm1.ppm").exists());
     assertEquals(randomImage(), imageMemory.getImage("random-ppm1"));
     assertEquals(randomImage(), imageMemory.getImage("random-ppm2"));
     assertEquals(imageMemory.getImage("random-ppm1"),
@@ -171,7 +186,7 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
 
-
+    assertTrue(new File("test_resources/output/random-ppm1.png").exists());
     assertEquals(randomImage(), imageMemory.getImage("random-ppm1"));
     assertEquals(randomImage(), imageMemory.getImage("random-png1"));
     assertEquals(imageMemory.getImage("random-ppm1"),
@@ -198,6 +213,7 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Successfully saved the image."));
 
 
+    assertTrue(new File("test_resources/output/random-png1.ppm").exists());
     assertEquals(randomImage(), imageMemory.getImage("random-ppm1"));
     assertEquals(randomImage(), imageMemory.getImage("random-png1"));
     assertEquals(imageMemory.getImage("random-ppm1"),
@@ -218,6 +234,7 @@ public class ControllerIntegrationTest {
             output, null);
 
     controller.processCommands();
+    assertTrue(new File("test_resources/output/random-jpeg.jpeg").exists());
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
   }
@@ -235,6 +252,7 @@ public class ControllerIntegrationTest {
             output, null);
 
     controller.processCommands();
+    assertTrue(new File("test_resources/output/random-jpg.jpg").exists());
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
   }
@@ -2260,6 +2278,94 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(blackImage, imageMemory.getImage(INITIAL_IMAGE_NAME));
+  }
+
+  @Test
+  public void performMultipleOperationsOnRandomImage() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image blackImage = randomImage();
+    initialiseController(
+            new StringBuilder()
+                    .append("brighten 1 ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("brighten 0 ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("brighten -1 ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .toString(),
+            output, blackImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16646144, 254},
+                            {65024, 8421504}
+                    }
+            )
+    ), imageMemory.getImage(INITIAL_IMAGE_NAME));
+  }
+
+
+  @Test
+  public void testWithMultipleBlurs() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image blackImage = randomImage();
+    initialiseController(
+            new StringBuilder()
+                    .append("blur ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("blur ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("blur ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .toString(),
+            output, blackImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {1052688, 1052433},
+                            {1052943, 1052688}
+                    }
+            )
+    ), imageMemory.getImage(INITIAL_IMAGE_NAME));
+  }
+
+  @Test
+  public void testWithMultipleSharpen() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image blackImage = randomImage();
+    initialiseController(
+            new StringBuilder()
+                    .append("sharpen ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("sharpen ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .append("sharpen ")
+                    .append(INITIAL_IMAGE_NAME)
+                    .append(" ").append(INITIAL_IMAGE_NAME).append("\n")
+                    .toString(),
+            output, blackImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16777215, 16777215},
+                            {16777215, 16777215}
+                    }
+            )
+    ), imageMemory.getImage(INITIAL_IMAGE_NAME));
   }
 
 
