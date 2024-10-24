@@ -12,7 +12,9 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Optional;
+import java.util.SimpleTimeZone;
 
+import controller.ExecutionStatus;
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
 import app.ImageProcessorApp;
@@ -44,6 +46,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -939,24 +942,25 @@ public class UnitTestForImageProcessor {
     public void testGetImageTypeFromPath() throws ImageProcessorException {
       assertEquals(ImageType.JPG, ImageType.getImageTypeFromPath("image.jpg"));
       assertEquals(ImageType.PNG, ImageType.getImageTypeFromPath("image.png"));
-      assertEquals(ImageType.JPEG, ImageType.getImageTypeFromPath("image.jpeg"));
+      assertEquals(ImageType.JPEG, ImageType.getImageTypeFromPath("image" +
+              ".jpeg"));
       assertEquals(ImageType.PPM, ImageType.getImageTypeFromPath("image.ppm"));
     }
 
     @Test
-    public void testFromExtension_png() throws ImageProcessorException{
+    public void testFromExtension_png() throws ImageProcessorException {
       ImageType imageType = ImageType.fromExtension("png");
       assertEquals(ImageType.PNG, imageType);
     }
 
     @Test
-    public void testFromExtension_ppm() throws ImageProcessorException{
+    public void testFromExtension_ppm() throws ImageProcessorException {
       ImageType imageType = ImageType.fromExtension("ppm");
       assertEquals(ImageType.PPM, imageType);
     }
 
     @Test
-    public void testFromExtension_jpg() throws ImageProcessorException{
+    public void testFromExtension_jpg() throws ImageProcessorException {
       ImageType imageType = ImageType.fromExtension("jpg");
       assertEquals(ImageType.JPG, imageType);
     }
@@ -1015,7 +1019,7 @@ public class UnitTestForImageProcessor {
   public static class PixelTypeTest {
 
     @Test
-    public void testFromBufferedImageTypeSupportedTypes() throws ImageProcessorException{
+    public void testFromBufferedImageTypeSupportedTypes() throws ImageProcessorException {
       assertEquals(PixelType.RGB,
               PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_RGB));
       assertEquals(PixelType.RGB,
@@ -1107,7 +1111,7 @@ public class UnitTestForImageProcessor {
               + "red-component image-name dest-image-name: Create an image with"
               + " the red-component of the image with the given name, and refer"
               + " to it henceforth in the program by the given destination name"
-              +  ".\n"
+              + ".\n"
               + "green-component image-name dest-image-name: Create an image "
               + "with the green-component of the image with the given name, and"
               + " refer to it henceforth in the program by the given "
@@ -1162,7 +1166,6 @@ public class UnitTestForImageProcessor {
 
       assertEquals(expectedCommands, UserCommand.getUserCommands());
     }
-
 
 
   }
@@ -1433,8 +1436,8 @@ public class UnitTestForImageProcessor {
                   + 0.189 * originalBlue));
           int expectedGreen = Math.min(255, (int) (
                   0.349 * originalRed
-                  + 0.686 * originalGreen
-                  + 0.168 * originalBlue));
+                          + 0.686 * originalGreen
+                          + 0.168 * originalBlue));
           int expectedBlue = Math.min(255, (int) (0.272 * originalRed
                   + 0.534 * originalGreen
                   + 0.131 * originalBlue));
@@ -2119,7 +2122,7 @@ public class UnitTestForImageProcessor {
                       Factory.createRGBPixel(100, 150, 200),
                       Factory.createRGBPixel(75, 112, 150)},
               {Factory.createRGBPixel(56, 84, 112),
-                      Factory.createRGBPixel(75 ,112, 150),
+                      Factory.createRGBPixel(75, 112, 150),
                       Factory.createRGBPixel(56, 84, 112)}
       };
 
@@ -2490,10 +2493,12 @@ public class UnitTestForImageProcessor {
       UserOutput userOutput = Factory.createUserOutput(output);
       ImageProcessingService processor = Factory.createImageProcessor(memory);
 
-      ImageProcessorController controller = Factory.createController(userInput, userOutput, processor);
+      ImageProcessorController controller =
+              Factory.createController(userInput, userOutput, processor);
 
       assertNotNull("Controller should not be null", controller);
-      assertTrue("Controller should be instance of SimpleImageProcessorController",
+      assertTrue("Controller should be instance of " +
+                      "SimpleImageProcessorController",
               controller instanceof SimpleImageProcessorController);
     }
 
@@ -2502,16 +2507,21 @@ public class UnitTestForImageProcessor {
       Image image = Factory.createImage(testPixels);
 
       assertNotNull("Image should not be null", image);
-      assertEquals("Image width should match pixel array width", 2, image.getWidth());
-      assertEquals("Image height should match pixel array height", 2, image.getHeight());
+      assertEquals("Image width should match pixel array width", 2,
+              image.getWidth());
+      assertEquals("Image height should match pixel array height", 2,
+              image.getHeight());
 
-      assertEquals("Pixel values should match", testPixels[0][0], image.getPixel(0, 0));
-      assertEquals("Pixel values should match", testPixels[1][1], image.getPixel(1, 1));
+      assertEquals("Pixel values should match", testPixels[0][0],
+              image.getPixel(0, 0));
+      assertEquals("Pixel values should match", testPixels[1][1],
+              image.getPixel(1, 1));
     }
 
     @Test
     public void testCombineRGBComponents() throws ImageProcessorException {
-      Image combinedImage = Factory.combineRGBComponents(redComponent, greenComponent, blueComponent);
+      Image combinedImage = Factory.combineRGBComponents(redComponent,
+              greenComponent, blueComponent);
 
       assertNotNull("Combined image should not be null", combinedImage);
       assertEquals("Combined image width should match component width",
@@ -2543,7 +2553,8 @@ public class UnitTestForImageProcessor {
       }
       Image differentSizeImage = Factory.createImage(differentSizePixels);
 
-      Factory.combineRGBComponents(redComponent, differentSizeImage, blueComponent);
+      Factory.combineRGBComponents(redComponent, differentSizeImage,
+              blueComponent);
     }
 
     @Test(expected = NullPointerException.class)
@@ -2565,7 +2576,8 @@ public class UnitTestForImageProcessor {
       ImageProcessingService processor = Factory.createImageProcessor(memory);
 
       assertNotNull("Image processor should not be null", processor);
-      assertTrue("Image processor should be instance of FileImageProcessingService",
+      assertTrue("Image processor should be instance of " +
+                      "FileImageProcessingService",
               processor instanceof FileImageProcessingService);
     }
 
@@ -2616,8 +2628,10 @@ public class UnitTestForImageProcessor {
     // Create a simple 2x2 test image
     private Image createTestImage() {
       Pixel[][] pixels = {
-              {new RGB(255, 0, 0), new RGB(0, 255, 0)},    // First row: red and green pixels
-              {new RGB(0, 0, 255), new RGB(255, 255, 255)}  // Second row: blue and white pixels
+              {new RGB(255, 0, 0), new RGB(0, 255, 0)},    // First row: red
+              // and green pixels
+              {new RGB(0, 0, 255), new RGB(255, 255, 255)}  // Second row:
+              // blue and white pixels
       };
       return new RenderedImage(pixels);
     }
@@ -2739,7 +2753,8 @@ public class UnitTestForImageProcessor {
       for (int row = 0; row < 2; row++) {
         for (int col = 0; col < 2; col++) {
           Pixel originalPixel = testImage.getPixel(row, col);
-          Pixel flippedPixel = flippedImage.getPixel(row, flippedImage.getHeight() - 1 - col); // Flipped vertically
+          Pixel flippedPixel = flippedImage.getPixel(row,
+                  flippedImage.getHeight() - 1 - col); // Flipped vertically
 
           assertEquals(originalPixel.getRed(), flippedPixel.getRed());
           assertEquals(originalPixel.getGreen(), flippedPixel.getGreen());
@@ -2760,7 +2775,10 @@ public class UnitTestForImageProcessor {
       for (int row = 0; row < 2; row++) {
         for (int col = 0; col < 2; col++) {
           Pixel originalPixel = testImage.getPixel(row, col);
-          Pixel flippedPixel = flippedImage.getPixel(flippedImage.getWidth() - 1 - row, col); // Flipped horizontally
+          Pixel flippedPixel =
+                  flippedImage.getPixel(flippedImage.getWidth() - 1 - row,
+                          col); //
+          // Flipped horizontally
 
           assertEquals(originalPixel.getRed(), flippedPixel.getRed());
           assertEquals(originalPixel.getGreen(), flippedPixel.getGreen());
@@ -2784,17 +2802,26 @@ public class UnitTestForImageProcessor {
         for (int col = 0; col < 2; col++) {
           Pixel originalPixel = testImage.getPixel(row, col);
 
-          assertEquals(originalPixel.getRed(), redImage.getPixel(row, col).getRed());
-          assertEquals(originalPixel.getRed(), redImage.getPixel(row, col).getGreen());
-          assertEquals(originalPixel.getRed(), redImage.getPixel(row, col).getBlue());
+          assertEquals(originalPixel.getRed(),
+                  redImage.getPixel(row, col).getRed());
+          assertEquals(originalPixel.getRed(),
+                  redImage.getPixel(row, col).getGreen());
+          assertEquals(originalPixel.getRed(),
+                  redImage.getPixel(row, col).getBlue());
 
-          assertEquals(originalPixel.getGreen(), greenImage.getPixel(row, col).getRed());
-          assertEquals(originalPixel.getGreen(), greenImage.getPixel(row, col).getGreen());
-          assertEquals(originalPixel.getGreen(), greenImage.getPixel(row, col).getBlue());
+          assertEquals(originalPixel.getGreen(), greenImage.getPixel(row,
+                  col).getRed());
+          assertEquals(originalPixel.getGreen(), greenImage.getPixel(row,
+                  col).getGreen());
+          assertEquals(originalPixel.getGreen(), greenImage.getPixel(row,
+                  col).getBlue());
 
-          assertEquals(originalPixel.getBlue(), blueImage.getPixel(row, col).getRed());
-          assertEquals(originalPixel.getBlue(), blueImage.getPixel(row, col).getGreen());
-          assertEquals(originalPixel.getBlue(), blueImage.getPixel(row, col).getBlue());
+          assertEquals(originalPixel.getBlue(),
+                  blueImage.getPixel(row, col).getRed());
+          assertEquals(originalPixel.getBlue(),
+                  blueImage.getPixel(row, col).getGreen());
+          assertEquals(originalPixel.getBlue(),
+                  blueImage.getPixel(row, col).getBlue());
         }
       }
     }
@@ -2824,7 +2851,9 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlur() throws ImageProcessorException {
-      Image testImage = Factory.createImage(new Pixel[][] {new Pixel[] {new RGB(100, 100, 100)}});
+      Image testImage =
+              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
+                      100)}});
       memory.addImage("original", testImage);
 
       service.blurImage("original", "blurred");
@@ -2839,7 +2868,9 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSepia() throws ImageProcessorException {
-      Image testImage = Factory.createImage(new Pixel[][] {new Pixel[] {new RGB(100, 100, 100)}});
+      Image testImage =
+              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
+100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage("original", "sepia");
@@ -2855,7 +2886,9 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testValueComponent() throws ImageProcessorException {
-      Image testImage = Factory.createImage(new Pixel[][] {new Pixel[] {new RGB(100, 100, 100)}});
+      Image testImage =
+              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
+100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent("original", "value");
@@ -2867,7 +2900,9 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testLumaComponent() throws ImageProcessorException {
-      Image testImage = Factory.createImage(new Pixel[][] {new Pixel[] {new RGB(100, 100, 100)}});
+      Image testImage =
+              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
+                      100)}});
       memory.addImage("original", testImage);
 
       service.createLumaComponent("original", "luma");
@@ -2879,7 +2914,9 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testIntenistyComponent() throws ImageProcessorException {
-      Image testImage = Factory.createImage(new Pixel[][] {new Pixel[] {new RGB(100, 100, 100)}});
+      Image testImage =
+              Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
+               100)}});
       memory.addImage("original", testImage);
 
       service.createIntensityComponent("original", "intensity");
@@ -2892,7 +2929,7 @@ public class UnitTestForImageProcessor {
     @Test
     public void testSharpen() throws ImageProcessorException {
       Image testImage = Factory.createImage(
-              new Pixel[][] {new Pixel[] {new RGB(100, 100, 100)}}
+              new Pixel[][]{new Pixel[]{new RGB(100, 100, 100)}}
       );
       memory.addImage("original", testImage);
 
@@ -2911,12 +2948,13 @@ public class UnitTestForImageProcessor {
   /**
    * Test class for image processor app
    */
-  public static class TestImageProcessorApplication{
+  public static class TestImageProcessorApplication {
 
 
     @Test
-    public void testMain(){
-      ByteArrayInputStream inContent = new ByteArrayInputStream("quit\n".getBytes());
+    public void testMain() {
+      ByteArrayInputStream inContent =
+              new ByteArrayInputStream("quit\n".getBytes());
       System.setIn(inContent);
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
@@ -2927,5 +2965,48 @@ public class UnitTestForImageProcessor {
       System.setOut(System.out);
     }
   }
+
+  /**
+   * Test class for execution status.
+   */
+  public static class TestExecutionStatus {
+
+
+    @Test(expected = NullPointerException.class)
+    public void testConstructor() {
+      new ExecutionStatus(true, null);
+    }
+
+
+    @Test
+    public void testGetters() {
+      ExecutionStatus status = new ExecutionStatus(true, "test");
+      assertEquals("test", status.getMessage());
+      assertTrue(status.isSuccess());
+    }
+
+    @Test
+    public void testEqualsAndHashCode() {
+
+      ExecutionStatus statusOne = new ExecutionStatus(true, "test");
+      ExecutionStatus statusTwo = new ExecutionStatus(true, "test");
+      ExecutionStatus statusThree = new ExecutionStatus(false, "test");
+      ExecutionStatus statusFour = new ExecutionStatus(true, "test1");
+
+      assertEquals(statusOne, statusTwo);
+      assertEquals(statusOne.hashCode(), statusTwo.hashCode());
+
+      assertNotEquals(statusOne, statusThree);
+      assertNotEquals(statusOne.hashCode(), statusThree.hashCode());
+
+      assertNotEquals(statusOne, statusFour);
+      assertNotEquals(statusOne.hashCode(), statusFour.hashCode());
+
+      assertNotEquals(statusOne, null);
+      assertNotEquals(statusOne, "test");
+      assertEquals(statusOne, statusOne);
+    }
+  }
+
 
 }
