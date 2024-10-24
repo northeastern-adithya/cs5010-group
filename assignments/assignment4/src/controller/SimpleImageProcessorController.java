@@ -292,8 +292,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createIntensityComponent(arguments.get(0),
             arguments.get(1));
-    return new ExecutionStatus(true, "Successfully created intensity " +
-            "component.");
+    return new ExecutionStatus(true, "Successfully created intensity "
+            + "component.");
   }
 
   /**
@@ -308,8 +308,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.horizontalFlip(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully flipped the image " +
-            "horizontally.");
+    return new ExecutionStatus(true, "Successfully flipped the image "
+            + "horizontally.");
   }
 
   /**
@@ -324,8 +324,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.verticalFlip(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully flipped the image " +
-            "vertically.");
+    return new ExecutionStatus(true, "Successfully flipped the image "
+            + "vertically.");
   }
 
   /**
@@ -339,8 +339,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeBrightenCommand(Scanner scanner)
           throws ImageProcessorException {
     if (!scanner.hasNextInt()) {
-      throw new ImageProcessorException("Invalid factor provided for " +
-              "brightening the image.");
+      throw new ImageProcessorException("Invalid factor provided for "
+              + "brightening the image.");
     }
     int brightness = scanner.nextInt();
     List<String> arguments = extractArguments(scanner, 2);
@@ -381,8 +381,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     List<String> arguments = extractArguments(scanner, 4);
     imageProcessingService.rgbCombine(arguments.get(0), arguments.get(1),
             arguments.get(2), arguments.get(3));
-    return new ExecutionStatus(true, "Successfully combined the RGB " +
-            "components.");
+    return new ExecutionStatus(true, "Successfully combined the RGB "
+            + "components.");
   }
 
   /**
@@ -424,8 +424,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeSepiaCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.sepiaImage(arguments.get(0), arguments.get(1));
-    return new ExecutionStatus(true, "Successfully converted the image to " +
-            "sepia.");
+    return new ExecutionStatus(true, "Successfully converted the image to "
+            + "sepia.");
   }
 
   /**
@@ -453,9 +453,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
       }
 
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error reading script " +
-                      "file: %s",
-              scriptFile), e);
+      throw new ImageProcessorException(String.format("Error reading script "
+                      + "file: %s", scriptFile), e);
     }
 
     return new ExecutionStatus(true, "Successfully executed the script file.");
