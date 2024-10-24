@@ -122,12 +122,12 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
-                    .append("load test_resources/input/random.png " +
-                            "random-png1\n")
+                    .append("load test_resources/input/random.png "
+                            + "random-png1\n")
                     .append("save test_resources/output/random-png1.png"
                             + " random-png1\n")
-                    .append("load test_resources/output/random-png1.png " +
-                            "random-png2\n")
+                    .append("load test_resources/output/random-png1.png "
+                            + "random-png2\n")
                     .toString(),
             output, null);
 
@@ -150,12 +150,12 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
-                    .append("load test_resources/input/random.ppm " +
-                            "random-ppm1\n")
+                    .append("load test_resources/input/random.ppm "
+                            + "random-ppm1\n")
                     .append("save test_resources/output/random-ppm1.ppm"
                             + " random-ppm1\n")
-                    .append("load test_resources/output/random-ppm1.ppm " +
-                            "random-ppm2\n")
+                    .append("load test_resources/output/random-ppm1.ppm "
+                            + "random-ppm2\n")
                     .toString(),
             output, null);
 
@@ -176,12 +176,12 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
-                    .append("load test_resources/input/random.ppm " +
-                            "random-ppm1\n")
+                    .append("load test_resources/input/random.ppm "
+                            + "random-ppm1\n")
                     .append("save test_resources/output/random-ppm1.png"
                             + " random-ppm1\n")
-                    .append("load test_resources/output/random-ppm1.png " +
-                            "random-png1\n")
+                    .append("load test_resources/output/random-ppm1.png "
+                            + "random-png1\n")
                     .toString(),
             output, null);
 
@@ -202,12 +202,12 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
-                    .append("load test_resources/input/random.png " +
-                            "random-png1\n")
+                    .append("load test_resources/input/random.png "
+                            + "random-png1\n")
                     .append("save test_resources/output/random-png1.ppm"
                             + " random-png1\n")
-                    .append("load test_resources/output/random-png1.ppm " +
-                            "random-ppm1\n")
+                    .append("load test_resources/output/random-png1.ppm "
+                            + "random-ppm1\n")
                     .toString(),
             output, null);
 

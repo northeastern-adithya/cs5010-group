@@ -2868,7 +2868,7 @@ public class UnitTestForImageProcessor {
     public void testSepia() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-              new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage("original", "sepia");
@@ -2886,7 +2886,7 @@ public class UnitTestForImageProcessor {
     public void testValueComponent() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-              new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent("original", "value");
