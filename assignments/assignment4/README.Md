@@ -7,7 +7,10 @@
 ### Steps to Run Script
 - Clone the repository.
 - run `src/app/ImageProcessorApp.java`
-- execute the command `run <path-to-script-file>` on the console.
+- execute the command `run sample-script.txt` on the console.
+
+### Image Citation
+- Testing image was taken from [dummyimage.com](https://dummyimage.com/
 
 ## Packages and MVC Structure
 
