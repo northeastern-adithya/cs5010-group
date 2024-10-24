@@ -4,7 +4,7 @@ import exception.ImageProcessingRunTimeException;
 
 /**
  * Represents the output to the user.
- * This output can be to any source like console, file etc.
+ * This output is displayed through the console.
  */
 public interface UserOutput {
 
