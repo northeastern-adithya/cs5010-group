@@ -8,7 +8,7 @@
 - Clone the repository.
 - Open the project in an IDE.
 - run `src/app/ImageProcessorApp.java`
-- execute the command `run sample-script.txt` on the console (If you face any errors, make sure the project root is set to current working directory.).
+- execute the command `run sample-script.txt` on the console (If you face any errors while loading the file, make sure the project root is set to current working directory.).
 - Output images will be saved in `res/` folder.
 - To view input files go to `test_resources/input/`
 - To test for a better image use `test_resources/input/dubai.png`
