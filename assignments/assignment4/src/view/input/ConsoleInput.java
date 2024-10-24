@@ -4,8 +4,8 @@ import java.io.InputStream;
 import java.util.Objects;
 
 /**
- * Console input represents all the inputs
- * taken from command line .
+ * Represents all the inputs
+ * taken from command line.
  */
 public class ConsoleInput implements UserInput {
 
