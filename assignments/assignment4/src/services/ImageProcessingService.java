@@ -34,7 +34,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the red component cannot be created.
    */
-  void createRedComponent(String imageName, String destinationImageName) throws ImageProcessorException;
+  void createRedComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Creates the green component of the image.
@@ -43,7 +44,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the green component cannot be created.
    */
-  void createGreenComponent(String imageName, String destinationImageName) throws ImageProcessorException;
+  void createGreenComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Creates the blue component of the image.
@@ -52,7 +54,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the blue component cannot be created.
    */
-  void createBlueComponent(String imageName, String destinationImageName) throws ImageProcessorException;
+  void createBlueComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Creates the value component of the image.
@@ -62,7 +65,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the value component cannot be created.
    */
-  void createValueComponent(String imageName, String destinationImageName) throws ImageProcessorException;
+  void createValueComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Creates the luma component of the image.
@@ -72,7 +76,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the luma component cannot be created.
    */
-  void createLumaComponent(String imageName, String destinationImageName) throws ImageProcessorException;
+  void createLumaComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Creates the intensity component of the image.
@@ -82,7 +87,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the intensity component cannot be created.
    */
-  void createIntensityComponent(String imageName, String destinationImageName) throws ImageProcessorException;
+  void createIntensityComponent(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Flips the image horizontally.
@@ -91,7 +97,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the image cannot be flipped vertically.
    */
-  void horizontalFlip(String imageName, String destinationImageName) throws ImageProcessorException;
+  void horizontalFlip(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Flips the image vertically.
@@ -100,7 +107,8 @@ public interface ImageProcessingService {
    * @param destinationImageName the name of the destination image.
    * @throws ImageProcessorException if the image cannot be flipped vertically.
    */
-  void verticalFlip(String imageName, String destinationImageName) throws ImageProcessorException;
+  void verticalFlip(String imageName, String destinationImageName)
+          throws ImageProcessorException;
 
   /**
    * Brightens the image by applying a factor to the image.
@@ -108,10 +116,12 @@ public interface ImageProcessingService {
    * @param imageName            the name of the image.
    * @param destinationImageName the name of the destination image.
    * @param factor               the factor to brighten the image.
-   *                             (positive values increase brightness, negative values decrease brightness)
+   *                             (positive values increase brightness,
+   *                             negative values decrease brightness)
    * @throws ImageProcessorException if the image cannot be brightened.
    */
-  void brighten(String imageName, String destinationImageName, int factor) throws ImageProcessorException;
+  void brighten(String imageName, String destinationImageName, int factor)
+          throws ImageProcessorException;
 
   /**
    * Split the RGB components of the image.
@@ -122,7 +132,11 @@ public interface ImageProcessingService {
    * @param destinationImageNameBlue  the name of the blue image.
    * @throws ImageProcessorException if the RGB components cannot be split.
    */
-  void rgbSplit(String imageName, String destinationImageNameRed, String destinationImageNameGreen, String destinationImageNameBlue) throws ImageProcessorException;
+  void rgbSplit(
+          String imageName,
+          String destinationImageNameRed,
+          String destinationImageNameGreen,
+          String destinationImageNameBlue) throws ImageProcessorException;
 
   /**
    * Combines the RGB components of the image.
@@ -133,7 +147,11 @@ public interface ImageProcessingService {
    * @param blueImageName  the name of the blue image.
    * @throws ImageProcessorException if the RGB components cannot be combined.
    */
-  void rgbCombine(String imageName, String redImageName, String greenImageName, String blueImageName) throws ImageProcessorException;
+  void rgbCombine(
+          String imageName,
+          String redImageName,
+          String greenImageName,
+          String blueImageName) throws ImageProcessorException;
 
 
   /**

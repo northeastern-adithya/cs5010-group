@@ -1,6 +1,5 @@
 package view.input;
 
-import java.io.InputStream;
 import java.util.Objects;
 
 /**

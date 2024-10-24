@@ -96,7 +96,10 @@ public class IOUtils {
       Pixel[][] pixelArray = new Pixel[width][height];
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-          pixelArray[x][y] = Factory.createPixel(image.getRGB(x, y), PixelType.fromBufferedImageType(image.getType()));
+          pixelArray[x][y] = Factory.createPixel(
+                  image.getRGB(x, y),
+                  PixelType.fromBufferedImageType(image.getType())
+          );
         }
       }
       return Factory.createImage(pixelArray);
@@ -115,7 +118,8 @@ public class IOUtils {
    * @param imageType the type of the image.
    * @throws ImageProcessorException if the image cannot be read.
    */
-  public static void write(Image image, String path, ImageType imageType) throws ImageProcessorException {
+  public static void write(Image image, String path, ImageType imageType)
+          throws ImageProcessorException {
     createDirectoryIfNotPresent(path);
     if (ImageType.PPM.equals(imageType)) {
       writeImageForPPM(image, path);
@@ -125,10 +129,15 @@ public class IOUtils {
   }
 
 
-  private static void writeImageUsingImageIO(Image image, String path) throws ImageProcessorException {
+  private static void writeImageUsingImageIO(Image image, String path)
+          throws ImageProcessorException {
     try {
       String extension = getExtensionFromPath(path);
-      BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+      BufferedImage bufferedImage = new BufferedImage(
+              image.getWidth(),
+              image.getHeight(),
+              BufferedImage.TYPE_INT_RGB
+      );
       for (int y = 0; y < image.getHeight(); y++) {
         for (int x = 0; x < image.getWidth(); x++) {
           Pixel pixel = image.getPixel(x, y);
@@ -138,14 +147,19 @@ public class IOUtils {
       }
       File outputFile = new File(path);
       if (!ImageIO.write(bufferedImage, extension, outputFile)) {
-        throw new ImageProcessorException(String.format("No appropriate writer found for format: %s", extension));
+        throw new ImageProcessorException(String.format(
+                "No appropriate writer found for format: %s",
+                extension)
+        );
       }
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error saving the image file to path: %s", path), e);
+      throw new ImageProcessorException(String.format(
+              "Error saving the image file to path: %s", path), e);
     }
   }
 
-  private static void writeImageForPPM(Image image, String path) throws ImageProcessorException {
+  private static void writeImageForPPM(Image image, String path)
+          throws ImageProcessorException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
       writer.write("P3\n");
       writer.write(image.getWidth() + " " + image.getHeight() + "\n");

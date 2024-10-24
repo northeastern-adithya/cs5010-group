@@ -29,11 +29,14 @@ public class ConsoleOutput implements UserOutput {
   }
 
   @Override
-  public void displayMessage(String message) throws ImageProcessingRunTimeException.DisplayException {
+  public void displayMessage(String message)
+          throws ImageProcessingRunTimeException.DisplayException {
     try {
       this.output.append(message).append("\n");
     } catch (IOException e) {
-      throw new ImageProcessingRunTimeException.DisplayException(String.format("Error displaying message:%s", message), e);
+      throw new ImageProcessingRunTimeException.DisplayException(
+              String.format("Error displaying message:%s", message), e
+      );
     }
   }
 }

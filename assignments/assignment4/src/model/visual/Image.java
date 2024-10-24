@@ -99,7 +99,8 @@ public interface Image {
   /**
    * Returns a new image with the horizontal flip of the original image.
    *
-   * @return the image with the horizontal flip of the original image by creating a new image object.
+   * @return the image with the horizontal flip of the original image
+   *         by creating a new image object.
    */
   Image horizontalFlip();
 

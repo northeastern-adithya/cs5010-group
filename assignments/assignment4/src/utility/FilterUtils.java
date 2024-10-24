@@ -28,7 +28,8 @@ public class FilterUtils {
    * @param filterOption the filter option to apply
    * @return the image with the filter applied
    */
-  public static Image applyFilter(Image image, FilterOption filterOption) throws NullPointerException {
+  public static Image applyFilter(Image image, FilterOption filterOption)
+          throws NullPointerException {
     Objects.requireNonNull(image);
     Objects.requireNonNull(filterOption);
     int width = image.getWidth();
@@ -55,7 +56,8 @@ public class FilterUtils {
             }
           }
         }
-        newPixelArray[x][y] = image.getPixel(x, y).createPixel((int) redSum, (int) greenSum, (int) blueSum); // Pixel Factory
+        newPixelArray[x][y] = image.getPixel(x, y)
+                                   .createPixel((int) redSum, (int) greenSum, (int) blueSum);
       }
     }
 

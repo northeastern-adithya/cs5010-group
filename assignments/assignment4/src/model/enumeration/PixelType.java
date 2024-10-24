@@ -18,7 +18,8 @@ public enum PixelType {
    *
    * @param type BufferedImage type.
    * @return PixelType object.
-   * @throws ImageProcessingRunTimeException.NotImplementedException if the pixel type is not supported.
+   * @throws ImageProcessingRunTimeException.NotImplementedException
+   * if the pixel type is not supported.
    */
   public static PixelType fromBufferedImageType(int type) {
     switch (type) {
@@ -35,7 +36,9 @@ public enum PixelType {
       case BufferedImage.TYPE_BYTE_BINARY:
         return RGB;
       default:
-        throw new ImageProcessingRunTimeException.NotImplementedException(String.format("Received an unsupported image type: %s", type));
+        throw new ImageProcessingRunTimeException.NotImplementedException(
+                String.format("Received an unsupported image type: %s", type)
+        );
     }
   }
 }

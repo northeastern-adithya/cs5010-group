@@ -95,11 +95,11 @@ public interface Pixel {
   /**
    * Creates a pixel with the given red, green, and blue components.
    *
-   * @param red the red component of the pixel
+   * @param red   the red component of the pixel
    * @param green the green component of the pixel
-   * @param blue the blue component of the pixel
+   * @param blue  the blue component of the pixel
    * @return the pixel with the given red, green, and blue components
-   * by creating a new pixel object.
+   *         by creating a new pixel object.
    */
   Pixel createPixel(int red, int green, int blue);
 
