@@ -6,11 +6,17 @@
 
 ### Steps to Run Script
 - Clone the repository.
+- Open the project in an IDE.
 - run `src/app/ImageProcessorApp.java`
-- execute the command `run sample-script.txt` on the console.
+- execute the command `run sample-script.txt` on the console (If you face any errors, make sure the project root is set to current working directory.).
+- Output images will be saved in `res/` folder.
+- To view input files go to `test_resources/input/`
+- To test for a better image use `test_resources/input/dubai.png`
 
 ### Image Citation
-- Testing image was taken from [dummyimage.com](https://dummyimage.com/
+- Testing image `test_resources/input/sample_input.png` was taken from [dummyimage.com](https://dummyimage.com/)
+- Testing image `test_resources/input/dubai.png` is our own photo and is authorized to be used in this project.
+- Testing images `test_resources/input/random.jpeg`,`test_resources/input/random.jpg`,`test_resources/input/random.png`,`test_resources/input/random.ppm` are generated from our own scripts and are authorized to be used in this project.
 
 ## Packages and MVC Structure
 
@@ -32,8 +38,19 @@
 - **Classes**:
     - `ImageProcessingRunTimeException`
         - **Purpose**: A generic runtime exception that is used across the image processing application.
+        - **Subclasses**:
+          - DisplayException
+              - **Purpose**: An exception that is thrown when there is an error displaying a message.
+          - QuitException
+            - **Purpose**: An exception that is thrown when the user wants to quit the application.
     - `ImageProcessorException`
-        - **Purpose**: A generic exception that is thrown across the image processing application when there is an error processing an image.
+      - **Purpose**: A generic exception that is thrown across the image processing application when there is an error processing an image.
+      - **Subclasses**:
+          - NotFoundException
+              - **Purpose**: An exception that is thrown when an image is not found in the memory.
+          - NotImplementedException
+              - **Purpose**: An exception that is thrown when a method is not implemented.
+
 
 ### `factories` Package
 - **Classes**:
@@ -117,9 +134,10 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
 1. **Model**:
 - **Purpose**: Represents the data and the business logic of the application.
 - **Packages**:
-    - `memory`: Manages image memory through interfaces like `ImageMemory` and classes like `HashMapImageMemory`.
-    - `pixels`: Contains interfaces and classes for pixel representation, such as `Pixel`, `AbstractPixel`, and `RGB`.
-    - `visual`: Contains interfaces and classes for image representation, such as `Image` and `RenderedImage`.
+    - `model/memory`: Manages image memory through interfaces like `ImageMemory` and classes like `HashMapImageMemory`.
+    - `model/pixels`: Contains interfaces and classes for pixel representation, such as `Pixel`, `AbstractPixel`, and `RGB`.
+    - `model/visual`: Contains interfaces and classes for image representation, such as `Image` and `RenderedImage`.
+    - `services`: Contains interfaces and classes for image processing services, such as `ImageProcessingService` and `SimpleImageProcessingService`.
 
 2. **View**:
 - **Purpose**: Handles the presentation layer and user interface.
