@@ -42,7 +42,9 @@ public class UnitTestForImageProcessor {
     public void testDisplayExceptionMessage() {
       String message = "Error displaying image";
       Throwable cause = new Throwable("Cause of the error");
-      ImageProcessingRunTimeException.DisplayException exception = new ImageProcessingRunTimeException.DisplayException(message, cause);
+      ImageProcessingRunTimeException.DisplayException exception =
+              new ImageProcessingRunTimeException.DisplayException(message,
+                      cause);
       assertEquals(message, exception.getMessage());
     }
 
@@ -50,7 +52,9 @@ public class UnitTestForImageProcessor {
     public void testDisplayExceptionMessageAndCause() {
       String message = "Error displaying image";
       Throwable cause = new Throwable("Cause of the error");
-      ImageProcessingRunTimeException.DisplayException exception = new ImageProcessingRunTimeException.DisplayException(message, cause);
+      ImageProcessingRunTimeException.DisplayException exception =
+              new ImageProcessingRunTimeException.DisplayException(message,
+                      cause);
       assertEquals(message, exception.getMessage());
       assertEquals(cause, exception.getCause());
     }
@@ -60,7 +64,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testConstructorWithMessage() {
       String message = "Test message";
-      ImageProcessingRunTimeException exception = new ImageProcessingRunTimeException(message);
+      ImageProcessingRunTimeException exception =
+              new ImageProcessingRunTimeException(message);
       assertEquals(message, exception.getMessage());
     }
 
@@ -68,7 +73,8 @@ public class UnitTestForImageProcessor {
     public void testConstructorWithMessageAndCause() {
       String message = "Test message";
       Throwable cause = new Throwable("Cause message");
-      ImageProcessingRunTimeException exception = new ImageProcessingRunTimeException(message, cause);
+      ImageProcessingRunTimeException exception =
+              new ImageProcessingRunTimeException(message, cause);
       assertEquals(message, exception.getMessage());
       assertEquals(cause, exception.getCause());
     }
@@ -78,7 +84,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testImageProcessorExceptionMessage() {
       String errorMessage = "Error processing image";
-      ImageProcessorException exception = new ImageProcessorException(errorMessage);
+      ImageProcessorException exception =
+              new ImageProcessorException(errorMessage);
       assertEquals(errorMessage, exception.getMessage());
     }
 
@@ -86,7 +93,8 @@ public class UnitTestForImageProcessor {
     public void testImageProcessorExceptionMessageAndCause() {
       String errorMessage = "Error processing image";
       Throwable cause = new Throwable("Cause of the error");
-      ImageProcessorException exception = new ImageProcessorException(errorMessage, cause);
+      ImageProcessorException exception =
+              new ImageProcessorException(errorMessage, cause);
       assertEquals(errorMessage, exception.getMessage());
       assertEquals(cause, exception.getCause());
     }
@@ -97,7 +105,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testNotFoundExceptionMessage() {
       String errorMessage = "Error processing image";
-      ImageProcessorException.NotFoundException exception = new ImageProcessorException.NotFoundException(errorMessage);
+      ImageProcessorException.NotFoundException exception =
+              new ImageProcessorException.NotFoundException(errorMessage);
       assertEquals(errorMessage, exception.getMessage());
     }
 
@@ -108,7 +117,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testConstructorWithMessage() {
       String message = "Test message";
-      ImageProcessingRunTimeException.NotImplementedException exception = new ImageProcessingRunTimeException.NotImplementedException(message);
+      ImageProcessingRunTimeException.NotImplementedException exception =
+              new ImageProcessingRunTimeException.NotImplementedException(message);
       assertEquals(message, exception.getMessage());
     }
   }
@@ -118,7 +128,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testConstructorWithMessage() {
       String message = "Test message";
-      ImageProcessingRunTimeException.QuitException exception = new ImageProcessingRunTimeException.QuitException(message);
+      ImageProcessingRunTimeException.QuitException exception =
+              new ImageProcessingRunTimeException.QuitException(message);
       assertEquals(message, exception.getMessage());
     }
   }
@@ -180,7 +191,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testConstructorWithValidInputStream() {
-      ConsoleInput consoleInput = new ConsoleInput(new StringReader("test input"));
+      ConsoleInput consoleInput = new ConsoleInput(new StringReader("test " +
+              "input"));
       assertNotNull(consoleInput);
     }
 
@@ -385,7 +397,8 @@ public class UnitTestForImageProcessor {
       assertEquals(50, brighterPixel.getGreen());
       assertEquals(50, brighterPixel.getBlue());
 
-      // Adjusting brightness of black pixel by negative value should still be black
+      // Adjusting brightness of black pixel by negative value should still
+      // be black
       Pixel darkerPixel = blackPixel.adjustBrightness(-50);
       assertEquals(BLACK, darkerPixel.getRed());
       assertEquals(BLACK, darkerPixel.getGreen());
@@ -514,7 +527,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testEqualsSymmetric() {
-      // Symmetric: x.equals(y) should return true if and only if y.equals(x) returns true
+      // Symmetric: x.equals(y) should return true if and only if y.equals(x)
+      // returns true
       RGB x = new RGB(100, 150, 200);
       RGB y = new RGB(100, 150, 200);
 
@@ -570,9 +584,12 @@ public class UnitTestForImageProcessor {
       Pixel luma = pixel.getLuma();
       double[][] lumaKernel = LinearColorTransformationType.LUMA.getKernel();
 
-      int expectedRed = (int) (lumaKernel[0][0] * RED + lumaKernel[0][1] * GREEN + lumaKernel[0][2] * BLUE);
-      int expectedGreen = (int) (lumaKernel[1][0] * RED + lumaKernel[1][1] * GREEN + lumaKernel[1][2] * BLUE);
-      int expectedBlue = (int) (lumaKernel[2][0] * RED + lumaKernel[2][1] * GREEN + lumaKernel[2][2] * BLUE);
+      int expectedRed =
+              (int) (lumaKernel[0][0] * RED + lumaKernel[0][1] * GREEN + lumaKernel[0][2] * BLUE);
+      int expectedGreen =
+              (int) (lumaKernel[1][0] * RED + lumaKernel[1][1] * GREEN + lumaKernel[1][2] * BLUE);
+      int expectedBlue =
+              (int) (lumaKernel[2][0] * RED + lumaKernel[2][1] * GREEN + lumaKernel[2][2] * BLUE);
 
       assertEquals(expectedRed, luma.getRed());
       assertEquals(expectedGreen, luma.getGreen());
@@ -584,9 +601,12 @@ public class UnitTestForImageProcessor {
       Pixel sepia = pixel.getSepia();
       double[][] sepiaKernel = LinearColorTransformationType.SEPIA.getKernel();
 
-      int expectedRed = (int) (sepiaKernel[0][0] * RED + sepiaKernel[0][1] * GREEN + sepiaKernel[0][2] * BLUE);
-      int expectedGreen = (int) (sepiaKernel[1][0] * RED + sepiaKernel[1][1] * GREEN + sepiaKernel[1][2] * BLUE);
-      int expectedBlue = (int) (sepiaKernel[2][0] * RED + sepiaKernel[2][1] * GREEN + sepiaKernel[2][2] * BLUE);
+      int expectedRed =
+              (int) (sepiaKernel[0][0] * RED + sepiaKernel[0][1] * GREEN + sepiaKernel[0][2] * BLUE);
+      int expectedGreen =
+              (int) (sepiaKernel[1][0] * RED + sepiaKernel[1][1] * GREEN + sepiaKernel[1][2] * BLUE);
+      int expectedBlue =
+              (int) (sepiaKernel[2][0] * RED + sepiaKernel[2][1] * GREEN + sepiaKernel[2][2] * BLUE);
 
       assertEquals(expectedRed, sepia.getRed());
       assertEquals(expectedGreen, sepia.getGreen());
@@ -754,10 +774,14 @@ public class UnitTestForImageProcessor {
       Pixel sepia = whitePixel.getSepia();
       double[][] sepiaKernel = LinearColorTransformationType.SEPIA.getKernel();
 
-      // For white pixel, all channels are 255, so we can calculate expected values
-      int expectedRed = (int) ((sepiaKernel[0][0] + sepiaKernel[0][1] + sepiaKernel[0][2]) * WHITE);
-      int expectedGreen = (int) ((sepiaKernel[1][0] + sepiaKernel[1][1] + sepiaKernel[1][2]) * WHITE);
-      int expectedBlue = (int) ((sepiaKernel[2][0] + sepiaKernel[2][1] + sepiaKernel[2][2]) * WHITE);
+      // For white pixel, all channels are 255, so we can calculate expected
+      // values
+      int expectedRed =
+              (int) ((sepiaKernel[0][0] + sepiaKernel[0][1] + sepiaKernel[0][2]) * WHITE);
+      int expectedGreen =
+              (int) ((sepiaKernel[1][0] + sepiaKernel[1][1] + sepiaKernel[1][2]) * WHITE);
+      int expectedBlue =
+              (int) ((sepiaKernel[2][0] + sepiaKernel[2][1] + sepiaKernel[2][2]) * WHITE);
 
       // Values should be clamped to 255 if they exceed it
       expectedRed = Math.min(255, expectedRed);
@@ -796,7 +820,8 @@ public class UnitTestForImageProcessor {
       assertEquals(ImageType.JPEG, imageType);
     }
 
-    @Test(expected = ImageProcessingRunTimeException.NotImplementedException.class)
+    @Test(expected =
+            ImageProcessingRunTimeException.NotImplementedException.class)
     public void testFromExtension_unsupported() {
       ImageType.fromExtension("gif");
     }
@@ -818,7 +843,8 @@ public class UnitTestForImageProcessor {
               {0.2126, 0.7152, 0.0722},
               {0.2126, 0.7152, 0.0722}
       };
-      assertArrayEquals(expectedLumaKernel, LinearColorTransformationType.LUMA.getKernel());
+      assertArrayEquals(expectedLumaKernel,
+              LinearColorTransformationType.LUMA.getKernel());
     }
 
     @Test
@@ -828,7 +854,8 @@ public class UnitTestForImageProcessor {
               {0.349, 0.686, 0.168},
               {0.272, 0.534, 0.131}
       };
-      assertArrayEquals(expectedSepiaKernel, LinearColorTransformationType.SEPIA.getKernel());
+      assertArrayEquals(expectedSepiaKernel,
+              LinearColorTransformationType.SEPIA.getKernel());
     }
   }
 
@@ -836,23 +863,34 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testFromBufferedImageTypeSupportedTypes() {
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_RGB));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_ARGB));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_ARGB_PRE));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_BGR));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_3BYTE_BGR));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_4BYTE_ABGR));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_4BYTE_ABGR_PRE));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_565_RGB));
-      assertEquals(PixelType.RGB, PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_555_RGB));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_RGB));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_ARGB));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_ARGB_PRE));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_INT_BGR));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_3BYTE_BGR));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_4BYTE_ABGR));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_4BYTE_ABGR_PRE));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_565_RGB));
+      assertEquals(PixelType.RGB,
+              PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_555_RGB));
     }
 
-    @Test(expected = ImageProcessingRunTimeException.NotImplementedException.class)
+    @Test(expected =
+            ImageProcessingRunTimeException.NotImplementedException.class)
     public void testFromBufferedImageTypeUnsupportedType() {
-      PixelType.fromBufferedImageType(BufferedImage.TYPE_BYTE_BINARY);
+      PixelType.fromBufferedImageType(BufferedImage.TYPE_USHORT_GRAY);
     }
 
-    @Test(expected = ImageProcessingRunTimeException.NotImplementedException.class)
+    @Test(expected =
+            ImageProcessingRunTimeException.NotImplementedException.class)
     public void testFromBufferedImageTypeInvalidType() {
       PixelType.fromBufferedImageType(-1);
     }
@@ -861,47 +899,108 @@ public class UnitTestForImageProcessor {
   public static class UserCommandTest {
     @Test
     public void testGetCommand() {
-      assertEquals(Optional.of(UserCommand.LOAD), UserCommand.getCommand("load"));
-      assertEquals(Optional.of(UserCommand.SAVE), UserCommand.getCommand("save"));
-      assertEquals(Optional.of(UserCommand.RED_COMPONENT), UserCommand.getCommand("red-component"));
-      assertEquals(Optional.of(UserCommand.GREEN_COMPONENT), UserCommand.getCommand("green-component"));
-      assertEquals(Optional.of(UserCommand.BLUE_COMPONENT), UserCommand.getCommand("blue-component"));
-      assertEquals(Optional.of(UserCommand.VALUE_COMPONENT), UserCommand.getCommand("value-component"));
-      assertEquals(Optional.of(UserCommand.LUMA_COMPONENT), UserCommand.getCommand("luma-component"));
-      assertEquals(Optional.of(UserCommand.INTENSITY_COMPONENT), UserCommand.getCommand("intensity-component"));
-      assertEquals(Optional.of(UserCommand.HORIZONTAL_FLIP), UserCommand.getCommand("horizontal-flip"));
-      assertEquals(Optional.of(UserCommand.VERTICAL_FLIP), UserCommand.getCommand("vertical-flip"));
-      assertEquals(Optional.of(UserCommand.BRIGHTEN), UserCommand.getCommand("brighten"));
-      assertEquals(Optional.of(UserCommand.RGB_SPLIT), UserCommand.getCommand("rgb-split"));
-      assertEquals(Optional.of(UserCommand.RGB_COMBINE), UserCommand.getCommand("rgb-combine"));
-      assertEquals(Optional.of(UserCommand.BLUR), UserCommand.getCommand("blur"));
-      assertEquals(Optional.of(UserCommand.SHARPEN), UserCommand.getCommand("sharpen"));
-      assertEquals(Optional.of(UserCommand.SEPIA), UserCommand.getCommand("sepia"));
+      assertEquals(Optional.of(UserCommand.LOAD), UserCommand.getCommand(
+              "load"));
+      assertEquals(Optional.of(UserCommand.SAVE), UserCommand.getCommand(
+              "save"));
+      assertEquals(Optional.of(UserCommand.RED_COMPONENT),
+              UserCommand.getCommand("red-component"));
+      assertEquals(Optional.of(UserCommand.GREEN_COMPONENT),
+              UserCommand.getCommand("green-component"));
+      assertEquals(Optional.of(UserCommand.BLUE_COMPONENT),
+              UserCommand.getCommand("blue-component"));
+      assertEquals(Optional.of(UserCommand.VALUE_COMPONENT),
+              UserCommand.getCommand("value-component"));
+      assertEquals(Optional.of(UserCommand.LUMA_COMPONENT),
+              UserCommand.getCommand("luma-component"));
+      assertEquals(Optional.of(UserCommand.INTENSITY_COMPONENT),
+              UserCommand.getCommand("intensity-component"));
+      assertEquals(Optional.of(UserCommand.HORIZONTAL_FLIP),
+              UserCommand.getCommand("horizontal-flip"));
+      assertEquals(Optional.of(UserCommand.VERTICAL_FLIP),
+              UserCommand.getCommand("vertical-flip"));
+      assertEquals(Optional.of(UserCommand.BRIGHTEN), UserCommand.getCommand(
+              "brighten"));
+      assertEquals(Optional.of(UserCommand.RGB_SPLIT),
+              UserCommand.getCommand("rgb-split"));
+      assertEquals(Optional.of(UserCommand.RGB_COMBINE),
+              UserCommand.getCommand("rgb-combine"));
+      assertEquals(Optional.of(UserCommand.BLUR), UserCommand.getCommand(
+              "blur"));
+      assertEquals(Optional.of(UserCommand.SHARPEN), UserCommand.getCommand(
+              "sharpen"));
+      assertEquals(Optional.of(UserCommand.SEPIA), UserCommand.getCommand(
+              "sepia"));
       assertEquals(Optional.of(UserCommand.RUN), UserCommand.getCommand("run"));
-      assertEquals(Optional.of(UserCommand.QUIT), UserCommand.getCommand("quit"));
-      assertEquals(Optional.of(UserCommand.HELP), UserCommand.getCommand("help"));
-      assertEquals(Optional.empty(), UserCommand.getCommand("non-existent-command"));
+      assertEquals(Optional.of(UserCommand.QUIT), UserCommand.getCommand(
+              "quit"));
+      assertEquals(Optional.of(UserCommand.HELP), UserCommand.getCommand(
+              "help"));
+      assertEquals(Optional.empty(), UserCommand.getCommand("non-existent" +
+              "-command"));
     }
 
     @Test
     public void testGetUserCommands() {
-      String expectedCommands = "load image-path image-name: Load an image from the specified path and refer it to henceforth in the program by the given image name.\n" +
-              "save image-path image-name: Save the image with the given name to the specified path which should include the name of the file.\n" +
-              "red-component image-name dest-image-name: Create an image with the red-component of the image with the given name, and refer to it henceforth in the program by the given destination name.\n" +
-              "green-component image-name dest-image-name: Create an image with the green-component of the image with the given name, and refer to it henceforth in the program by the given destination name.\n" +
-              "blue-component image-name dest-image-name: Create an image with the blue-component of the image with the given name, and refer to it henceforth in the program by the given destination name.\n" +
-              "value-component image-name dest-image-name: Create an image with the value-component of the image with the given name, and refer to it henceforth in the program by the given destination name.\n" +
-              "luma-component image-name dest-image-name: Create an image with the luma-component of the image with the given name, and refer to it henceforth in the program by the given destination name.\n" +
-              "intensity-component image-name dest-image-name: Create an image with the intensity-component of the image with the given name, and refer to it henceforth in the program by the given destination name.\n" +
-              "horizontal-flip image-name dest-image-name: Flip an image horizontally to create a new image, referred to henceforth by the given destination name.\n" +
-              "vertical-flip image-name dest-image-name: Flip an image vertically to create a new image, referred to henceforth by the given destination name.\n" +
-              "brighten increment image-name dest-image-name: brighten the image by the given increment to create a new image, referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).\n" +
-              "rgb-split image-name dest-image-name-red dest-image-name-green dest-image-name-blue: split the given image into three images containing its red, green and blue components respectively. These would be the same images that would be individually produced with the red-component, green-component and blue-component commands.\n" +
-              "rgb-combine image-name red-image green-image blue-image: Combine the three images that are individually red, green and blue into a single image that gets its red, green and blue components from the three images respectively.\n" +
-              "blur image-name dest-image-name: blur the given image and store the result in another image with the given name.\n" +
-              "sharpen image-name dest-image-name: sharpen the given image and store the result in another image with the given name.\n" +
-              "sepia image-name dest-image-name: produce a sepia-toned version of the given image and store the result in another image with the given name.\n" +
-              "run script-file: Load and run the script commands in the specified file.\n" +
+      String expectedCommands = "load image-path image-name: Load an image " +
+              "from the specified path and refer it to henceforth in the " +
+              "program by the given image name.\n" +
+              "save image-path image-name: Save the image with the given name" +
+              " to the specified path which should include the name of the " +
+              "file.\n" +
+              "red-component image-name dest-image-name: Create an image with" +
+              " the red-component of the image with the given name, and refer" +
+              " to it henceforth in the program by the given destination name" +
+              ".\n" +
+              "green-component image-name dest-image-name: Create an image " +
+              "with the green-component of the image with the given name, and" +
+              " refer to it henceforth in the program by the given " +
+              "destination name.\n" +
+              "blue-component image-name dest-image-name: Create an image " +
+              "with the blue-component of the image with the given name, and " +
+              "refer to it henceforth in the program by the given destination" +
+              " name.\n" +
+              "value-component image-name dest-image-name: Create an image " +
+              "with the value-component of the image with the given name, and" +
+              " refer to it henceforth in the program by the given " +
+              "destination name.\n" +
+              "luma-component image-name dest-image-name: Create an image " +
+              "with the luma-component of the image with the given name, and " +
+              "refer to it henceforth in the program by the given destination" +
+              " name.\n" +
+              "intensity-component image-name dest-image-name: Create an " +
+              "image with the intensity-component of the image with the given" +
+              " name, and refer to it henceforth in the program by the given " +
+              "destination name.\n" +
+              "horizontal-flip image-name dest-image-name: Flip an image " +
+              "horizontally to create a new image, referred to henceforth by " +
+              "the given destination name.\n" +
+              "vertical-flip image-name dest-image-name: Flip an image " +
+              "vertically to create a new image, referred to henceforth by " +
+              "the given destination name.\n" +
+              "brighten increment image-name dest-image-name: brighten the " +
+              "image by the given increment to create a new image, referred " +
+              "to henceforth by the given destination name. The increment may" +
+              " be positive (brightening) or negative (darkening).\n" +
+              "rgb-split image-name dest-image-name-red dest-image-name-green" +
+              " dest-image-name-blue: split the given image into three images" +
+              " containing its red, green and blue components respectively. " +
+              "These would be the same images that would be individually " +
+              "produced with the red-component, green-component and " +
+              "blue-component commands.\n" +
+              "rgb-combine image-name red-image green-image blue-image: " +
+              "Combine the three images that are individually red, green and " +
+              "blue into a single image that gets its red, green and blue " +
+              "components from the three images respectively.\n" +
+              "blur image-name dest-image-name: blur the given image and " +
+              "store the result in another image with the given name.\n" +
+              "sharpen image-name dest-image-name: sharpen the given image " +
+              "and store the result in another image with the given name.\n" +
+              "sepia image-name dest-image-name: produce a sepia-toned " +
+              "version of the given image and store the result in another " +
+              "image with the given name.\n" +
+              "run script-file: Load and run the script commands in the " +
+              "specified file.\n" +
               "quit: Quit the program.\n" +
               "help: Print this help message.\n";
 
@@ -1164,7 +1263,8 @@ public class UnitTestForImageProcessor {
                   0.0722 * original.getBlue());
           Pixel lumaPixel = lumaImage.getPixel(x, y);
 
-          assertEquals(new RGB(expectedLuma, expectedLuma, expectedLuma), lumaPixel);
+          assertEquals(new RGB(expectedLuma, expectedLuma, expectedLuma),
+                  lumaPixel);
         }
       }
     }
@@ -1192,7 +1292,8 @@ public class UnitTestForImageProcessor {
 
           Pixel sepiaPixel = sepiaImage.getPixel(x, y);
 
-          assertEquals(new RGB(expectedRed, expectedGreen, expectedBlue), sepiaPixel);
+          assertEquals(new RGB(expectedRed, expectedGreen, expectedBlue),
+                  sepiaPixel);
         }
       }
     }
@@ -1210,7 +1311,8 @@ public class UnitTestForImageProcessor {
 
           Pixel intensityPixel = intensityImage.getPixel(x, y);
 
-          assertEquals(new RGB(expectedIntensity, expectedIntensity, expectedIntensity),
+          assertEquals(new RGB(expectedIntensity, expectedIntensity,
+                          expectedIntensity),
                   intensityPixel);
         }
       }
@@ -1241,7 +1343,8 @@ public class UnitTestForImageProcessor {
       // Verify pixels are flipped horizontally
       for (int x = 0; x < image.getWidth(); x++) {
         for (int y = 0; y < image.getHeight(); y++) {
-          assertEquals(image.getPixel(x, y), flippedImage.getPixel(image.getWidth() - 1 - x, y));
+          assertEquals(image.getPixel(x, y),
+                  flippedImage.getPixel(image.getWidth() - 1 - x, y));
         }
       }
 
@@ -1256,7 +1359,8 @@ public class UnitTestForImageProcessor {
       // Verify pixels are flipped vertically
       for (int x = 0; x < image.getWidth(); x++) {
         for (int y = 0; y < image.getHeight(); y++) {
-          assertEquals(image.getPixel(x, y), flippedImage.getPixel(x, image.getHeight() - 1 - y));
+          assertEquals(image.getPixel(x, y), flippedImage.getPixel(x,
+                  image.getHeight() - 1 - y));
         }
       }
 
@@ -1376,9 +1480,12 @@ public class UnitTestForImageProcessor {
         for (int y = 0; y < image.getHeight(); y++) {
           Pixel original = image.getPixel(x, y);
           Pixel brightened = brightenedImage.getPixel(x, y);
-          assertEquals(Math.min(255, original.getRed() + 50), brightened.getRed());
-          assertEquals(Math.min(255, original.getGreen() + 50), brightened.getGreen());
-          assertEquals(Math.min(255, original.getBlue() + 50), brightened.getBlue());
+          assertEquals(Math.min(255, original.getRed() + 50),
+                  brightened.getRed());
+          assertEquals(Math.min(255, original.getGreen() + 50),
+                  brightened.getGreen());
+          assertEquals(Math.min(255, original.getBlue() + 50),
+                  brightened.getBlue());
         }
       }
 
@@ -1389,8 +1496,10 @@ public class UnitTestForImageProcessor {
           Pixel original = image.getPixel(x, y);
           Pixel darkened = darkenedImage.getPixel(x, y);
           assertEquals(Math.max(0, original.getRed() - 50), darkened.getRed());
-          assertEquals(Math.max(0, original.getGreen() - 50), darkened.getGreen());
-          assertEquals(Math.max(0, original.getBlue() - 50), darkened.getBlue());
+          assertEquals(Math.max(0, original.getGreen() - 50),
+                  darkened.getGreen());
+          assertEquals(Math.max(0, original.getBlue() - 50),
+                  darkened.getBlue());
         }
       }
     }
@@ -1407,7 +1516,8 @@ public class UnitTestForImageProcessor {
                   0.0722 * original.getBlue());
           Pixel lumaPixel = lumaImage.getPixel(x, y);
 
-          assertEquals(new RGB(expectedLuma, expectedLuma, expectedLuma), lumaPixel);
+          assertEquals(new RGB(expectedLuma, expectedLuma, expectedLuma),
+                  lumaPixel);
         }
       }
     }
@@ -1435,7 +1545,8 @@ public class UnitTestForImageProcessor {
 
           Pixel sepiaPixel = sepiaImage.getPixel(x, y);
 
-          assertEquals(new RGB(expectedRed, expectedGreen, expectedBlue), sepiaPixel);
+          assertEquals(new RGB(expectedRed, expectedGreen, expectedBlue),
+                  sepiaPixel);
         }
       }
     }
@@ -1453,7 +1564,8 @@ public class UnitTestForImageProcessor {
 
           Pixel intensityPixel = intensityImage.getPixel(x, y);
 
-          assertEquals(new RGB(expectedIntensity, expectedIntensity, expectedIntensity),
+          assertEquals(new RGB(expectedIntensity, expectedIntensity,
+                          expectedIntensity),
                   intensityPixel);
         }
       }
@@ -1585,7 +1697,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testAdjustImageBrightness() {
-      // Test brightening a white image (it should remain white as it can't go beyond 255)
+      // Test brightening a white image (it should remain white as it can't
+      // go beyond 255)
       Image brightenedImage = whiteImage.adjustImageBrightness(50);
       assertEquals(new RGB(255, 255, 255), brightenedImage.getPixel(0, 0));
 
@@ -1608,7 +1721,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testGetSepia() {
       Image sepiaImage = whiteImage.getSepia();
-      // Sepia transformation of a white image should result in light sepia tones
+      // Sepia transformation of a white image should result in light sepia
+      // tones
       for (int x = 0; x < whiteImage.getWidth(); x++) {
         for (int y = 0; y < whiteImage.getHeight(); y++) {
           assertEquals(new RGB(255, 255, 238), sepiaImage.getPixel(x, y));
@@ -1689,7 +1803,8 @@ public class UnitTestForImageProcessor {
 
       // Verify pixel retrieval
       Pixel retrievedPixel = singlePixelImage.getPixel(0, 0);
-      assertEquals("Original pixel should match retrieved pixel", originalPixel, retrievedPixel);
+      assertEquals("Original pixel should match retrieved pixel",
+              originalPixel, retrievedPixel);
     }
 
     @Test
@@ -1744,7 +1859,8 @@ public class UnitTestForImageProcessor {
       Pixel intensityPixel = intensityImage.getPixel(0, 0);
 
       assertEquals("Intensity transformation should match expected value",
-              new RGB(expectedIntensity, expectedIntensity, expectedIntensity), intensityPixel);
+              new RGB(expectedIntensity, expectedIntensity,
+                      expectedIntensity), intensityPixel);
     }
 
     @Test
@@ -1768,36 +1884,42 @@ public class UnitTestForImageProcessor {
       Image redImage = singlePixelImage.createRedComponent();
       Pixel redPixel = redImage.getPixel(0, 0);
       assertEquals("Red component should preserve red value only",
-              new RGB(originalPixel.getRed(), originalPixel.getRed(), originalPixel.getRed()), redPixel);
+              new RGB(originalPixel.getRed(), originalPixel.getRed(),
+                      originalPixel.getRed()), redPixel);
 
       // Test Green Component
       Image greenImage = singlePixelImage.createGreenComponent();
       Pixel greenPixel = greenImage.getPixel(0, 0);
       assertEquals("Green component should preserve green value only",
-              new RGB(originalPixel.getGreen(), originalPixel.getGreen(), originalPixel.getGreen()), greenPixel);
+              new RGB(originalPixel.getGreen(), originalPixel.getGreen(),
+                      originalPixel.getGreen()), greenPixel);
 
       // Test Blue Component
       Image blueImage = singlePixelImage.createBlueComponent();
       Pixel bluePixel = blueImage.getPixel(0, 0);
       assertEquals("Blue component should preserve blue value only",
-              new RGB(originalPixel.getBlue(), originalPixel.getBlue(), originalPixel.getBlue()), bluePixel);
+              new RGB(originalPixel.getBlue(), originalPixel.getBlue(),
+                      originalPixel.getBlue()), bluePixel);
     }
 
     @Test
     public void testBrightnessAdjustment() {
       // Test brightening
       int brightenFactor = 50;
-      Image brightenedImage = singlePixelImage.adjustImageBrightness(brightenFactor);
+      Image brightenedImage =
+              singlePixelImage.adjustImageBrightness(brightenFactor);
       Pixel brightenedPixel = brightenedImage.getPixel(0, 0);
 
       assertEquals("Brightened pixel should have increased RGB values",
               new RGB(originalPixel.getRed() + brightenFactor,
                       originalPixel.getGreen() + brightenFactor,
-                      originalPixel.getBlue() + brightenFactor), brightenedPixel);
+                      originalPixel.getBlue() + brightenFactor),
+              brightenedPixel);
 
       // Test darkening
       int darkenFactor = -30;
-      Image darkenedImage = singlePixelImage.adjustImageBrightness(darkenFactor);
+      Image darkenedImage =
+              singlePixelImage.adjustImageBrightness(darkenFactor);
       Pixel darkenedPixel = darkenedImage.getPixel(0, 0);
 
       assertEquals("Darkened pixel should have decreased RGB values",
@@ -1827,7 +1949,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurBlackImage() {
-      Image blurredImage = FilterUtils.applyFilter(blackImage, FilterOption.GAUSSIAN_BLUR);
+      Image blurredImage = FilterUtils.applyFilter(blackImage,
+              FilterOption.GAUSSIAN_BLUR);
 
       Pixel[][] expectedPixels = new Pixel[3][3];
       for (int i = 0; i < 3; i++) {
@@ -1870,27 +1993,36 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurUniformImage() {
-      Image blurredImage = FilterUtils.applyFilter(testImage, FilterOption.GAUSSIAN_BLUR);
+      Image blurredImage = FilterUtils.applyFilter(testImage,
+              FilterOption.GAUSSIAN_BLUR);
       Pixel[][] expectedPixels = {
-              {Factory.createRGBPixel(56, 84, 112), Factory.createRGBPixel(75, 112, 150), Factory.createRGBPixel(56, 84, 112)},
-              {Factory.createRGBPixel(75, 112, 150), Factory.createRGBPixel(100, 150, 200), Factory.createRGBPixel(75, 112, 150)},
-              {Factory.createRGBPixel(56, 84, 112), Factory.createRGBPixel(75, 112, 150), Factory.createRGBPixel(56, 84, 112)}
+              {Factory.createRGBPixel(56, 84, 112), Factory.createRGBPixel(75
+                      , 112, 150), Factory.createRGBPixel(56, 84, 112)},
+              {Factory.createRGBPixel(75, 112, 150),
+                      Factory.createRGBPixel(100, 150, 200),
+                      Factory.createRGBPixel(75, 112, 150)},
+              {Factory.createRGBPixel(56, 84, 112), Factory.createRGBPixel(75
+                      , 112, 150), Factory.createRGBPixel(56, 84, 112)}
       };
 
       for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
           Pixel resultPixel = blurredImage.getPixel(i, j);
           Pixel expectedPixel = expectedPixels[i][j];
-          assertEquals("Pixel red value should be as expected", expectedPixel.getRed(), resultPixel.getRed());
-          assertEquals("Pixel green value should be as expected", expectedPixel.getGreen(), resultPixel.getGreen());
-          assertEquals("Pixel blue value should be as expected", expectedPixel.getBlue(), resultPixel.getBlue());
+          assertEquals("Pixel red value should be as expected",
+                  expectedPixel.getRed(), resultPixel.getRed());
+          assertEquals("Pixel green value should be as expected",
+                  expectedPixel.getGreen(), resultPixel.getGreen());
+          assertEquals("Pixel blue value should be as expected",
+                  expectedPixel.getBlue(), resultPixel.getBlue());
         }
       }
     }
 
     @Test
     public void testImageDimensionsPreserved() {
-      Image blurredImage = FilterUtils.applyFilter(testImage, FilterOption.GAUSSIAN_BLUR);
+      Image blurredImage = FilterUtils.applyFilter(testImage,
+              FilterOption.GAUSSIAN_BLUR);
       assertEquals("Image width should be preserved",
               testImage.getWidth(), blurredImage.getWidth());
       assertEquals("Image height should be preserved",
@@ -1913,7 +2045,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurSinglePixel() {
-      Image blurredImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.GAUSSIAN_BLUR);
+      Image blurredImage = FilterUtils.applyFilter(singlePixelImage,
+              FilterOption.GAUSSIAN_BLUR);
       Pixel resultPixel = blurredImage.getPixel(0, 0);
 
       assertEquals("Single pixel red value should be affected by kernel",
@@ -1926,7 +2059,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSinglePixelDimensionsPreserved() {
-      Image blurredImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.GAUSSIAN_BLUR);
+      Image blurredImage = FilterUtils.applyFilter(singlePixelImage,
+              FilterOption.GAUSSIAN_BLUR);
       assertEquals("Image width should remain 1",
               1, blurredImage.getWidth());
       assertEquals("Image height should remain 1",
@@ -1935,7 +2069,8 @@ public class UnitTestForImageProcessor {
   }
 
   /**
-   * Base test class for Blur filter tests containing common setup and utilities.
+   * Base test class for Blur filter tests containing common setup and
+   * utilities.
    */
   public abstract static class BlurTestBase {
     private static final double DELTA = 0.0001;
@@ -1976,12 +2111,19 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurWhiteImage() {
-      Image blurredImage = FilterUtils.applyFilter(whiteImage, FilterOption.GAUSSIAN_BLUR);
+      Image blurredImage = FilterUtils.applyFilter(whiteImage,
+              FilterOption.GAUSSIAN_BLUR);
 
       Pixel[][] expectedPixels = {
-              {Factory.createRGBPixel(143, 143, 143), Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(143, 143, 143)},
-              {Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(255, 255, 255), Factory.createRGBPixel(191, 191, 191)},
-              {Factory.createRGBPixel(143, 143, 143), Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(143, 143, 143)}
+              {Factory.createRGBPixel(143, 143, 143),
+                      Factory.createRGBPixel(191, 191, 191),
+                      Factory.createRGBPixel(143, 143, 143)},
+              {Factory.createRGBPixel(191, 191, 191),
+                      Factory.createRGBPixel(255, 255, 255),
+                      Factory.createRGBPixel(191, 191, 191)},
+              {Factory.createRGBPixel(143, 143, 143),
+                      Factory.createRGBPixel(191, 191, 191),
+                      Factory.createRGBPixel(143, 143, 143)}
       };
 
       for (int i = 0; i < 3; i++) {
@@ -2018,7 +2160,8 @@ public class UnitTestForImageProcessor {
 
       assertEquals("Center value should be 1", 1.0, kernel[2][2], DELTA);
       assertEquals("Edge value should be -1/8", -0.125, kernel[0][0], DELTA);
-      assertEquals("Near center value should be 1/4", 0.25, kernel[1][2], DELTA);
+      assertEquals("Near center value should be 1/4", 0.25, kernel[1][2],
+              DELTA);
     }
 
     @Test(expected = NullPointerException.class)
@@ -2028,7 +2171,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenWhiteImage() {
-      Image sharpenedImage = FilterUtils.applyFilter(whiteImage, FilterOption.SHARPEN);
+      Image sharpenedImage = FilterUtils.applyFilter(whiteImage,
+              FilterOption.SHARPEN);
 
       for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -2062,7 +2206,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenBlackImage() {
-      Image sharpenedImage = FilterUtils.applyFilter(blackImage, FilterOption.SHARPEN);
+      Image sharpenedImage = FilterUtils.applyFilter(blackImage,
+              FilterOption.SHARPEN);
       Pixel centerPixel = sharpenedImage.getPixel(2, 2);
 
       assertEquals("Black image should remain black (red)",
@@ -2075,7 +2220,8 @@ public class UnitTestForImageProcessor {
   }
 
   /**
-   * Test class for testing the Sharpen filter functionality on normal RGB images.
+   * Test class for testing the Sharpen filter functionality on normal RGB
+   * images.
    */
   public static class SharpenNormalImageTest {
     private Image testImage;
@@ -2093,14 +2239,35 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenUniformImage() {
-      Image sharpenedImage = FilterUtils.applyFilter(testImage, FilterOption.SHARPEN);
+      Image sharpenedImage = FilterUtils.applyFilter(testImage,
+              FilterOption.SHARPEN);
       ;
       Pixel[][] expectedPixels = {
-              {Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(112, 168, 225)},
-              {Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(212, 255, 255), Factory.createRGBPixel(162, 243, 255), Factory.createRGBPixel(212, 255, 255), Factory.createRGBPixel(150, 225, 255)},
-              {Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(162, 243, 255), Factory.createRGBPixel(100, 150, 200), Factory.createRGBPixel(162, 243, 255), Factory.createRGBPixel(112, 168, 225)},
-              {Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(212, 255, 255), Factory.createRGBPixel(162, 243, 255), Factory.createRGBPixel(212, 255, 255), Factory.createRGBPixel(150, 225, 255)},
-              {Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(112, 168, 225)}
+              {Factory.createRGBPixel(112, 168, 225),
+                      Factory.createRGBPixel(150, 225, 255),
+                      Factory.createRGBPixel(112, 168, 225),
+                      Factory.createRGBPixel(150, 225, 255),
+                      Factory.createRGBPixel(112, 168, 225)},
+              {Factory.createRGBPixel(150, 225, 255),
+                      Factory.createRGBPixel(212, 255, 255),
+                      Factory.createRGBPixel(162, 243, 255),
+                      Factory.createRGBPixel(212, 255, 255),
+                      Factory.createRGBPixel(150, 225, 255)},
+              {Factory.createRGBPixel(112, 168, 225),
+                      Factory.createRGBPixel(162, 243, 255),
+                      Factory.createRGBPixel(100, 150, 200),
+                      Factory.createRGBPixel(162, 243, 255),
+                      Factory.createRGBPixel(112, 168, 225)},
+              {Factory.createRGBPixel(150, 225, 255),
+                      Factory.createRGBPixel(212, 255, 255),
+                      Factory.createRGBPixel(162, 243, 255),
+                      Factory.createRGBPixel(212, 255, 255),
+                      Factory.createRGBPixel(150, 225, 255)},
+              {Factory.createRGBPixel(112, 168, 225),
+                      Factory.createRGBPixel(150, 225, 255),
+                      Factory.createRGBPixel(112, 168, 225),
+                      Factory.createRGBPixel(150, 225, 255),
+                      Factory.createRGBPixel(112, 168, 225)}
       };
 
       for (int i = 0; i < 5; i++) {
@@ -2112,7 +2279,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testImageDimensionsPreserved() {
-      Image sharpenedImage = FilterUtils.applyFilter(testImage, FilterOption.SHARPEN);
+      Image sharpenedImage = FilterUtils.applyFilter(testImage,
+              FilterOption.SHARPEN);
       ;
       assertEquals("Image width should be preserved",
               testImage.getWidth(), sharpenedImage.getWidth());
@@ -2122,7 +2290,8 @@ public class UnitTestForImageProcessor {
   }
 
   /**
-   * Test class for testing the Sharpen filter functionality on single pixel images.
+   * Test class for testing the Sharpen filter functionality on single pixel
+   * images.
    */
   public static class SharpenSinglePixelTest {
     private Image singlePixelImage;
@@ -2136,7 +2305,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenSinglePixel() {
-      Image sharpenedImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.SHARPEN);
+      Image sharpenedImage = FilterUtils.applyFilter(singlePixelImage,
+              FilterOption.SHARPEN);
       Pixel resultPixel = sharpenedImage.getPixel(0, 0);
 
       assertEquals("Single pixel red value should be affected by kernel",
@@ -2149,7 +2319,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSinglePixelDimensionsPreserved() {
-      Image sharpenedImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.SHARPEN);
+      Image sharpenedImage = FilterUtils.applyFilter(singlePixelImage,
+              FilterOption.SHARPEN);
       assertEquals("Image width should remain 1",
               1, sharpenedImage.getWidth());
       assertEquals("Image height should remain 1",
