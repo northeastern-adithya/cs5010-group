@@ -4,14 +4,12 @@ import java.util.Objects;
 
 import exception.ImageProcessorException;
 import factories.Factory;
-import filters.Filter;
-import filters.FilterOption;
-import filters.ImageFilter;
-import model.ImageType;
+import model.enumeration.FilterOption;
+import utility.FilterUtils;
+import model.enumeration.ImageType;
 import model.memory.ImageMemory;
 import model.visual.Image;
-import utility.IOUtility;
-import utility.ImageUtility;
+import utility.IOUtils;
 import utility.StringUtils;
 
 /**
@@ -40,8 +38,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   @Override
   public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
     validateStringParams(imagePath, imageName);
-    ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
-    Image imageToLoad = IOUtility.read(imagePath, imageType);
+    ImageType imageType = ImageType.getImageTypeFromPath(imagePath);
+    Image imageToLoad = IOUtils.read(imagePath, imageType);
     memory.addImage(imageName, imageToLoad);
   }
 
@@ -49,8 +47,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void saveImage(String imagePath, String imageName) throws ImageProcessorException {
     validateStringParams(imagePath, imageName);
     Image imageToSave = memory.getImage(imageName);
-    ImageType imageType = ImageUtility.getExtensionFromPath(imagePath);
-    IOUtility.write(imageToSave, imagePath, imageType);
+    ImageType imageType = ImageType.getImageTypeFromPath(imagePath);
+    IOUtils.write(imageToSave, imagePath, imageType);
   }
 
   @Override
@@ -140,7 +138,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void blurImage(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = new ImageFilter(FilterOption.GAUSSIAN_BLUR).applyFilter(image);
+    Image filteredImage = FilterUtils.applyFilter(image, FilterOption.GAUSSIAN_BLUR);
     memory.addImage(destinationImageName, filteredImage);
   }
 
@@ -148,7 +146,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   public void sharpenImage(String imageName, String destinationImageName) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = new ImageFilter(FilterOption.SHARPEN).applyFilter(image);
+    Image filteredImage = FilterUtils.applyFilter(image, FilterOption.SHARPEN);
     memory.addImage(destinationImageName, filteredImage);
   }
 

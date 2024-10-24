@@ -1,4 +1,4 @@
-package model;
+package model.enumeration;
 
 import java.util.Arrays;
 import java.util.Optional;

@@ -12,20 +12,20 @@ import javax.imageio.ImageIO;
 
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.ImageType;
-import model.PixelType;
+import model.enumeration.ImageType;
+import model.enumeration.PixelType;
 import model.pixels.Pixel;
 import model.visual.Image;
 
 /**
  * Utility class for IO operations.
  */
-public class IOUtility {
+public class IOUtils {
 
   /**
    * Private constructor to prevent instantiation.
    */
-  private IOUtility() {
+  private IOUtils() {
   }
 
 
@@ -127,7 +127,7 @@ public class IOUtility {
 
   private static void writeImageUsingImageIO(Image image, String path) throws ImageProcessorException {
     try {
-      String extension = ImageUtility.getExtension(path);
+      String extension = getExtensionFromPath(path);
       BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
       for (int y = 0; y < image.getHeight(); y++) {
         for (int x = 0; x < image.getWidth(); x++) {
@@ -178,6 +178,16 @@ public class IOUtility {
         throw new ImageProcessorException("Error creating directory for path: " + path);
       }
     }
+  }
+
+  /**
+   * Get the extension of the image from the path.
+   *
+   * @param imagePath the path of the image.
+   * @return the extension of the image.
+   */
+  public static String getExtensionFromPath(String imagePath) {
+    return imagePath.substring(imagePath.lastIndexOf('.') + 1);
   }
 
 }

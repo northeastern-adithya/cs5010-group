@@ -6,7 +6,7 @@ import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import model.PixelType;
+import model.enumeration.PixelType;
 import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;

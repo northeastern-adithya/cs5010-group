@@ -5,7 +5,7 @@ import java.io.StringReader;
 import controller.ImageProcessorController;
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.PixelType;
+import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;

@@ -1,4 +1,4 @@
-package model;
+package model.enumeration;
 
 /**
  * Represents the type of linear transformation

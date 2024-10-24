@@ -2,7 +2,7 @@ package model.pixels;
 
 import java.util.Objects;
 
-import model.LinearColorTransformationType;
+import model.enumeration.LinearColorTransformationType;
 
 /**
  * Represents a pixel in the RGB color space.

@@ -12,13 +12,12 @@ import java.util.Optional;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import filters.Filter;
-import filters.FilterOption;
-import filters.ImageFilter;
-import model.ImageType;
-import model.LinearColorTransformationType;
-import model.PixelType;
-import model.UserCommand;
+import model.enumeration.FilterOption;
+import utility.FilterUtils;
+import model.enumeration.ImageType;
+import model.enumeration.LinearColorTransformationType;
+import model.enumeration.PixelType;
+import model.enumeration.UserCommand;
 import model.memory.HashMapMemory;
 import model.pixels.Pixel;
 import model.pixels.RGB;
@@ -1816,9 +1815,7 @@ public class UnitTestForImageProcessor {
     private Image blackImage;
 
     @Before
-    @Override
     public void setUp() {
-      super.setUp();
       Pixel[][] pixels = new Pixel[3][3];
       for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -1830,8 +1827,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurBlackImage() {
-      Image blurredImage = blurFilter.applyFilter(blackImage);
-      Pixel centerPixel = blurredImage.getPixel(1, 1);
+      Image blurredImage = FilterUtils.applyFilter(blackImage, FilterOption.GAUSSIAN_BLUR);
 
       Pixel[][] expectedPixels = new Pixel[3][3];
       for (int i = 0; i < 3; i++) {
@@ -1862,9 +1858,7 @@ public class UnitTestForImageProcessor {
     private Image testImage;
 
     @Before
-    @Override
     public void setUp() {
-      super.setUp();
       Pixel[][] pixels = new Pixel[3][3];
       for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -1876,7 +1870,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurUniformImage() {
-      Image blurredImage = blurFilter.applyFilter(testImage);
+      Image blurredImage = FilterUtils.applyFilter(testImage, FilterOption.GAUSSIAN_BLUR);
       Pixel[][] expectedPixels = {
               {Factory.createRGBPixel(56, 84, 112), Factory.createRGBPixel(75, 112, 150), Factory.createRGBPixel(56, 84, 112)},
               {Factory.createRGBPixel(75, 112, 150), Factory.createRGBPixel(100, 150, 200), Factory.createRGBPixel(75, 112, 150)},
@@ -1896,7 +1890,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testImageDimensionsPreserved() {
-      Image blurredImage = blurFilter.applyFilter(testImage);
+      Image blurredImage = FilterUtils.applyFilter(testImage, FilterOption.GAUSSIAN_BLUR);
       assertEquals("Image width should be preserved",
               testImage.getWidth(), blurredImage.getWidth());
       assertEquals("Image height should be preserved",
@@ -1911,9 +1905,7 @@ public class UnitTestForImageProcessor {
     private Image singlePixelImage;
 
     @Before
-    @Override
     public void setUp() {
-      super.setUp();
       Pixel[][] pixel = new Pixel[1][1];
       pixel[0][0] = Factory.createRGBPixel(100, 100, 100);
       singlePixelImage = Factory.createImage(pixel);
@@ -1921,7 +1913,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurSinglePixel() {
-      Image blurredImage = blurFilter.applyFilter(singlePixelImage);
+      Image blurredImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.GAUSSIAN_BLUR);
       Pixel resultPixel = blurredImage.getPixel(0, 0);
 
       assertEquals("Single pixel red value should be affected by kernel",
@@ -1934,7 +1926,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSinglePixelDimensionsPreserved() {
-      Image blurredImage = blurFilter.applyFilter(singlePixelImage);
+      Image blurredImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.GAUSSIAN_BLUR);
       assertEquals("Image width should remain 1",
               1, blurredImage.getWidth());
       assertEquals("Image height should remain 1",
@@ -1946,14 +1938,7 @@ public class UnitTestForImageProcessor {
    * Base test class for Blur filter tests containing common setup and utilities.
    */
   public abstract static class BlurTestBase {
-    protected static final double DELTA = 0.0001;
-    protected Filter blurFilter;
-
-    @Before
-    public void setUp() {
-      blurFilter = new ImageFilter(FilterOption.GAUSSIAN_BLUR);
-    }
-
+    private static final double DELTA = 0.0001;
 
     @Test
     public void testGaussianKernelValues() {
@@ -1968,7 +1953,7 @@ public class UnitTestForImageProcessor {
 
     @Test(expected = NullPointerException.class)
     public void testApplyFilterWithNullImage() {
-      blurFilter.applyFilter(null);
+      FilterUtils.applyFilter(null, FilterOption.GAUSSIAN_BLUR);
     }
   }
 
@@ -1979,9 +1964,7 @@ public class UnitTestForImageProcessor {
     private Image whiteImage;
 
     @Before
-    @Override
     public void setUp() {
-      super.setUp();
       Pixel[][] pixels = new Pixel[3][3];
       for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -1993,8 +1976,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testBlurWhiteImage() {
-      Image blurredImage = blurFilter.applyFilter(whiteImage);
-      Pixel centerPixel = blurredImage.getPixel(1, 1);
+      Image blurredImage = FilterUtils.applyFilter(whiteImage, FilterOption.GAUSSIAN_BLUR);
 
       Pixel[][] expectedPixels = {
               {Factory.createRGBPixel(143, 143, 143), Factory.createRGBPixel(191, 191, 191), Factory.createRGBPixel(143, 143, 143)},
@@ -2015,12 +1997,10 @@ public class UnitTestForImageProcessor {
    */
   public static class SharpenWhiteImageTest {
     protected static final double DELTA = 0.0001;
-    private Filter sharpenFilter;
     private Image whiteImage;
 
     @Before
     public void setUp() {
-      sharpenFilter = new ImageFilter(FilterOption.SHARPEN);
       Pixel[][] pixels = new Pixel[5][5];
       for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -2043,12 +2023,12 @@ public class UnitTestForImageProcessor {
 
     @Test(expected = NullPointerException.class)
     public void testApplyFilterWithNullImage() {
-      sharpenFilter.applyFilter(null);
+      FilterUtils.applyFilter(null, FilterOption.SHARPEN);
     }
 
     @Test
     public void testSharpenWhiteImage() {
-      Image sharpenedImage = sharpenFilter.applyFilter(whiteImage);
+      Image sharpenedImage = FilterUtils.applyFilter(whiteImage, FilterOption.SHARPEN);
 
       for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -2067,12 +2047,10 @@ public class UnitTestForImageProcessor {
    * Test class for testing the Sharpen filter functionality on black images.
    */
   public static class SharpenBlackImageTest {
-    private Filter sharpenFilter;
     private Image blackImage;
 
     @Before
     public void setUp() {
-      sharpenFilter = new ImageFilter(FilterOption.SHARPEN);
       Pixel[][] pixels = new Pixel[5][5];
       for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -2084,7 +2062,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenBlackImage() {
-      Image sharpenedImage = sharpenFilter.applyFilter(blackImage);
+      Image sharpenedImage = FilterUtils.applyFilter(blackImage, FilterOption.SHARPEN);
       Pixel centerPixel = sharpenedImage.getPixel(2, 2);
 
       assertEquals("Black image should remain black (red)",
@@ -2100,12 +2078,10 @@ public class UnitTestForImageProcessor {
    * Test class for testing the Sharpen filter functionality on normal RGB images.
    */
   public static class SharpenNormalImageTest {
-    private Filter sharpenFilter;
     private Image testImage;
 
     @Before
     public void setUp() {
-      sharpenFilter = new ImageFilter(FilterOption.SHARPEN);
       Pixel[][] pixels = new Pixel[5][5];
       for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -2117,7 +2093,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenUniformImage() {
-      Image sharpenedImage = sharpenFilter.applyFilter(testImage);
+      Image sharpenedImage = FilterUtils.applyFilter(testImage, FilterOption.SHARPEN);
+      ;
       Pixel[][] expectedPixels = {
               {Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(112, 168, 225), Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(112, 168, 225)},
               {Factory.createRGBPixel(150, 225, 255), Factory.createRGBPixel(212, 255, 255), Factory.createRGBPixel(162, 243, 255), Factory.createRGBPixel(212, 255, 255), Factory.createRGBPixel(150, 225, 255)},
@@ -2135,7 +2112,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testImageDimensionsPreserved() {
-      Image sharpenedImage = sharpenFilter.applyFilter(testImage);
+      Image sharpenedImage = FilterUtils.applyFilter(testImage, FilterOption.SHARPEN);
+      ;
       assertEquals("Image width should be preserved",
               testImage.getWidth(), sharpenedImage.getWidth());
       assertEquals("Image height should be preserved",
@@ -2147,12 +2125,10 @@ public class UnitTestForImageProcessor {
    * Test class for testing the Sharpen filter functionality on single pixel images.
    */
   public static class SharpenSinglePixelTest {
-    private Filter sharpenFilter;
     private Image singlePixelImage;
 
     @Before
     public void setUp() {
-      sharpenFilter = new ImageFilter(FilterOption.SHARPEN);
       Pixel[][] pixel = new Pixel[1][1];
       pixel[0][0] = Factory.createRGBPixel(100, 100, 100);
       singlePixelImage = Factory.createImage(pixel);
@@ -2160,7 +2136,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSharpenSinglePixel() {
-      Image sharpenedImage = sharpenFilter.applyFilter(singlePixelImage);
+      Image sharpenedImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.SHARPEN);
       Pixel resultPixel = sharpenedImage.getPixel(0, 0);
 
       assertEquals("Single pixel red value should be affected by kernel",
@@ -2173,7 +2149,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testSinglePixelDimensionsPreserved() {
-      Image sharpenedImage = sharpenFilter.applyFilter(singlePixelImage);
+      Image sharpenedImage = FilterUtils.applyFilter(singlePixelImage, FilterOption.SHARPEN);
       assertEquals("Image width should remain 1",
               1, sharpenedImage.getWidth());
       assertEquals("Image height should remain 1",

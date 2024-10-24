@@ -14,7 +14,7 @@ import java.util.Scanner;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.UserCommand;
+import model.enumeration.UserCommand;
 import services.ImageProcessingService;
 import utility.StringUtils;
 import view.input.UserInput;

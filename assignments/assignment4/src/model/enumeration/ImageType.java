@@ -1,8 +1,9 @@
-package model;
+package model.enumeration;
 
 import java.util.Arrays;
 
 import exception.ImageProcessingRunTimeException;
+import utility.IOUtils;
 
 /**
  * Enum representing the type of image.
@@ -47,5 +48,15 @@ public enum ImageType {
    */
   public String getExtension() {
     return extension;
+  }
+
+  /**
+   * Get the type of the image from the path.
+   *
+   * @param path the path of the image.
+   * @return the type of the image.
+   */
+  public static ImageType getImageTypeFromPath(String path) {
+    return ImageType.fromExtension(IOUtils.getExtensionFromPath(path));
   }
 }

@@ -1,4 +1,4 @@
-package model;
+package model.enumeration;
 
 import java.awt.image.BufferedImage;
 

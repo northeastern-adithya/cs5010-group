@@ -10,6 +10,7 @@ import exception.ImageProcessingRunTimeException;
 public interface ImageProcessorController {
   /**
    * Processes the commands from the view.
+   *
    * @throws ImageProcessingRunTimeException.QuitException if the user wants to quit the application.
    */
   void processCommands() throws ImageProcessingRunTimeException.QuitException;

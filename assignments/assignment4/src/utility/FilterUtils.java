@@ -1,35 +1,36 @@
-package filters;
+package utility;
 
 import java.util.Objects;
 
 import factories.Factory;
+import model.enumeration.FilterOption;
 import model.pixels.Pixel;
 import model.visual.Image;
 
 /**
- * Class for applying filters to an image.
+ * Utility class for applying filters to an image.
  * Provides a method to apply a filter to an image.
  */
-public class ImageFilter implements Filter {
+public class FilterUtils {
 
-  /**
-   * The filter option to apply.
-   */
-  private final FilterOption filterOption;
-
-  /**
-   * Constructs a filter with the given filter option.
-   * @param filterOption the filter option to apply
-   */
-  public ImageFilter(FilterOption filterOption) {
-    Objects.requireNonNull(filterOption);
-    this.filterOption = filterOption;
+  private FilterUtils() {
+    //Empty private constructor to prevent instantiation.
   }
 
-
-  @Override
-  public Image applyFilter(Image image) throws NullPointerException {
-    validateImage(image);
+  /**
+   * Applies a filter to an image.
+   * The filter is applied by involving the image with the filter's kernel.
+   * For each pixel in the image, the kernel is centered on the pixel, and the
+   * surrounding pixels are multiplied by the corresponding kernel values.
+   * The results are summed to produce the new pixel value.
+   *
+   * @param image        the image to apply the filter to
+   * @param filterOption the filter option to apply
+   * @return the image with the filter applied
+   */
+  public static Image applyFilter(Image image, FilterOption filterOption) throws NullPointerException {
+    Objects.requireNonNull(image);
+    Objects.requireNonNull(filterOption);
     int width = image.getWidth();
     int height = image.getHeight();
     int radius = filterOption.getKernel().length / 2;
@@ -54,14 +55,10 @@ public class ImageFilter implements Filter {
             }
           }
         }
-        newPixelArray[x][y] = image.getPixel(x,y).createPixel((int) redSum,(int) greenSum,(int) blueSum); // Pixel Factory
+        newPixelArray[x][y] = image.getPixel(x, y).createPixel((int) redSum, (int) greenSum, (int) blueSum); // Pixel Factory
       }
     }
 
     return Factory.createImage(newPixelArray);
-  }
-
-  protected void validateImage(Image image) throws NullPointerException {
-    Objects.requireNonNull(image);
   }
 }

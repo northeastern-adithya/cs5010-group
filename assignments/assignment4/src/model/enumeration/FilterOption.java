@@ -1,4 +1,4 @@
-package filters;
+package model.enumeration;
 
 /**
  * Enum representing the different filter options available.
