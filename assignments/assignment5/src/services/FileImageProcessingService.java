@@ -13,7 +13,8 @@ import utility.IOUtils;
 import utility.StringUtils;
 
 /**
- * FileImageProcessingService class that implements the ImageProcessingService interface
+ * FileImageProcessingService class that implements the
+ * ImageProcessingService interface
  * and provides the implementation for the methods to process images.
  * It uses the ImageMemory object to store and retrieve images.
  */
@@ -60,7 +61,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void createGreenComponent(String imageName, String destinationImageName)
+  public void createGreenComponent(String imageName,
+                                   String destinationImageName)
           throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
@@ -76,7 +78,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void createValueComponent(String imageName, String destinationImageName)
+  public void createValueComponent(String imageName,
+                                   String destinationImageName)
           throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
@@ -92,7 +95,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void createIntensityComponent(String imageName, String destinationImageName)
+  public void createIntensityComponent(String imageName,
+                                       String destinationImageName)
           throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
@@ -117,7 +121,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void brighten(String imageName, String destinationImageName, int factor)
+  public void brighten(String imageName, String destinationImageName,
+                       int factor)
           throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
@@ -148,11 +153,13 @@ public class FileImageProcessingService implements ImageProcessingService {
           String redImageName,
           String greenImageName,
           String blueImageName) throws ImageProcessorException {
-    validateStringParams(imageName, redImageName, greenImageName, blueImageName);
+    validateStringParams(imageName, redImageName, greenImageName,
+            blueImageName);
     Image redImage = memory.getImage(redImageName);
     Image greenImage = memory.getImage(greenImageName);
     Image blueImage = memory.getImage(blueImageName);
-    Image combinedImage = Factory.combineRGBComponents(redImage, greenImage, blueImage);
+    Image combinedImage = Factory.combineRGBComponents(redImage, greenImage,
+            blueImage);
     memory.addImage(imageName, combinedImage);
   }
 
@@ -161,7 +168,8 @@ public class FileImageProcessingService implements ImageProcessingService {
           throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    Image filteredImage = FilterUtils.applyFilter(image, FilterOption.GAUSSIAN_BLUR);
+    Image filteredImage = FilterUtils.applyFilter(image,
+            FilterOption.GAUSSIAN_BLUR);
     memory.addImage(destinationImageName, filteredImage);
   }
 
@@ -182,11 +190,20 @@ public class FileImageProcessingService implements ImageProcessingService {
     memory.addImage(destinationImageName, image.getSepia());
   }
 
+  @Override
+  public void compressImage(String imageName, String destinationImageName,
+                            int percentage) throws ImageProcessorException {
+    validateStringParams(imageName, destinationImageName);
+    Image image = memory.getImage(imageName);
+    memory.addImage(destinationImageName, image.compress(percentage));
+  }
+
   /**
    * Validates the input string parameters.
    *
    * @param strings the input string parameters
-   * @throws ImageProcessorException if the input string parameters are null or empty
+   * @throws ImageProcessorException if the input string parameters are null
+   *                                 or empty
    */
   private void validateStringParams(String... strings)
           throws ImageProcessorException {

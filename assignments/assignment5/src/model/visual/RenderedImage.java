@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
 
+import exception.ImageProcessorException;
 import factories.Factory;
 import model.pixels.Pixel;
 
@@ -122,6 +123,25 @@ public class RenderedImage implements Image {
       }
     }
     return Factory.createImage(newPixelArray);
+  }
+
+  @Override
+  public Image compress(int percentage) throws ImageProcessorException {
+    validatePercentage(percentage);
+    return null;
+  }
+
+  /**
+   * Validates the given percentage for image compression.
+   * Percentage must be between 0 and 100 exclusive.
+   *
+   * @param percentage the percentage to compress the image by
+   * @throws ImageProcessorException if the percentage is invalid
+   */
+  private void validatePercentage(int percentage) throws ImageProcessorException {
+    if (percentage <= 0 || percentage >= 100) {
+      throw new ImageProcessorException("Invalid compression percentage");
+    }
   }
 
   /**
