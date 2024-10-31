@@ -1,0 +1,69 @@
+# This script processes an image using various operations.
+# It loads a sample image, applies several transformations, and saves the results.
+load res/sample_input.png sample-image
+save res/saved_sample_image.png sample-image
+
+# Apply various transformations
+# 1. Extract red component and save
+red-component sample-image sample-image-red-component
+save res/saved_sample_image_red_component.png sample-image-red-component
+
+# 2. Extract green component and save
+green-component sample-image sample-image-green-component
+save res/saved_sample_image_green_component.png sample-image-green-component
+
+# 3. Extract blue component and save
+blue-component sample-image sample-image-blue-component
+save res/saved_sample_image_blue_component.png sample-image-blue-component
+
+# 4. Horizontal flip and save
+horizontal-flip sample-image sample-image-h-flip
+save res/saved_sample_image_h_flip.png sample-image-h-flip
+
+# 5. Vertical flip and save
+vertical-flip sample-image sample-image-v-flip
+save res/saved_sample_image_v_flip.png sample-image-v-flip
+
+# 6. Brighten the image by 20 and save
+brighten 20 sample-image sample-image-brightened
+save res/saved_sample_image_brightened.png sample-image-brightened
+
+# 7. Darken the image by 20 and save
+brighten -20 sample-image sample-image-darkened
+save res/saved_sample_image_darkened.png sample-image-darkened
+
+# 8. Split RGB channels and save
+rgb-split sample-image sample-image-r-split sample-image-g-split sample-image-b-split
+save res/saved_sample_image_r_split.png sample-image-r-split
+save res/saved_sample_image_g_split.png sample-image-g-split
+save res/saved_sample_image_b_split.png sample-image-b-split
+
+# 9. Combine RGB channels and save
+rgb-combine combined-rgb-sample sample-image-r-split sample-image-g-split sample-image-b-split
+save res/saved_combined_rgb_sample_image.png combined-rgb-sample
+
+# 10. Blur the image twice and save
+blur sample-image sample-image-blurred
+blur sample-image-blurred sample-image-blurred
+save res/saved_sample_image_blurred.png sample-image-blurred
+
+# 11. Sharpen the image twice and save
+sharpen sample-image sample-image-sharpened
+sharpen sample-image-sharpened sample-image-sharpened
+save res/saved_sample_image_sharpened.png sample-image-sharpened
+
+# 12. extract edges and save
+sepia sample-image sample-image-sepia
+save res/saved_sample_image_sepia.png sample-image-sepia
+
+# 13. extract value component and save
+value-component sample-image sample-image-value-component
+save res/saved_sample_image_value_component.png sample-image-value-component
+
+# 14. extract Luma component and save
+luma-component sample-image sample-image-luma-component
+save res/saved_sample_image_luma_component.png sample-image-luma-component
+
+# 15. extract Intensity and save
+intensity-component sample-image sample-image-intensity-component
+save res/saved_sample_image_intensity_component.png sample-image-intensity-component
