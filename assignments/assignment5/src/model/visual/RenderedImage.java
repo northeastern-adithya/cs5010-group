@@ -1,5 +1,7 @@
 package model.visual;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
@@ -169,14 +171,17 @@ public class RenderedImage implements Image {
 
   @Override
   public Image createHistogram() {
+    int width = getWidth();
+    int height = getHeight();
+
     // Create frequency arrays for each channel (0-255)
     int[] redFreq = new int[256];
     int[] greenFreq = new int[256];
     int[] blueFreq = new int[256];
 
     // Count frequencies
-    for (int x = 0; x < getWidth(); x++) {
-      for (int y = 0; y < getHeight(); y++) {
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
         Pixel pixel = getPixel(x, y);
         redFreq[pixel.getRed()]++;
         greenFreq[pixel.getGreen()]++;
@@ -192,24 +197,21 @@ public class RenderedImage implements Image {
       maxFreq = Math.max(maxFreq, blueFreq[i]);
     }
 
-    // Create 256x256 histogram image
-    Pixel[][] histogramPixels = new Pixel[256][256];
+    // Create BufferedImage for histogram
+    BufferedImage histogramImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+    Graphics2D g2d = histogramImage.createGraphics();
 
     // Initialize with white background and gray grid
-    for (int x = 0; x < 256; x++) {
-      for (int y = 0; y < 256; y++) {
-        // Add grid lines every 32 pixels
-        if (x % 32 == 0 || y % 32 == 0) {
-          histogramPixels[x][y] = new RGB(240, 240, 240); // Light gray
-        } else {
-          histogramPixels[x][y] = new RGB(255, 255, 255); // White
-        }
-      }
+    g2d.setColor(Color.WHITE);
+    g2d.fillRect(0, 0, 256, 256);
+    g2d.setColor(Color.LIGHT_GRAY);
+    for (int i = 0; i <= 256; i += 32) {
+      g2d.drawLine(i, 0, i, 256);
+      g2d.drawLine(0, i, 256, i);
     }
 
     // Draw the histogram lines
     for (int x = 0; x < 255; x++) {
-      // Calculate scaled heights for current and next points
       int redHeight1 = (int)((redFreq[x] * 255.0) / maxFreq);
       int redHeight2 = (int)((redFreq[x + 1] * 255.0) / maxFreq);
       int greenHeight1 = (int)((greenFreq[x] * 255.0) / maxFreq);
@@ -217,44 +219,28 @@ public class RenderedImage implements Image {
       int blueHeight1 = (int)((blueFreq[x] * 255.0) / maxFreq);
       int blueHeight2 = (int)((blueFreq[x + 1] * 255.0) / maxFreq);
 
-      // Draw lines between consecutive points
-      drawLine(histogramPixels, x, 255 - redHeight1, x + 1, 255 - redHeight2,
-              new RGB(255, 0, 0)); // Red channel
-      drawLine(histogramPixels, x, 255 - greenHeight1, x + 1, 255 - greenHeight2,
-              new RGB(0, 255, 0)); // Green channel
-      drawLine(histogramPixels, x, 255 - blueHeight1, x + 1, 255 - blueHeight2,
-              new RGB(0, 0, 255)); // Blue channel
+      g2d.setColor(Color.RED);
+      g2d.drawLine(x, 255 - redHeight1, x + 1, 255 - redHeight2);
+      g2d.setColor(Color.GREEN);
+      g2d.drawLine(x, 255 - greenHeight1, x + 1, 255 - greenHeight2);
+      g2d.setColor(Color.BLUE);
+      g2d.drawLine(x, 255 - blueHeight1, x + 1, 255 - blueHeight2);
+    }
+
+    g2d.dispose();
+
+    // Convert BufferedImage to Pixel array
+    Pixel[][] histogramPixels = new Pixel[256][256];
+    for (int x = 0; x < 256; x++) {
+      for (int y = 0; y < 256; y++) {
+        int rgb = histogramImage.getRGB(x, y);
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+        histogramPixels[x][y] = new RGB(red, green, blue);
+      }
     }
 
     return Factory.createImage(histogramPixels);
-  }
-
-  // Helper method to draw a line between two points using Bresenham's algorithm
-  private void drawLine(Pixel[][] pixels, int x1, int y1, int x2, int y2, Pixel color) {
-    int dx = Math.abs(x2 - x1);
-    int dy = Math.abs(y2 - y1);
-    int sx = x1 < x2 ? 1 : -1;
-    int sy = y1 < y2 ? 1 : -1;
-    int err = dx - dy;
-
-    while (true) {
-      if (x1 >= 0 && x1 < 256 && y1 >= 0 && y1 < 256) {
-        pixels[x1][y1] = color;
-      }
-
-      if (x1 == x2 && y1 == y2) {
-        break;
-      }
-
-      int e2 = 2 * err;
-      if (e2 > -dy) {
-        err = err - dy;
-        x1 = x1 + sx;
-      }
-      if (e2 < dx) {
-        err = err + dx;
-        y1 = y1 + sy;
-      }
-    }
   }
 }
