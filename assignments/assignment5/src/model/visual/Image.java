@@ -110,4 +110,6 @@ public interface Image {
    * @return the image with the vertical flip of the original image by creating a new image object.
    */
   Image verticalFlip();
+
+  Image createHistogram();
 }
