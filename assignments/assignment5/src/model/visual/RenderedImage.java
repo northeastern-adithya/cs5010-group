@@ -127,17 +127,17 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public int[] getRedChannel() {
+  public int[][] getRedChannel() {
     return getChannel(Pixel::getRed);
   }
 
   @Override
-  public int[] getGreenChannel() {
+  public int[][] getGreenChannel() {
     return getChannel(Pixel::getGreen);
   }
 
   @Override
-  public int[] getBlueChannel() {
+  public int[][] getBlueChannel() {
     return getChannel(Pixel::getBlue);
   }
 
@@ -158,15 +158,13 @@ public class RenderedImage implements Image {
     return new RenderedImage(newPixelArray);
   }
 
-  private int[] getChannel(Function<Pixel, Integer> channel) {
+  private int[][] getChannel(Function<Pixel, Integer> channel) {
     int height = this.getHeight();
     int width = this.getWidth();
-    int[] channelArray = new int[width * height];
-    int index = 0;
+    int[][] channelArray = new int[height][width];
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        channelArray[index] = channel.apply(this.getPixel(x, y));
-        index++;
+        channelArray[y][x] = channel.apply(this.getPixel(x, y));
       }
     }
     return channelArray;

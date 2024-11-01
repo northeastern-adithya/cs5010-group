@@ -13,32 +13,66 @@ public class HaarCompression implements Compression {
   public HaarCompression() {
   }
 
-  private static int[] fromDoubleArray(double[] data) {
-    int[] cleanedData = new int[data.length];
+  private static int[][] fromDoubleArray(double[][] data) {
+    int[][] cleanedData = new int[data.length][data[0].length];
     for (int i = 0; i < data.length; i++) {
-      cleanedData[i] = (int) data[i];
+      for (int j = 0; j < data[0].length; j++) {
+        cleanedData[i][j] = (int) data[i][j];
+      }
     }
     return cleanedData;
   }
 
-  private static double[] transform(double[] sequence) {
-    double[] paddedSequence = paddedSequence(sequence);
+  private static double[][] transform(double[][] sequence) {
+    double[][] paddedSequence = padToSquareMatrix(sequence);
     int length = paddedSequence.length;
-    double[] transformed = Arrays.copyOf(paddedSequence, length);
+    double[][] transformed = new double[length][length];
+
     while (length > 1) {
-      double[] sequenceSubset = transformSequenceSubset(transformed, length);
-      System.arraycopy(sequenceSubset, 0, transformed, 0, length);
+
+      for (int i = 0; i < length; i++) {
+        double[] rowSequenceSubset =
+                transformSequenceSubset(paddedSequence[i], length);
+        System.arraycopy(rowSequenceSubset, 0, transformed[i], 0, length);
+      }
+
+      for (int j = 0; j < length; j++) {
+        double[] columnSubset = new double[length];
+        for (int i = 0; i < length; i++) {
+          columnSubset[i] = transformed[i][j];
+        }
+        double[] columnSequenceSubset = transformSequenceSubset(columnSubset,
+                length);
+
+        for (int i = 0; i < length; i++) {
+          transformed[i][j] = columnSequenceSubset[i];
+        }
+      }
       length /= 2;
     }
+
     return transformed;
   }
 
-  private static double[] invert(double[] sequence) {
-    double[] inverted = Arrays.copyOf(sequence, sequence.length);
+  private static double[][] invert(double[][] sequence) {
     int length = 2;
+    double[][] inverted = new double[sequence.length][sequence.length];
     while (length <= sequence.length) {
-      double[] sequenceSubset = invertSequenceSubset(inverted, length);
-      System.arraycopy(sequenceSubset, 0, inverted, 0, length);
+      for (int j = 0; j < length; j++) {
+        double[] columnSubset = new double[length];
+        for (int i = 0; i < length; i++) {
+          columnSubset[i] = sequence[i][j];
+        }
+        double[] invertedColumn = invertSequenceSubset(columnSubset, length);
+        for (int i = 0; i < length; i++) {
+          inverted[i][j] = invertedColumn[i];
+        }
+      }
+      for (int i = 0; i < length; i++) {
+        double[] rowSubset = Arrays.copyOfRange(inverted[i], 0, length);
+        double[] invertedRow = invertSequenceSubset(rowSubset, length);
+        System.arraycopy(invertedRow, 0, inverted[i], 0, length);
+      }
       length *= 2;
     }
     return inverted;
@@ -70,10 +104,16 @@ public class HaarCompression implements Compression {
     return transformed;
   }
 
-  private static double[] paddedSequence(double[] sequence) {
-    int length = sequence.length;
-    int paddedLength = getNearestPowerOfTwo(length);
-    return Arrays.copyOf(sequence, paddedLength);
+
+  private static double[][] padToSquareMatrix(double[][] sequence) {
+    int row = sequence.length;
+    int column = sequence[0].length;
+    int newLength = getNearestPowerOfTwo(Math.max(row, column));
+    double[][] paddedSequence = new double[newLength][newLength];
+    for (int i = 0; i < row; i++) {
+      System.arraycopy(sequence[i], 0, paddedSequence[i], 0, column);
+    }
+    return paddedSequence;
   }
 
   private static int getNearestPowerOfTwo(int number) {
@@ -104,60 +144,73 @@ public class HaarCompression implements Compression {
   }
 
 
+  private static double[][] toDoubleArray(int[][] data) {
+    double[][] doubleArray = new double[data.length][data[0].length];
+    for (int i = 0; i < data.length; i++) {
+      for (int j = 0; j < data[0].length; j++) {
+        doubleArray[i][j] = data[i][j];
+      }
+    }
+    return doubleArray;
+  }
+
   @Override
   public Image compress(Image image, int percentage) throws ImageProcessorException {
     validatePercentage(percentage);
     Objects.requireNonNull(image, "Image cannot be null");
-    int[] compressedRed = compress(image.getRedChannel(), percentage);
-    int[] compressedGreen = compress(image.getGreenChannel(), percentage);
-    int[] compressedBlue = compress(image.getBlueChannel(), percentage);
+    int[][] compressedRed = compress(image.getRedChannel(), percentage);
+    int[][] compressedGreen = compress(image.getGreenChannel(), percentage);
+    int[][] compressedBlue = compress(image.getBlueChannel(), percentage);
     int height = image.getHeight();
     int width = image.getWidth();
     Pixel[][] newPixelArray = new Pixel[width][height];
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        int index = y * width + x;
-        int red = compressedRed[index];
-        int green = compressedGreen[index];
-        int blue = compressedBlue[index];
-        newPixelArray[x][y] = image.getPixel(x, y).createPixel(red, green, blue);
+        newPixelArray[x][y] = Factory.createRGBPixel(compressedRed[y][x],
+                compressedGreen[y][x], compressedBlue[y][x]);
       }
     }
     return Factory.createImage(newPixelArray);
   }
 
+
   private int[][] compress(int[][] data, int percentage) throws ImageProcessorException {
     validatePercentage(percentage);
-    int[][] compressedData = new int[data.length][];
-    for (int i = 0; i < data.length; i++) {
-      compressedData[i] = compress(data[i], percentage);
-    }
-    return compressedData;
+    double[][] transformed = transform(toDoubleArray(data));
+    double[][] dataWithThreshold = computeSequenceWithThreshold(transformed,
+            percentage);
+    double[][] invert = invert(dataWithThreshold);
+    return fromDoubleArray(invert);
   }
 
+  private double[][] computeSequenceWithThreshold(double[][] data,
+                                                  int percentage) {
 
-  private int[] compress(int[] data, int percentage) throws ImageProcessorException {
-    validatePercentage(percentage);
-    double[] transformed = transform(toDoubleArray(data));
-    double[] sortedTransformed = Arrays.copyOf(transformed, transformed.length);
-    Arrays.sort(sortedTransformed);
+
+    int height = data.length;
+    int width = data[0].length;
+    double[] dataInOneDimension = new double[ height* width];
+    for (int i = 0; i < height; i++) {
+      System.arraycopy(data[i], 0, dataInOneDimension, i * width, width);
+    }
+
+    double[] sortedData = Arrays.copyOf(dataInOneDimension,
+            dataInOneDimension.length);
+    Arrays.sort(sortedData);
     int thresholdIndex =
-            (int) Math.ceil((percentage / 100.0) * sortedTransformed.length);
-    double threshold = sortedTransformed[thresholdIndex];
-    for (int i = 0; i < transformed.length; i++) {
-      if (Math.abs(transformed[i]) <= threshold) {
-        transformed[i] = 0;
+            (int) Math.ceil((percentage / 100.0) * sortedData.length);
+    double threshold = sortedData[thresholdIndex];
+
+    double[][] dataWithThreshold = new double[height][width];
+
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        if (Math.abs(data[i][j]) > threshold) {
+          dataWithThreshold[i][j] = data[i][j];
+        }
       }
     }
-    double[] invertedData = invert(transformed);
-    return fromDoubleArray(invertedData);
+    return dataWithThreshold;
   }
 
-  private static double[] toDoubleArray(int[] data) {
-    double[] doubleArray = new double[data.length];
-    for (int i = 0; i < data.length; i++) {
-      doubleArray[i] = data[i];
-    }
-    return doubleArray;
-  }
 }

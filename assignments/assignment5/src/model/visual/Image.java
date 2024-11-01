@@ -120,10 +120,10 @@ public interface Image {
   Image verticalFlip();
 
 
-  int[] getRedChannel();
+  int[][] getRedChannel();
 
-  int[] getGreenChannel();
+  int[][] getGreenChannel();
 
-  int[] getBlueChannel();
+  int[][] getBlueChannel();
 
 }
