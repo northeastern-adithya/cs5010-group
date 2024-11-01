@@ -2377,10 +2377,11 @@ public class ControllerIntegrationTest {
             "load test_resources/input/man.png man "
                +  "load test_resources/input/man-compress-20.png expected "
                + "compression 90 man actual " +
-                    "save test_resources/input/compressed.png actual"
+                    "save test_resources/input/compressed.png actual "
             ,output, null);
 
     controller.processCommands();
+
   }
 
 

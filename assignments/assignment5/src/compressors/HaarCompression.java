@@ -26,13 +26,11 @@ public class HaarCompression implements Compression {
   private static double[][] transform(double[][] sequence) {
     double[][] paddedSequence = padToSquareMatrix(sequence);
     int length = paddedSequence.length;
-    double[][] transformed = new double[length][length];
-
+    double[][] transformed = Arrays.copyOf(paddedSequence, length);
     while (length > 1) {
-
       for (int i = 0; i < length; i++) {
         double[] rowSequenceSubset =
-                transformSequenceSubset(paddedSequence[i], length);
+                transformSequenceSubset(transformed[i], length);
         System.arraycopy(rowSequenceSubset, 0, transformed[i], 0, length);
       }
 
@@ -56,12 +54,12 @@ public class HaarCompression implements Compression {
 
   private static double[][] invert(double[][] sequence) {
     int length = 2;
-    double[][] inverted = new double[sequence.length][sequence.length];
-    while (length <= sequence.length) {
+    double[][] inverted = Arrays.copyOf(sequence, sequence.length);
+    while (length <= inverted.length) {
       for (int j = 0; j < length; j++) {
         double[] columnSubset = new double[length];
         for (int i = 0; i < length; i++) {
-          columnSubset[i] = sequence[i][j];
+          columnSubset[i] = inverted[i][j];
         }
         double[] invertedColumn = invertSequenceSubset(columnSubset, length);
         for (int i = 0; i < length; i++) {
@@ -185,32 +183,29 @@ public class HaarCompression implements Compression {
 
   private double[][] computeSequenceWithThreshold(double[][] data,
                                                   int percentage) {
-
-
     int height = data.length;
     int width = data[0].length;
-    double[] dataInOneDimension = new double[ height* width];
+    double[][] dataWithThreshold = Arrays.copyOf(data, height);
     for (int i = 0; i < height; i++) {
-      System.arraycopy(data[i], 0, dataInOneDimension, i * width, width);
-    }
-
-    double[] sortedData = Arrays.copyOf(dataInOneDimension,
-            dataInOneDimension.length);
-    Arrays.sort(sortedData);
-    int thresholdIndex =
-            (int) Math.ceil((percentage / 100.0) * sortedData.length);
-    double threshold = sortedData[thresholdIndex];
-
-    double[][] dataWithThreshold = new double[height][width];
-
-    for (int i = 0; i < height; i++) {
+      double thresholdValue = getThresholdValue(data[i], percentage);
       for (int j = 0; j < width; j++) {
-        if (Math.abs(data[i][j]) > threshold) {
-          dataWithThreshold[i][j] = data[i][j];
+        if (Math.abs(data[i][j]) < thresholdValue) {
+          dataWithThreshold[i][j] = 0;
         }
       }
     }
     return dataWithThreshold;
+  }
+
+  private double getThresholdValue(double[] data,int percentage){
+    int length = data.length;
+    int thresholdIndex = (int) Math.ceil((double) (length * percentage) / 100);
+    double[] sortedData = Arrays.copyOf(data, length);
+    for(int i = 0; i < length; i++){
+      sortedData[i] = Math.abs(sortedData[i]);
+    }
+    Arrays.sort(sortedData);
+    return sortedData[thresholdIndex];
   }
 
 }
