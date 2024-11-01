@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.CompressionType;
 import model.enumeration.FilterOption;
 import model.enumeration.ImageType;
 import model.memory.ImageMemory;
@@ -195,7 +196,9 @@ public class FileImageProcessingService implements ImageProcessingService {
                             int percentage) throws ImageProcessorException {
     validateStringParams(imageName, destinationImageName);
     Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.compress(percentage));
+    memory.addImage(destinationImageName,
+            Factory.createCompression(CompressionType.HAAR)
+                    .compress(image, percentage));
   }
 
   /**

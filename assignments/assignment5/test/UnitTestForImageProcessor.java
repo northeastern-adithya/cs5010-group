@@ -12,6 +12,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Optional;
 
+import compressors.Compression;
 import controller.ExecutionStatus;
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
@@ -19,6 +20,7 @@ import app.ImageProcessorApp;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.CompressionType;
 import model.enumeration.FilterOption;
 import model.memory.ImageMemory;
 import services.FileImageProcessingService;

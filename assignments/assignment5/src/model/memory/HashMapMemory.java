@@ -31,7 +31,7 @@ public class HashMapMemory implements ImageMemory {
 
   @Override
   public void addImage(String imageName, Image image) {
-    if (Objects.isNull(imageName) || StringUtils.isNullOrEmpty(imageName)) {
+    if (Objects.isNull(image) || StringUtils.isNullOrEmpty(imageName)) {
       return;
     }
     memory.put(imageName, image);

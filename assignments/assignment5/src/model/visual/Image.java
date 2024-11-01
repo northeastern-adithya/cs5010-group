@@ -119,12 +119,11 @@ public interface Image {
    */
   Image verticalFlip();
 
-  /**
-   * Returns a new image with the image compressed by the given percentage.
-   *
-   * @param percentage the percentage to compress the image by
-   * @return the image compressed by the given percentage by creating a new
-   * image object.
-   */
-  Image compress(int percentage) throws ImageProcessorException;
+
+  int[] getRedChannel();
+
+  int[] getGreenChannel();
+
+  int[] getBlueChannel();
+
 }

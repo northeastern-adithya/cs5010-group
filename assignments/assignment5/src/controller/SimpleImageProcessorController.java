@@ -531,7 +531,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
       imageProcessingService.compressImage(arguments.get(1), arguments.get(2)
               , compressionPercentage);
       return new ExecutionStatus(true
-              , String.format("Successfully compressed the image at %s\\%."
+              , String.format("Successfully compressed the image at %s%%."
               , compressionPercentage));
     } catch (NumberFormatException e) {
       throw new ImageProcessorException("Invalid compression percentage " +

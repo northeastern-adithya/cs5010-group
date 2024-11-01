@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.CompressionType;
 import model.pixels.Pixel;
 
 /**
@@ -126,22 +127,18 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image compress(int percentage) throws ImageProcessorException {
-    validatePercentage(percentage);
-    return null;
+  public int[] getRedChannel() {
+    return getChannel(Pixel::getRed);
   }
 
-  /**
-   * Validates the given percentage for image compression.
-   * Percentage must be between 0 and 100 exclusive.
-   *
-   * @param percentage the percentage to compress the image by
-   * @throws ImageProcessorException if the percentage is invalid
-   */
-  private void validatePercentage(int percentage) throws ImageProcessorException {
-    if (percentage <= 0 || percentage >= 100) {
-      throw new ImageProcessorException("Invalid compression percentage");
-    }
+  @Override
+  public int[] getGreenChannel() {
+    return getChannel(Pixel::getGreen);
+  }
+
+  @Override
+  public int[] getBlueChannel() {
+    return getChannel(Pixel::getBlue);
   }
 
   /**
@@ -159,6 +156,20 @@ public class RenderedImage implements Image {
       }
     }
     return new RenderedImage(newPixelArray);
+  }
+
+  private int[] getChannel(Function<Pixel, Integer> channel) {
+    int height = this.getHeight();
+    int width = this.getWidth();
+    int[] channelArray = new int[width * height];
+    int index = 0;
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        channelArray[index] = channel.apply(this.getPixel(x, y));
+        index++;
+      }
+    }
+    return channelArray;
   }
 
   @Override
