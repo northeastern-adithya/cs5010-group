@@ -1,6 +1,7 @@
 package model.visual;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Objects;
@@ -205,7 +206,7 @@ public class RenderedImage implements Image {
     g2d.setColor(Color.WHITE);
     g2d.fillRect(0, 0, 256, 256);
     g2d.setColor(Color.LIGHT_GRAY);
-    for (int i = 0; i <= 256; i += 32) {
+    for (int i = 0; i <= 256; i += 13) {
       g2d.drawLine(i, 0, i, 256);
       g2d.drawLine(0, i, 256, i);
     }
@@ -242,5 +243,85 @@ public class RenderedImage implements Image {
     }
 
     return Factory.createImage(histogramPixels);
+  }
+
+  @Override
+  public Image colorCorrect() {
+    int width = getWidth();
+    int height = getHeight();
+
+    // Create arrays to store frequency of each color value
+    int[] redFreq = new int[256];
+    int[] greenFreq = new int[256];
+    int[] blueFreq = new int[256];
+
+    // Count frequencies for each channel
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        Pixel pixel = getPixel(x, y);
+        redFreq[pixel.getRed()]++;
+        greenFreq[pixel.getGreen()]++;
+        blueFreq[pixel.getBlue()]++;
+      }
+    }
+
+    // Find meaningful peaks (ignoring extremities)
+    int redPeak = findMeaningfulPeak(redFreq);
+    int greenPeak = findMeaningfulPeak(greenFreq);
+    int bluePeak = findMeaningfulPeak(blueFreq);
+
+    // Calculate average peak position
+    int avgPeak = (redPeak + greenPeak + bluePeak) / 3;
+
+    // Calculate offsets for each channel
+    int redOffset = avgPeak - redPeak;
+    int greenOffset = avgPeak - greenPeak;
+    int blueOffset = avgPeak - bluePeak;
+
+    // Create new image with adjusted colors
+    Pixel[][] newPixels = new Pixel[width][height];
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        Pixel oldPixel = getPixel(x, y);
+        int newRed = clamp(oldPixel.getRed() + redOffset);
+        int newGreen = clamp(oldPixel.getGreen() + greenOffset);
+        int newBlue = clamp(oldPixel.getBlue() + blueOffset);
+        newPixels[x][y] = new RGB(newRed, newGreen, newBlue);
+      }
+    }
+
+    return Factory.createImage(newPixels);
+  }
+
+  /**
+   * Finds the meaningful peak in a frequency array, ignoring extremities.
+   * Only considers values between 10 and 245 to avoid dark/blown-out regions.
+   *
+   * @param freq the frequency array
+   * @return the value where the meaningful peak occurs
+   */
+  private int findMeaningfulPeak(int[] freq) {
+    int maxFreq = 0;
+    int peakValue = 0;
+
+    // Only consider values between 10 and 245
+    for (int i = 10; i < 245; i++) {
+      if (freq[i] > maxFreq) {
+        maxFreq = freq[i];
+        peakValue = i;
+      }
+    }
+
+    return peakValue;
+  }
+
+  /**
+   * Clamps a value between 0 and 255.
+   *
+   * @param value the value to clamp
+   * @return the clamped value
+   */
+  private int clamp(int value) {
+    return Math.max(0, Math.min(255, value));
   }
 }

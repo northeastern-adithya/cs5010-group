@@ -112,4 +112,6 @@ public interface Image {
   Image verticalFlip();
 
   Image createHistogram();
+
+  Image colorCorrect();
 }
