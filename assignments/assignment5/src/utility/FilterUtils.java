@@ -35,20 +35,23 @@ public class FilterUtils {
     int width = image.getWidth();
     int height = image.getHeight();
     int radius = filterOption.getKernel().length / 2;
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
+    Pixel[][] newPixelArray = new Pixel[height][width];
+
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+
         double redSum = 0;
         double greenSum = 0;
         double blueSum = 0;
 
         for (int ky = -radius; ky <= radius; ky++) {
           for (int kx = -radius; kx <= radius; kx++) {
-            int pixelX = x + kx;
-            int pixelY = y + ky;
+            int pixelX = row + kx;
+            int pixelY = col + ky;
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
               Pixel pixel = image.getPixel(pixelX, pixelY);
-              double kernelValue = filterOption.getKernel()[ky + radius][kx + radius];
+              double kernelValue =
+                      filterOption.getKernel()[ky + radius][kx + radius];
 
               redSum += pixel.getRed() * kernelValue;
               greenSum += pixel.getGreen() * kernelValue;
@@ -56,8 +59,8 @@ public class FilterUtils {
             }
           }
         }
-        newPixelArray[x][y] = image.getPixel(x, y)
-                                   .createPixel((int) redSum, (int) greenSum, (int) blueSum);
+        newPixelArray[row][col] = image.getPixel(row, col)
+                .createPixel((int) redSum, (int) greenSum, (int) blueSum);
       }
     }
 

@@ -45,12 +45,12 @@ public class RenderedImage implements Image {
 
   @Override
   public int getWidth() {
-    return pixels.length;
+    return pixels[0].length;
   }
 
   @Override
   public int getHeight() {
-    return pixels[0].length;
+    return pixels.length;
   }
 
   @Override
@@ -104,12 +104,13 @@ public class RenderedImage implements Image {
   public Image horizontalFlip() {
     int height = this.getHeight();
     int width = this.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = this.getPixel(width - x - 1, y);
+    Pixel[][] newPixelArray = new Pixel[height][width];
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        newPixelArray[row][col] = this.getPixel(row, width - col - 1);
       }
     }
+
     return Factory.createImage(newPixelArray);
   }
 
@@ -117,10 +118,10 @@ public class RenderedImage implements Image {
   public Image verticalFlip() {
     int height = this.getHeight();
     int width = this.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = this.getPixel(x, height - y - 1);
+    Pixel[][] newPixelArray = new Pixel[height][width];
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        newPixelArray[row][col] = this.getPixel(height - row - 1, col);
       }
     }
     return Factory.createImage(newPixelArray);
@@ -148,11 +149,11 @@ public class RenderedImage implements Image {
   private Image transformImage(Function<Pixel, Pixel> transformation) {
     int height = this.getHeight();
     int width = this.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
+    Pixel[][] newPixelArray = new Pixel[height][width];
 
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = transformation.apply(this.getPixel(x, y));
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        newPixelArray[row][col] = transformation.apply(this.getPixel(row, col));
       }
     }
     return new RenderedImage(newPixelArray);
@@ -166,9 +167,9 @@ public class RenderedImage implements Image {
     int height = this.getHeight();
     int width = this.getWidth();
     int[][] channelArray = new int[height][width];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        channelArray[y][x] = channel.apply(this.getPixel(x, y));
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        channelArray[row][col] = channel.apply(this.getPixel(row, col));
       }
     }
     return channelArray;

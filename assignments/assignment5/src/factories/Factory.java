@@ -65,7 +65,7 @@ public class Factory {
    * @param blueComponent  the blue component of the image
    * @return the new image with the combined RGB components
    * @throws ImageProcessorException if the RGB components do not have the
-   * same dimensions
+   *                                 same dimensions
    */
   public static Image combineRGBComponents(Image redComponent,
                                            Image greenComponent,
@@ -74,13 +74,13 @@ public class Factory {
     validateRGBComponents(redComponent, greenComponent, blueComponent);
     int height = redComponent.getHeight();
     int width = redComponent.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] =
-                createRGBPixel(redComponent.getPixel(x, y).getRed(),
-                greenComponent.getPixel(x, y).getGreen(),
-                blueComponent.getPixel(x, y).getBlue());
+    Pixel[][] newPixelArray = new Pixel[height][width];
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        newPixelArray[row][col] =
+                createRGBPixel(redComponent.getPixel(row, col).getRed(),
+                        greenComponent.getPixel(row, col).getGreen(),
+                        blueComponent.getPixel(row, col).getBlue());
       }
     }
     return createImage(newPixelArray);
@@ -93,7 +93,7 @@ public class Factory {
    * @param greenComponent the green component of the image
    * @param blueComponent  the blue component of the image
    * @throws ImageProcessorException if the RGB components do not have the
-   * same dimensions
+   *                                 same dimensions
    * @throws NullPointerException    if any of the RGB components are null
    */
   private static void validateRGBComponents(Image redComponent,
@@ -141,7 +141,7 @@ public class Factory {
    * @param type  the type of the pixel
    * @return the pixel based on the given pixel and type
    * @throws ImageProcessorException.NotImplementedException if the pixel is
-   * not implemented
+   *                                                         not implemented
    */
   public static Pixel createPixel(int pixel, PixelType type)
           throws ImageProcessorException.NotImplementedException {
@@ -209,7 +209,8 @@ public class Factory {
    * @param type the type of the compression
    * @return the Compression object based on the given type
    * @throws ImageProcessorException.NotImplementedException if the compression
-   * type is not implemented
+   *                                                         type is not
+   *                                                         implemented
    */
   public static Compression createCompression(CompressionType type) throws ImageProcessorException {
 
