@@ -48,7 +48,7 @@ public class FilterUtils {
           for (int kx = -radius; kx <= radius; kx++) {
             int pixelX = row + kx;
             int pixelY = col + ky;
-            if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
+            if (pixelX >= 0 && pixelX < height && pixelY >= 0 && pixelY < width) {
               Pixel pixel = image.getPixel(pixelX, pixelY);
               double kernelValue =
                       filterOption.getKernel()[ky + radius][kx + radius];
