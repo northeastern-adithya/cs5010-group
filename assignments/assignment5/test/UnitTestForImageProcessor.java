@@ -1493,10 +1493,10 @@ public class UnitTestForImageProcessor {
     @Test
     public void testHorizontalFlip() {
       Image flippedImage = image.horizontalFlip();
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          assertEquals(image.getPixel(x, y),
-                  flippedImage.getPixel(image.getWidth() - 1 - x, y));
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
+          assertEquals(image.getPixel(row, col),
+                  flippedImage.getPixel(row, image.getWidth()-1-col));
         }
       }
 
@@ -1507,10 +1507,10 @@ public class UnitTestForImageProcessor {
     @Test
     public void testVerticalFlip() {
       Image flippedImage = image.verticalFlip();
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          assertEquals(image.getPixel(x, y), flippedImage.getPixel(x,
-                  image.getHeight() - 1 - y));
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
+          assertEquals(image.getPixel(row, col),
+                  flippedImage.getPixel(image.getHeight()-1-row, col));
         }
       }
 
@@ -1744,19 +1744,19 @@ public class UnitTestForImageProcessor {
     @Test
     public void testHorizontalFlip() {
       Image flippedImage = image.horizontalFlip();
-      assertEquals(image.getPixel(0, 0), flippedImage.getPixel(1, 0));
-      assertEquals(image.getPixel(1, 0), flippedImage.getPixel(0, 0));
-      assertEquals(image.getPixel(0, 1), flippedImage.getPixel(1, 1));
-      assertEquals(image.getPixel(1, 1), flippedImage.getPixel(0, 1));
+      assertEquals(image.getPixel(0, 0), flippedImage.getPixel(0, 1));
+      assertEquals(image.getPixel(0, 1), flippedImage.getPixel(0, 0));
+      assertEquals(image.getPixel(1, 0), flippedImage.getPixel(1, 1));
+      assertEquals(image.getPixel(1, 1), flippedImage.getPixel(1, 0));
     }
 
     @Test
     public void testVerticalFlip() {
       Image flippedImage = image.verticalFlip();
-      assertEquals(image.getPixel(0, 0), flippedImage.getPixel(0, 1));
-      assertEquals(image.getPixel(0, 1), flippedImage.getPixel(0, 0));
-      assertEquals(image.getPixel(1, 0), flippedImage.getPixel(1, 1));
-      assertEquals(image.getPixel(1, 1), flippedImage.getPixel(1, 0));
+      assertEquals(image.getPixel(0,0),flippedImage.getPixel(1,0));
+      assertEquals(image.getPixel(1,0),flippedImage.getPixel(0,0));
+      assertEquals(image.getPixel(0,1),flippedImage.getPixel(1,1));
+      assertEquals(image.getPixel(1,1),flippedImage.getPixel(0,1));
     }
 
     @Test
@@ -2761,8 +2761,8 @@ public class UnitTestForImageProcessor {
       for (int row = 0; row < 2; row++) {
         for (int col = 0; col < 2; col++) {
           Pixel originalPixel = testImage.getPixel(row, col);
-          Pixel flippedPixel = flippedImage.getPixel(row,
-                  flippedImage.getHeight() - 1 - col); // Flipped vertically
+          Pixel flippedPixel =
+                  flippedImage.getPixel(flippedImage.getHeight()-1-row,col );// Flipped vertically
 
           assertEquals(originalPixel.getRed(), flippedPixel.getRed());
           assertEquals(originalPixel.getGreen(), flippedPixel.getGreen());
@@ -2784,8 +2784,8 @@ public class UnitTestForImageProcessor {
         for (int col = 0; col < 2; col++) {
           Pixel originalPixel = testImage.getPixel(row, col);
           Pixel flippedPixel =
-                  flippedImage.getPixel(flippedImage.getWidth() - 1 - row,
-                          col); //
+                  flippedImage.getPixel(row,
+                          flippedImage.getWidth()-col-1); //
           // Flipped horizontally
 
           assertEquals(originalPixel.getRed(), flippedPixel.getRed());

@@ -168,7 +168,6 @@ public class IOUtils {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
       writer.write("P3\n");
       writer.write(image.getWidth() + " " + image.getHeight() + "\n");
-      writer.write("255\n");
       for (int row = 0; row < image.getHeight(); row++) {
         for (int col = 0; col < image.getWidth(); col++) {
           Pixel pixel = image.getPixel(row, col);

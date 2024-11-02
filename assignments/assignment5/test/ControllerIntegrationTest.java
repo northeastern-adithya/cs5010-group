@@ -1242,8 +1242,8 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Successfully flipped the image "
             + "horizontally."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {65280, 8421504},
-            {16711680, 255}
+            {255, 16711680},
+            {8421504, 65280}
     }));
     assertEquals(expectedImage, imageMemory.getImage("horizontalFlip"));
   }
@@ -1375,8 +1375,8 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString().contains("Successfully flipped the image "
             + "vertically."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-            {255, 16711680},
-            {8421504, 65280}
+            {65280, 8421504},
+            {16711680, 255},
     }));
     assertEquals(expectedImage, imageMemory.getImage("verticalFlip"));
   }
@@ -2197,19 +2197,18 @@ public class ControllerIntegrationTest {
     assertEquals(
             Factory.createImage(createPixels(
                     new int[][]{
-                            {65280, 8421504},
-                            {16711680, 255}
+                            {255,16711680},
+                            {8421504,65280},
                     }
             )),
             imageMemory.getImage("horizontalFlip")
 
     );
-
     assertEquals(
             Factory.createImage(createPixels(
                     new int[][]{
-                            {8421504, 65280},
-                            {255, 16711680}
+                            {8421504,65280},
+                            {255,16711680},
                     }
             )),
             imageMemory.getImage("verticalFlip")
@@ -2219,8 +2218,8 @@ public class ControllerIntegrationTest {
     assertEquals(
             Factory.createImage(createPixels(
                     new int[][]{
-                            {255, 16711680},
-                            {8421504, 65280}
+                            {65280, 8421504},
+                            {16711680, 255}
                     }
             )),
             imageMemory.getImage("horizontalFlipNew")
@@ -2377,7 +2376,6 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "load test_resources/input/man.png man "
-               +  "load test_resources/input/man-compress-20.png expected "
                + "compress 90 man actual " +
                     "save test_resources/input/compressed.png actual "
             ,output, null);
