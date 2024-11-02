@@ -58,25 +58,26 @@ public class IOUtils {
     try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
       String format = reader.readLine();
       if (!"P3".equals(format)) {
-        throw new ImageProcessorException(String.format("Unsupported PPM format: %s", format));
+        throw new ImageProcessorException(String.format("Unsupported PPM " +
+                "format: %s", format));
       }
       String[] dimensions = reader.readLine().split(" ");
       int width = Integer.parseInt(dimensions[0]);
       int height = Integer.parseInt(dimensions[1]);
-      int maxColorValue = Integer.parseInt(reader.readLine());
-      Pixel[][] pixelArray = new Pixel[width][height];
-      for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
+      Pixel[][] pixelArray = new Pixel[height][width];
+      for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
           int red = Integer.parseInt(reader.readLine());
           int green = Integer.parseInt(reader.readLine());
           int blue = Integer.parseInt(reader.readLine());
-          pixelArray[x][y] = Factory.createRGBPixel(red, green, blue);
+          pixelArray[row][col] = Factory.createRGBPixel(red, green, blue);
         }
       }
 
       return Factory.createImage(pixelArray);
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error reading PPM file: %s", path), e);
+      throw new ImageProcessorException(String.format("Error reading PPM " +
+              "file: %s", path), e);
     }
   }
 
@@ -93,11 +94,11 @@ public class IOUtils {
       BufferedImage image = ImageIO.read(file);
       int width = image.getWidth();
       int height = image.getHeight();
-      Pixel[][] pixelArray = new Pixel[width][height];
-      for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-          pixelArray[x][y] = Factory.createPixel(
-                  image.getRGB(x, y),
+      Pixel[][] pixelArray = new Pixel[height][width];
+      for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+          pixelArray[row][col] = Factory.createPixel(
+                  image.getRGB(row, col),
                   PixelType.fromBufferedImageType(image.getType())
           );
         }
@@ -138,11 +139,15 @@ public class IOUtils {
               image.getHeight(),
               BufferedImage.TYPE_INT_RGB
       );
-      for (int y = 0; y < image.getHeight(); y++) {
-        for (int x = 0; x < image.getWidth(); x++) {
-          Pixel pixel = image.getPixel(x, y);
-          int rgb = (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-          bufferedImage.setRGB(x, y, rgb);
+      int width = image.getWidth();
+      int height = image.getHeight();
+
+      for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+          Pixel pixel = image.getPixel(row, col);
+          int rgb =
+                  (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
+          bufferedImage.setRGB(row, col, rgb);
         }
       }
       File outputFile = new File(path);
@@ -164,10 +169,9 @@ public class IOUtils {
       writer.write("P3\n");
       writer.write(image.getWidth() + " " + image.getHeight() + "\n");
       writer.write("255\n");
-
-      for (int y = 0; y < image.getHeight(); y++) {
-        for (int x = 0; x < image.getWidth(); x++) {
-          Pixel pixel = image.getPixel(x, y);
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
+          Pixel pixel = image.getPixel(row, col);
           writer.write(pixel.getRed() + "\n");
           writer.write(pixel.getGreen() + "\n");
           writer.write(pixel.getBlue() + "\n");
@@ -189,7 +193,8 @@ public class IOUtils {
     File file = new File(path);
     if (file.getParentFile() != null && !file.getParentFile().exists()) {
       if (!file.getParentFile().mkdirs()) {
-        throw new ImageProcessorException("Error creating directory for path: " + path);
+        throw new ImageProcessorException("Error creating directory for path:" +
+                " " + path);
       }
     }
   }

@@ -39,7 +39,7 @@ public interface Image {
 
   /**
    * Get the height of the image.
-   * The height is the number of pixels in a column.
+   * The height is the number of rows in the image.
    *
    * @return the height of the image
    */
@@ -122,18 +122,21 @@ public interface Image {
 
   /**
    * Returns the red pixel values of the image as a 2D array.
+   *
    * @return the red pixel values of the image as a 2D array.
    */
   int[][] getRedChannel();
 
   /**
    * Returns the green pixel values of the image as a 2D array.
+   *
    * @return the green pixel values of the image as a 2D array.
    */
   int[][] getGreenChannel();
 
   /**
    * Returns the blue pixel values of the image as a 2D array.
+   *
    * @return the blue pixel values of the image as a 2D array.
    */
   int[][] getBlueChannel();

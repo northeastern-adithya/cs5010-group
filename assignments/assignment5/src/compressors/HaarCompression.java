@@ -177,11 +177,12 @@ public class HaarCompression implements Compression {
     int[][] compressedBlue = compress(image.getBlueChannel(), percentage);
     int height = image.getHeight();
     int width = image.getWidth();
-    Pixel[][] newPixelArray = new Pixel[width][height];
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = Factory.createRGBPixel(compressedRed[y][x],
-                compressedGreen[y][x], compressedBlue[y][x]);
+    Pixel[][] newPixelArray = new Pixel[height][width];
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        newPixelArray[row][col] =
+                Factory.createRGBPixel(compressedRed[row][col],
+                        compressedGreen[row][col], compressedBlue[row][col]);
       }
     }
     return Factory.createImage(newPixelArray);
