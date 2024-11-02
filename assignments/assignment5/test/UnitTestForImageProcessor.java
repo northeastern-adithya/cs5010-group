@@ -1356,22 +1356,22 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testGetWidth() {
-      assertEquals(3, image.getWidth());
+      assertEquals(2, image.getWidth());
     }
 
     @Test
     public void testGetHeight() {
-      assertEquals(2, image.getHeight());
+      assertEquals(3, image.getHeight());
     }
 
     @Test
     public void testCreateRedComponent() {
       Image redImage = image.createRedComponent();
 
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          Pixel original = image.getPixel(x, y);
-          Pixel redPixel = redImage.getPixel(x, y);
+      for(int row = 0; row < image.getHeight(); row++) {
+        for(int col = 0; col < image.getWidth(); col++) {
+          Pixel original = image.getPixel(row, col);
+          Pixel redPixel = redImage.getPixel(row, col);
           assertEquals(redPixel.getRed(), original.getRed());
           assertEquals(redPixel.getGreen(), original.getRed());
           assertEquals(redPixel.getBlue(), original.getRed());
@@ -1406,27 +1406,28 @@ public class UnitTestForImageProcessor {
     public void testGetLuma() {
       Image lumaImage = image.getLuma();
 
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          Pixel original = image.getPixel(x, y);
+      for(int row = 0; row < image.getHeight(); row++) {
+        for(int col = 0; col < image.getWidth(); col++) {
+          Pixel original = image.getPixel(row, col);
           int expectedLuma = (int) (0.2126 * original.getRed()
                   + 0.7152 * original.getGreen()
                   + 0.0722 * original.getBlue());
-          Pixel lumaPixel = lumaImage.getPixel(x, y);
+          Pixel lumaPixel = lumaImage.getPixel(row, col);
 
           assertEquals(new RGB(expectedLuma, expectedLuma, expectedLuma),
                   lumaPixel);
         }
       }
+
     }
 
     @Test
     public void testGetSepia() {
       Image sepiaImage = image.getSepia();
 
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          Pixel original = image.getPixel(x, y);
+      for(int row = 0; row < image.getHeight(); row++) {
+        for(int col = 0; col < image.getWidth(); col++) {
+          Pixel original = image.getPixel(row, col);
           int originalRed = original.getRed();
           int originalGreen = original.getGreen();
           int originalBlue = original.getBlue();
@@ -1442,26 +1443,27 @@ public class UnitTestForImageProcessor {
                   + 0.534 * originalGreen
                   + 0.131 * originalBlue));
 
-          Pixel sepiaPixel = sepiaImage.getPixel(x, y);
+          Pixel sepiaPixel = sepiaImage.getPixel(row, col);
 
           assertEquals(new RGB(expectedRed, expectedGreen, expectedBlue),
                   sepiaPixel);
         }
       }
+
     }
 
     @Test
     public void testGetIntensity() {
       Image intensityImage = image.getIntensity();
 
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          Pixel original = image.getPixel(x, y);
+      for(int row = 0; row < image.getHeight(); row++) {
+        for(int col = 0; col < image.getWidth(); col++) {
+          Pixel original = image.getPixel(row, col);
           int expectedIntensity = (original.getRed()
                   + original.getGreen()
                   + original.getBlue()) / 3;
 
-          Pixel intensityPixel = intensityImage.getPixel(x, y);
+          Pixel intensityPixel = intensityImage.getPixel(row, col);
 
           assertEquals(new RGB(expectedIntensity, expectedIntensity,
                           expectedIntensity),
@@ -1473,15 +1475,14 @@ public class UnitTestForImageProcessor {
     @Test
     public void testGetValue() {
       Image valueImage = image.getValue();
-
-      for (int x = 0; x < image.getWidth(); x++) {
-        for (int y = 0; y < image.getHeight(); y++) {
-          Pixel original = image.getPixel(x, y);
+      for(int row = 0; row < image.getHeight(); row++) {
+        for(int col = 0; col < image.getWidth(); col++) {
+          Pixel original = image.getPixel(row, col);
           int expectedValue = Math.max(Math.max(original.getRed(),
                           original.getGreen()),
                   original.getBlue());
 
-          Pixel valuePixel = valueImage.getPixel(x, y);
+          Pixel valuePixel = valueImage.getPixel(row, col);
 
           assertEquals(new RGB(expectedValue, expectedValue, expectedValue),
                   valuePixel);
