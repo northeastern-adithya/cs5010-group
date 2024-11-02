@@ -160,7 +160,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
         return executeSepiaCommand(scanner);
       case RUN:
         return executeRunCommand(scanner);
-      case COMPRESSION:
+      case COMPRESS:
         return executeCompressionCommand(scanner);
       case HELP:
         return executeHelpCommand();

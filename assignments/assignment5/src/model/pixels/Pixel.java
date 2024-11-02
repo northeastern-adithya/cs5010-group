@@ -1,6 +1,6 @@
 package model.pixels;
 
-import model.enumeration.CompressionType;
+
 
 /**
  * Represents a pixel in an image.

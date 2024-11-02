@@ -83,13 +83,13 @@ public enum UserCommand {
   SEPIA("sepia", "sepia image-name dest-image-name: "
           + "produce a sepia-toned version of the given image "
           + "and store the result in another image with the given name."),
-  RUN("run", "run script-file: "
-          + "Load and run the script commands in the specified file."),
-
-  COMPRESSION("compression",
+  COMPRESS("compress",
           "compress percentage image-name dest-image-name: "
                   + "compress the given image by the given percentage and "
                   + "store the result in another image with the given name."),
+  RUN("run", "run script-file: "
+          + "Load and run the script commands in the specified file."),
+
   QUIT("quit", "quit: Quit the program."),
   HELP("help", "help: Print this help message.");
 

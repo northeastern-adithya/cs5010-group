@@ -217,7 +217,7 @@ public class Factory {
       return new HaarCompression();
     }
     throw new ImageProcessorException
-            .NotImplementedException(String.format("Compression type:%s not " +
-            "implemented", type));
+            .NotImplementedException(String.format("Compression type:%s not "
+            + "implemented", type));
   }
 }

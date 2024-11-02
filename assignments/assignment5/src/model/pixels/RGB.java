@@ -2,7 +2,7 @@ package model.pixels;
 
 import java.util.Objects;
 
-import model.enumeration.CompressionType;
+
 import model.enumeration.LinearColorTransformationType;
 
 /**

@@ -12,7 +12,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Optional;
 
-import compressors.Compression;
+
 import controller.ExecutionStatus;
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
@@ -20,7 +20,6 @@ import app.ImageProcessorApp;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.enumeration.CompressionType;
 import model.enumeration.FilterOption;
 import model.memory.ImageMemory;
 import services.FileImageProcessingService;
@@ -1157,6 +1156,9 @@ public class UnitTestForImageProcessor {
               + "sepia image-name dest-image-name: produce a sepia-toned "
               + "version of the given image and store the result in another "
               + "image with the given name.\n"
+              + "compress percentage image-name dest-image-name: "
+              + "compress the given image by the given percentage and store "
+              + "the result in another image with the given name.\n"
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
               + "quit: Quit the program.\n"

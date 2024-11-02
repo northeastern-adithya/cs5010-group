@@ -120,10 +120,22 @@ public interface Image {
   Image verticalFlip();
 
 
+  /**
+   * Returns the red pixel values of the image as a 2D array.
+   * @return the red pixel values of the image as a 2D array.
+   */
   int[][] getRedChannel();
 
+  /**
+   * Returns the green pixel values of the image as a 2D array.
+   * @return the green pixel values of the image as a 2D array.
+   */
   int[][] getGreenChannel();
 
+  /**
+   * Returns the blue pixel values of the image as a 2D array.
+   * @return the blue pixel values of the image as a 2D array.
+   */
   int[][] getBlueChannel();
 
 }

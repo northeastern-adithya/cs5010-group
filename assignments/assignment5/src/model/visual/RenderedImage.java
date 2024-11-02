@@ -158,6 +158,10 @@ public class RenderedImage implements Image {
     return new RenderedImage(newPixelArray);
   }
 
+  /**
+   * Helper method to get the channel of the image.
+   * Channel is extracted from each pixel in the image.
+   */
   private int[][] getChannel(Function<Pixel, Integer> channel) {
     int height = this.getHeight();
     int width = this.getWidth();

@@ -23,57 +23,65 @@ public class HaarCompression implements Compression {
     return cleanedData;
   }
 
-  private static double[][] transform(double[][] sequence) {
-    double[][] paddedSequence = padToSquareMatrix(sequence);
-    int length = paddedSequence.length;
-    double[][] transformed = Arrays.copyOf(paddedSequence, length);
-    while (length > 1) {
-      for (int i = 0; i < length; i++) {
-        double[] rowSequenceSubset =
-                transformSequenceSubset(transformed[i], length);
-        System.arraycopy(rowSequenceSubset, 0, transformed[i], 0, length);
+
+  private static double[][] haar(double[][] data) {
+    double[][] squareMatrix = padToSquareMatrix(data);
+    int squareMatrixLength = squareMatrix.length;
+
+    double[][] haarTransformData = Arrays.copyOf(squareMatrix,
+            squareMatrixLength);
+
+    while (squareMatrixLength > 1) {
+
+      for (int row = 0; row < squareMatrixLength; row++) {
+
+        double[] transformedSubset =
+                transform(haarTransformData[row], squareMatrixLength);
+        System.arraycopy(transformedSubset, 0, haarTransformData[row], 0,
+                squareMatrixLength);
       }
 
-      for (int j = 0; j < length; j++) {
-        double[] columnSubset = new double[length];
-        for (int i = 0; i < length; i++) {
-          columnSubset[i] = transformed[i][j];
+      for (int column = 0; column < squareMatrixLength; column++) {
+        double[] columnSubset = new double[squareMatrixLength];
+        for (int i = 0; i < squareMatrixLength; i++) {
+          columnSubset[i] = haarTransformData[i][column];
         }
-        double[] columnSequenceSubset = transformSequenceSubset(columnSubset,
-                length);
+        double[] columnSequenceSubset = transform(columnSubset,
+                squareMatrixLength);
 
-        for (int i = 0; i < length; i++) {
-          transformed[i][j] = columnSequenceSubset[i];
+        for (int i = 0; i < squareMatrixLength; i++) {
+          haarTransformData[i][column] = columnSequenceSubset[i];
         }
       }
-      length /= 2;
+      squareMatrixLength /= 2;
     }
 
-    return transformed;
+    return haarTransformData;
   }
 
-  private static double[][] invert(double[][] sequence) {
+  private static double[][] invhaar(double[][] data) {
     int length = 2;
-    double[][] inverted = Arrays.copyOf(sequence, sequence.length);
-    while (length <= inverted.length) {
-      for (int j = 0; j < length; j++) {
+    double[][] invhaarData = Arrays.copyOf(data, data.length);
+
+    while (length <= invhaarData.length) {
+      for (int column = 0; column < length; column++) {
         double[] columnSubset = new double[length];
         for (int i = 0; i < length; i++) {
-          columnSubset[i] = inverted[i][j];
+          columnSubset[i] = invhaarData[i][column];
         }
-        double[] invertedColumn = invertSequenceSubset(columnSubset, length);
+        double[] invertedColumn = invert(columnSubset, length);
         for (int i = 0; i < length; i++) {
-          inverted[i][j] = invertedColumn[i];
+          invhaarData[i][column] = invertedColumn[i];
         }
       }
-      for (int i = 0; i < length; i++) {
-        double[] rowSubset = Arrays.copyOfRange(inverted[i], 0, length);
-        double[] invertedRow = invertSequenceSubset(rowSubset, length);
-        System.arraycopy(invertedRow, 0, inverted[i], 0, length);
+      for (int row = 0; row < length; row++) {
+        double[] rowSubset = Arrays.copyOfRange(invhaarData[row], 0, length);
+        double[] invertedRow = invert(rowSubset, length);
+        System.arraycopy(invertedRow, 0, invhaarData[row], 0, length);
       }
       length *= 2;
     }
-    return inverted;
+    return invhaarData;
   }
 
   /**
@@ -89,29 +97,31 @@ public class HaarCompression implements Compression {
     }
   }
 
-  private static double[] transformSequenceSubset(double[] sequence,
-                                                  int length) {
-    double[] transformed = new double[length];
+  private static double[] transform(double[] data,
+                                    int length) {
+    double[] transformedData = new double[length];
     int halfLength = length / 2;
     for (int i = 0; i < halfLength; i++) {
-      double firstValue = sequence[2 * i];
-      double secondValue = sequence[2 * i + 1];
-      transformed[i] = (firstValue + secondValue) / Math.sqrt(2);
-      transformed[halfLength + i] = (firstValue - secondValue) / Math.sqrt(2);
+      double firstValue = data[2 * i];
+      double secondValue = data[2 * i + 1];
+      transformedData[i] = (firstValue + secondValue) / Math.sqrt(2);
+      transformedData[halfLength + i] =
+              (firstValue - secondValue) / Math.sqrt(2);
     }
-    return transformed;
+    return transformedData;
   }
 
 
-  private static double[][] padToSquareMatrix(double[][] sequence) {
-    int row = sequence.length;
-    int column = sequence[0].length;
+  private static double[][] padToSquareMatrix(double[][] data) {
+    int row = data.length;
+    int column = data[0].length;
+
     int newLength = getNearestPowerOfTwo(Math.max(row, column));
-    double[][] paddedSequence = new double[newLength][newLength];
+    double[][] squareMatrix = new double[newLength][newLength];
     for (int i = 0; i < row; i++) {
-      System.arraycopy(sequence[i], 0, paddedSequence[i], 0, column);
+      System.arraycopy(data[i], 0, squareMatrix[i], 0, column);
     }
-    return paddedSequence;
+    return squareMatrix;
   }
 
   private static int getNearestPowerOfTwo(int number) {
@@ -129,12 +139,12 @@ public class HaarCompression implements Compression {
     return power;
   }
 
-  private static double[] invertSequenceSubset(double[] sequence, int length) {
+  private static double[] invert(double[] data, int length) {
     double[] inverted = new double[length];
     int halfLength = length / 2;
     for (int i = 0; i < halfLength; i++) {
-      double firstValue = sequence[i];
-      double secondValue = sequence[halfLength + i];
+      double firstValue = data[i];
+      double secondValue = data[halfLength + i];
       inverted[2 * i] = (firstValue + secondValue) / Math.sqrt(2);
       inverted[2 * i + 1] = (firstValue - secondValue) / Math.sqrt(2);
     }
@@ -142,6 +152,12 @@ public class HaarCompression implements Compression {
   }
 
 
+  /**
+   * Converts a 2D integer array to a 2D double array.
+   *
+   * @param data the 2D integer array to convert
+   * @return the 2D double array
+   */
   private static double[][] toDoubleArray(int[][] data) {
     double[][] doubleArray = new double[data.length][data[0].length];
     for (int i = 0; i < data.length; i++) {
@@ -172,36 +188,35 @@ public class HaarCompression implements Compression {
   }
 
 
-  private int[][] compress(int[][] data, int percentage) throws ImageProcessorException {
-    validatePercentage(percentage);
-    double[][] transformed = transform(toDoubleArray(data));
-    double[][] dataWithThreshold = computeSequenceWithThreshold(transformed,
+  private int[][] compress(int[][] data, int percentage) {
+    double[][] haarTransformed = haar(toDoubleArray(data));
+    double[][] dataWithThreshold = computeDataWithThreshold(haarTransformed,
             percentage);
-    double[][] invert = invert(dataWithThreshold);
-    return fromDoubleArray(invert);
+    double[][] invhaarData = invhaar(dataWithThreshold);
+    return fromDoubleArray(invhaarData);
   }
 
-  private double[][] computeSequenceWithThreshold(double[][] data,
-                                                  int percentage) {
+  private double[][] computeDataWithThreshold(double[][] data,
+                                              int percentage) {
     int height = data.length;
     int width = data[0].length;
     double[][] dataWithThreshold = Arrays.copyOf(data, height);
-    for (int i = 0; i < height; i++) {
-      double thresholdValue = getThresholdValue(data[i], percentage);
-      for (int j = 0; j < width; j++) {
-        if (Math.abs(data[i][j]) < thresholdValue) {
-          dataWithThreshold[i][j] = 0;
+    for (int row = 0; row < height; row++) {
+      double thresholdValue = getThresholdValue(data[row], percentage);
+      for (int column = 0; column < width; column++) {
+        if (Math.abs(data[row][column]) < thresholdValue) {
+          dataWithThreshold[row][column] = 0;
         }
       }
     }
     return dataWithThreshold;
   }
 
-  private double getThresholdValue(double[] data,int percentage){
+  private double getThresholdValue(double[] data, int percentage) {
     int length = data.length;
     int thresholdIndex = (int) Math.ceil((double) (length * percentage) / 100);
     double[] sortedData = Arrays.copyOf(data, length);
-    for(int i = 0; i < length; i++){
+    for (int i = 0; i < length; i++) {
       sortedData[i] = Math.abs(sortedData[i]);
     }
     Arrays.sort(sortedData);
