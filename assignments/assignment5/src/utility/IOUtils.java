@@ -98,7 +98,7 @@ public class IOUtils {
       for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
           pixelArray[row][col] = Factory.createPixel(
-                  image.getRGB(row, col),
+                  image.getRGB(col, row),
                   PixelType.fromBufferedImageType(image.getType())
           );
         }
@@ -147,7 +147,7 @@ public class IOUtils {
           Pixel pixel = image.getPixel(row, col);
           int rgb =
                   (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-          bufferedImage.setRGB(row, col, rgb);
+          bufferedImage.setRGB(col, row, rgb);
         }
       }
       File outputFile = new File(path);
