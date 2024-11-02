@@ -315,6 +315,69 @@ public class RenderedImage implements Image {
     return peakValue;
   }
 
+  @Override
+  public Image levelsAdjust(int b, int m, int w) {
+    // Validate input parameters
+    if (b < 0 || b > 255 || m < 0 || m > 255 || w < 0 || w > 255) {
+      throw new IllegalArgumentException("Level adjustment values must be between 0 and 255");
+    }
+    if (b >= m || m >= w) {
+      throw new IllegalArgumentException("Values must be in ascending order: black < mid < white");
+    }
+
+    // Calculate quadratic curve coefficients as per the mathematical formula
+    double A1 = Math.pow(b, 2) - (Math.pow(m, 2) * w + Math.pow(b, 2) * m -
+            Math.pow(m, 2) * b - Math.pow(b, 2) * w + Math.pow(w, 2) * b) /
+            (m - w - b + m);
+    double A2 = -(Math.pow(b, 2) * 255) + (128 * Math.pow(b, 2));
+    double A3 = Math.pow(128 - 255, 2) * Math.pow(m, 2);
+    double A4 = Math.pow(255 * m - 128 * m, 2);
+
+    // Calculate coefficients a, b, c for the quadratic equation ax² + bx + c
+    double ac = A1 / A2;
+    double bc = A3 / A4;
+    double cc = A4 / A2;
+
+    // Create new pixel array for the adjusted image
+    int height = this.getHeight();
+    int width = this.getWidth();
+    Pixel[][] adjustedPixels = new Pixel[width][height];
+
+    // Apply the quadratic transformation to each pixel
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        Pixel original = this.getPixel(x, y);
+
+        // Apply quadratic transformation to each color channel
+        int newRed = applyQuadraticTransform(original.getRed(), ac, bc, cc);
+        int newGreen = applyQuadraticTransform(original.getGreen(), ac, bc, cc);
+        int newBlue = applyQuadraticTransform(original.getBlue(), ac, bc, cc);
+
+        // Create new pixel with adjusted values
+        adjustedPixels[x][y] = new RGB(newRed, newGreen, newBlue);
+      }
+    }
+
+    return Factory.createImage(adjustedPixels);
+  }
+
+  /**
+   * Applies the quadratic transformation to a single color value.
+   *
+   * @param value The original color value
+   * @param a Quadratic coefficient a
+   * @param b Quadratic coefficient b
+   * @param c Quadratic coefficient c
+   * @return The transformed color value, clamped between 0 and 255
+   */
+  private int applyQuadraticTransform(int value, double a, double b, double c) {
+    // Apply quadratic transformation: ax² + bx + c
+    double result = a * Math.pow(value, 2) + b * value + c;
+
+    // Clamp result between 0 and 255
+    return clamp((int) Math.round(result));
+  }
+
   /**
    * Clamps a value between 0 and 255.
    *

@@ -114,4 +114,6 @@ public interface Image {
   Image createHistogram();
 
   Image colorCorrect();
+
+  Image levelsAdjust(int b, int m, int w);
 }
