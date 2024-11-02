@@ -160,6 +160,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
         return executeSepiaCommand(scanner);
       case RUN:
         return executeRunCommand(scanner);
+      case COMPRESS:
+        return executeCompressionCommand(scanner);
       case HELP:
         return executeHelpCommand();
       case QUIT:
@@ -453,7 +455,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
 
     } catch (IOException e) {
       throw new ImageProcessorException(String.format("Error reading script "
-                      + "file: %s", scriptFile), e);
+              + "file: %s", scriptFile), e);
     }
 
     return new ExecutionStatus(true, "Successfully executed the script file.");
@@ -510,6 +512,30 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private void displayMessage(String message) {
     if (StringUtils.isNotNullOrEmpty(message)) {
       this.userOutput.displayMessage(message);
+    }
+  }
+
+
+  /**
+   * Executes the compression command.
+   *
+   * @param scanner scanner to read the command arguments
+   * @return ExecutionStatus information of the execution
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
+   */
+  private ExecutionStatus executeCompressionCommand(Scanner scanner) throws ImageProcessorException {
+    List<String> arguments = extractArguments(scanner, 3);
+    try {
+      int compressionPercentage = Integer.parseInt(arguments.get(0));
+      imageProcessingService.compressImage(arguments.get(1), arguments.get(2)
+              , compressionPercentage);
+      return new ExecutionStatus(true
+              , String.format("Successfully compressed the image at %s%%."
+              , compressionPercentage));
+    } catch (NumberFormatException e) {
+      throw new ImageProcessorException("Invalid compression percentage " +
+              "provided.");
     }
   }
 }

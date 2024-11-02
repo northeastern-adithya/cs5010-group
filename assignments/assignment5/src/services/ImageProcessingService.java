@@ -59,7 +59,8 @@ public interface ImageProcessingService {
 
   /**
    * Creates the value component of the image.
-   * This is the maximum value of the three components for each pixel of the image.
+   * This is the maximum value of the three components for each pixel of the
+   * image.
    *
    * @param imageName            the name of the image.
    * @param destinationImageName the name of the destination image.
@@ -85,7 +86,8 @@ public interface ImageProcessingService {
    *
    * @param imageName            the name of the image.
    * @param destinationImageName the name of the destination image.
-   * @throws ImageProcessorException if the intensity component cannot be created.
+   * @throws ImageProcessorException if the intensity component cannot be
+   *                                 created.
    */
   void createIntensityComponent(String imageName, String destinationImageName)
           throws ImageProcessorException;
@@ -182,5 +184,17 @@ public interface ImageProcessingService {
    * @throws ImageProcessorException if the sepia component cannot be created.
    */
   void sepiaImage(String imageName, String destinationImageName) throws ImageProcessorException;
+
+
+  /**
+   * Compresses the image by the given percentage.
+   *
+   * @param imageName            the name of the image.
+   * @param destinationImageName the name of the destination image.
+   * @param percentage           the percentage to compress the image by.
+   * @throws ImageProcessorException if the image cannot be compressed.
+   */
+  void compressImage(String imageName, String destinationImageName
+          , int percentage) throws ImageProcessorException;
 
 }

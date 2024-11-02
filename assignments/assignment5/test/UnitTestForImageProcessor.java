@@ -12,6 +12,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Optional;
 
+
 import controller.ExecutionStatus;
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
@@ -1155,6 +1156,9 @@ public class UnitTestForImageProcessor {
               + "sepia image-name dest-image-name: produce a sepia-toned "
               + "version of the given image and store the result in another "
               + "image with the given name.\n"
+              + "compress percentage image-name dest-image-name: "
+              + "compress the given image by the given percentage and store "
+              + "the result in another image with the given name.\n"
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
               + "quit: Quit the program.\n"

@@ -2,6 +2,7 @@ package model.pixels;
 
 import java.util.Objects;
 
+
 import model.enumeration.LinearColorTransformationType;
 
 /**

@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
 
+import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.CompressionType;
 import model.pixels.Pixel;
 
 /**
@@ -124,6 +126,21 @@ public class RenderedImage implements Image {
     return Factory.createImage(newPixelArray);
   }
 
+  @Override
+  public int[][] getRedChannel() {
+    return getChannel(Pixel::getRed);
+  }
+
+  @Override
+  public int[][] getGreenChannel() {
+    return getChannel(Pixel::getGreen);
+  }
+
+  @Override
+  public int[][] getBlueChannel() {
+    return getChannel(Pixel::getBlue);
+  }
+
   /**
    * Helper method to transform the image using the given transformation.
    * Transformation is applied to each pixel in the image.
@@ -139,6 +156,22 @@ public class RenderedImage implements Image {
       }
     }
     return new RenderedImage(newPixelArray);
+  }
+
+  /**
+   * Helper method to get the channel of the image.
+   * Channel is extracted from each pixel in the image.
+   */
+  private int[][] getChannel(Function<Pixel, Integer> channel) {
+    int height = this.getHeight();
+    int width = this.getWidth();
+    int[][] channelArray = new int[height][width];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        channelArray[y][x] = channel.apply(this.getPixel(x, y));
+      }
+    }
+    return channelArray;
   }
 
   @Override

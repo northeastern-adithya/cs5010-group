@@ -1,4 +1,5 @@
 import org.junit.AfterClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -2368,6 +2369,21 @@ public class ControllerIntegrationTest {
                     }
             )
     ), imageMemory.getImage(INITIAL_IMAGE_NAME));
+  }
+
+  @Test
+  @Ignore
+  public void testCompression() throws ImageProcessorException{
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "load test_resources/input/man.png man "
+               +  "load test_resources/input/man-compress-20.png expected "
+               + "compress 90 man actual " +
+                    "save test_resources/input/compressed.png actual "
+            ,output, null);
+
+    controller.processCommands();
+
   }
 
 

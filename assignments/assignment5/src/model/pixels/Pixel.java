@@ -1,5 +1,7 @@
 package model.pixels;
 
+
+
 /**
  * Represents a pixel in an image.
  * Each pixel has a position in the image (row, column) and a color.
@@ -102,5 +104,4 @@ public interface Pixel {
    *         by creating a new pixel object.
    */
   Pixel createPixel(int red, int green, int blue);
-
 }

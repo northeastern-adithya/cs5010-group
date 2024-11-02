@@ -1,5 +1,6 @@
 package model.visual;
 
+import exception.ImageProcessorException;
 import model.pixels.Pixel;
 
 /**
@@ -21,8 +22,10 @@ public interface Image {
    * Adjusts the brightness of the image by a given factor.
    *
    * @param factor the factor to adjust the brightness by
-   *               (positive values increase brightness, negative values decrease brightness)
-   * @return the image with the adjusted brightness by creating a new image object.
+   *               (positive values increase brightness, negative values
+   *               decrease brightness)
+   * @return the image with the adjusted brightness by creating a new image
+   * object.
    */
   Image adjustImageBrightness(int factor);
 
@@ -45,21 +48,24 @@ public interface Image {
   /**
    * Creates a new image with the red component of the pixels.
    *
-   * @return the image with the red component of the pixels by creating a new image object.
+   * @return the image with the red component of the pixels by creating a new
+   * image object.
    */
   Image createRedComponent();
 
   /**
    * Creates a new image with the green component of the pixels.
    *
-   * @return the image with the green component of the pixels by creating a new image object.
+   * @return the image with the green component of the pixels by creating a
+   * new image object.
    */
   Image createGreenComponent();
 
   /**
    * Creates a new image with the blue component of the pixels.
    *
-   * @return the image with the blue component of the pixels by creating a new image object.
+   * @return the image with the blue component of the pixels by creating a
+   * new image object.
    */
   Image createBlueComponent();
 
@@ -90,7 +96,8 @@ public interface Image {
 
   /**
    * Returns the value of the image.
-   * This is the maximum value of the three components for each pixel of the image.
+   * This is the maximum value of the three components for each pixel of the
+   * image.
    *
    * @return the value of the image by creating a new image object.
    */
@@ -100,14 +107,35 @@ public interface Image {
    * Returns a new image with the horizontal flip of the original image.
    *
    * @return the image with the horizontal flip of the original image
-   *         by creating a new image object.
+   * by creating a new image object.
    */
   Image horizontalFlip();
 
   /**
    * Returns a new image with the vertical flip of the original image.
    *
-   * @return the image with the vertical flip of the original image by creating a new image object.
+   * @return the image with the vertical flip of the original image by
+   * creating a new image object.
    */
   Image verticalFlip();
+
+
+  /**
+   * Returns the red pixel values of the image as a 2D array.
+   * @return the red pixel values of the image as a 2D array.
+   */
+  int[][] getRedChannel();
+
+  /**
+   * Returns the green pixel values of the image as a 2D array.
+   * @return the green pixel values of the image as a 2D array.
+   */
+  int[][] getGreenChannel();
+
+  /**
+   * Returns the blue pixel values of the image as a 2D array.
+   * @return the blue pixel values of the image as a 2D array.
+   */
+  int[][] getBlueChannel();
+
 }

@@ -2,9 +2,12 @@ package factories;
 
 import java.util.Objects;
 
+import compressors.Compression;
+import compressors.HaarCompression;
 import controller.ImageProcessorController;
 import controller.SimpleImageProcessorController;
 import exception.ImageProcessorException;
+import model.enumeration.CompressionType;
 import model.enumeration.PixelType;
 import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
@@ -35,7 +38,8 @@ public class Factory {
    * @param processor The processor service to perform operations on the image.
    * @return the controller to control the view and model
    */
-  public static ImageProcessorController createController(UserInput input, UserOutput output,
+  public static ImageProcessorController createController(UserInput input,
+                                                          UserOutput output,
                                                           ImageProcessingService processor) {
     return new SimpleImageProcessorController(input, output, processor);
   }
@@ -53,15 +57,18 @@ public class Factory {
 
 
   /**
-   * Combines the red, green, and blue components of an image to create a new image.
+   * Combines the red, green, and blue components of an image to create a new
+   * image.
    *
    * @param redComponent   the red component of the image
    * @param greenComponent the green component of the image
    * @param blueComponent  the blue component of the image
    * @return the new image with the combined RGB components
-   * @throws ImageProcessorException if the RGB components do not have the same dimensions
+   * @throws ImageProcessorException if the RGB components do not have the
+   * same dimensions
    */
-  public static Image combineRGBComponents(Image redComponent, Image greenComponent,
+  public static Image combineRGBComponents(Image redComponent,
+                                           Image greenComponent,
                                            Image blueComponent)
           throws ImageProcessorException {
     validateRGBComponents(redComponent, greenComponent, blueComponent);
@@ -70,7 +77,8 @@ public class Factory {
     Pixel[][] newPixelArray = new Pixel[width][height];
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        newPixelArray[x][y] = createRGBPixel(redComponent.getPixel(x, y).getRed(),
+        newPixelArray[x][y] =
+                createRGBPixel(redComponent.getPixel(x, y).getRed(),
                 greenComponent.getPixel(x, y).getGreen(),
                 blueComponent.getPixel(x, y).getBlue());
       }
@@ -84,10 +92,12 @@ public class Factory {
    * @param redComponent   the red component of the image
    * @param greenComponent the green component of the image
    * @param blueComponent  the blue component of the image
-   * @throws ImageProcessorException if the RGB components do not have the same dimensions
+   * @throws ImageProcessorException if the RGB components do not have the
+   * same dimensions
    * @throws NullPointerException    if any of the RGB components are null
    */
-  private static void validateRGBComponents(Image redComponent, Image greenComponent,
+  private static void validateRGBComponents(Image redComponent,
+                                            Image greenComponent,
                                             Image blueComponent)
           throws ImageProcessorException, NullPointerException {
     Objects.requireNonNull(redComponent, "Red component cannot be null");
@@ -97,7 +107,8 @@ public class Factory {
             || redComponent.getWidth() != blueComponent.getWidth()
             || redComponent.getHeight() != greenComponent.getHeight()
             || redComponent.getHeight() != blueComponent.getHeight()) {
-      throw new ImageProcessorException("The RGB components must have the same dimensions");
+      throw new ImageProcessorException("The RGB components must have the " +
+              "same dimensions");
     }
   }
 
@@ -129,7 +140,8 @@ public class Factory {
    * @param pixel the pixel to create the pixel
    * @param type  the type of the pixel
    * @return the pixel based on the given pixel and type
-   * @throws ImageProcessorException.NotImplementedException if the pixel is not implemented
+   * @throws ImageProcessorException.NotImplementedException if the pixel is
+   * not implemented
    */
   public static Pixel createPixel(int pixel, PixelType type)
           throws ImageProcessorException.NotImplementedException {
@@ -189,5 +201,23 @@ public class Factory {
    */
   public static UserOutput createUserOutput(Appendable output) {
     return new ConsoleOutput(output);
+  }
+
+  /**
+   * Creates a Compression object based on the given type.
+   *
+   * @param type the type of the compression
+   * @return the Compression object based on the given type
+   * @throws ImageProcessorException.NotImplementedException if the compression
+   * type is not implemented
+   */
+  public static Compression createCompression(CompressionType type) throws ImageProcessorException {
+
+    if (CompressionType.HAAR.equals(type)) {
+      return new HaarCompression();
+    }
+    throw new ImageProcessorException
+            .NotImplementedException(String.format("Compression type:%s not "
+            + "implemented", type));
   }
 }
