@@ -239,31 +239,31 @@ public class RenderedImage implements Image {
     }
 
     for (int x = 0; x < 255; x++) {
-      int currRedFreq = (int)((redFreq[x] * 255.0) / maxFreq);
-      int nextRedFreq = (int)((redFreq[x + 1] * 255.0) / maxFreq);
-      int currGreenFreq = (int)((greenFreq[x] * 255.0) / maxFreq);
-      int nextGreenFreq = (int)((greenFreq[x + 1] * 255.0) / maxFreq);
-      int currBlueFreq = (int)((blueFreq[x] * 255.0) / maxFreq);
-      int nextBlueFreq = (int)((blueFreq[x + 1] * 255.0) / maxFreq);
+      int currRedHeight = (int)((redFreq[x] * 255.0) / maxFreq);
+      int nextRedHeight = (int)((redFreq[x + 1] * 255.0) / maxFreq);
+      int currGreenHeight = (int)((greenFreq[x] * 255.0) / maxFreq);
+      int nextGreenHeight = (int)((greenFreq[x + 1] * 255.0) / maxFreq);
+      int currBlueHeight = (int)((blueFreq[x] * 255.0) / maxFreq);
+      int nextBlueHeight = (int)((blueFreq[x + 1] * 255.0) / maxFreq);
 
       g2d.setColor(Color.RED);
-      g2d.drawLine(x, 255 - currRedFreq, x + 1, 255 - nextRedFreq);
+      g2d.drawLine(x, 255 - currRedHeight, x + 1, 255 - nextRedHeight);
       g2d.setColor(Color.GREEN);
-      g2d.drawLine(x, 255 - currGreenFreq, x + 1, 255 - nextGreenFreq);
+      g2d.drawLine(x, 255 - currGreenHeight, x + 1, 255 - nextGreenHeight);
       g2d.setColor(Color.BLUE);
-      g2d.drawLine(x, 255 - currBlueFreq, x + 1, 255 - nextBlueFreq);
+      g2d.drawLine(x, 255 - currBlueHeight, x + 1, 255 - nextBlueHeight);
     }
 
     g2d.dispose();
 
     Pixel[][] histogramPixels = new Pixel[256][256];
-    for (int x = 0; x < 256; x++) {
-      for (int y = 0; y < 256; y++) {
+    for (int y = 0; y < 256; y++) {
+      for (int x = 0; x < 256; x++) {
         int rgb = histogramImage.getRGB(x, y);
         int red = (rgb >> 16) & 0xFF;
         int green = (rgb >> 8) & 0xFF;
         int blue = rgb & 0xFF;
-        histogramPixels[x][y] = new RGB(red, green, blue);
+        histogramPixels[y][x] = new RGB(red, green, blue);
       }
     }
 
@@ -312,6 +312,13 @@ public class RenderedImage implements Image {
     return Factory.createImage(newPixels);
   }
 
+  /**
+   * Finds the meaningful peak in a frequency array, ignoring extremities.
+   * Only considers values between 10 and 245 to avoid dark/blown-out regions.
+   *
+   * @param freq the frequency array
+   * @return the value where the meaningful peak occurs
+   */
   private int findMeaningfulPeak(int[] freq) {
     int maxFreq = 0;
     int peakValue = 0;
@@ -366,12 +373,27 @@ public class RenderedImage implements Image {
     return Factory.createImage(adjustedPixels);
   }
 
+  /**
+   * Applies the quadratic transformation to a single color value.
+   *
+   * @param value The original color value
+   * @param coeffA Quadratic coefficient a
+   * @param coeffB Quadratic coefficient b
+   * @param coeffC Quadratic coefficient c
+   * @return The transformed color value, clamped between 0 and 255
+   */
   private int applyQuadraticTransform(int value, double coeffA, double coeffB, double coeffC) {
     double result = coeffA * Math.pow(value, 2) + coeffB * value + coeffC;
 
     return clamp((int) Math.round(result));
   }
 
+  /**
+   * Clamps a value between 0 and 255.
+   *
+   * @param value the value to clamp
+   * @return the clamped value
+   */
   private int clamp(int value) {
     return Math.max(0, Math.min(255, value));
   }
