@@ -193,7 +193,11 @@ public class FileImageProcessingService implements ImageProcessingService {
     Image image = memory.getImage(request.getImageName());
     Image filteredImage = FilterUtils.applyFilter(image,
             FilterOption.SHARPEN);
-    memory.addImage(request.getDestinationImageName(), filteredImage);
+    Image imageAfterCombining = filteredImage;
+    if(request.getPercentage().isPresent()){
+      imageAfterCombining = Factory.combineImage(image, filteredImage, request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
   }
 
   @Override
