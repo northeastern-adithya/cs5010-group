@@ -5,6 +5,8 @@ package utility;
  */
 public class StringUtils {
 
+  public static final String EMPTY_STRING = "";
+
   /**
    * Private constructor to prevent instantiation.
    */
