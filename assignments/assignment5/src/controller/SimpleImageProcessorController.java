@@ -14,6 +14,7 @@ import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
 import model.enumeration.UserCommand;
+import model.request.ImageProcessingRequest;
 import services.ImageProcessingService;
 import utility.StringUtils;
 import view.input.UserInput;
@@ -182,7 +183,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    */
   private ExecutionStatus executeLoadCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.loadImage(arguments.get(0), arguments.get(1));
+    imageProcessingService.loadImage(ImageProcessingRequest
+            .builder()
+            .imagePath(arguments.get(0))
+            .imageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully loaded the image.");
   }
 
@@ -196,7 +200,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    */
   private ExecutionStatus executeSaveCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.saveImage(arguments.get(0), arguments.get(1));
+    imageProcessingService.saveImage(ImageProcessingRequest
+            .builder()
+            .imagePath(arguments.get(0))
+            .imageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully saved the image.");
   }
 
@@ -211,8 +218,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeRedComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createRedComponent(arguments.get(0),
-            arguments.get(1));
+    imageProcessingService.createRedComponent(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully created red component.");
   }
 
@@ -227,8 +236,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeBlueComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createBlueComponent(arguments.get(0),
-            arguments.get(1));
+    imageProcessingService.createBlueComponent(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully created blue component.");
   }
 
@@ -243,8 +254,12 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeGreenComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createGreenComponent(arguments.get(0),
-            arguments.get(1));
+    imageProcessingService.createGreenComponent(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .destinationImageName(arguments.get(1)).build()
+    );
     return new ExecutionStatus(true, "Successfully created green component.");
   }
 
@@ -259,8 +274,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeValueComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createValueComponent(arguments.get(0),
-            arguments.get(1));
+    imageProcessingService.createValueComponent(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully created value component.");
   }
 
@@ -275,8 +292,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeLumaComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createLumaComponent(arguments.get(0),
-            arguments.get(1));
+    imageProcessingService.createLumaComponent(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully created luma component.");
   }
 
@@ -291,8 +310,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeIntensityComponentCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.createIntensityComponent(arguments.get(0),
-            arguments.get(1));
+    imageProcessingService.createIntensityComponent(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully created intensity "
             + "component.");
   }
@@ -308,7 +329,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeHorizontalFlipCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.horizontalFlip(arguments.get(0), arguments.get(1));
+    imageProcessingService.horizontalFlip(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully flipped the image "
             + "horizontally.");
   }
@@ -324,7 +348,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeVerticalFlipCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.verticalFlip(arguments.get(0), arguments.get(1));
+    imageProcessingService.verticalFlip(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1)).build());
     return new ExecutionStatus(true, "Successfully flipped the image "
             + "vertically.");
   }
@@ -345,8 +372,11 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     }
     int brightness = scanner.nextInt();
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.brighten(arguments.get(0), arguments.get(1),
-            brightness);
+    imageProcessingService.brighten(ImageProcessingRequest
+            .builder()
+            .imageName(arguments.get(0))
+            .destinationImageName(arguments.get(1))
+            .factor(brightness).build());
     return new ExecutionStatus(true,
             String.format("Successfully brightened the image at factor:%s",
                     brightness));
@@ -363,8 +393,15 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeRgbSplitCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 4);
-    imageProcessingService.rgbSplit(arguments.get(0), arguments.get(1),
-            arguments.get(2), arguments.get(3));
+    imageProcessingService.rgbSplit(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .redImageName(arguments.get(1))
+                    .greenImageName(arguments.get(2))
+                    .blueImageName(arguments.get(3))
+                    .build()
+    );
     return new ExecutionStatus(true,
             "Successfully split the image into RGB components.");
   }
@@ -380,8 +417,15 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   private ExecutionStatus executeRgbCombineCommand(Scanner scanner)
           throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 4);
-    imageProcessingService.rgbCombine(arguments.get(0), arguments.get(1),
-            arguments.get(2), arguments.get(3));
+    imageProcessingService.rgbCombine(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .redImageName(arguments.get(1))
+                    .greenImageName(arguments.get(2))
+                    .blueImageName(arguments.get(3))
+                    .build()
+    );
     return new ExecutionStatus(true, "Successfully combined the RGB "
             + "components.");
   }
@@ -396,7 +440,13 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    */
   private ExecutionStatus executeBlurCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.blurImage(arguments.get(0), arguments.get(1));
+    imageProcessingService.blurImage(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .destinationImageName(arguments.get(1))
+                    .build()
+    );
     return new ExecutionStatus(true, "Successfully blurred the image.");
   }
 
@@ -410,7 +460,13 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    */
   private ExecutionStatus executeSharpenCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.sharpenImage(arguments.get(0), arguments.get(1));
+    imageProcessingService.sharpenImage(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .destinationImageName(arguments.get(1))
+                    .build()
+    );
     return new ExecutionStatus(true, "Successfully sharpened the image.");
   }
 
@@ -424,7 +480,13 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    */
   private ExecutionStatus executeSepiaCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
-    imageProcessingService.sepiaImage(arguments.get(0), arguments.get(1));
+    imageProcessingService.sepiaImage(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .destinationImageName(arguments.get(1))
+                    .build()
+    );
     return new ExecutionStatus(true, "Successfully converted the image to "
             + "sepia.");
   }
@@ -493,6 +555,11 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     return arguments;
   }
 
+  private Optional<Integer> extractOptionalIntArgument(Scanner scanner) {
+    return scanner.hasNextInt() ? Optional.of(scanner.nextInt()) :
+            Optional.empty();
+  }
+
 
   /**
    * Executes the help command.
@@ -528,8 +595,14 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     List<String> arguments = extractArguments(scanner, 3);
     try {
       int compressionPercentage = Integer.parseInt(arguments.get(0));
-      imageProcessingService.compressImage(arguments.get(1), arguments.get(2)
-              , compressionPercentage);
+      imageProcessingService.compressImage(
+              ImageProcessingRequest
+                      .builder()
+                      .imageName(arguments.get(0))
+                      .destinationImageName(arguments.get(1))
+                      .percentage(compressionPercentage)
+                      .build()
+      );
       return new ExecutionStatus(true
               , String.format("Successfully compressed the image at %s%%."
               , compressionPercentage));

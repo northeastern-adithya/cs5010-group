@@ -22,6 +22,7 @@ import exception.ImageProcessorException;
 import factories.Factory;
 import model.enumeration.FilterOption;
 import model.memory.ImageMemory;
+import model.request.ImageProcessingRequest;
 import services.FileImageProcessingService;
 import services.ImageProcessingService;
 import utility.FilterUtils;
@@ -2657,12 +2658,15 @@ public class UnitTestForImageProcessor {
 
     @Test(expected = ImageProcessorException.class)
     public void loadImageShouldThrowOnNullPath() throws ImageProcessorException {
-      service.loadImage(null, "testImage");
+      service.loadImage(ImageProcessingRequest.builder().imagePath(null).imageName(
+              "test").build());
     }
 
     @Test(expected = ImageProcessorException.class)
     public void loadImageShouldThrowOnEmptyName() throws ImageProcessorException {
-      service.loadImage("test.jpg", "");
+      service.loadImage(ImageProcessingRequest.builder().imagePath("test" +
+              ".jpeg").imageName(
+              "").build());
     }
 
     @Test
@@ -2672,7 +2676,8 @@ public class UnitTestForImageProcessor {
       memory.addImage("original", testImage);
 
       // Execute
-      service.createRedComponent("original", "red");
+      service.createRedComponent(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("red").build());
 
       // Verify
       Image redImage = memory.getImage("red");
@@ -2695,7 +2700,8 @@ public class UnitTestForImageProcessor {
       memory.addImage("original", testImage);
 
       // Execute
-      service.createGreenComponent("original", "green");
+      service.createGreenComponent(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("green").build());
 
       // Verify
       Image greenImage = memory.getImage("green");
@@ -2718,7 +2724,8 @@ public class UnitTestForImageProcessor {
       memory.addImage("original", testImage);
 
       // Execute
-      service.createBlueComponent("original", "blue");
+      service.createBlueComponent(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("blue").build());
 
       // Verify
       Image blueImage = memory.getImage("blue");
@@ -2739,7 +2746,8 @@ public class UnitTestForImageProcessor {
       Image testImage = createTestImage();
       memory.addImage("original", testImage);
 
-      service.brighten("original", "brightened", 50);
+      service.brighten(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("brightened").factor(50).build());
 
       Image brightenedImage = memory.getImage("brightened");
       Pixel brightenedPixel = brightenedImage.getPixel(0, 0);
@@ -2754,7 +2762,8 @@ public class UnitTestForImageProcessor {
       Image testImage = createTestImage();
       memory.addImage("original", testImage);
 
-      service.verticalFlip("original", "flipped");
+      service.verticalFlip(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("flipped").build());
 
       Image flippedImage = memory.getImage("flipped");
 
@@ -2776,7 +2785,8 @@ public class UnitTestForImageProcessor {
       Image testImage = createTestImage();
       memory.addImage("original", testImage);
 
-      service.horizontalFlip("original", "flipped");
+      service.horizontalFlip(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("flipped").build());
 
       Image flippedImage = memory.getImage("flipped");
 
@@ -2800,7 +2810,10 @@ public class UnitTestForImageProcessor {
       Image testImage = createTestImage();
       memory.addImage("original", testImage);
 
-      service.rgbSplit("original", "red", "green", "blue");
+      service.rgbSplit(ImageProcessingRequest.builder().imageName(
+              "original").redImageName("red")
+              .greenImageName("green")
+              .blueImageName("blue").build());
 
       Image redImage = memory.getImage("red");
       Image greenImage = memory.getImage("green");
@@ -2838,9 +2851,15 @@ public class UnitTestForImageProcessor {
     public void testRGBCombine() throws ImageProcessorException {
       Image testImage = createTestImage();
       memory.addImage("original", testImage);
-      service.rgbSplit("original", "red", "green", "blue");
+      service.rgbSplit(ImageProcessingRequest.builder().imageName(
+                      "original").redImageName("red")
+              .greenImageName("green")
+              .blueImageName("blue").build());
 
-      service.rgbCombine("combined", "red", "green", "blue");
+      service.rgbCombine(ImageProcessingRequest.builder().imageName(
+                      "combined").redImageName("red")
+              .greenImageName("green")
+              .blueImageName("blue").build());
 
       Image combinedImage = memory.getImage("combined");
       Image originalImage = memory.getImage("original");
@@ -2864,7 +2883,8 @@ public class UnitTestForImageProcessor {
                       100)}});
       memory.addImage("original", testImage);
 
-      service.blurImage("original", "blurred");
+      service.blurImage(ImageProcessingRequest.builder().imageName(
+                      "original").destinationImageName("blurred").build());
 
       Image blurredImage = memory.getImage("blurred");
       assertNotNull(blurredImage);
@@ -2881,7 +2901,8 @@ public class UnitTestForImageProcessor {
                   new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
-      service.sepiaImage("original", "sepia");
+      service.sepiaImage(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("sepia").build());
 
       Image sepiaImage = memory.getImage("sepia");
       assertNotNull(sepiaImage);
@@ -2899,7 +2920,8 @@ public class UnitTestForImageProcessor {
                   new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
-      service.createValueComponent("original", "value");
+      service.createValueComponent(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("value").build());
 
       assertEquals(100, memory.getImage("value").getPixel(0, 0).getRed());
       assertEquals(100, memory.getImage("value").getPixel(0, 0).getGreen());
@@ -2913,7 +2935,8 @@ public class UnitTestForImageProcessor {
                       100)}});
       memory.addImage("original", testImage);
 
-      service.createLumaComponent("original", "luma");
+      service.createLumaComponent(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("luma").build());
 
       assertEquals(100, memory.getImage("luma").getPixel(0, 0).getRed());
       assertEquals(100, memory.getImage("luma").getPixel(0, 0).getGreen());
@@ -2927,7 +2950,8 @@ public class UnitTestForImageProcessor {
                100)}});
       memory.addImage("original", testImage);
 
-      service.createIntensityComponent("original", "intensity");
+      service.createIntensityComponent(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("intensity").build());
 
       assertEquals(100, memory.getImage("intensity").getPixel(0, 0).getRed());
       assertEquals(100, memory.getImage("intensity").getPixel(0, 0).getGreen());
@@ -2941,7 +2965,8 @@ public class UnitTestForImageProcessor {
       );
       memory.addImage("original", testImage);
 
-      service.sharpenImage("original", "sharpened");
+      service.sharpenImage(ImageProcessingRequest.builder().imageName(
+              "original").destinationImageName("sharpened").build());
 
       Image sharpenedImage = memory.getImage("sharpened");
       assertNotNull(sharpenedImage);

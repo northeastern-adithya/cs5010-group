@@ -8,6 +8,7 @@ import model.enumeration.CompressionType;
 import model.enumeration.FilterOption;
 import model.enumeration.ImageType;
 import model.memory.ImageMemory;
+import model.request.ImageProcessingRequest;
 import model.visual.Image;
 import utility.FilterUtils;
 import utility.IOUtils;
@@ -38,167 +39,177 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void loadImage(String imagePath, String imageName) throws ImageProcessorException {
-    validateStringParams(imagePath, imageName);
-    ImageType imageType = ImageType.getImageTypeFromPath(imagePath);
-    Image imageToLoad = IOUtils.read(imagePath, imageType);
-    memory.addImage(imageName, imageToLoad);
+  public void loadImage(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImagePath(), request.getImageName());
+    ImageType imageType =
+            ImageType.getImageTypeFromPath(request.getImagePath());
+    Image imageToLoad = IOUtils.read(request.getImagePath(), imageType);
+    memory.addImage(request.getImageName(), imageToLoad);
   }
 
   @Override
-  public void saveImage(String imagePath, String imageName) throws ImageProcessorException {
-    validateStringParams(imagePath, imageName);
-    Image imageToSave = memory.getImage(imageName);
-    ImageType imageType = ImageType.getImageTypeFromPath(imagePath);
-    IOUtils.write(imageToSave, imagePath, imageType);
+  public void saveImage(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImagePath(), request.getImageName());
+    Image imageToSave = memory.getImage(request.getImageName());
+    ImageType imageType =
+            ImageType.getImageTypeFromPath(request.getImagePath());
+    IOUtils.write(imageToSave, request.getImagePath(), imageType);
   }
 
   @Override
-  public void createRedComponent(String imageName, String destinationImageName)
+  public void createRedComponent(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.createRedComponent());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(),
+            image.createRedComponent());
   }
 
   @Override
-  public void createGreenComponent(String imageName,
-                                   String destinationImageName)
+  public void createGreenComponent(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.createGreenComponent());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(),
+            image.createGreenComponent());
   }
 
   @Override
-  public void createBlueComponent(String imageName, String destinationImageName)
+  public void createBlueComponent(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.createBlueComponent());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(),
+            image.createBlueComponent());
   }
 
   @Override
-  public void createValueComponent(String imageName,
-                                   String destinationImageName)
+  public void createValueComponent(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.getValue());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.getValue());
   }
 
   @Override
-  public void createLumaComponent(String imageName, String destinationImageName)
+  public void createLumaComponent(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.getLuma());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.getLuma());
   }
 
   @Override
-  public void createIntensityComponent(String imageName,
-                                       String destinationImageName)
+  public void createIntensityComponent(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.getIntensity());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.getIntensity());
   }
 
   @Override
-  public void horizontalFlip(String imageName, String destinationImageName)
+  public void horizontalFlip(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.horizontalFlip());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.horizontalFlip());
   }
 
 
   @Override
-  public void verticalFlip(String imageName, String destinationImageName)
+  public void verticalFlip(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.verticalFlip());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.verticalFlip());
   }
 
   @Override
-  public void brighten(String imageName, String destinationImageName,
-                       int factor)
+  public void brighten(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.adjustImageBrightness(factor));
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(),
+            image.adjustImageBrightness(request.getFactor().orElse(0)));
   }
 
   @Override
-  public void rgbSplit(
-          String imageName,
-          String destinationImageNameRed,
-          String destinationImageNameGreen,
-          String destinationImageNameBlue) throws ImageProcessorException {
+  public void rgbSplit(ImageProcessingRequest request) throws ImageProcessorException {
     validateStringParams(
-            imageName,
-            destinationImageNameRed,
-            destinationImageNameGreen,
-            destinationImageNameBlue
+            request.getImageName(),
+            request.getRedImageName(),
+            request.getGreenImageName(),
+            request.getBlueImageName()
     );
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageNameRed, image.createRedComponent());
-    memory.addImage(destinationImageNameGreen, image.createGreenComponent());
-    memory.addImage(destinationImageNameBlue, image.createBlueComponent());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getRedImageName(), image.createRedComponent());
+    memory.addImage(request.getGreenImageName(), image.createGreenComponent());
+    memory.addImage(request.getBlueImageName(), image.createBlueComponent());
   }
 
   @Override
-  public void rgbCombine(
-          String imageName,
-          String redImageName,
-          String greenImageName,
-          String blueImageName) throws ImageProcessorException {
-    validateStringParams(imageName, redImageName, greenImageName,
-            blueImageName);
-    Image redImage = memory.getImage(redImageName);
-    Image greenImage = memory.getImage(greenImageName);
-    Image blueImage = memory.getImage(blueImageName);
+  public void rgbCombine(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getRedImageName(),
+            request.getGreenImageName(),
+            request.getBlueImageName());
+    Image redImage = memory.getImage(request.getRedImageName());
+    Image greenImage = memory.getImage(request.getGreenImageName());
+    Image blueImage = memory.getImage(request.getBlueImageName());
     Image combinedImage = Factory.combineRGBComponents(redImage, greenImage,
             blueImage);
-    memory.addImage(imageName, combinedImage);
+    memory.addImage(request.getImageName(), combinedImage);
   }
 
   @Override
-  public void blurImage(String imageName, String destinationImageName)
+  public void blurImage(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
     Image filteredImage = FilterUtils.applyFilter(image,
             FilterOption.GAUSSIAN_BLUR);
-    memory.addImage(destinationImageName, filteredImage);
+    memory.addImage(request.getDestinationImageName(), filteredImage);
   }
 
   @Override
-  public void sharpenImage(String imageName, String destinationImageName)
+  public void sharpenImage(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    Image filteredImage = FilterUtils.applyFilter(image, FilterOption.SHARPEN);
-    memory.addImage(destinationImageName, filteredImage);
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    Image filteredImage = FilterUtils.applyFilter(image,
+            FilterOption.SHARPEN);
+    memory.addImage(request.getDestinationImageName(), filteredImage);
   }
 
   @Override
-  public void sepiaImage(String imageName, String destinationImageName)
+  public void sepiaImage(ImageProcessingRequest request)
           throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName, image.getSepia());
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(),
+            image.getSepia());
   }
 
   @Override
-  public void compressImage(String imageName, String destinationImageName,
-                            int percentage) throws ImageProcessorException {
-    validateStringParams(imageName, destinationImageName);
-    Image image = memory.getImage(imageName);
-    memory.addImage(destinationImageName,
+  public void compressImage(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(),
             Factory.createCompression(CompressionType.HAAR)
-                    .compress(image, percentage));
+                    .compress(image, request.getPercentage().orElse(0)));
   }
 
   /**
