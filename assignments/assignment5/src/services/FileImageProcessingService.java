@@ -178,7 +178,11 @@ public class FileImageProcessingService implements ImageProcessingService {
     Image image = memory.getImage(request.getImageName());
     Image filteredImage = FilterUtils.applyFilter(image,
             FilterOption.GAUSSIAN_BLUR);
-    memory.addImage(request.getDestinationImageName(), filteredImage);
+    Image imageAfterCombining = filteredImage;
+    if(request.getPercentage().isPresent()){
+      imageAfterCombining = Factory.combineImage(image, filteredImage, request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
   }
 
   @Override
@@ -189,7 +193,11 @@ public class FileImageProcessingService implements ImageProcessingService {
     Image image = memory.getImage(request.getImageName());
     Image filteredImage = FilterUtils.applyFilter(image,
             FilterOption.SHARPEN);
-    memory.addImage(request.getDestinationImageName(), filteredImage);
+    Image imageAfterCombining = filteredImage;
+    if(request.getPercentage().isPresent()){
+      imageAfterCombining = Factory.combineImage(image, filteredImage, request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
   }
 
   @Override
@@ -198,8 +206,11 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(),
-            image.getSepia());
+    Image imageAfterCombining = image.getSepia();
+    if(request.getPercentage().isPresent()){
+      imageAfterCombining = Factory.combineImage(image, imageAfterCombining, request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
   }
 
   @Override

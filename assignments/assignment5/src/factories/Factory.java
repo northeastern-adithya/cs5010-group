@@ -221,4 +221,38 @@ public class Factory {
             .NotImplementedException(String.format("Compression type:%s not "
             + "implemented", type));
   }
+
+
+  public static Image combineImage(Image firstImage,Image secondImage,
+                                   int percentage) throws ImageProcessorException {
+    validateImageDimensions(firstImage, secondImage);
+    validatePercentage(percentage);
+    int height = firstImage.getHeight();
+    int width = firstImage.getWidth();
+    Pixel[][] newPixelArray = new Pixel[height][width];
+    int widthWithPercentage = width * percentage / 100;
+    for(int row = 0; row < height; row++) {
+      for(int col = 0; col < widthWithPercentage; col++) {
+        newPixelArray[row][col] = firstImage.getPixel(row, col);
+      }
+      for(int col=widthWithPercentage; col < width; col++) {
+        newPixelArray[row][col] = secondImage.getPixel(row, col);
+      }
+    }
+    return createImage(newPixelArray);
+  }
+
+  private static void validateImageDimensions(Image firstImage, Image secondImage) throws ImageProcessorException {
+    if (firstImage.getWidth() != secondImage.getWidth() || firstImage.getHeight() != secondImage.getHeight()) {
+      throw new ImageProcessorException("The images must have the same dimensions");
+    }
+  }
+
+  private static void  validatePercentage(int percentage) throws ImageProcessorException {
+    if (percentage < 0 || percentage > 100) {
+      throw new ImageProcessorException("The percentage must be between 0 and 100");
+    }
+  }
+
+
 }
