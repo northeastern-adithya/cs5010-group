@@ -141,4 +141,7 @@ public interface Image {
    */
   int[][] getBlueChannel();
 
+  Image createHistogram();
+  Image colorCorrect();
+  Image levelsAdjust(int b, int m, int w);
 }
