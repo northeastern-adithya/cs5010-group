@@ -445,6 +445,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .builder()
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
+                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully blurred the image.");

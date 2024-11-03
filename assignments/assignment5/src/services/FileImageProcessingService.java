@@ -178,7 +178,11 @@ public class FileImageProcessingService implements ImageProcessingService {
     Image image = memory.getImage(request.getImageName());
     Image filteredImage = FilterUtils.applyFilter(image,
             FilterOption.GAUSSIAN_BLUR);
-    memory.addImage(request.getDestinationImageName(), filteredImage);
+    Image finalImage = filteredImage;
+    if(request.getPercentage().isPresent()){
+      finalImage = Factory.combineImage(image, filteredImage, request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), finalImage);
   }
 
   @Override
