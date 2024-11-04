@@ -273,7 +273,8 @@ public class RenderedImage implements Image {
    * @param mid the mid point value (0-255)
    * @param white the white point value (0-255)
    * @return a new Image with adjusted levels
-   * @throws IllegalArgumentException if any of the values are out of range (0-255) or not in ascending order
+   * @throws IllegalArgumentException if any of the values are out of range (0-255)
+   *                                  or not in ascending order
    */
   @Override
   public Image levelsAdjust(int black, int mid, int white) {
@@ -284,16 +285,18 @@ public class RenderedImage implements Image {
       throw new IllegalArgumentException("Values must be in ascending order: black < mid < white");
     }
 
-    double A = Math.pow(black, 2) * (mid - white) - black * (Math.pow(mid, 2) - Math.pow(white, 2))
+    double a = Math.pow(black, 2) * (mid - white)
+                - black * (Math.pow(mid, 2) - Math.pow(white, 2))
                 + Math.pow(mid, 2) * white - Math.pow(white, 2) * mid;
-    double Aa = (-black) * (128 - 255) + 128 * white - 255 * mid;
-    double Ab = Math.pow(black, 2) * (128 - 255) + 255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2);
-    double Ac = Math.pow(black, 2) * (255 * mid - 128 * white)
+    double aA = (-black) * (128 - 255) + 128 * white - 255 * mid;
+    double aB = Math.pow(black, 2) * (128 - 255)
+                + 255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2);
+    double aC = Math.pow(black, 2) * (255 * mid - 128 * white)
                 - black * (255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2));
 
-    double coeffA = Aa / A;
-    double coeffB = Ab / A;
-    double coeffC = Ac / A;
+    double coeffA = aA / a;
+    double coeffB = aB / a;
+    double coeffC = aC / a;
 
     int height = this.getHeight();
     int width = this.getWidth();
@@ -301,7 +304,8 @@ public class RenderedImage implements Image {
 
     for (int column = 0; column < width; column++) {
       for (int row = 0; row < height; row++) {
-        adjustedPixels[row][column] = this.getPixel(row, column).QuadraticTransform(coeffA, coeffB, coeffC);
+        adjustedPixels[row][column] = this.getPixel(row, column)
+                                          .quadraticTransform(coeffA, coeffB, coeffC);
       }
     }
 
@@ -342,7 +346,8 @@ public class RenderedImage implements Image {
    * @param greenFreq the frequency array for the green channel
    * @param blueFreq the frequency array for the blue channel
    */
-  private void calculateColorFrequencies(int width, int height, int[] redFreq, int[] greenFreq, int[] blueFreq) {
+  private void calculateColorFrequencies(int width, int height, int[] redFreq,
+                                         int[] greenFreq, int[] blueFreq) {
     for (int column = 0; column < width; column++) {
       for (int row = 0; row < height; row++) {
         Pixel pixel = getPixel(row, column);
@@ -380,7 +385,8 @@ public class RenderedImage implements Image {
    * @param maxFreq the maximum frequency value among the three channels
    * @return a new BufferedImage representing the histogram
    */
-  private BufferedImage createHistogramImage(int[] redFreq, int[] greenFreq, int[] blueFreq, int maxFreq) {
+  private BufferedImage createHistogramImage(int[] redFreq, int[] greenFreq,
+                                             int[] blueFreq, int maxFreq) {
     BufferedImage histogramImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
     Graphics2D g2d = histogramImage.createGraphics();
 

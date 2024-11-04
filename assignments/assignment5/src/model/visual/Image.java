@@ -141,7 +141,27 @@ public interface Image {
    */
   int[][] getBlueChannel();
 
+  /**
+   * Creates a histogram of the image.
+   *
+   * @return the image with the histogram by creating a new image object.
+   */
   Image createHistogram();
+
+  /**
+   * Applies color correction to the image.
+   *
+   * @return the color-corrected image by creating a new image object.
+   */
   Image colorCorrect();
-  Image levelsAdjust(int b, int m, int w);
+
+  /**
+   * Adjusts the levels of the image.
+   *
+   * @param black the black point
+   * @param mid   the mid point
+   * @param white the white point
+   * @return the image with adjusted levels by creating a new image object.
+   */
+  Image levelsAdjust(int black, int mid, int white);
 }

@@ -162,12 +162,13 @@ public class RGB extends AbstractPixel {
 
 
   @Override
-  public Pixel QuadraticTransform(double coeffA, double coeffB, double coeffC) {
+  public Pixel quadraticTransform(double coeffA, double coeffB, double coeffC) {
     int newRed = applyQuadraticTransform(getRed(), coeffA, coeffB, coeffC);
     int newGreen = applyQuadraticTransform(getGreen(), coeffA, coeffB, coeffC);
     int newBlue = applyQuadraticTransform(getBlue(), coeffA, coeffB, coeffC);
     return this.createPixel(newRed, newGreen, newBlue);
   }
+
   /**
    * Applies the quadratic transformation to a single color value.
    *

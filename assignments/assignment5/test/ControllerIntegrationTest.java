@@ -18,7 +18,6 @@ import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
-import model.visual.RenderedImage;
 import services.ImageProcessingService;
 import view.input.UserInput;
 import view.output.UserOutput;
@@ -2123,8 +2122,8 @@ public class ControllerIntegrationTest {
 
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
-    assertTrue(output.toString().contains("Successfully created red component" +
-            "."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
 
     assertTrue(new File("test_resources/output/saved_sample_image.png").exists());
     assertTrue(new File("test_resources/output"

@@ -118,5 +118,5 @@ public interface Pixel {
    *
    * @return the pixel with the quadratic transformation applied by creating a new pixel object.
    */
-  Pixel QuadraticTransform(double coeffA, double coeffB, double coeffC);
+  Pixel quadraticTransform(double coeffA, double coeffB, double coeffC);
 }

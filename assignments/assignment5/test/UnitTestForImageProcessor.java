@@ -2738,9 +2738,10 @@ public class UnitTestForImageProcessor {
 
     @Test(expected = ImageProcessorException.class)
     public void loadImageShouldThrowOnEmptyName() throws ImageProcessorException {
-      service.loadImage(ImageProcessingRequest.builder().imagePath("test" +
-              ".jpeg").imageName(
-              "").build());
+      service.loadImage(ImageProcessingRequest.builder()
+              .imagePath("test" + ".jpeg")
+              .imageName("")
+              .build());
     }
 
     @Test
