@@ -277,13 +277,8 @@ public class RenderedImage implements Image {
    *                                  or not in ascending order
    */
   @Override
-  public Image levelsAdjust(int black, int mid, int white) {
-    if (black < 0 || black > 255 || mid < 0 || mid > 255 || white < 0 || white > 255) {
-      throw new IllegalArgumentException("Level adjustment values must be between 0 and 255");
-    }
-    if (black >= mid || mid >= white) {
-      throw new IllegalArgumentException("Values must be in ascending order: black < mid < white");
-    }
+  public Image levelsAdjust(int black, int mid, int white) throws IllegalArgumentException {
+    validateLevels(black, mid, white);
 
     double a = Math.pow(black, 2) * (mid - white)
                 - black * (Math.pow(mid, 2) - Math.pow(white, 2))
@@ -310,6 +305,25 @@ public class RenderedImage implements Image {
     }
 
     return Factory.createImage(adjustedPixels);
+  }
+
+  /**
+   * Validates the black, mid, and white points for levels adjustment.
+   *
+   * @param black the black point value
+   * @param mid   the mid point value
+   * @param white the white point value
+   * @throws IllegalArgumentException if any of the values are out of range (0-255)
+   *                                  or not in ascending order
+   */
+  private void validateLevels(int black, int mid, int white)
+          throws IllegalArgumentException {
+    if (black < 0 || black > 255 || mid < 0 || mid > 255 || white < 0 || white > 255) {
+      throw new IllegalArgumentException("Levels must be between 0 and 255");
+    }
+    if (black >= mid || mid >= white) {
+      throw new IllegalArgumentException("Levels must be in ascending order");
+    }
   }
 
   /**
