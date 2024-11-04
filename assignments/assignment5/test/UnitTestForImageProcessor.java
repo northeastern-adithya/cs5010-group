@@ -1231,7 +1231,13 @@ public class UnitTestForImageProcessor {
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
               + "quit: Quit the program.\n"
-              + "help: Print this help message.\n";
+              + "help: Print this help message.\n"
+              + "histogram image-name dest-image-name: Create a histogram of the given image "
+              + "and store the result in another image with the given name.\n"
+              + "color-correct image-name dest-image-name: Color correct the given image "
+              + "and store the result in another image with the given name.\n"
+              + "levels-adjust b m w image-name dest-image-name: Adjust the levels of the "
+              + "given image and store the result in another image with the given name.\n";
 
       assertEquals(expectedCommands, UserCommand.getUserCommands());
     }
