@@ -1369,8 +1369,8 @@ public class UnitTestForImageProcessor {
     public void testCreateRedComponent() {
       Image redImage = image.createRedComponent();
 
-      for(int row = 0; row < image.getHeight(); row++) {
-        for(int col = 0; col < image.getWidth(); col++) {
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
           Pixel original = image.getPixel(row, col);
           Pixel redPixel = redImage.getPixel(row, col);
           assertEquals(redPixel.getRed(), original.getRed());
@@ -1407,8 +1407,8 @@ public class UnitTestForImageProcessor {
     public void testGetLuma() {
       Image lumaImage = image.getLuma();
 
-      for(int row = 0; row < image.getHeight(); row++) {
-        for(int col = 0; col < image.getWidth(); col++) {
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
           Pixel original = image.getPixel(row, col);
           int expectedLuma = (int) (0.2126 * original.getRed()
                   + 0.7152 * original.getGreen()
@@ -1426,8 +1426,8 @@ public class UnitTestForImageProcessor {
     public void testGetSepia() {
       Image sepiaImage = image.getSepia();
 
-      for(int row = 0; row < image.getHeight(); row++) {
-        for(int col = 0; col < image.getWidth(); col++) {
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
           Pixel original = image.getPixel(row, col);
           int originalRed = original.getRed();
           int originalGreen = original.getGreen();
@@ -1457,8 +1457,8 @@ public class UnitTestForImageProcessor {
     public void testGetIntensity() {
       Image intensityImage = image.getIntensity();
 
-      for(int row = 0; row < image.getHeight(); row++) {
-        for(int col = 0; col < image.getWidth(); col++) {
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
           Pixel original = image.getPixel(row, col);
           int expectedIntensity = (original.getRed()
                   + original.getGreen()
@@ -1476,8 +1476,8 @@ public class UnitTestForImageProcessor {
     @Test
     public void testGetValue() {
       Image valueImage = image.getValue();
-      for(int row = 0; row < image.getHeight(); row++) {
-        for(int col = 0; col < image.getWidth(); col++) {
+      for (int row = 0; row < image.getHeight(); row++) {
+        for (int col = 0; col < image.getWidth(); col++) {
           Pixel original = image.getPixel(row, col);
           int expectedValue = Math.max(Math.max(original.getRed(),
                           original.getGreen()),
@@ -1497,7 +1497,7 @@ public class UnitTestForImageProcessor {
       for (int row = 0; row < image.getHeight(); row++) {
         for (int col = 0; col < image.getWidth(); col++) {
           assertEquals(image.getPixel(row, col),
-                  flippedImage.getPixel(row, image.getWidth()-1-col));
+                  flippedImage.getPixel(row, image.getWidth() - 1 - col));
         }
       }
 
@@ -1511,7 +1511,7 @@ public class UnitTestForImageProcessor {
       for (int row = 0; row < image.getHeight(); row++) {
         for (int col = 0; col < image.getWidth(); col++) {
           assertEquals(image.getPixel(row, col),
-                  flippedImage.getPixel(image.getHeight()-1-row, col));
+                  flippedImage.getPixel(image.getHeight() - 1 - row, col));
         }
       }
 
@@ -1754,10 +1754,10 @@ public class UnitTestForImageProcessor {
     @Test
     public void testVerticalFlip() {
       Image flippedImage = image.verticalFlip();
-      assertEquals(image.getPixel(0,0),flippedImage.getPixel(1,0));
-      assertEquals(image.getPixel(1,0),flippedImage.getPixel(0,0));
-      assertEquals(image.getPixel(0,1),flippedImage.getPixel(1,1));
-      assertEquals(image.getPixel(1,1),flippedImage.getPixel(0,1));
+      assertEquals(image.getPixel(0, 0), flippedImage.getPixel(1, 0));
+      assertEquals(image.getPixel(1, 0), flippedImage.getPixel(0, 0));
+      assertEquals(image.getPixel(0, 1), flippedImage.getPixel(1, 1));
+      assertEquals(image.getPixel(1, 1), flippedImage.getPixel(0, 1));
     }
 
     @Test
@@ -2606,7 +2606,7 @@ public class UnitTestForImageProcessor {
       assertEquals("Blue component should match", blue, pixel.getBlue());
     }
 
-    @Test( expected = ImageProcessorException.NotImplementedException.class)
+    @Test(expected = ImageProcessorException.NotImplementedException.class)
     public void testCreateInvalidPixel() throws ImageProcessorException {
       int pixelValue = 0xFF9966; // RGB(255, 153, 102)
       Pixel pixel = Factory.createPixel(pixelValue, null);
@@ -2771,7 +2771,8 @@ public class UnitTestForImageProcessor {
         for (int col = 0; col < 2; col++) {
           Pixel originalPixel = testImage.getPixel(row, col);
           Pixel flippedPixel =
-                  flippedImage.getPixel(flippedImage.getHeight()-1-row,col );// Flipped vertically
+                  flippedImage.getPixel(flippedImage.getHeight() - 1 - row,
+                          col);// Flipped vertically
 
           assertEquals(originalPixel.getRed(), flippedPixel.getRed());
           assertEquals(originalPixel.getGreen(), flippedPixel.getGreen());
@@ -2795,7 +2796,7 @@ public class UnitTestForImageProcessor {
           Pixel originalPixel = testImage.getPixel(row, col);
           Pixel flippedPixel =
                   flippedImage.getPixel(row,
-                          flippedImage.getWidth()-col-1); //
+                          flippedImage.getWidth() - col - 1); //
           // Flipped horizontally
 
           assertEquals(originalPixel.getRed(), flippedPixel.getRed());
@@ -2811,7 +2812,7 @@ public class UnitTestForImageProcessor {
       memory.addImage("original", testImage);
 
       service.rgbSplit(ImageProcessingRequest.builder().imageName(
-              "original").redImageName("red")
+                      "original").redImageName("red")
               .greenImageName("green")
               .blueImageName("blue").build());
 
@@ -2884,7 +2885,7 @@ public class UnitTestForImageProcessor {
       memory.addImage("original", testImage);
 
       service.blurImage(ImageProcessingRequest.builder().imageName(
-                      "original").destinationImageName("blurred").build());
+              "original").destinationImageName("blurred").build());
 
       Image blurredImage = memory.getImage("blurred");
       assertNotNull(blurredImage);
@@ -2947,7 +2948,7 @@ public class UnitTestForImageProcessor {
     public void testIntenistyComponent() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{new RGB(100, 100,
-               100)}});
+                      100)}});
       memory.addImage("original", testImage);
 
       service.createIntensityComponent(ImageProcessingRequest.builder().imageName(

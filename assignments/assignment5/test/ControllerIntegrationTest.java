@@ -2121,7 +2121,8 @@ public class ControllerIntegrationTest {
 
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
-    assertTrue(output.toString().contains("Successfully created red component."));
+    assertTrue(output.toString().contains("Successfully created red component" +
+            "."));
 
     assertTrue(new File("test_resources/output/saved_sample_image.png").exists());
     assertTrue(new File("test_resources/output"
@@ -2197,8 +2198,8 @@ public class ControllerIntegrationTest {
     assertEquals(
             Factory.createImage(createPixels(
                     new int[][]{
-                            {255,16711680},
-                            {8421504,65280},
+                            {255, 16711680},
+                            {8421504, 65280},
                     }
             )),
             imageMemory.getImage("horizontalFlip")
@@ -2207,8 +2208,8 @@ public class ControllerIntegrationTest {
     assertEquals(
             Factory.createImage(createPixels(
                     new int[][]{
-                            {8421504,65280},
-                            {255,16711680},
+                            {8421504, 65280},
+                            {255, 16711680},
                     }
             )),
             imageMemory.getImage("verticalFlip")
@@ -2252,9 +2253,9 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString()
             .contains("Successfully combined the RGB components."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-        {16711937, 66047},
-        {130817, 8487297}
-    }
+            {16711937, 66047},
+            {130817, 8487297}
+        }
     ));
     assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
   }
@@ -2372,15 +2373,16 @@ public class ControllerIntegrationTest {
 
   @Test
   @Ignore
-  public void testCompression() throws ImageProcessorException{
+  public void testCompression() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "load test_resources/input/man.png man "
-               + "compress 90 man actual " +
-                    "save test_resources/input/compressed.png actual "
-            ,output, null);
+                    + "compress 90 man actual "
+                    + "save test_resources/input/compressed.png actual ",
+            output, null);
 
     controller.processCommands();
+    assertTrue(output.toString().contains("Successfully saved the image.."));
 
   }
 
