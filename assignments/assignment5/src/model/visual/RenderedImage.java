@@ -4,9 +4,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
 
-import exception.ImageProcessorException;
+
 import factories.Factory;
-import model.enumeration.CompressionType;
 import model.pixels.Pixel;
 
 /**

@@ -58,8 +58,8 @@ public class IOUtils {
     try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
       String format = reader.readLine();
       if (!"P3".equals(format)) {
-        throw new ImageProcessorException(String.format("Unsupported PPM " +
-                "format: %s", format));
+        throw new ImageProcessorException(String.format("Unsupported PPM "
+                + "format: %s", format));
       }
       String[] dimensions = reader.readLine().split(" ");
       int width = Integer.parseInt(dimensions[0]);
@@ -76,8 +76,8 @@ public class IOUtils {
 
       return Factory.createImage(pixelArray);
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error reading PPM " +
-              "file: %s", path), e);
+      throw new ImageProcessorException(String.format("Error reading PPM "
+              + "file: %s", path), e);
     }
   }
 
@@ -192,8 +192,8 @@ public class IOUtils {
     File file = new File(path);
     if (file.getParentFile() != null && !file.getParentFile().exists()) {
       if (!file.getParentFile().mkdirs()) {
-        throw new ImageProcessorException("Error creating directory for path:" +
-                " " + path);
+        throw new ImageProcessorException("Error creating directory for path: "
+                + path);
       }
     }
   }

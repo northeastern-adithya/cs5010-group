@@ -445,6 +445,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .builder()
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
+                    // Optional percentage argument to get the split view.
                     .percentage(extractOptionalIntArgument(scanner).orElse(null))
                     .build()
     );
@@ -466,6 +467,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .builder()
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
+                    // Optional percentage argument to get the split view.
                     .percentage(extractOptionalIntArgument(scanner).orElse(null))
                     .build()
     );
@@ -487,6 +489,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .builder()
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
+                    // Optional percentage argument to get the split view.
                     .percentage(extractOptionalIntArgument(scanner).orElse(null))
                     .build()
     );
@@ -558,6 +561,12 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     return arguments;
   }
 
+  /**
+   * Extracts the optional integer argument from the scanner.
+   *
+   * @param scanner scanner to read the argument
+   * @return optional integer argument
+   */
   private Optional<Integer> extractOptionalIntArgument(Scanner scanner) {
     return scanner.hasNextInt() ? Optional.of(scanner.nextInt()) :
             Optional.empty();
@@ -594,7 +603,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeCompressionCommand(Scanner scanner) throws ImageProcessorException {
+  private ExecutionStatus executeCompressionCommand(Scanner scanner)
+          throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 3);
     try {
       int compressionPercentage = Integer.parseInt(arguments.get(0));
@@ -606,12 +616,12 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                       .percentage(compressionPercentage)
                       .build()
       );
-      return new ExecutionStatus(true
-              , String.format("Successfully compressed the image at %s%%."
-              , compressionPercentage));
+      return new ExecutionStatus(true,
+              String.format("Successfully compressed the image at %s%%.",
+                      compressionPercentage));
     } catch (NumberFormatException e) {
-      throw new ImageProcessorException("Invalid compression percentage " +
-              "provided.");
+      throw new ImageProcessorException("Invalid compression percentage "
+              + "provided.");
     }
   }
 }

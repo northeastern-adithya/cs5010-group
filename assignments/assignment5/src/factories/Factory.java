@@ -107,8 +107,8 @@ public class Factory {
             || redComponent.getWidth() != blueComponent.getWidth()
             || redComponent.getHeight() != greenComponent.getHeight()
             || redComponent.getHeight() != blueComponent.getHeight()) {
-      throw new ImageProcessorException("The RGB components must have the " +
-              "same dimensions");
+      throw new ImageProcessorException("The RGB components must have the "
+              + "same dimensions");
     }
   }
 
@@ -212,7 +212,8 @@ public class Factory {
    *                                                         type is not
    *                                                         implemented
    */
-  public static Compression createCompression(CompressionType type) throws ImageProcessorException {
+  public static Compression createCompression(CompressionType type)
+          throws ImageProcessorException.NotImplementedException {
 
     if (CompressionType.HAAR.equals(type)) {
       return new HaarCompression();
@@ -223,7 +224,18 @@ public class Factory {
   }
 
 
-  public static Image combineImage(Image firstImage,Image secondImage,
+  /**
+   * Combines the given images based on the given percentage.
+   * The first image occupies the given percentage of the new image.
+   *
+   * @param firstImage  the first image to combine
+   * @param secondImage the second image to combine
+   * @param percentage  the percentage of the first image in the new image
+   * @return the new image with the combined images
+   * @throws ImageProcessorException if the images do not have the same
+   *                                 dimensions or the percentage is invalid
+   */
+  public static Image combineImage(Image firstImage, Image secondImage,
                                    int percentage) throws ImageProcessorException {
     validateImageDimensions(firstImage, secondImage);
     validatePercentage(percentage);
@@ -231,26 +243,45 @@ public class Factory {
     int width = firstImage.getWidth();
     Pixel[][] newPixelArray = new Pixel[height][width];
     int widthWithPercentage = width * percentage / 100;
-    for(int row = 0; row < height; row++) {
-      for(int col = 0; col < widthWithPercentage; col++) {
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < widthWithPercentage; col++) {
         newPixelArray[row][col] = firstImage.getPixel(row, col);
       }
-      for(int col=widthWithPercentage; col < width; col++) {
+      for (int col = widthWithPercentage; col < width; col++) {
         newPixelArray[row][col] = secondImage.getPixel(row, col);
       }
     }
     return createImage(newPixelArray);
   }
 
-  private static void validateImageDimensions(Image firstImage, Image secondImage) throws ImageProcessorException {
-    if (firstImage.getWidth() != secondImage.getWidth() || firstImage.getHeight() != secondImage.getHeight()) {
-      throw new ImageProcessorException("The images must have the same dimensions");
+  /**
+   * Validates the dimensions of the given images.
+   *
+   * @param firstImage  the first image to validate
+   * @param secondImage the second image to validate
+   * @throws ImageProcessorException if the images do not have the same
+   *                                 dimensions
+   */
+  private static void validateImageDimensions(Image firstImage,
+                                              Image secondImage) throws ImageProcessorException {
+    if (firstImage.getWidth() != secondImage.getWidth()
+            || firstImage.getHeight() != secondImage.getHeight()) {
+      throw new ImageProcessorException("The images must have the same "
+              + "dimensions");
     }
   }
 
-  private static void  validatePercentage(int percentage) throws ImageProcessorException {
+  /**
+   * Validates the given percentage.
+   * The percentage must be between 0 and 100 inclusive.
+   *
+   * @param percentage the percentage to validate
+   * @throws ImageProcessorException if the percentage is invalid
+   */
+  private static void validatePercentage(int percentage) throws ImageProcessorException {
     if (percentage < 0 || percentage > 100) {
-      throw new ImageProcessorException("The percentage must be between 0 and 100");
+      throw new ImageProcessorException("The percentage must be between 0 and"
+              + " 100");
     }
   }
 

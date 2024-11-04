@@ -25,6 +25,7 @@ public class ConsoleInput implements UserInput {
   }
 
 
+  @Override
   public Readable getUserInput() {
     return this.input;
   }
