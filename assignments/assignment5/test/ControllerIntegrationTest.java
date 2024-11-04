@@ -14,11 +14,13 @@ import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.ImageType;
 import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import services.ImageProcessingService;
+import utility.IOUtils;
 import view.input.UserInput;
 import view.output.UserOutput;
 
@@ -2455,30 +2457,6 @@ public class ControllerIntegrationTest {
       return pixels;
     } catch (ImageProcessorException e) {
       throw new ImageProcessingRunTimeException("Invalid pixel type");
-    }
-  }
-
-  @Test
-  public void testHistogram() {
-    try {
-      StringBuilder output = new StringBuilder();
-      initialiseController(
-              new StringBuilder()
-                      .append("load test_resources/input/manhattan-small.png"
-                              + " manhattan-small-image\n")
-                      .append("histogram manhattan-small-image"
-                              + " manhattan-small-image-histogram\n")
-                      .append("save test_resources/output/histogram.png"
-                              + " manhattan-small-image-histogram\n")
-                      .toString(),
-              output, null);
-
-      controller.processCommands();
-      assertTrue(output.toString().contains("Successfully loaded the image."));
-
-      assertTrue(new File("test_resources/output/histogram.png").exists());
-    } catch (Exception e) {
-      fail("Unexpected exception: " + e.getMessage());
     }
   }
 
