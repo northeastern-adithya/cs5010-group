@@ -226,6 +226,35 @@ public class FileImageProcessingService implements ImageProcessingService {
                     .compress(image, request.getPercentage().orElse(0)));
   }
 
+  @Override
+  public void histogram(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.createHistogram());
+  }
+
+  @Override
+  public void colorCorrect(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.colorCorrect());
+  }
+
+  @Override
+  public void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    ImageProcessingRequest.Levels levels = request.getLevels();
+    int black = levels.getBlack();
+    int white = levels.getWhite();
+    int mid = levels.getMid();
+    memory.addImage(request.getDestinationImageName(),
+            image.levelsAdjust(black, mid, white));
+  }
+
   /**
    * Validates the input string parameters.
    *

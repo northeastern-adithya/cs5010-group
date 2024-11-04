@@ -91,7 +91,16 @@ public enum UserCommand {
           + "Load and run the script commands in the specified file."),
 
   QUIT("quit", "quit: Quit the program."),
-  HELP("help", "help: Print this help message.");
+  HELP("help", "help: Print this help message."),
+  HISTOGRAM("histogram", "histogram image-name dest-image-name: "
+          + "Create a histogram of the given image and store the result in "
+          + "another image with the given name."),
+  COLOR_CORRECT("color-correct", "color-correct image-name dest-image-name: "
+          + "Color correct the given image and store the result in another "
+          + "image with the given name."),
+  LEVELS_ADJUST("levels-adjust", "levels-adjust b m w image-name dest-image-name: "
+          + "Adjust the levels of the given image and store the result in "
+          + "another image with the given name."),;
 
   /**
    * Command which the user can give.

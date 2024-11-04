@@ -203,74 +203,6 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image createHistogram() {
-    int width = getWidth();
-    int height = getHeight();
-
-    int[] redFreq = new int[256];
-    int[] greenFreq = new int[256];
-    int[] blueFreq = new int[256];
-
-    for (int column = 0; column < width; column++) {
-      for (int row = 0; row < height; row++) {
-        Pixel pixel = getPixel(row, column);
-        redFreq[pixel.getRed()]++;
-        greenFreq[pixel.getGreen()]++;
-        blueFreq[pixel.getBlue()]++;
-      }
-    }
-
-    int maxFreq = 0;
-    for (int i = 0; i < 256; i++) {
-      maxFreq = Math.max(maxFreq, redFreq[i]);
-      maxFreq = Math.max(maxFreq, greenFreq[i]);
-      maxFreq = Math.max(maxFreq, blueFreq[i]);
-    }
-
-    BufferedImage histogramImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
-    Graphics2D g2d = histogramImage.createGraphics();
-
-    g2d.setColor(Color.WHITE);
-    g2d.fillRect(0, 0, 256, 256);
-    g2d.setColor(Color.LIGHT_GRAY);
-    for (int i = 0; i <= 256; i += 13) {
-      g2d.drawLine(i, 0, i, 256);
-      g2d.drawLine(0, i, 256, i);
-    }
-
-    for (int x = 0; x < 255; x++) {
-      int currRedHeight = (int)((redFreq[x] * 255.0) / maxFreq);
-      int nextRedHeight = (int)((redFreq[x + 1] * 255.0) / maxFreq);
-      int currGreenHeight = (int)((greenFreq[x] * 255.0) / maxFreq);
-      int nextGreenHeight = (int)((greenFreq[x + 1] * 255.0) / maxFreq);
-      int currBlueHeight = (int)((blueFreq[x] * 255.0) / maxFreq);
-      int nextBlueHeight = (int)((blueFreq[x + 1] * 255.0) / maxFreq);
-
-      g2d.setColor(Color.RED);
-      g2d.drawLine(x, 255 - currRedHeight, x + 1, 255 - nextRedHeight);
-      g2d.setColor(Color.GREEN);
-      g2d.drawLine(x, 255 - currGreenHeight, x + 1, 255 - nextGreenHeight);
-      g2d.setColor(Color.BLUE);
-      g2d.drawLine(x, 255 - currBlueHeight, x + 1, 255 - nextBlueHeight);
-    }
-
-    g2d.dispose();
-
-    Pixel[][] histogramPixels = new Pixel[256][256];
-    for (int y = 0; y < 256; y++) {
-      for (int x = 0; x < 256; x++) {
-        int rgb = histogramImage.getRGB(x, y);
-        int red = (rgb >> 16) & 0xFF;
-        int green = (rgb >> 8) & 0xFF;
-        int blue = rgb & 0xFF;
-        histogramPixels[y][x] = new RGB(red, green, blue);
-      }
-    }
-
-    return Factory.createImage(histogramPixels);
-  }
-
-  @Override
   public Image colorCorrect() {
     int width = getWidth();
     int height = getHeight();
@@ -334,6 +266,15 @@ public class RenderedImage implements Image {
     return peakValue;
   }
 
+  /**
+   * Adjusts the levels of the image using the specified black, mid, and white points.
+   *
+   * @param black the black point value (0-255)
+   * @param mid the mid point value (0-255)
+   * @param white the white point value (0-255)
+   * @return a new Image with adjusted levels
+   * @throws IllegalArgumentException if any of the values are out of range (0-255) or not in ascending order
+   */
   @Override
   public Image levelsAdjust(int black, int mid, int white) {
     if (black < 0 || black > 255 || mid < 0 || mid > 255 || white < 0 || white > 255) {
@@ -350,9 +291,9 @@ public class RenderedImage implements Image {
     double Ac = Math.pow(black, 2) * (255 * mid - 128 * white)
                 - black * (255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2));
 
-    double ac = Aa / A;
-    double bc = Ab / A;
-    double cc = Ac / A;
+    double coeffA = Aa / A;
+    double coeffB = Ab / A;
+    double coeffC = Ac / A;
 
     int height = this.getHeight();
     int width = this.getWidth();
@@ -362,9 +303,9 @@ public class RenderedImage implements Image {
       for (int row = 0; row < height; row++) {
         Pixel original = this.getPixel(row, column);
 
-        int newRed = applyQuadraticTransform(original.getRed(), ac, bc, cc);
-        int newGreen = applyQuadraticTransform(original.getGreen(), ac, bc, cc);
-        int newBlue = applyQuadraticTransform(original.getBlue(), ac, bc, cc);
+        int newRed = applyQuadraticTransform(original.getRed(), coeffA, coeffB, coeffC);
+        int newGreen = applyQuadraticTransform(original.getGreen(), coeffA, coeffB, coeffC);
+        int newBlue = applyQuadraticTransform(original.getBlue(), coeffA, coeffB, coeffC);
 
         adjustedPixels[row][column] = new RGB(newRed, newGreen, newBlue);
       }
@@ -396,5 +337,129 @@ public class RenderedImage implements Image {
    */
   private int clamp(int value) {
     return Math.max(0, Math.min(255, value));
+  }
+
+  /**
+   * Creates a histogram image from the current image.
+   *
+   * @return a new Image representing the histogram of the current image
+   */
+  @Override
+  public Image createHistogram() {
+    int width = getWidth();
+    int height = getHeight();
+
+    int[] redFreq = new int[256];
+    int[] greenFreq = new int[256];
+    int[] blueFreq = new int[256];
+
+    calculateColorFrequencies(width, height, redFreq, greenFreq, blueFreq);
+
+    int maxFreq = findMaxFrequency(redFreq, greenFreq, blueFreq);
+
+    BufferedImage histogramImage = createHistogramImage(redFreq, greenFreq, blueFreq, maxFreq);
+
+    Pixel[][] histogramPixels = convertBufferedImageToPixels(histogramImage);
+
+    return Factory.createImage(histogramPixels);
+  }
+
+  /**
+   * Calculates the color frequencies for the red, green, and blue channels.
+   *
+   * @param width the width of the image
+   * @param height the height of the image
+   * @param redFreq the frequency array for the red channel
+   * @param greenFreq the frequency array for the green channel
+   * @param blueFreq the frequency array for the blue channel
+   */
+  private void calculateColorFrequencies(int width, int height, int[] redFreq, int[] greenFreq, int[] blueFreq) {
+    for (int column = 0; column < width; column++) {
+      for (int row = 0; row < height; row++) {
+        Pixel pixel = getPixel(row, column);
+        redFreq[pixel.getRed()]++;
+        greenFreq[pixel.getGreen()]++;
+        blueFreq[pixel.getBlue()]++;
+      }
+    }
+  }
+
+  /**
+   * Finds the maximum frequency among the red, green, and blue frequency arrays.
+   *
+   * @param redFreq the frequency array for the red channel
+   * @param greenFreq the frequency array for the green channel
+   * @param blueFreq the frequency array for the blue channel
+   * @return the maximum frequency value among the three channels
+   */
+  private int findMaxFrequency(int[] redFreq, int[] greenFreq, int[] blueFreq) {
+    int maxFreq = 0;
+    for (int i = 0; i < 256; i++) {
+      maxFreq = Math.max(maxFreq, redFreq[i]);
+      maxFreq = Math.max(maxFreq, greenFreq[i]);
+      maxFreq = Math.max(maxFreq, blueFreq[i]);
+    }
+    return maxFreq;
+  }
+
+  /**
+   * Creates a histogram image from the red, green, and blue frequency arrays.
+   *
+   * @param redFreq the frequency array for the red channel
+   * @param greenFreq the frequency array for the green channel
+   * @param blueFreq the frequency array for the blue channel
+   * @param maxFreq the maximum frequency value among the three channels
+   * @return a new BufferedImage representing the histogram
+   */
+  private BufferedImage createHistogramImage(int[] redFreq, int[] greenFreq, int[] blueFreq, int maxFreq) {
+    BufferedImage histogramImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+    Graphics2D g2d = histogramImage.createGraphics();
+
+    g2d.setColor(Color.WHITE);
+    g2d.fillRect(0, 0, 256, 256);
+    g2d.setColor(Color.LIGHT_GRAY);
+    for (int i = 0; i <= 256; i += 13) {
+      g2d.drawLine(i, 0, i, 256);
+      g2d.drawLine(0, i, 256, i);
+    }
+
+    for (int x = 0; x < 255; x++) {
+      int currRedHeight = (int)((redFreq[x] * 255.0) / maxFreq);
+      int nextRedHeight = (int)((redFreq[x + 1] * 255.0) / maxFreq);
+      int currGreenHeight = (int)((greenFreq[x] * 255.0) / maxFreq);
+      int nextGreenHeight = (int)((greenFreq[x + 1] * 255.0) / maxFreq);
+      int currBlueHeight = (int)((blueFreq[x] * 255.0) / maxFreq);
+      int nextBlueHeight = (int)((blueFreq[x + 1] * 255.0) / maxFreq);
+
+      g2d.setColor(Color.RED);
+      g2d.drawLine(x, 255 - currRedHeight, x + 1, 255 - nextRedHeight);
+      g2d.setColor(Color.GREEN);
+      g2d.drawLine(x, 255 - currGreenHeight, x + 1, 255 - nextGreenHeight);
+      g2d.setColor(Color.BLUE);
+      g2d.drawLine(x, 255 - currBlueHeight, x + 1, 255 - nextBlueHeight);
+    }
+
+    g2d.dispose();
+    return histogramImage;
+  }
+
+  /**
+   * Converts a BufferedImage to a 2D array of Pixels.
+   *
+   * @param histogramImage the BufferedImage to convert
+   * @return a 2D array of Pixels representing the image
+   */
+  private Pixel[][] convertBufferedImageToPixels(BufferedImage histogramImage) {
+    Pixel[][] histogramPixels = new Pixel[256][256];
+    for (int y = 0; y < 256; y++) {
+      for (int x = 0; x < 256; x++) {
+        int rgb = histogramImage.getRGB(x, y);
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+        histogramPixels[y][x] = new RGB(red, green, blue);
+      }
+    }
+    return histogramPixels;
   }
 }

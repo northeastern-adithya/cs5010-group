@@ -163,6 +163,12 @@ public class SimpleImageProcessorController implements ImageProcessorController 
         return executeRunCommand(scanner);
       case COMPRESS:
         return executeCompressionCommand(scanner);
+      case HISTOGRAM:
+        return executeHistogramCommand(scanner);
+      case COLOR_CORRECT:
+        return executeColorCorrectionCommand(scanner);
+      case LEVELS_ADJUST:
+        return executeLevelsAdjustCommand(scanner);
       case HELP:
         return executeHelpCommand();
       case QUIT:
@@ -622,6 +628,78 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     } catch (NumberFormatException e) {
       throw new ImageProcessorException("Invalid compression percentage "
               + "provided.");
+    }
+  }
+
+  /**
+   * Executes the histogram command.
+   *
+   * @param scanner scanner to read the command arguments
+   * @return ExecutionStatus information of the execution
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
+   */
+  private ExecutionStatus executeHistogramCommand(Scanner scanner)
+          throws ImageProcessorException {
+    List<String> arguments = extractArguments(scanner, 2);
+    imageProcessingService.histogram(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .destinationImageName(arguments.get(1))
+                    .build()
+    );
+    return new ExecutionStatus(true, "Successfully created histogram of the image.");
+  }
+
+  /**
+   * Executes the color correction command.
+   *
+   * @param scanner scanner to read the command arguments
+   * @return ExecutionStatus information of the execution
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
+   */
+  private ExecutionStatus executeColorCorrectionCommand(Scanner scanner)
+          throws ImageProcessorException {
+    List<String> arguments = extractArguments(scanner, 2);
+    imageProcessingService.colorCorrect(
+            ImageProcessingRequest
+                    .builder()
+                    .imageName(arguments.get(0))
+                    .destinationImageName(arguments.get(1))
+                    .build()
+    );
+    return new ExecutionStatus(true, "Successfully color corrected the image.");
+  }
+
+  /**
+   * Executes the levels adjust command.
+   *
+   * @param scanner scanner to read the command arguments
+   * @return ExecutionStatus information of the execution
+   * @throws ImageProcessorException if an error occurs while executing the
+   *                                 command
+   */
+  private ExecutionStatus executeLevelsAdjustCommand(Scanner scanner)
+          throws ImageProcessorException {
+    List<String> arguments = extractArguments(scanner, 5);
+    try {
+      int black = Integer.parseInt(arguments.get(0));
+      int mid = Integer.parseInt(arguments.get(1));
+      int white = Integer.parseInt(arguments.get(2));
+      imageProcessingService.levelsAdjust(
+              ImageProcessingRequest
+                      .builder()
+                      .imageName(arguments.get(3))
+                      .destinationImageName(arguments.get(4))
+                      .levels(black, mid, white)
+                      .build()
+      );
+      return new ExecutionStatus(true,
+              String.format("Successfully adjusted the levels of the image."));
+    } catch (NumberFormatException e) {
+      throw new ImageProcessorException("Invalid levels provided.");
     }
   }
 }

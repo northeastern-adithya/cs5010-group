@@ -27,6 +27,7 @@ public class ImageProcessingRequest {
   private final String greenImageName;
   private final String blueImageName;
   private final Integer percentage;
+  private final Levels levels;
 
   private ImageProcessingRequest(ImageProcessingRequestBuilder builder) {
     this.imagePath = builder.imagePath;
@@ -37,6 +38,7 @@ public class ImageProcessingRequest {
     this.greenImageName = builder.greenImageName;
     this.blueImageName = builder.blueImageName;
     this.percentage = builder.percentage;
+    this.levels = builder.levels;
   }
 
   /**
@@ -89,6 +91,10 @@ public class ImageProcessingRequest {
    */
   public Optional<Integer> getFactor() {
     return Optional.ofNullable(factor);
+  }
+
+  public Levels getLevels() {
+    return levels;
   }
 
   /**
@@ -149,6 +155,7 @@ public class ImageProcessingRequest {
     private String greenImageName;
     private String blueImageName;
     private Integer percentage;
+    private Levels levels;
 
     private ImageProcessingRequestBuilder() {
     }
@@ -241,6 +248,11 @@ public class ImageProcessingRequest {
       return this;
     }
 
+    public ImageProcessingRequestBuilder levels(int black, int mid, int white) {
+      this.levels = new Levels(black, mid, white);
+      return this;
+    }
+
     /**
      * Builds an ImageProcessingRequest.
      *
@@ -265,5 +277,37 @@ public class ImageProcessingRequest {
 
   }
 
+  /**
+   * Represents the levels of the image.
+   */
+  public static class Levels {
+    private final int black;
+    private final int white;
+    private final int mid;
 
+    /**
+     * Constructor to initialize the levels.
+     *
+     * @param black the black level
+     * @param mid   the mid level
+     * @param white the white level
+     */
+    public Levels(int black, int mid, int white) {
+      this.black = black;
+      this.white = white;
+      this.mid = mid;
+    }
+
+    public int getBlack() {
+      return black;
+    }
+
+    public int getWhite() {
+      return white;
+    }
+
+    public int getMid() {
+      return mid;
+    }
+  }
 }
