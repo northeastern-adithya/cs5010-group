@@ -247,7 +247,9 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    ImageProcessingRequest.Levels levels = request.getLevels();
+    ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
+            () -> new ImageProcessorException("Levels not provided")
+    );
     int black = levels.getBlack();
     int white = levels.getWhite();
     int mid = levels.getMid();

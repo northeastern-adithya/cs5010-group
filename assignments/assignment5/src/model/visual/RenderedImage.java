@@ -234,9 +234,9 @@ public class RenderedImage implements Image {
     for (int column = 0; column < width; column++) {
       for (int row = 0; row < height; row++) {
         Pixel oldPixel = getPixel(row, column);
-        int newRed = clamp(oldPixel.getRed() + redOffset);
-        int newGreen = clamp(oldPixel.getGreen() + greenOffset);
-        int newBlue = clamp(oldPixel.getBlue() + blueOffset);
+        int newRed = oldPixel.getRed() + redOffset;
+        int newGreen = oldPixel.getGreen() + greenOffset;
+        int newBlue = oldPixel.getBlue() + blueOffset;
         newPixels[row][column] = new RGB(newRed, newGreen, newBlue);
       }
     }
@@ -301,42 +301,11 @@ public class RenderedImage implements Image {
 
     for (int column = 0; column < width; column++) {
       for (int row = 0; row < height; row++) {
-        Pixel original = this.getPixel(row, column);
-
-        int newRed = applyQuadraticTransform(original.getRed(), coeffA, coeffB, coeffC);
-        int newGreen = applyQuadraticTransform(original.getGreen(), coeffA, coeffB, coeffC);
-        int newBlue = applyQuadraticTransform(original.getBlue(), coeffA, coeffB, coeffC);
-
-        adjustedPixels[row][column] = new RGB(newRed, newGreen, newBlue);
+        adjustedPixels[row][column] = this.getPixel(row, column).QuadraticTransform(coeffA, coeffB, coeffC);
       }
     }
 
     return Factory.createImage(adjustedPixels);
-  }
-
-  /**
-   * Applies the quadratic transformation to a single color value.
-   *
-   * @param value The original color value
-   * @param coeffA Quadratic coefficient a
-   * @param coeffB Quadratic coefficient b
-   * @param coeffC Quadratic coefficient c
-   * @return The transformed color value, clamped between 0 and 255
-   */
-  private int applyQuadraticTransform(int value, double coeffA, double coeffB, double coeffC) {
-    double result = coeffA * Math.pow(value, 2) + coeffB * value + coeffC;
-
-    return clamp((int) Math.round(result));
-  }
-
-  /**
-   * Clamps a value between 0 and 255.
-   *
-   * @param value the value to clamp
-   * @return the clamped value
-   */
-  private int clamp(int value) {
-    return Math.max(0, Math.min(255, value));
   }
 
   /**

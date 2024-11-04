@@ -42,9 +42,9 @@ public class RGB extends AbstractPixel {
    */
   public RGB(int red, int green, int blue) {
     super(24);
-    this.red = Math.max(0, Math.min(red, computeMaxValue()));
-    this.green = Math.max(0, Math.min(green, computeMaxValue()));
-    this.blue = Math.max(0, Math.min(blue, computeMaxValue()));
+    this.red = clamp(red);
+    this.green = clamp(green);
+    this.blue = clamp(blue);
   }
 
   /**
@@ -158,5 +158,38 @@ public class RGB extends AbstractPixel {
   @Override
   public Pixel getSepia() {
     return matrixOperation(this, LinearColorTransformationType.SEPIA);
+  }
+
+
+  @Override
+  public Pixel QuadraticTransform(double coeffA, double coeffB, double coeffC) {
+    int newRed = applyQuadraticTransform(getRed(), coeffA, coeffB, coeffC);
+    int newGreen = applyQuadraticTransform(getGreen(), coeffA, coeffB, coeffC);
+    int newBlue = applyQuadraticTransform(getBlue(), coeffA, coeffB, coeffC);
+    return this.createPixel(newRed, newGreen, newBlue);
+  }
+  /**
+   * Applies the quadratic transformation to a single color value.
+   *
+   * @param value The original color value
+   * @param coeffA Quadratic coefficient a
+   * @param coeffB Quadratic coefficient b
+   * @param coeffC Quadratic coefficient c
+   * @return The transformed color value, clamped between 0 and 255
+   */
+  private int applyQuadraticTransform(int value, double coeffA, double coeffB, double coeffC) {
+    double result = coeffA * Math.pow(value, 2) + coeffB * value + coeffC;
+
+    return (int) Math.round(result);
+  }
+
+  /**
+   * Clamps a value between 0 and 255.
+   *
+   * @param value the value to clamp
+   * @return the clamped value
+   */
+  private int clamp(int value) {
+    return Math.max(0, Math.min(255, value));
   }
 }

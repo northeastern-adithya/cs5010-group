@@ -104,4 +104,19 @@ public interface Pixel {
    *         by creating a new pixel object.
    */
   Pixel createPixel(int red, int green, int blue);
+
+
+  /**
+   * Applies the quadratic transformation to a Pixel.
+   * The quadratic transformation is defined as:
+   * f(x) = Ax^2 + Bx + C
+   * where A, B, and C are the coefficients of the transformation.
+   *
+   * @param coeffA the coefficient A of the quadratic transformation.
+   * @param coeffB the coefficient B of the quadratic transformation.
+   * @param coeffC the coefficient C of the quadratic transformation.
+   *
+   * @return the pixel with the quadratic transformation applied by creating a new pixel object.
+   */
+  Pixel QuadraticTransform(double coeffA, double coeffB, double coeffC);
 }

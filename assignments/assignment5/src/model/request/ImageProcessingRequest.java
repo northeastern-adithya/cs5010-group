@@ -93,8 +93,8 @@ public class ImageProcessingRequest {
     return Optional.ofNullable(factor);
   }
 
-  public Levels getLevels() {
-    return levels;
+  public Optional<Levels> getLevels() {
+    return Optional.ofNullable(levels);
   }
 
   /**
