@@ -259,9 +259,21 @@ public class HaarCompression implements Compression {
   public Image compress(Image image, int percentage) throws ImageProcessorException {
     validatePercentage(percentage);
     Objects.requireNonNull(image, "Image cannot be null");
-    int[][] compressedRed = compress(image.getRedChannel(), percentage);
-    int[][] compressedGreen = compress(image.getGreenChannel(), percentage);
-    int[][] compressedBlue = compress(image.getBlueChannel(), percentage);
+    double[][] haarRed = haar(
+            toDoubleArray(image.getRedChannel()));
+    double[][] haarGreen = haar(toDoubleArray(image.getGreenChannel()));
+    double[][] haarBlue = haar(toDoubleArray(image.getBlueChannel()));
+    double[][] thresholdRed = computeDataWithThreshold(haarRed,
+            getThresholdValue(haarRed, percentage)
+            );
+    double[][] thresholdGreen = computeDataWithThreshold(haarGreen,
+            getThresholdValue(haarGreen, percentage));
+    double[][] thresholdBlue = computeDataWithThreshold(haarBlue,
+            getThresholdValue(haarBlue, percentage));
+
+    int[][] compressedRed = fromDoubleArray(invhaar(thresholdRed));
+    int[][] compressedGreen = fromDoubleArray(invhaar(thresholdGreen));
+    int[][] compressedBlue = fromDoubleArray(invhaar(thresholdBlue));
     int height = image.getHeight();
     int width = image.getWidth();
     Pixel[][] newPixelArray = new Pixel[height][width];
@@ -275,42 +287,26 @@ public class HaarCompression implements Compression {
     return Factory.createImage(newPixelArray);
   }
 
-  /**
-   * Compresses the given 2D integer array by the given percentage.
-   * The compression is done by setting the values below a threshold to 0.
-   *
-   * @param data       the 2D integer array to compress
-   * @param percentage the percentage by which to compress the data
-   * @return the new compressed 2D integer array
-   */
-  private int[][] compress(int[][] data, int percentage) {
-    double[][] dataAsDouble = toDoubleArray(data);
-    double[][] haarTransformed = haar(dataAsDouble);
-    double[][] dataWithThreshold = computeDataWithThreshold(haarTransformed,
-            dataAsDouble,
-            percentage);
-    double[][] invhaarData = invhaar(dataWithThreshold);
-    return fromDoubleArray(invhaarData);
+
+  private double getThresholdValue(double[][] data, int percentage) {
+    int totalLength = data.length * data[0].length;
+    double[] flattenedData = new double[totalLength];
+    int index = 0;
+
+    for (int i = 0; i < data.length; i++) {
+      for (int j = 0; j < data[0].length; j++) {
+        flattenedData[index] = data[i][j];
+        index++;
+      }
+    }
+    return getThresholdValue(flattenedData, percentage);
   }
 
-  /**
-   * Computes the data with the threshold value.
-   * The values below the threshold value are set to 0.
-   *
-   * @param haarData     the data after haar transformation
-   * @param originalData the original data used to calculate the threshold value
-   * @param percentage   the percentage to calculate the threshold value
-   * @return the new data with the threshold value
-   */
   private double[][] computeDataWithThreshold(double[][] haarData,
-                                              double[][] originalData,
-                                              int percentage) {
+                                              double thresholdValue) {
     int height = haarData.length;
     int width = haarData[0].length;
     double[][] dataWithThreshold = Arrays.copyOf(haarData, height);
-
-    // Threshold value is calculated based on the original data
-    double thresholdValue = getThresholdValue(originalData, percentage);
     for (int row = 0; row < height; row++) {
       for (int column = 0; column < width; column++) {
         if (Math.abs(haarData[row][column]) < thresholdValue) {
@@ -329,11 +325,14 @@ public class HaarCompression implements Compression {
    * @return the threshold value
    */
   private double getThresholdValue(double[] data, int percentage) {
-    int length = data.length;
+    double[] nonZeroData = Arrays.stream(data)
+            .filter(value -> value != 0)
+            .toArray();
+
+    int length = nonZeroData.length;
     // Getting the index based on percentage
-    int thresholdIndex = (int) Math.ceil((double) (length * percentage) / 100);
-    double[] sortedData = Arrays.copyOf(data, length);
-//    // Converting the data to absolute values
+    double[] sortedData = Arrays.copyOf(nonZeroData, length);
+    // Converting the data to absolute values
     for (int i = 0; i < length; i++) {
       sortedData[i] = Math.abs(sortedData[i]);
     }
@@ -341,20 +340,13 @@ public class HaarCompression implements Compression {
     Arrays.sort(sortedData);
     // Getting the value from index to reduce all the values less than this
     // to 0.
+    sortedData = Arrays.stream(sortedData)
+            .distinct()
+            .filter(value -> value != 0)
+            .toArray();
+    int thresholdIndex =
+            (int) Math.ceil((double) (sortedData.length * percentage) / 100);
     return sortedData[thresholdIndex];
-  }
-
-  private double getThresholdValue(double[][] data, int percentage) {
-    // Flatten the 2D array to a 1D array
-    double[] flattenedData = new double[data.length * data[0].length];
-    int index = 0;
-    for (int i = 0; i < data.length; i++) {
-      for (int j = 0; j < data[0].length; j++) {
-        flattenedData[index] = data[i][j];
-        index++;
-      }
-    }
-    return getThresholdValue(flattenedData, percentage);
   }
 
 }

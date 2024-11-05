@@ -191,6 +191,6 @@ public class RGB extends AbstractPixel {
    * @return the clamped value
    */
   private int clamp(int value) {
-    return Math.max(0, Math.min(255, value));
+    return Math.max(0, Math.min(computeMaxValue(), value));
   }
 }

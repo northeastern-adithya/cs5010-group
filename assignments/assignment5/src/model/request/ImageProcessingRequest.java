@@ -298,14 +298,29 @@ public class ImageProcessingRequest {
       this.mid = mid;
     }
 
+    /**
+     * Returns the black value of the level.
+     *
+     * @return the black level
+     */
     public int getBlack() {
       return black;
     }
 
+    /**
+     * Returns the white value of the level.
+     *
+     * @return the white level
+     */
     public int getWhite() {
       return white;
     }
 
+    /**
+     * Returns the mid value of the level.
+     *
+     * @return the mid level
+     */
     public int getMid() {
       return mid;
     }
