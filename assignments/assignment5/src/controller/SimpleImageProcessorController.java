@@ -537,8 +537,11 @@ public class SimpleImageProcessorController implements ImageProcessorController 
       }
 
     } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error reading script "
-              + "file: %s", scriptFile), e);
+      // Quit the application if an error occurs while reading the script file.
+      String errorMessage = String.format("Error reading script file: %s, %s",
+              scriptFile, e.getMessage());
+      displayMessage(errorMessage);
+      throw new ImageProcessingRunTimeException.QuitException(errorMessage);
     }
 
     return new ExecutionStatus(true, "Successfully executed the script file.");
