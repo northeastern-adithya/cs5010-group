@@ -292,7 +292,7 @@ public class ImageProcessingRequest {
      * @param mid   the mid level
      * @param white the white level
      */
-    public Levels(int black, int mid, int white) {
+    private Levels(int black, int mid, int white) {
       this.black = black;
       this.white = white;
       this.mid = mid;

@@ -697,7 +697,9 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                       .build()
       );
       return new ExecutionStatus(true,
-              String.format("Successfully adjusted the levels of the image."));
+              String.format("Successfully adjusted the levels of the image to "
+                              + "black:%s, mid:%s, white:%s.",
+                      black, mid, white));
     } catch (NumberFormatException e) {
       throw new ImageProcessorException("Invalid levels provided.");
     }

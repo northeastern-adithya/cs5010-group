@@ -142,13 +142,6 @@ public interface Image {
   int[][] getBlueChannel();
 
   /**
-   * Creates a histogram of the image.
-   *
-   * @return the image with the histogram by creating a new image object.
-   */
-  Image createHistogram();
-
-  /**
    * Applies color correction to the image.
    *
    * @return the color-corrected image by creating a new image object.

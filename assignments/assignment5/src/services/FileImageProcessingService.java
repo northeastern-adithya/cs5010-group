@@ -10,6 +10,7 @@ import model.enumeration.ImageType;
 import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
+import utility.ExtractUtility;
 import utility.FilterUtils;
 import utility.IOUtils;
 import utility.StringUtils;
@@ -231,7 +232,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), image.createHistogram());
+    memory.addImage(request.getDestinationImageName(), ExtractUtility.createHistogram(image));
   }
 
   @Override

@@ -2516,7 +2516,8 @@ public class ControllerIntegrationTest {
               inputImage);
 
       controller.processCommands();
-      assertTrue(output.toString().contains("Successfully adjusted the levels of the image."));
+      assertTrue(output.toString().contains("Successfully adjusted the levels of the image to "
+              + "black:10, mid:120, white:255."));
 
       Image expectedImage = Factory.createImage(
               new Pixel[][] {
