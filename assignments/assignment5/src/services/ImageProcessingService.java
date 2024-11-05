@@ -183,4 +183,32 @@ public interface ImageProcessingService {
    * @throws ImageProcessorException if the image cannot be compressed.
    */
   void compressImage(ImageProcessingRequest request) throws ImageProcessorException;
+
+  /**
+   * Creates a histogram of the image.
+   *
+   * @param request the request to create a histogram of the image.
+   *                Contains the name of the image and the destination image.
+   * @throws ImageProcessorException if the histogram cannot be created.
+   */
+  void histogram(ImageProcessingRequest request) throws ImageProcessorException;
+
+  /**
+   * Color corrects the image.
+   *
+   * @param request the request to color correct the image.
+   *                Contains the name of the image and the destination image.
+   * @throws ImageProcessorException if the image cannot be color corrected.
+   */
+  void colorCorrect(ImageProcessingRequest request) throws ImageProcessorException;
+
+  /**
+   * Adjusts the levels of the image.
+   *
+   * @param request the request to adjust the levels of the image.
+   *                Contains the name of the image, the destination image,
+   *                and the levels to adjust the image by.
+   * @throws ImageProcessorException if the image cannot have its levels adjusted.
+   */
+  void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException;
 }

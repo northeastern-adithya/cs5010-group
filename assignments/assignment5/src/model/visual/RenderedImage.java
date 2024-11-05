@@ -1,5 +1,8 @@
 package model.visual;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
@@ -7,6 +10,8 @@ import java.util.function.Function;
 
 import factories.Factory;
 import model.pixels.Pixel;
+import model.pixels.RGB;
+import utility.ExtractUtility;
 
 /**
  * RenderedImage class that implements Image interface
@@ -196,5 +201,147 @@ public class RenderedImage implements Image {
   @Override
   public int hashCode() {
     return Arrays.deepHashCode(pixels);
+  }
+
+  @Override
+  public Image colorCorrect() {
+    int width = getWidth();
+    int height = getHeight();
+
+    int[] redFreq = new int[256];
+    int[] greenFreq = new int[256];
+    int[] blueFreq = new int[256];
+
+    for (int column = 0; column < width; column++) {
+      for (int row = 0; row < height; row++) {
+        Pixel pixel = getPixel(row, column);
+        redFreq[pixel.getRed()]++;
+        greenFreq[pixel.getGreen()]++;
+        blueFreq[pixel.getBlue()]++;
+      }
+    }
+
+    int redPeak = findMeaningfulPeak(redFreq);
+    int greenPeak = findMeaningfulPeak(greenFreq);
+    int bluePeak = findMeaningfulPeak(blueFreq);
+
+    int avgPeak = (redPeak + greenPeak + bluePeak) / 3;
+
+    int redOffset = avgPeak - redPeak;
+    int greenOffset = avgPeak - greenPeak;
+    int blueOffset = avgPeak - bluePeak;
+
+    Pixel[][] newPixels = new Pixel[height][width];
+    for (int column = 0; column < width; column++) {
+      for (int row = 0; row < height; row++) {
+        Pixel oldPixel = getPixel(row, column);
+        int newRed = oldPixel.getRed() + redOffset;
+        int newGreen = oldPixel.getGreen() + greenOffset;
+        int newBlue = oldPixel.getBlue() + blueOffset;
+        newPixels[row][column] = new RGB(newRed, newGreen, newBlue);
+      }
+    }
+
+    return Factory.createImage(newPixels);
+  }
+
+  /**
+   * Finds the meaningful peak in a frequency array, ignoring extremities.
+   * Only considers values between 10 and 245 to avoid dark/blown-out regions.
+   *
+   * @param freq the frequency array
+   * @return the value where the meaningful peak occurs
+   */
+  private int findMeaningfulPeak(int[] freq) {
+    int maxFreq = 0;
+    int peakValue = 0;
+
+    // Only consider values between 10 and 245
+    for (int i = 10; i < 245; i++) {
+      if (freq[i] > maxFreq) {
+        maxFreq = freq[i];
+        peakValue = i;
+      }
+    }
+
+    return peakValue;
+  }
+
+  /**
+   * Adjusts the levels of the image using the specified black, mid, and white points.
+   * Quadratic Transformation used
+   * <a href="https://northeastern.instructure.com/courses/192553/assignments/2490204">...</a>
+   *
+   * @param black the black point value (0-255)
+   * @param mid the mid point value (0-255)
+   * @param white the white point value (0-255)
+   * @return a new Image with adjusted levels
+   * @throws IllegalArgumentException if any of the values are out of range (0-255)
+   *                                  or not in ascending order
+   */
+  @Override
+  public Image levelsAdjust(int black, int mid, int white) throws IllegalArgumentException {
+    validateLevels(black, mid, white);
+
+    double a = fittingCoefficientA(black, mid, white);
+    double aA = fittingCoefficientAa(black, mid, white);
+    double aB = fittingCoefficientAb(black, mid, white);
+    double aC = fittingCoefficientAc(black, mid, white);
+
+    double coeffA = aA / a;
+    double coeffB = aB / a;
+    double coeffC = aC / a;
+
+    int height = this.getHeight();
+    int width = this.getWidth();
+    Pixel[][] adjustedPixels = new Pixel[height][width];
+
+    for (int column = 0; column < width; column++) {
+      for (int row = 0; row < height; row++) {
+        adjustedPixels[row][column] = this.getPixel(row, column)
+                                          .quadraticTransform(coeffA, coeffB, coeffC);
+      }
+    }
+
+    return Factory.createImage(adjustedPixels);
+  }
+
+  /**
+   * Validates the black, mid, and white points for levels adjustment.
+   *
+   * @param black the black point value
+   * @param mid   the mid point value
+   * @param white the white point value
+   * @throws IllegalArgumentException if any of the values are out of range (0-255)
+   *                                  or not in ascending order
+   */
+  private void validateLevels(int black, int mid, int white)
+          throws IllegalArgumentException {
+    if (black < 0 || black > 255 || mid < 0 || mid > 255 || white < 0 || white > 255) {
+      throw new IllegalArgumentException("Levels must be between 0 and 255");
+    }
+    if (black >= mid || mid >= white) {
+      throw new IllegalArgumentException("Levels must be in ascending order");
+    }
+  }
+
+  private double fittingCoefficientA(int black, int mid, int white) {
+    return Math.pow(black, 2) * (mid - white)
+            - black * (Math.pow(mid, 2) - Math.pow(white, 2))
+            + Math.pow(mid, 2) * white - Math.pow(white, 2) * mid;
+  }
+
+  private double fittingCoefficientAa(int black, int mid, int white) {
+    return (-black) * (128 - 255) + 128 * white - 255 * mid;
+  }
+
+  private double fittingCoefficientAb(int black, int mid, int white) {
+    return Math.pow(black, 2) * (128 - 255) +
+            255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2);
+  }
+
+  private double fittingCoefficientAc(int black, int mid, int white) {
+    return Math.pow(black, 2) * (255 * mid - 128 * white)
+            - black * (255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2));
   }
 }

@@ -141,4 +141,20 @@ public interface Image {
    */
   int[][] getBlueChannel();
 
+  /**
+   * Applies color correction to the image.
+   *
+   * @return the color-corrected image by creating a new image object.
+   */
+  Image colorCorrect();
+
+  /**
+   * Adjusts the levels of the image.
+   *
+   * @param black the black point
+   * @param mid   the mid point
+   * @param white the white point
+   * @return the image with adjusted levels by creating a new image object.
+   */
+  Image levelsAdjust(int black, int mid, int white);
 }

@@ -208,6 +208,74 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
+    public void testColorCorrectPreservesNaturalGrey() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(100, 100, 100);
+      pixels[0][1] = new RGB(150, 150, 150);
+      pixels[1][0] = new RGB(200, 200, 200);
+      pixels[1][1] = new RGB(250, 250, 250);
+
+      Image image = new RenderedImage(pixels);
+      Image colorCorrectedImage = image.colorCorrect();
+
+      assertEquals(new RGB(100, 100, 100), colorCorrectedImage.getPixel(0, 0));
+      assertEquals(new RGB(150, 150, 150), colorCorrectedImage.getPixel(0, 1));
+      assertEquals(new RGB(200, 200, 200), colorCorrectedImage.getPixel(1, 0));
+      assertEquals(new RGB(250, 250, 250), colorCorrectedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testColorCorrect() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(100, 101, 102);
+      pixels[0][1] = new RGB(150, 151, 152);
+      pixels[1][0] = new RGB(200, 201, 202);
+      pixels[1][1] = new RGB(250, 251, 252);
+
+      Image image = new RenderedImage(pixels);
+      Image colorCorrectedImage = image.colorCorrect();
+
+      assertEquals(new RGB(101, 101, 101), colorCorrectedImage.getPixel(0, 0));
+      assertEquals(new RGB(151, 151, 151), colorCorrectedImage.getPixel(0, 1));
+      assertEquals(new RGB(201, 201, 201), colorCorrectedImage.getPixel(1, 0));
+      assertEquals(new RGB(251, 251, 251), colorCorrectedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testLevelsAdjust() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(100, 100, 100);
+      pixels[0][1] = new RGB(150, 150, 150);
+      pixels[1][0] = new RGB(200, 200, 200);
+      pixels[1][1] = new RGB(250, 250, 250);
+
+      Image image = new RenderedImage(pixels);
+      Image levelsAdjustedImage = image.levelsAdjust(0, 128, 255);
+
+      assertEquals(new RGB(100, 100, 100), levelsAdjustedImage.getPixel(0, 0));
+      assertEquals(new RGB(150, 150, 150), levelsAdjustedImage.getPixel(0, 1));
+      assertEquals(new RGB(200, 200, 200), levelsAdjustedImage.getPixel(1, 0));
+      assertEquals(new RGB(250, 250, 250), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testLevelsAdjustCurve() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(100, 100, 100);
+      pixels[0][1] = new RGB(150, 150, 150);
+      pixels[1][0] = new RGB(200, 200, 200);
+      pixels[1][1] = new RGB(250, 250, 250);
+
+      Image image = new RenderedImage(pixels);
+      Image levelsAdjustedImage = image.levelsAdjust(10, 120, 255);
+
+      assertEquals(new RGB(106, 106, 106), levelsAdjustedImage.getPixel(0, 0));
+      assertEquals(new RGB(159, 159, 159), levelsAdjustedImage.getPixel(0, 1));
+      assertEquals(new RGB(207, 207, 207), levelsAdjustedImage.getPixel(1, 0));
+      assertEquals(new RGB(251, 251, 251), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test
     public void testDarkenImage() {
       Pixel[][] pixels = new Pixel[2][2];
       pixels[0][0] = new RGB(100, 100, 100);
@@ -1163,7 +1231,13 @@ public class UnitTestForImageProcessor {
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
               + "quit: Quit the program.\n"
-              + "help: Print this help message.\n";
+              + "help: Print this help message.\n"
+              + "histogram image-name dest-image-name: Create a histogram of the given image "
+              + "and store the result in another image with the given name.\n"
+              + "color-correct image-name dest-image-name: Color correct the given image "
+              + "and store the result in another image with the given name.\n"
+              + "levels-adjust b m w image-name dest-image-name: Adjust the levels of the "
+              + "given image and store the result in another image with the given name.\n";
 
       assertEquals(expectedCommands, UserCommand.getUserCommands());
     }
@@ -2664,9 +2738,10 @@ public class UnitTestForImageProcessor {
 
     @Test(expected = ImageProcessorException.class)
     public void loadImageShouldThrowOnEmptyName() throws ImageProcessorException {
-      service.loadImage(ImageProcessingRequest.builder().imagePath("test" +
-              ".jpeg").imageName(
-              "").build());
+      service.loadImage(ImageProcessingRequest.builder()
+              .imagePath("test" + ".jpeg")
+              .imageName("")
+              .build());
     }
 
     @Test

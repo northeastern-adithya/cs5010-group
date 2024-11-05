@@ -10,6 +10,7 @@ import model.enumeration.ImageType;
 import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
+import utility.ExtractUtility;
 import utility.FilterUtils;
 import utility.IOUtils;
 import utility.StringUtils;
@@ -224,6 +225,37 @@ public class FileImageProcessingService implements ImageProcessingService {
     memory.addImage(request.getDestinationImageName(),
             Factory.createCompression(CompressionType.HAAR)
                     .compress(image, request.getPercentage().orElse(0)));
+  }
+
+  @Override
+  public void histogram(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), ExtractUtility.createHistogram(image));
+  }
+
+  @Override
+  public void colorCorrect(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    memory.addImage(request.getDestinationImageName(), image.colorCorrect());
+  }
+
+  @Override
+  public void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
+        () -> new ImageProcessorException("Levels not provided")
+    );
+    int black = levels.getBlack();
+    int white = levels.getWhite();
+    int mid = levels.getMid();
+    memory.addImage(request.getDestinationImageName(),
+            image.levelsAdjust(black, mid, white));
   }
 
   /**

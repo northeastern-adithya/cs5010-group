@@ -14,16 +14,19 @@ import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.ImageType;
 import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import services.ImageProcessingService;
+import utility.IOUtils;
 import view.input.UserInput;
 import view.output.UserOutput;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -2121,8 +2124,8 @@ public class ControllerIntegrationTest {
 
     assertTrue(output.toString().contains("Successfully loaded the image."));
     assertTrue(output.toString().contains("Successfully saved the image."));
-    assertTrue(output.toString().contains("Successfully created red component" +
-            "."));
+    assertTrue(output.toString().contains("Successfully created red component"
+            + "."));
 
     assertTrue(new File("test_resources/output/saved_sample_image.png").exists());
     assertTrue(new File("test_resources/output"
@@ -2457,5 +2460,78 @@ public class ControllerIntegrationTest {
     }
   }
 
+  @Test
+  public void testColorCorrection() {
+    try {
+      StringBuilder output = new StringBuilder();
+      Image inputImage = Factory.createImage(
+              new Pixel[][] {
+                      {Factory.createRGBPixel(100, 101, 102),
+                              Factory.createRGBPixel(150, 151, 152)},
+                      {Factory.createRGBPixel(200, 201, 202),
+                              Factory.createRGBPixel(250, 251, 252)}
+              }
+      );
+
+      initialiseController(
+              String.format("color-correct %s color-corrected-input-image", INITIAL_IMAGE_NAME),
+              output,
+              inputImage);
+
+      controller.processCommands();
+      assertTrue(output.toString().contains("Successfully color corrected the image."));
+
+      Image expectedImage = Factory.createImage(
+              new Pixel[][] {
+                      {Factory.createRGBPixel(101, 101, 101),
+                              Factory.createRGBPixel(151, 151, 151)},
+                      {Factory.createRGBPixel(201, 201, 201),
+                              Factory.createRGBPixel(251, 251, 251)}
+              }
+      );
+      assertEquals(expectedImage, imageMemory.getImage("color-corrected-input-image"));
+
+    } catch (Exception e) {
+      fail("Unexpected exception: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testLevelsAdjustment() {
+    try {
+      StringBuilder output = new StringBuilder();
+      Image inputImage = Factory.createImage(
+              new Pixel[][] {
+                      {Factory.createRGBPixel(100, 100, 100),
+                              Factory.createRGBPixel(150, 150, 150)},
+                      {Factory.createRGBPixel(200, 200, 200),
+                              Factory.createRGBPixel(250, 250, 250)}
+              }
+      );
+
+      initialiseController(
+              String.format("levels-adjust 10 120 255 %s levels-adjusted-input-image",
+                      INITIAL_IMAGE_NAME),
+              output,
+              inputImage);
+
+      controller.processCommands();
+      assertTrue(output.toString().contains("Successfully adjusted the levels of the image to "
+              + "black:10, mid:120, white:255."));
+
+      Image expectedImage = Factory.createImage(
+              new Pixel[][] {
+                      {Factory.createRGBPixel(106, 106, 106),
+                              Factory.createRGBPixel(159, 159, 159)},
+                      {Factory.createRGBPixel(207, 207, 207),
+                              Factory.createRGBPixel(251, 251, 251)}
+              }
+      );
+      assertEquals(expectedImage, imageMemory.getImage("levels-adjusted-input-image"));
+
+    } catch (Exception e) {
+      fail("Unexpected exception: " + e.getMessage());
+    }
+  }
 
 }
