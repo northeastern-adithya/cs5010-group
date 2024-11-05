@@ -87,11 +87,6 @@ public enum UserCommand {
           "compress percentage image-name dest-image-name: "
                   + "compress the given image by the given percentage and "
                   + "store the result in another image with the given name."),
-  RUN("run", "run script-file: "
-          + "Load and run the script commands in the specified file."),
-
-  QUIT("quit", "quit: Quit the program."),
-  HELP("help", "help: Print this help message."),
   HISTOGRAM("histogram", "histogram image-name dest-image-name: "
           + "Create a histogram of the given image and store the result in "
           + "another image with the given name."),
@@ -100,7 +95,12 @@ public enum UserCommand {
           + "image with the given name."),
   LEVELS_ADJUST("levels-adjust", "levels-adjust b m w image-name dest-image-name: "
           + "Adjust the levels of the given image and store the result in "
-          + "another image with the given name."),;
+          + "another image with the given name."),
+  RUN("run", "run script-file: "
+          + "Load and run the script commands in the specified file."),
+
+  QUIT("quit", "quit: Quit the program."),
+  HELP("help", "help: Print this help message."),;
 
   /**
    * Command which the user can give.
