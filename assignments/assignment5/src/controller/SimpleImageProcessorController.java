@@ -227,7 +227,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     imageProcessingService.createRedComponent(ImageProcessingRequest
             .builder()
             .imageName(arguments.get(0))
-            .destinationImageName(arguments.get(1)).build());
+            .destinationImageName(arguments.get(1))
+            // Optional percentage argument to get the split view.
+            .percentage(extractOptionalIntArgument(scanner).orElse(null))
+            .build());
     return new ExecutionStatus(true, "Successfully created red component.");
   }
 
@@ -245,7 +248,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
     imageProcessingService.createBlueComponent(ImageProcessingRequest
             .builder()
             .imageName(arguments.get(0))
-            .destinationImageName(arguments.get(1)).build());
+            .destinationImageName(arguments.get(1))
+            // Optional percentage argument to get the split view.
+            .percentage(extractOptionalIntArgument(scanner).orElse(null))
+            .build());
     return new ExecutionStatus(true, "Successfully created blue component.");
   }
 
@@ -264,7 +270,10 @@ public class SimpleImageProcessorController implements ImageProcessorController 
             ImageProcessingRequest
                     .builder()
                     .imageName(arguments.get(0))
-                    .destinationImageName(arguments.get(1)).build()
+                    .destinationImageName(arguments.get(1))
+                    // Optional percentage argument to get the split view.
+                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                    .build()
     );
     return new ExecutionStatus(true, "Successfully created green component.");
   }
@@ -649,7 +658,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .destinationImageName(arguments.get(1))
                     .build()
     );
-    return new ExecutionStatus(true, "Successfully created histogram of the image.");
+    return new ExecutionStatus(true, "Successfully created histogram of the " +
+            "image.");
   }
 
   /**
@@ -668,6 +678,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .builder()
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
+                    // Optional percentage argument to get the split view.
+                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully color corrected the image.");
@@ -694,6 +706,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                       .imageName(arguments.get(3))
                       .destinationImageName(arguments.get(4))
                       .levels(black, mid, white)
+                      // Optional percentage argument to get the split view.
+                      .percentage(extractOptionalIntArgument(scanner).orElse(null))
                       .build()
       );
       return new ExecutionStatus(true,

@@ -16,22 +16,23 @@ public enum UserCommand {
   SAVE("save", "save image-path image-name: "
           + "Save the image with the given name to the specified path "
           + "which should include the name of the file."),
-  RED_COMPONENT("red-component", "red-component image-name dest-image-name: "
+  RED_COMPONENT("red-component", "red-component image-name dest-image-name p: "
           + "Create an image with the red-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name."),
+          + "destination name.P is an optional parameter for split view."),
   GREEN_COMPONENT("green-component", "green-component image-name "
-          + "dest-image-name: "
+          + "dest-image-name p: "
           + "Create an image with the green-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name."),
-  BLUE_COMPONENT("blue-component", "blue-component image-name dest-image-name: "
+          + "destination name.P is an optional parameter for split view."),
+  BLUE_COMPONENT("blue-component", "blue-component image-name dest-image-name"
+          + " p: "
           + "Create an image with the blue-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name."),
+          + "destination name.P is an optional parameter for split view."),
   VALUE_COMPONENT("value-component", "value-component image-name "
           + "dest-image-name: "
           + "Create an image with the value-component of the image with the "
@@ -74,15 +75,16 @@ public enum UserCommand {
           + "blue "
           + "into a single image that gets its red, green and blue components "
           + "from the three images respectively."),
-  BLUR("blur", "blur image-name dest-image-name: "
+  BLUR("blur", "blur image-name dest-image-name p: "
           + "blur the given image and store the result in another image with "
-          + "the given name."),
-  SHARPEN("sharpen", "sharpen image-name dest-image-name: "
+          + "the given name.P is an optional parameter for split view."),
+  SHARPEN("sharpen", "sharpen image-name dest-image-name p: "
           + "sharpen the given image and store the result in another image "
-          + "with the given name."),
-  SEPIA("sepia", "sepia image-name dest-image-name: "
+          + "with the given name.P is an optional parameter for split view."),
+  SEPIA("sepia", "sepia image-name dest-image-name p: "
           + "produce a sepia-toned version of the given image "
-          + "and store the result in another image with the given name."),
+          + "and store the result in another image with the given name."
+          + "P is an optional parameter for split view."),
   COMPRESS("compress",
           "compress percentage image-name dest-image-name: "
                   + "compress the given image by the given percentage and "
@@ -90,12 +92,13 @@ public enum UserCommand {
   HISTOGRAM("histogram", "histogram image-name dest-image-name: "
           + "Create a histogram of the given image and store the result in "
           + "another image with the given name."),
-  COLOR_CORRECT("color-correct", "color-correct image-name dest-image-name: "
+  COLOR_CORRECT("color-correct", "color-correct image-name dest-image-name p: "
           + "Color correct the given image and store the result in another "
-          + "image with the given name."),
-  LEVELS_ADJUST("levels-adjust", "levels-adjust b m w image-name dest-image-name: "
+          + "image with the given name.P is an optional parameter for split view."),
+  LEVELS_ADJUST("levels-adjust", "levels-adjust b m w image-name "
+          + "dest-image-name p: "
           + "Adjust the levels of the given image and store the result in "
-          + "another image with the given name."),
+          + "another image with the given name.P is an optional parameter for split view."),
   RUN("run", "run script-file: "
           + "Load and run the script commands in the specified file."),
 
