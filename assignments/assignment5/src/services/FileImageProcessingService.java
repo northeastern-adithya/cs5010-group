@@ -63,8 +63,12 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(),
-            image.createRedComponent());
+    Image finalImage = image.createRedComponent();
+    if (request.getPercentage().isPresent()) {
+      finalImage = Factory.combineImage(image, finalImage,
+              request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), finalImage);
   }
 
   @Override
@@ -73,8 +77,12 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(),
-            image.createGreenComponent());
+    Image finalImage = image.createGreenComponent();
+    if (request.getPercentage().isPresent()) {
+      finalImage = Factory.combineImage(image, finalImage,
+              request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), finalImage);
   }
 
   @Override
@@ -83,8 +91,12 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(),
-            image.createBlueComponent());
+    Image finalImage = image.createBlueComponent();
+    if (request.getPercentage().isPresent()) {
+      finalImage = Factory.combineImage(image, finalImage,
+              request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), finalImage);
   }
 
   @Override
@@ -232,7 +244,8 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), ExtractUtility.createHistogram(image));
+    memory.addImage(request.getDestinationImageName(),
+            ExtractUtility.createHistogram(image));
   }
 
   @Override
@@ -240,7 +253,12 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), image.colorCorrect());
+    Image imageAfterCombining = image.colorCorrect();
+    if (request.getPercentage().isPresent()) {
+      imageAfterCombining = Factory.combineImage(image, imageAfterCombining,
+              request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
   }
 
   @Override
@@ -249,13 +267,17 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
-        () -> new ImageProcessorException("Levels not provided")
+            () -> new ImageProcessorException("Levels not provided")
     );
     int black = levels.getBlack();
     int white = levels.getWhite();
     int mid = levels.getMid();
-    memory.addImage(request.getDestinationImageName(),
-            image.levelsAdjust(black, mid, white));
+    Image imageAfterCombining = image.levelsAdjust(black, mid, white);
+    if (request.getPercentage().isPresent()) {
+      imageAfterCombining = Factory.combineImage(image, imageAfterCombining,
+              request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
   }
 
   /**

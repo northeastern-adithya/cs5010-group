@@ -1,8 +1,6 @@
 package model.visual;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
@@ -11,7 +9,6 @@ import java.util.function.Function;
 import factories.Factory;
 import model.pixels.Pixel;
 import model.pixels.RGB;
-import utility.ExtractUtility;
 
 /**
  * RenderedImage class that implements Image interface

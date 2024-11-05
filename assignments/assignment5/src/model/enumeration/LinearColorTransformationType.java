@@ -27,6 +27,11 @@ public enum LinearColorTransformationType {
     this.kernel = kernel;
   }
 
+  /**
+   * Gets the kernel for the linear transformation.
+   *
+   * @return the kernel for the linear transformation
+   */
   public double[][] getKernel() {
     return kernel;
   }
