@@ -1174,18 +1174,18 @@ public class UnitTestForImageProcessor {
               + "save image-path image-name: Save the image with the given name"
               + " to the specified path which should include the name of the "
               + "file.\n"
-              + "red-component image-name dest-image-name: Create an image with"
-              + " the red-component of the image with the given name, and refer"
-              + " to it henceforth in the program by the given destination name"
-              + ".\n"
-              + "green-component image-name dest-image-name: Create an image "
-              + "with the green-component of the image with the given name, and"
+              + "red-component image-name dest-image-name p: Create an image "
+              + "with the red-component of the image with the given name, and "
+              + "refer to it henceforth in the program by the given "
+              + "destination name.P is an optional parameter for split view.\n"
+              + "green-component image-name dest-image-name p: Create an "
+              + "image with the green-component of the image with the given "
+              + "name, and refer to it henceforth in the program by the given "
+              + "destination name.P is an optional parameter for split view.\n"
+              + "blue-component image-name dest-image-name p: Create an image "
+              + "with the blue-component of the image with the given name, and"
               + " refer to it henceforth in the program by the given "
-              + "destination name.\n"
-              + "blue-component image-name dest-image-name: Create an image "
-              + "with the blue-component of the image with the given name, and "
-              + "refer to it henceforth in the program by the given destination"
-              + " name.\n"
+              + "destination name.P is an optional parameter for split view.\n"
               + "value-component image-name dest-image-name: Create an image "
               + "with the value-component of the image with the given name, and"
               + " refer to it henceforth in the program by the given "
@@ -1218,26 +1218,35 @@ public class UnitTestForImageProcessor {
               + "Combine the three images that are individually red, green and "
               + "blue into a single image that gets its red, green and blue "
               + "components from the three images respectively.\n"
-              + "blur image-name dest-image-name: blur the given image and "
-              + "store the result in another image with the given name.\n"
-              + "sharpen image-name dest-image-name: sharpen the given image "
-              + "and store the result in another image with the given name.\n"
-              + "sepia image-name dest-image-name: produce a sepia-toned "
+              + "blur image-name dest-image-name p: blur the given image and "
+              + "store the result in another image with the given name."
+              + "P is an optional parameter for split view.\n"
+              + "sharpen image-name dest-image-name p: sharpen the given image "
+              + "and store the result in another image with the given name."
+              + "P is an optional parameter for split view.\n"
+              + "sepia image-name dest-image-name p: produce a sepia-toned "
               + "version of the given image and store the result in another "
-              + "image with the given name.\n"
+              + "image with the given name."
+              + "P is an optional parameter for split view.\n"
               + "compress percentage image-name dest-image-name: "
               + "compress the given image by the given percentage and store "
               + "the result in another image with the given name.\n"
+              + "histogram image-name dest-image-name: Create a histogram of "
+              + "the given image "
+              + "and store the result in another image with the given name.\n"
+              + "color-correct image-name dest-image-name p: Color correct the "
+              + "given image "
+              + "and store the result in another image with the given name."
+              + "P is an optional parameter for split view.\n"
+              + "levels-adjust b m w image-name dest-image-name p: Adjust the"
+              + " levels of the "
+              + "given image and store the result in another image with the " +
+              "given name."
+              + "P is an optional parameter for split view.\n"
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
               + "quit: Quit the program.\n"
-              + "help: Print this help message.\n"
-              + "histogram image-name dest-image-name: Create a histogram of the given image "
-              + "and store the result in another image with the given name.\n"
-              + "color-correct image-name dest-image-name: Color correct the given image "
-              + "and store the result in another image with the given name.\n"
-              + "levels-adjust b m w image-name dest-image-name: Adjust the levels of the "
-              + "given image and store the result in another image with the given name.\n";
+              + "help: Print this help message.\n";
 
       assertEquals(expectedCommands, UserCommand.getUserCommands());
     }
@@ -2974,7 +2983,7 @@ public class UnitTestForImageProcessor {
     public void testSepia() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                  new RGB(100, 100, 100)}});
+                      new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage(ImageProcessingRequest.builder().imageName(
@@ -2993,7 +3002,7 @@ public class UnitTestForImageProcessor {
     public void testValueComponent() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                  new RGB(100, 100, 100)}});
+                      new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent(ImageProcessingRequest.builder().imageName(

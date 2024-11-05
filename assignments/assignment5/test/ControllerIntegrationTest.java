@@ -25,6 +25,7 @@ import view.input.UserInput;
 import view.output.UserOutput;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -2149,7 +2150,8 @@ public class ControllerIntegrationTest {
     initialiseController("run test_resources/invalid_file.txt",
             output,
             null);
-    controller.processCommands();
+    assertThrows(ImageProcessingRunTimeException.QuitException.class,
+            ()->controller.processCommands());
 
     assertTrue(output.toString().contains("Error reading script file: "
             + "test_resources/invalid_file.txt"));
