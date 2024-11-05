@@ -611,8 +611,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
       imageProcessingService.compressImage(
               ImageProcessingRequest
                       .builder()
-                      .imageName(arguments.get(0))
-                      .destinationImageName(arguments.get(1))
+                      .imageName(arguments.get(1))
+                      .destinationImageName(arguments.get(2))
                       .percentage(compressionPercentage)
                       .build()
       );

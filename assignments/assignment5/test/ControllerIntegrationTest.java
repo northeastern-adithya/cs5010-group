@@ -2377,12 +2377,12 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "load test_resources/input/man.png man "
-                    + "compress 90 man actual "
+                    + "compress 99 man actual "
                     + "save test_resources/input/compressed.png actual ",
             output, null);
 
     controller.processCommands();
-    assertTrue(output.toString().contains("Successfully saved the image.."));
+    assertTrue(output.toString().contains("Successfully saved the image."));
 
   }
 
