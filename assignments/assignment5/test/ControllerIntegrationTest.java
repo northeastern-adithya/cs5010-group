@@ -2380,7 +2380,7 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "load test_resources/input/man.png man "
-                    + "compress 20 man actual "
+                    + "compress 90 man actual "
                     + "save test_resources/input/compressed.png actual ",
             output, null);
 
