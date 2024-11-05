@@ -50,7 +50,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D double array to apply the Haar transform to
    * @return the new 2D double array with the Haar transform applied
    */
-  private static double[][] haar(double[][] data) {
+  static double[][] haar(double[][] data) {
     // Pad the data to a square matrix
     double[][] squareMatrix = padToSquareMatrix(data);
 
@@ -97,7 +97,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D double array to apply the inverse Haar transform to
    * @return the new 2D double array with the inverse Haar transform applied
    */
-  private static double[][] invhaar(double[][] data) {
+  static double[][] invhaar(double[][] data) {
     int length = 2;
     double[][] invhaarData = Arrays.copyOf(data, data.length);
 
@@ -149,8 +149,8 @@ public class HaarCompression implements Compression {
    * @param length the length of the data to apply the transform to
    * @return the transformed data
    */
-  private static double[] transform(double[] data,
-                                    int length) {
+  static double[] transform(double[] data,
+                            int length) {
     double[] transformedData = new double[length];
     int halfLength = length / 2;
     for (int i = 0; i < halfLength; i++) {
@@ -173,7 +173,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D double array to pad
    * @return the new square matrix
    */
-  private static double[][] padToSquareMatrix(double[][] data) {
+  static double[][] padToSquareMatrix(double[][] data) {
     int row = data.length;
     int column = data[0].length;
 
@@ -334,9 +334,9 @@ public class HaarCompression implements Compression {
     int thresholdIndex = (int) Math.ceil((double) (length * percentage) / 100);
     double[] sortedData = Arrays.copyOf(data, length);
 //    // Converting the data to absolute values
-//    for (int i = 0; i < length; i++) {
-//      sortedData[i] = Math.abs(sortedData[i]);
-//    }
+    for (int i = 0; i < length; i++) {
+      sortedData[i] = Math.abs(sortedData[i]);
+    }
     // Sorting the data
     Arrays.sort(sortedData);
     // Getting the value from index to reduce all the values less than this
