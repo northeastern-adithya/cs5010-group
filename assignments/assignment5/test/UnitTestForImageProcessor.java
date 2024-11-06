@@ -3391,5 +3391,52 @@ public class UnitTestForImageProcessor {
         assertEquals(histogram.getPixel(255, i), new RGB(0, 0, 255));
       }
     }
+
+    @Test
+    public void testCountFrequency() {
+      // Create a simple 2x2 test image
+      Image image = new RenderedImage(
+              new Pixel[][]{
+                      {new RGB(255, 0, 0), new RGB(0, 255, 0)},
+                      {new RGB(0, 0, 255), new RGB(255, 255, 255)},
+                      //add random non boundary values
+                      {new RGB(100, 100, 100), new RGB(150, 150, 150)},
+                      {new RGB(200, 200, 200), new RGB(250, 250, 250)}
+              }
+      );
+
+      // Define the expected frequency arrays
+      int[] expectedRedFreq = new int[256];
+      int[] expectedGreenFreq = new int[256];
+      int[] expectedBlueFreq = new int[256];
+      expectedRedFreq[255] = 2;
+      expectedRedFreq[0] = 2;
+      expectedRedFreq[100] = 1;
+      expectedRedFreq[150] = 1;
+      expectedRedFreq[200] = 1;
+      expectedRedFreq[250] = 1;
+
+      expectedGreenFreq[255] = 2;
+      expectedGreenFreq[0] = 2;
+      expectedGreenFreq[100] = 1;
+      expectedGreenFreq[150] = 1;
+      expectedGreenFreq[200] = 1;
+      expectedGreenFreq[250] = 1;
+
+      expectedBlueFreq[255] = 2;
+      expectedBlueFreq[0] = 2;
+      expectedBlueFreq[100] = 1;
+      expectedBlueFreq[150] = 1;
+      expectedBlueFreq[200] = 1;
+      expectedBlueFreq[250] = 1;
+
+      int[] redFreq = ExtractUtility.calculateColorFrequencies(image, Pixel::getRed);
+      int[] greenFreq = ExtractUtility.calculateColorFrequencies(image, Pixel::getGreen);
+      int[] blueFreq = ExtractUtility.calculateColorFrequencies(image, Pixel::getBlue);
+
+      assertArrayEquals(expectedRedFreq, redFreq);
+      assertArrayEquals(expectedGreenFreq, greenFreq);
+      assertArrayEquals(expectedBlueFreq, blueFreq);
+    }
   }
 }

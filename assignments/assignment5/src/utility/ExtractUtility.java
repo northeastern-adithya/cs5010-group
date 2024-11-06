@@ -43,6 +43,13 @@ public class ExtractUtility {
     return Factory.createImage(histogramPixels);
   }
 
+  /**
+   * Calculates the frequency of a specific color channel in the given image.
+   *
+   * @param image the image to analyze
+   * @param transformation a function that extracts the color value from a pixel
+   * @return an array representing the frequency of each color value (0-255)
+   */
   public static int[] calculateColorFrequencies(Image image, Function<Pixel,
           Integer> transformation) {
     int[] colorFrequencies = new int[HISTOGRAM_SIZE];
@@ -94,6 +101,7 @@ public class ExtractUtility {
 
     g2d.setColor(Color.WHITE);
     g2d.fillRect(0, 0, HISTOGRAM_SIZE, HISTOGRAM_SIZE);
+
     g2d.setColor(Color.LIGHT_GRAY);
     for (int i = 0; i <= HISTOGRAM_SIZE; i += 13) {
       g2d.drawLine(i, 0, i, 256);
