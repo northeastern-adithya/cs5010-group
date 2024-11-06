@@ -34,7 +34,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D double array to convert
    * @return the 2D integer array
    */
-  private static int[][] fromDoubleArray(double[][] data) {
+  private int[][] fromDoubleArray(double[][] data) {
     int[][] cleanedData = new int[data.length][data[0].length];
     for (int i = 0; i < data.length; i++) {
       for (int j = 0; j < data[0].length; j++) {
@@ -45,13 +45,14 @@ public class HaarCompression implements Compression {
   }
 
   /**
-   * Applies the Haar transform to the given 2D double array.
-   * Is package protected for testing this function individually.
+   * Applies the Haar transform to the given 2D double array
+   * Pads the data to a square matrix, then iteratively applies the Haar transform
+   * to rows and columns until the matrix length is reduced to 1.
    *
    * @param data the 2D double array to apply the Haar transform to
    * @return the new 2D double array with the Haar transform applied
    */
-  static double[][] haar(double[][] data) {
+  private double[][] haar(double[][] data) {
     // Pad the data to a square matrix
     double[][] squareMatrix = padToSquareMatrix(data);
 
@@ -99,7 +100,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D double array to apply the inverse Haar transform to
    * @return the new 2D double array with the inverse Haar transform applied
    */
-  static double[][] invhaar(double[][] data) {
+  private double[][] invhaar(double[][] data) {
     int length = 2;
     double[][] invhaarData = Arrays.copyOf(data, data.length);
 
@@ -136,7 +137,7 @@ public class HaarCompression implements Compression {
    * @param percentage the percentage to compress the image by
    * @throws ImageProcessorException if the percentage is invalid
    */
-  private static void validatePercentage(int percentage) throws ImageProcessorException {
+  private void validatePercentage(int percentage) throws ImageProcessorException {
     if (percentage < 0 || percentage > 100) {
       throw new ImageProcessorException("Invalid compression percentage");
     }
@@ -152,7 +153,7 @@ public class HaarCompression implements Compression {
    * @param length the length of the data to apply the transform to
    * @return the transformed data
    */
-  static double[] transform(double[] data,
+  private double[] transform(double[] data,
                             int length) {
     double[] transformedData = new double[length];
     int halfLength = length / 2;
@@ -177,7 +178,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D double array to pad
    * @return the new square matrix
    */
-  static double[][] padToSquareMatrix(double[][] data) {
+  private double[][] padToSquareMatrix(double[][] data) {
     int row = data.length;
     int column = data[0].length;
 
@@ -195,7 +196,7 @@ public class HaarCompression implements Compression {
    * @param number the number to get the nearest power of two for
    * @return the nearest power of two
    */
-  private static int getNearestPowerOfTwo(int number) {
+  private int getNearestPowerOfTwo(int number) {
     if (number <= 0) {
       return 1;
     }
@@ -219,7 +220,7 @@ public class HaarCompression implements Compression {
    * @param length the length of the data to invert
    * @return the inverted data
    */
-  private static double[] invert(double[] data, int length) {
+  private double[] invert(double[] data, int length) {
     double[] inverted = new double[length];
     int halfLength = length / 2;
     for (int i = 0; i < halfLength; i++) {
@@ -240,7 +241,7 @@ public class HaarCompression implements Compression {
    * @param data the 2D integer array to convert
    * @return the 2D double array
    */
-  private static double[][] toDoubleArray(int[][] data) {
+  private double[][] toDoubleArray(int[][] data) {
     double[][] doubleArray = new double[data.length][data[0].length];
     for (int i = 0; i < data.length; i++) {
       for (int j = 0; j < data[0].length; j++) {
@@ -258,7 +259,7 @@ public class HaarCompression implements Compression {
    * @param percentage the percentage to compute threshold value
    * @return the data with values greater than threshold value
    */
-  private static double[][] computeDataWithThreshold(double[][] haarData,
+  private double[][] computeDataWithThreshold(double[][] haarData,
                                                      int percentage) {
     int height = haarData.length;
     int width = haarData[0].length;
@@ -283,7 +284,7 @@ public class HaarCompression implements Compression {
    * @param percentage the percentage to calculate the threshold value
    * @return the threshold value
    */
-  private static double getThresholdValue(double[] data, int percentage) {
+  private double getThresholdValue(double[] data, int percentage) {
 
     int length = data.length;
     double[] sortedData = Arrays.copyOf(data, length);
@@ -318,7 +319,7 @@ public class HaarCompression implements Compression {
    * @param percentage the percentage to calculate the threshold value
    * @return the threshold value
    */
-  private static double getThresholdValue(double[][] data, int percentage) {
+  private double getThresholdValue(double[][] data, int percentage) {
     int totalLength = data.length * data[0].length;
     double[] flattenedData = new double[totalLength];
     int index = 0;
@@ -374,7 +375,7 @@ public class HaarCompression implements Compression {
    * @param percentage the percentage by which to compress the data
    * @return the new compressed data
    */
-  static int[][] compress(int[][] data, int percentage) {
+  private int[][] compress(int[][] data, int percentage) {
     // Apply haar transformation.
     double[][] haarData = haar(toDoubleArray(data));
     // Remove data less than threshold

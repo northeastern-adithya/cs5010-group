@@ -16,9 +16,10 @@ import utility.StringUtils;
  * the controller and running the application.
  */
 public class ImageProcessorApp {
+
   /**
-   * The main method for the Image Processor application.
-   * This method creates the controller and runs the application.
+   * Entry point of the application.
+   * Initializes the controller and starts processing commands.
    *
    * @param args The command line arguments.
    */

@@ -6,16 +6,11 @@ import exception.ImageProcessorException;
 import utility.StringUtils;
 
 /**
- * Represents a request to process an image.
- * The request can have the following parameters:
- * - The path of the image
- * - The name of the image
- * - The name of the destination image
- * - The factor to be used for the transformation
- * - The name of the red image
- * - The name of the green image
- * - The name of the blue image
- * - The percentage by which to compress the image
+ * Represents a request for processing an image.
+ * This class uses the Builder pattern to create an instance of ImageProcessingRequest.
+ * It contains various parameters that can be set to customize the image processing request.
+ * The data it can contain includes image path, image name, destination image name, factor,
+ * red image name, green image name, blue image name, percentage, and levels.
  */
 public class ImageProcessingRequest {
 
