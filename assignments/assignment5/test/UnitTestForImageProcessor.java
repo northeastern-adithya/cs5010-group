@@ -1240,8 +1240,8 @@ public class UnitTestForImageProcessor {
               + "P is an optional parameter for split view.\n"
               + "levels-adjust b m w image-name dest-image-name p: Adjust the"
               + " levels of the "
-              + "given image and store the result in another image with the " +
-              "given name."
+              + "given image and store the result in another image with the "
+              + "given name."
               + "P is an optional parameter for split view.\n"
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
@@ -2983,7 +2983,7 @@ public class UnitTestForImageProcessor {
     public void testSepia() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                      new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage(ImageProcessingRequest.builder().imageName(
@@ -3002,7 +3002,7 @@ public class UnitTestForImageProcessor {
     public void testValueComponent() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                      new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent(ImageProcessingRequest.builder().imageName(

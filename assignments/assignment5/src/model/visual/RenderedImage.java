@@ -333,8 +333,8 @@ public class RenderedImage implements Image {
   }
 
   private double fittingCoefficientAb(int black, int mid, int white) {
-    return Math.pow(black, 2) * (128 - 255) +
-            255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2);
+    return Math.pow(black, 2) * (128 - 255)
+            + 255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2);
   }
 
   private double fittingCoefficientAc(int black, int mid, int white) {
