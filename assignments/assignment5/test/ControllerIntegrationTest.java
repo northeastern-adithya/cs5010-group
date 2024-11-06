@@ -18,7 +18,7 @@ import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
-import services.ImageProcessingService;
+import controller.services.ImageProcessingService;
 import view.input.UserInput;
 import view.output.UserOutput;
 
@@ -2634,8 +2634,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {6230063, 4663127, 999231},
-                            {6234159, 6233935, 2039631}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("blurImage"));
@@ -2667,7 +2667,14 @@ public class ControllerIntegrationTest {
             output, randomImage);
 
     controller.processCommands();
-    assertEquals(randomImage, imageMemory.getImage("blurImage"));
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {6230063, 4663127, 999231},
+                            {6234159, 6233935, 2039631}
+                    }
+            )
+    ), imageMemory.getImage("blurImage"));
     assertTrue(output.toString().contains("Successfully blurred the image."));
   }
 
@@ -2699,8 +2706,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {6230063, 4663127, 999231},
-                            {6234159, 6233935, 2039631}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("blurImage"));
@@ -2719,8 +2726,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 4663127, 999231},
-                            {8421504, 6233935, 2039631}
+                            {6230063, 255, 65280},
+                            {6234159, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("blurImage"));
@@ -2739,8 +2746,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 255, 999231},
-                            {8421504, 16711680, 2039631}
+                            {6230063, 4663127, 65280},
+                            {6234159, 6233935, 255}
                     }
             )
     ), imageMemory.getImage("blurImage"));
@@ -2782,8 +2789,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711743, 10444799, 1044335},
-                            {16736415, 16736159, 995327}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("sharpenImage"));
@@ -2815,7 +2822,14 @@ public class ControllerIntegrationTest {
             output, randomImage);
 
     controller.processCommands();
-    assertEquals(randomImage, imageMemory.getImage("sharpenImage"));
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16711743, 10444799, 1044335},
+                            {16736415, 16736159, 995327}
+                    }
+            )),
+            imageMemory.getImage("sharpenImage"));
     assertTrue(output.toString().contains("Successfully sharpened the image."));
   }
 
@@ -2849,8 +2863,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711743, 10444799, 1044335},
-                            {16736415, 16736159, 995327}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("sharpenImage"));
@@ -2869,8 +2883,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 10444799, 1044335},
-                            {8421504, 16736159, 995327}
+                            {16711743, 255, 65280},
+                            {16736415, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("sharpenImage"));
@@ -2889,8 +2903,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 255, 1044335},
-                            {8421504, 16711680, 995327}
+                            {16711743, 10444799, 65280},
+                            {16736415, 16736159, 255}
                     }
             )
     ), imageMemory.getImage("sharpenImage"));
@@ -2931,8 +2945,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {6576197, 3156513, 12889736},
-                            {11311479, 6576197, 3156513}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("sepiaImage"));
@@ -2965,7 +2979,14 @@ public class ControllerIntegrationTest {
             output, randomImage);
 
     controller.processCommands();
-    assertEquals(randomImage, imageMemory.getImage("sepiaImage"));
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {6576197, 3156513, 12889736},
+                            {11311479, 6576197, 3156513}
+                    }
+            )
+    ), imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("Successfully converted the image "
             + "to sepia."));
   }
@@ -2998,8 +3019,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {6576197, 3156513, 12889736},
-                            {11311479, 6576197, 3156513}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("sepiaImage"));
@@ -3019,8 +3040,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 3156513, 12889736},
-                            {8421504, 6576197, 3156513}
+                            {6576197, 255, 65280},
+                            {11311479, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("sepiaImage"));
@@ -3040,8 +3061,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 255, 12889736},
-                            {8421504, 16711680, 3156513}
+                            {6576197, 3156513, 65280},
+                            {11311479, 6576197, 255}
                     }
             )
     ), imageMemory.getImage("sepiaImage"));
@@ -3082,8 +3103,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16777215, 0, 0},
-                            {8421504, 16777215, 0}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("redComponent"));
@@ -3116,7 +3137,9 @@ public class ControllerIntegrationTest {
             output, randomImage);
 
     controller.processCommands();
-    assertEquals(randomImage, imageMemory.getImage("redComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {16777215, 0, 0}, {8421504, 16777215, 0}
+    })), imageMemory.getImage("redComponent"));
     assertTrue(output.toString().contains("Successfully created red "
             + "component"));
   }
@@ -3149,8 +3172,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16777215, 0, 0},
-                            {8421504, 16777215, 0}
+                            {16711680, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("redComponent"));
@@ -3170,8 +3193,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 0, 0},
-                            {8421504, 16777215, 0}
+                            {16777215, 255, 65280},
+                            {8421504, 16711680, 255}
                     }
             )
     ), imageMemory.getImage("redComponent"));
@@ -3191,8 +3214,8 @@ public class ControllerIntegrationTest {
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
-                            {16711680, 255, 0},
-                            {8421504, 16711680, 0}
+                            {16777215, 0, 65280},
+                            {8421504, 16777215, 255}
                     }
             )
     ), imageMemory.getImage("redComponent"));
@@ -3224,7 +3247,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {0, 16777215, 0}, {8421504, 0, 16777215}
+            {16711680, 255, 65280}, {8421504, 16711680, 255}
     })), imageMemory.getImage("blueComponent"));
     assertTrue(output.toString().contains("Successfully created blue "
             + "component."));
@@ -3252,7 +3275,9 @@ public class ControllerIntegrationTest {
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
-    assertEquals(randomImage, imageMemory.getImage("blueComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {0, 16777215, 0}, {8421504, 0, 16777215}
+    })), imageMemory.getImage("blueComponent"));
     assertTrue(output.toString().contains("Successfully created blue "
             + "component."));
   }
@@ -3281,7 +3306,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {0, 16777215, 0}, {8421504, 0, 16777215}
+            {16711680, 255, 65280}, {8421504, 16711680, 255}
     })), imageMemory.getImage("blueComponent"));
     assertTrue(output.toString().contains("Successfully created blue "
             + "component."));
@@ -3296,7 +3321,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {16711680, 16777215, 0}, {8421504, 0, 16777215}
+            {0, 255, 65280}, {8421504, 16711680, 255}
     })), imageMemory.getImage("blueComponent"));
     assertTrue(output.toString().contains("Successfully created blue "
             + "component."));
@@ -3311,7 +3336,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {16711680, 255, 0}, {8421504, 16711680, 16777215}
+            {0, 16777215, 65280}, {8421504, 0, 255}
     })), imageMemory.getImage("blueComponent"));
     assertTrue(output.toString().contains("Successfully created blue "
             + "component."));
@@ -3340,8 +3365,9 @@ public class ControllerIntegrationTest {
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
+
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {0, 0, 16777215}, {8421504, 0, 0}
+            {16711680, 255, 65280}, {8421504, 16711680, 255}
     })), imageMemory.getImage("greenComponent"));
     assertTrue(output.toString().contains("Successfully created green "
             + "component."));
@@ -3369,7 +3395,14 @@ public class ControllerIntegrationTest {
             + "100", INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
-    assertEquals(randomImage, imageMemory.getImage("greenComponent"));
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {0, 0, 16777215},
+                            {8421504, 0, 0}
+                    }
+            )
+    ), imageMemory.getImage("greenComponent"));
     assertTrue(output.toString().contains("Successfully created green "
             + "component."));
   }
@@ -3398,7 +3431,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {0, 0, 16777215}, {8421504, 0, 0}
+            {16711680, 255, 65280}, {8421504, 16711680, 255}
     })), imageMemory.getImage("greenComponent"));
     assertTrue(output.toString().contains("Successfully created green "
             + "component."));
@@ -3414,7 +3447,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {16711680, 0, 16777215}, {8421504, 0, 0}
+            {0, 255, 65280}, {8421504, 16711680, 255}
     })), imageMemory.getImage("greenComponent"));
     assertTrue(output.toString().contains("Successfully created green "
             + "component."));
@@ -3430,7 +3463,7 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(createPixels(new int[][]{
-            {16711680, 255, 16777215}, {8421504, 16711680, 0}
+            {0, 0, 65280}, {8421504, 0, 255}
     })), imageMemory.getImage("greenComponent"));
     assertTrue(output.toString().contains("Successfully created green "
             + "component."));

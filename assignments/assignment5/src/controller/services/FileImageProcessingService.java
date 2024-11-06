@@ -1,4 +1,4 @@
-package services;
+package controller.services;
 
 import java.util.Objects;
 
@@ -11,7 +11,6 @@ import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
 import utility.ExtractUtility;
-import utility.FilterUtils;
 import utility.IOUtils;
 import utility.StringUtils;
 
@@ -64,8 +63,10 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     Image finalImage = image.createRedComponent();
+    // If percentage is provided, combines the red image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      finalImage = Factory.combineImage(image, finalImage,
+      finalImage = finalImage.combineImages(image,
               request.getPercentage().get());
     }
     memory.addImage(request.getDestinationImageName(), finalImage);
@@ -78,8 +79,10 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     Image finalImage = image.createGreenComponent();
+    // If percentage is provided, combines the green image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      finalImage = Factory.combineImage(image, finalImage,
+      finalImage = finalImage.combineImages(image,
               request.getPercentage().get());
     }
     memory.addImage(request.getDestinationImageName(), finalImage);
@@ -92,8 +95,10 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     Image finalImage = image.createBlueComponent();
+    // If percentage is provided, combines the blue image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      finalImage = Factory.combineImage(image, finalImage,
+      finalImage = finalImage.combineImages(image,
               request.getPercentage().get());
     }
     memory.addImage(request.getDestinationImageName(), finalImage);
@@ -189,14 +194,14 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image filteredImage = FilterUtils.applyFilter(image,
-            FilterOption.GAUSSIAN_BLUR);
-    Image imageAfterCombining = filteredImage;
+    Image filteredImage = image.applyFilter(FilterOption.GAUSSIAN_BLUR);
+    // If percentage is provided, combines the blur image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      imageAfterCombining = Factory.combineImage(image, filteredImage,
+      filteredImage = filteredImage.combineImages(image,
               request.getPercentage().get());
     }
-    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
+    memory.addImage(request.getDestinationImageName(), filteredImage);
   }
 
   @Override
@@ -205,14 +210,14 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image filteredImage = FilterUtils.applyFilter(image,
-            FilterOption.SHARPEN);
-    Image imageAfterCombining = filteredImage;
+    Image filteredImage = image.applyFilter(FilterOption.SHARPEN);
+    // If percentage is provided, combines the sharpen image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      imageAfterCombining = Factory.combineImage(image, filteredImage,
+      filteredImage = filteredImage.combineImages(image,
               request.getPercentage().get());
     }
-    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
+    memory.addImage(request.getDestinationImageName(), filteredImage);
   }
 
   @Override
@@ -221,12 +226,14 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image imageAfterCombining = image.getSepia();
+    Image sepiaImage = image.getSepia();
+    // If percentage is provided, combines the sepia image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      imageAfterCombining = Factory.combineImage(image, imageAfterCombining,
+      sepiaImage = sepiaImage.combineImages(image,
               request.getPercentage().get());
     }
-    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
+    memory.addImage(request.getDestinationImageName(), sepiaImage);
   }
 
   @Override
@@ -235,8 +242,8 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     memory.addImage(request.getDestinationImageName(),
-            Factory.createCompression(CompressionType.HAAR)
-                    .compress(image, request.getPercentage().orElse(0)));
+            image.compress(CompressionType.HAAR,
+                    request.getPercentage().orElse(0)));
   }
 
   @Override
@@ -244,8 +251,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(),
-            ExtractUtility.createHistogram(image));
+    memory.addImage(request.getDestinationImageName(), image.histogram());
   }
 
   @Override
@@ -253,12 +259,14 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image imageAfterCombining = image.colorCorrect();
+    Image colorCorrect = image.colorCorrect();
+    // If percentage is provided, combines the color correct image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      imageAfterCombining = Factory.combineImage(image, imageAfterCombining,
+      colorCorrect = colorCorrect.combineImages(image,
               request.getPercentage().get());
     }
-    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
+    memory.addImage(request.getDestinationImageName(), colorCorrect);
   }
 
   @Override
@@ -267,17 +275,19 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
-        () -> new ImageProcessorException("Levels not provided")
+            () -> new ImageProcessorException("Levels not provided")
     );
     int black = levels.getBlack();
     int white = levels.getWhite();
     int mid = levels.getMid();
-    Image imageAfterCombining = image.levelsAdjust(black, mid, white);
+    Image levelsAdjust = image.levelsAdjust(black, mid, white);
+    // If percentage is provided, combines the levels adjusted image with the
+    // original image.
     if (request.getPercentage().isPresent()) {
-      imageAfterCombining = Factory.combineImage(image, imageAfterCombining,
+      levelsAdjust = levelsAdjust.combineImages(image,
               request.getPercentage().get());
     }
-    memory.addImage(request.getDestinationImageName(), imageAfterCombining);
+    memory.addImage(request.getDestinationImageName(), levelsAdjust);
   }
 
   /**
