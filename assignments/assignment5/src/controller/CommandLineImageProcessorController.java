@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import services.ImageProcessingService;
+import controller.services.ImageProcessingService;
 import view.input.UserInput;
 import view.output.UserOutput;
 

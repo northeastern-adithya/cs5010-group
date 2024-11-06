@@ -1,6 +1,9 @@
 package model.visual;
 
 
+import exception.ImageProcessorException;
+import model.enumeration.CompressionType;
+import model.enumeration.FilterOption;
 import model.pixels.Pixel;
 
 /**
@@ -25,7 +28,7 @@ public interface Image {
    *               (positive values increase brightness, negative values
    *               decrease brightness)
    * @return the image with the adjusted brightness by creating a new image
-   *         object.
+   * object.
    */
   Image adjustImageBrightness(int factor);
 
@@ -49,7 +52,7 @@ public interface Image {
    * Creates a new image with the red component of the pixels.
    *
    * @return the image with the red component of the pixels by creating a new
-   *         image object.
+   * image object.
    */
   Image createRedComponent();
 
@@ -57,7 +60,7 @@ public interface Image {
    * Creates a new image with the green component of the pixels.
    *
    * @return the image with the green component of the pixels by creating a
-   *         new image object.
+   * new image object.
    */
   Image createGreenComponent();
 
@@ -65,7 +68,7 @@ public interface Image {
    * Creates a new image with the blue component of the pixels.
    *
    * @return the image with the blue component of the pixels by creating a
-   *         new image object.
+   * new image object.
    */
   Image createBlueComponent();
 
@@ -107,7 +110,7 @@ public interface Image {
    * Returns a new image with the horizontal flip of the original image.
    *
    * @return the image with the horizontal flip of the original image
-   *         by creating a new image object.
+   * by creating a new image object.
    */
   Image horizontalFlip();
 
@@ -115,9 +118,19 @@ public interface Image {
    * Returns a new image with the vertical flip of the original image.
    *
    * @return the image with the vertical flip of the original image by
-   *         creating a new image object.
+   * creating a new image object.
    */
   Image verticalFlip();
+
+
+  /**
+   * Returns a new image with the filter applied to the original image.
+   *
+   * @param filterOption the filter to apply to the image
+   * @return the image with the filter applied to the original image by
+   * creating a new image object.
+   */
+  Image applyFilter(FilterOption filterOption);
 
 
   /**
@@ -147,6 +160,33 @@ public interface Image {
    * @return the color-corrected image by creating a new image object.
    */
   Image colorCorrect();
+
+  /**
+   * Combines this image with another image provided in param
+   *
+   * @param image      the image to combine with
+   * @param percentage the percentage of the first image(current image) on which
+   *                   the function is called on.
+   * @return the combined image by creating a new image object.
+   */
+  Image combineImages(Image image, int percentage) throws ImageProcessorException;
+
+
+  /**
+   * Compresses the image by the given percentage.
+   *
+   * @param type       the type of compression to apply
+   * @param percentage the percentage to compress the image by
+   * @return the compressed image by creating a new image object.
+   */
+  Image compress(CompressionType type, int percentage) throws ImageProcessorException;
+
+  /**
+   * Creates a histogram image from the current image.
+   *
+   * @return a new Image representing the histogram of the current image
+   */
+  Image histogram();
 
   /**
    * Adjusts the levels of the image.

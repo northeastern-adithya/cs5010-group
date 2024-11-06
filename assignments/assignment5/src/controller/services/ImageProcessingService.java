@@ -1,4 +1,4 @@
-package services;
+package controller.services;
 
 import exception.ImageProcessorException;
 import model.request.ImageProcessingRequest;

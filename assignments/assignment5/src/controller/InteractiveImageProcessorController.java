@@ -15,7 +15,7 @@ import exception.ImageProcessorException;
 import factories.Factory;
 import model.enumeration.UserCommand;
 import model.request.ImageProcessingRequest;
-import services.ImageProcessingService;
+import controller.services.ImageProcessingService;
 import utility.StringUtils;
 import view.input.UserInput;
 import view.output.UserOutput;

@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
 
+import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.CompressionType;
+import model.enumeration.FilterOption;
 import model.pixels.Pixel;
 import model.pixels.RGB;
 import utility.ExtractUtility;
+import utility.FilterUtils;
 
 /**
  * RenderedImage class that implements Image interface
@@ -128,6 +132,11 @@ public class RenderedImage implements Image {
   }
 
   @Override
+  public Image applyFilter(FilterOption filterOption) {
+    return FilterUtils.applyFilter(this, filterOption);
+  }
+
+  @Override
   public int[][] getRedChannel() {
     return getChannel(Pixel::getRed);
   }
@@ -204,9 +213,12 @@ public class RenderedImage implements Image {
     int width = getWidth();
     int height = getHeight();
 
-    int[] redFreq = ExtractUtility.calculateColorFrequencies(this, Pixel::getRed);
-    int[] greenFreq =  ExtractUtility.calculateColorFrequencies(this, Pixel::getGreen);
-    int[] blueFreq = ExtractUtility.calculateColorFrequencies(this, Pixel::getBlue);
+    int[] redFreq = ExtractUtility.calculateColorFrequencies(this,
+            Pixel::getRed);
+    int[] greenFreq = ExtractUtility.calculateColorFrequencies(this,
+            Pixel::getGreen);
+    int[] blueFreq = ExtractUtility.calculateColorFrequencies(this,
+            Pixel::getBlue);
 
     int redPeak = findMeaningfulPeak(redFreq);
     int greenPeak = findMeaningfulPeak(greenFreq);
@@ -255,15 +267,17 @@ public class RenderedImage implements Image {
   }
 
   /**
-   * Adjusts the levels of the image using the specified black, mid, and white points.
+   * Adjusts the levels of the image using the specified black, mid, and
+   * white points.
    * Quadratic Transformation used
    * <a href="https://northeastern.instructure.com/courses/192553/assignments/2490204">...</a>
    *
    * @param black the black point value (0-255)
-   * @param mid the mid point value (0-255)
+   * @param mid   the mid point value (0-255)
    * @param white the white point value (0-255)
    * @return a new Image with adjusted levels
-   * @throws IllegalArgumentException if any of the values are out of range (0-255)
+   * @throws IllegalArgumentException if any of the values are out of range
+   *                                  (0-255)
    *                                  or not in ascending order
    */
   @Override
@@ -286,11 +300,36 @@ public class RenderedImage implements Image {
     for (int column = 0; column < width; column++) {
       for (int row = 0; row < height; row++) {
         adjustedPixels[row][column] = this.getPixel(row, column)
-                                          .quadraticTransform(coeffA, coeffB, coeffC);
+                .quadraticTransform(coeffA, coeffB, coeffC);
       }
     }
 
     return Factory.createImage(adjustedPixels);
+  }
+
+  /**
+   * Combines this image with another image provided in param
+   *
+   * @param image      the image to combine with
+   * @param percentage the percentage of the first image(current image on which
+   *                   the function is called on.
+   * @return the combined image by creating a new image object.
+   */
+  @Override
+  public Image combineImages(Image image, int percentage) throws ImageProcessorException {
+    return Factory.combineImage(this, image, percentage);
+  }
+
+  @Override
+  public Image compress(CompressionType type, int percentage) throws ImageProcessorException {
+    return Factory.createCompression(type).compress(
+            this, percentage
+    );
+  }
+
+  @Override
+  public Image histogram() {
+    return ExtractUtility.createHistogram(this);
   }
 
   /**
@@ -299,7 +338,8 @@ public class RenderedImage implements Image {
    * @param black the black point value
    * @param mid   the mid point value
    * @param white the white point value
-   * @throws IllegalArgumentException if any of the values are out of range (0-255)
+   * @throws IllegalArgumentException if any of the values are out of range
+   *                                  (0-255)
    *                                  or not in ascending order
    */
   private void validateLevels(int black, int mid, int white)
