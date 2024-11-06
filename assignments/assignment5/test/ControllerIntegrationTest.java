@@ -2533,6 +2533,72 @@ public class ControllerIntegrationTest {
   }
 
   @Test
+  public void testLevelsAdjustmentWithInvalidBlackValues() {
+    try {
+      StringBuilder output = new StringBuilder();
+      Image inputImage = Factory.createImage(
+              new Pixel[][]{{Factory.createRGBPixel(0,0,0)}}
+      );
+
+      initialiseController(
+              String.format("levels-adjust invalid_input 120 255 %s " +
+                              "levels-adjusted-input-image",
+                      INITIAL_IMAGE_NAME),
+              output,
+              inputImage);
+
+      controller.processCommands();
+      assertTrue(output.toString().contains("Invalid levels provided."));
+    } catch (Exception e) {
+      fail("Unexpected exception: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testLevelsAdjustmentWithInvalidMidValues() {
+    try {
+      StringBuilder output = new StringBuilder();
+      Image inputImage = Factory.createImage(
+              new Pixel[][]{{Factory.createRGBPixel(0,0,0)}}
+      );
+
+      initialiseController(
+              String.format("levels-adjust 10 invalid_value 255 %s " +
+                              "levels-adjusted-input-image",
+                      INITIAL_IMAGE_NAME),
+              output,
+              inputImage);
+
+      controller.processCommands();
+      assertTrue(output.toString().contains("Invalid levels provided."));
+    } catch (Exception e) {
+      fail("Unexpected exception: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testLevelsAdjustmentWithInvalidValues() {
+    try {
+      StringBuilder output = new StringBuilder();
+      Image inputImage = Factory.createImage(
+              new Pixel[][]{{Factory.createRGBPixel(0,0,0)}}
+      );
+
+      initialiseController(
+              String.format("levels-adjust 10 120 invalid_value %s " +
+                              "levels-adjusted-input-image",
+                      INITIAL_IMAGE_NAME),
+              output,
+              inputImage);
+
+      controller.processCommands();
+      assertTrue(output.toString().contains("Invalid levels provided."));
+    } catch (Exception e) {
+      fail("Unexpected exception: " + e.getMessage());
+    }
+  }
+
+  @Test
   public void testBlurWithInvalidOptionalParameter() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();

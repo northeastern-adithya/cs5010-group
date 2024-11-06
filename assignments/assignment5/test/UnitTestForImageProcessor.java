@@ -25,6 +25,7 @@ import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
 import services.FileImageProcessingService;
 import services.ImageProcessingService;
+import utility.ExtractUtility;
 import utility.FilterUtils;
 import model.enumeration.ImageType;
 import model.enumeration.LinearColorTransformationType;
@@ -35,6 +36,7 @@ import model.pixels.Pixel;
 import model.pixels.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
+import utility.IOUtils;
 import view.input.ConsoleInput;
 import view.input.UserInput;
 import view.output.ConsoleOutput;
@@ -52,7 +54,6 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(Enclosed.class)
 public class UnitTestForImageProcessor {
-
 
   /**
    * Contains all the unit tests for the Display Exception.
@@ -208,6 +209,23 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
+    public void testColorCorrect() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(100, 101, 102);
+      pixels[0][1] = new RGB(150, 151, 152);
+      pixels[1][0] = new RGB(200, 201, 202);
+      pixels[1][1] = new RGB(250, 251, 252);
+
+      Image image = new RenderedImage(pixels);
+      Image colorCorrectedImage = image.colorCorrect();
+
+      assertEquals(new RGB(101, 101, 101), colorCorrectedImage.getPixel(0, 0));
+      assertEquals(new RGB(151, 151, 151), colorCorrectedImage.getPixel(0, 1));
+      assertEquals(new RGB(201, 201, 201), colorCorrectedImage.getPixel(1, 0));
+      assertEquals(new RGB(251, 251, 251), colorCorrectedImage.getPixel(1, 1));
+    }
+
+    @Test
     public void testColorCorrectPreservesNaturalGrey() {
       Pixel[][] pixels = new Pixel[2][2];
       pixels[0][0] = new RGB(100, 100, 100);
@@ -225,20 +243,29 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
-    public void testColorCorrect() {
-      Pixel[][] pixels = new Pixel[2][2];
-      pixels[0][0] = new RGB(100, 101, 102);
-      pixels[0][1] = new RGB(150, 151, 152);
-      pixels[1][0] = new RGB(200, 201, 202);
-      pixels[1][1] = new RGB(250, 251, 252);
+    public void testColorCorrectIgnoreDistribitionAtEdges() {
+      Pixel[][] pixels = new Pixel[1][3];
+      pixels[0][0] = new RGB(9, 128, 255);
+      pixels[0][1] = new RGB(127,  128, 129);
+      pixels[0][2] = new RGB(9, 128, 255);
 
       Image image = new RenderedImage(pixels);
       Image colorCorrectedImage = image.colorCorrect();
 
-      assertEquals(new RGB(101, 101, 101), colorCorrectedImage.getPixel(0, 0));
-      assertEquals(new RGB(151, 151, 151), colorCorrectedImage.getPixel(0, 1));
-      assertEquals(new RGB(201, 201, 201), colorCorrectedImage.getPixel(1, 0));
-      assertEquals(new RGB(251, 251, 251), colorCorrectedImage.getPixel(1, 1));
+      assertEquals(new RGB(10, 128, 254), colorCorrectedImage.getPixel(0, 0));
+      assertEquals(new RGB(128, 128, 128), colorCorrectedImage.getPixel(0, 1));
+    }
+
+    @Test
+    public void testColorCorrectWithSinglePixel() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(50, 100, 150);
+
+      Image testImage = new RenderedImage(pixels);
+      Image result = testImage.colorCorrect();
+
+      Pixel pixel = result.getPixel(0, 0);
+      assertEquals(new RGB(100, 100, 100) ,result.getPixel(0, 0));
     }
 
     @Test
@@ -273,6 +300,139 @@ public class UnitTestForImageProcessor {
       assertEquals(new RGB(159, 159, 159), levelsAdjustedImage.getPixel(0, 1));
       assertEquals(new RGB(207, 207, 207), levelsAdjustedImage.getPixel(1, 0));
       assertEquals(new RGB(251, 251, 251), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testLevelsAdjustCurve_ClampingAT0() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(10, 10, 10);
+      pixels[0][1] = new RGB(255, 255, 255);
+      pixels[1][0] = new RGB(20, 20, 20);
+      pixels[1][1] = new RGB(128, 128, 128);
+
+      Image image = new RenderedImage(pixels);
+      Image levelsAdjustedImage = image.levelsAdjust(10, 20, 50);
+
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(0, 0));
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(0, 1));
+      assertEquals(new RGB(128, 128, 128), levelsAdjustedImage.getPixel(1, 0));
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testLevelsAdjustCurve_ClampingAT255() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(10, 10, 10);
+      pixels[0][1] = new RGB(210, 210, 210);
+      pixels[1][0] = new RGB(101, 101, 101);
+      pixels[1][1] = new RGB(128, 128, 128);
+
+      Image image = new RenderedImage(pixels);
+      Image levelsAdjustedImage = image.levelsAdjust(100, 200, 210);
+
+      assertEquals(new RGB(255, 255, 255), levelsAdjustedImage.getPixel(0, 0));
+      assertEquals(new RGB(255, 255, 255), levelsAdjustedImage.getPixel(0, 1));
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(1, 0));
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testLevelsAdjustCurve_AdjacentPoints() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(10, 10, 10);
+      pixels[0][1] = new RGB(210, 210, 210);
+      pixels[1][0] = new RGB(101, 101, 101);
+      pixels[1][1] = new RGB(128, 128, 128);
+
+      Image image = new RenderedImage(pixels);
+      Image levelsAdjustedImage = image.levelsAdjust(128, 129, 130);
+
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(0, 0));
+      assertEquals(new RGB(255, 255, 255), levelsAdjustedImage.getPixel(0, 1));
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(1, 0));
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test
+    public void testLevelsAdjustCurve_CheckIfPointsMatchCurve() {
+      Pixel[][] pixels = new Pixel[2][2];
+      pixels[0][0] = new RGB(10, 10, 10);
+      pixels[0][1] = new RGB(128, 128, 128);
+      pixels[1][0] = new RGB(235, 235, 235);
+      pixels[1][1] = new RGB(255, 255, 255);
+
+      Image image = new RenderedImage(pixels);
+      Image levelsAdjustedImage = image.levelsAdjust(10, 128, 235);
+
+      assertEquals(new RGB(0, 0, 0), levelsAdjustedImage.getPixel(0, 0));
+      assertEquals(new RGB(128, 128, 128), levelsAdjustedImage.getPixel(0, 1));
+      assertEquals(new RGB(255, 255, 255), levelsAdjustedImage.getPixel(1, 0));
+      assertEquals(new RGB(255, 255, 255), levelsAdjustedImage.getPixel(1, 1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_BLessThan0() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(-1, 128, 256);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_BGreaterThan255() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(256, 128, 256);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_MLessThan0() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(10, -1, 255);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_MGreaterThan255() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(10, 256, 255);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_WLessThan0() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(10, 128, -2);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_WGreaterThan255() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(10, 128, 256);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLevelsAdjustCurve_BMWNotInOrder() {
+      Pixel[][] pixels = new Pixel[1][1];
+      pixels[0][0] = new RGB(10, 10, 10);
+      Image image = new RenderedImage(pixels);
+
+      image.levelsAdjust(255, 128, 0);
     }
 
     @Test
@@ -3138,5 +3298,75 @@ public class UnitTestForImageProcessor {
     }
   }
 
+  /**
+   * Test class for Extract Utility.
+   */
+  public static class TestExtractUtility {
 
+    @Test
+    public void testExtractHistogram_SinglePixelImage() {
+      Image image = new RenderedImage(
+              new Pixel[][]{new Pixel[]{new RGB(100, 150, 200)}}
+      );
+      Image histogram = ExtractUtility.createHistogram(image);
+
+      assertEquals(histogram.getPixel(0, 100), new RGB(255, 0, 0));
+      assertEquals(histogram.getPixel(0, 101), new RGB(192, 192, 192));
+
+      assertEquals(histogram.getPixel(0, 150), new RGB(0, 255, 0));
+      assertEquals(histogram.getPixel(0, 151), new RGB(192, 192, 192));
+
+      assertEquals(histogram.getPixel(0, 200), new RGB(0, 0, 255));
+    }
+
+    @Test
+    public void testExtractHistogram_2x2Image() {
+      Image image = new RenderedImage(
+              new Pixel[][]{
+                      {new RGB(100, 150, 200), new RGB(50, 100, 150)},
+                      {new RGB(200, 250, 255), new RGB(150, 200, 250)}
+              }
+      );
+      Image histogram = ExtractUtility.createHistogram(image);
+
+      assertEquals(histogram.getPixel(0, 100), new RGB(0, 255, 0));
+      assertEquals(histogram.getPixel(0, 150), new RGB(0, 0, 255));
+      assertEquals(histogram.getPixel(0, 200), new RGB(0, 0, 255));
+      assertEquals(histogram.getPixel(0, 50), new RGB(255, 0, 0));
+      assertEquals(histogram.getPixel(0, 250), new RGB(0, 0, 255));
+      assertEquals(histogram.getPixel(0, 255), new RGB(0, 0, 255));
+    }
+
+    @Test
+    public void testExtractHistogram_2x2Image_samePixel() {
+      Image image = new RenderedImage(
+              new Pixel[][]{
+                      {new RGB(100, 150, 200), new RGB(100, 150, 200)},
+                      {new RGB(100, 150, 200), new RGB(100, 150, 200)}
+              }
+      );
+      Image histogram = ExtractUtility.createHistogram(image);
+
+      assertEquals(histogram.getPixel(0, 100), new RGB(255, 0, 0));
+      assertEquals(histogram.getPixel(0, 150), new RGB(0, 255, 0));
+      assertEquals(histogram.getPixel(0, 200), new RGB(0, 0, 255));
+    }
+
+    @Test
+    public void testExtractHistogram_2x2Image_BlueImage() {
+      Image image = new RenderedImage(
+              new Pixel[][]{
+                      {new RGB(0, 0, 255), new RGB(0, 0, 255)},
+                      {new RGB(0, 0, 255), new RGB(0, 0, 255)}
+              }
+      );
+      Image histogram = ExtractUtility.createHistogram(image);
+
+      assertEquals(histogram.getPixel(0, 255), new RGB(0, 0, 255));
+      assertEquals(histogram.getPixel(0, 0), new RGB(0, 255, 0));
+      for(int i = 0; i < 255; i++) {
+        assertEquals(histogram.getPixel(255, i), new RGB(0, 0, 255));
+      }
+    }
+  }
 }
