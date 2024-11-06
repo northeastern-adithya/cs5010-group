@@ -7,6 +7,7 @@ import java.util.function.Function;
 import factories.Factory;
 import model.pixels.Pixel;
 import model.pixels.RGB;
+import utility.ExtractUtility;
 
 /**
  * RenderedImage class that implements Image interface
@@ -203,18 +204,9 @@ public class RenderedImage implements Image {
     int width = getWidth();
     int height = getHeight();
 
-    int[] redFreq = new int[256];
-    int[] greenFreq = new int[256];
-    int[] blueFreq = new int[256];
-
-    for (int column = 0; column < width; column++) {
-      for (int row = 0; row < height; row++) {
-        Pixel pixel = getPixel(row, column);
-        redFreq[pixel.getRed()]++;
-        greenFreq[pixel.getGreen()]++;
-        blueFreq[pixel.getBlue()]++;
-      }
-    }
+    int[] redFreq = ExtractUtility.calculateColorFrequencies(this, Pixel::getRed);
+    int[] greenFreq =  ExtractUtility.calculateColorFrequencies(this, Pixel::getGreen);
+    int[] blueFreq = ExtractUtility.calculateColorFrequencies(this, Pixel::getBlue);
 
     int redPeak = findMeaningfulPeak(redFreq);
     int greenPeak = findMeaningfulPeak(greenFreq);

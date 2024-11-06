@@ -43,7 +43,7 @@ public class ExtractUtility {
     return Factory.createImage(histogramPixels);
   }
 
-  private static int[] calculateColorFrequencies(Image image, Function<Pixel,
+  public static int[] calculateColorFrequencies(Image image, Function<Pixel,
           Integer> transformation) {
     int[] colorFrequencies = new int[HISTOGRAM_SIZE];
     for (int column = 0; column < image.getWidth(); column++) {
