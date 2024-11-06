@@ -226,6 +226,29 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
+    public void testColorCorrect_RandomDistribution() {
+      Pixel[][] pixels = new Pixel[2][3];
+      pixels[0][0] = new RGB(120, 130, 140);
+      pixels[0][1] = new RGB(150, 160, 170);
+      pixels[0][2] = new RGB(180, 190, 200);
+      pixels[1][0] = new RGB(210, 220, 230);
+      pixels[1][1] = new RGB(240, 250, 255);
+      pixels[1][2] = new RGB(100, 110, 120);
+
+
+
+      Image image = new RenderedImage(pixels);
+      Image colorCorrectedImage = image.colorCorrect();
+
+      assertEquals(new RGB(130, 130, 130), colorCorrectedImage.getPixel(0, 0));
+      assertEquals(new RGB(160, 160, 160), colorCorrectedImage.getPixel(0, 1));
+      assertEquals(new RGB(190, 190, 190), colorCorrectedImage.getPixel(0, 2));
+      assertEquals(new RGB(220, 220, 220), colorCorrectedImage.getPixel(1, 0));
+      assertEquals(new RGB(250, 250, 245), colorCorrectedImage.getPixel(1, 1));
+      assertEquals(new RGB(110, 110, 110), colorCorrectedImage.getPixel(1, 2));
+    }
+
+    @Test
     public void testColorCorrectPreservesNaturalGrey() {
       Pixel[][] pixels = new Pixel[2][2];
       pixels[0][0] = new RGB(100, 100, 100);
