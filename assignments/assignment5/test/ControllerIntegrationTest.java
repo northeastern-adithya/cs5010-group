@@ -2542,8 +2542,8 @@ public class ControllerIntegrationTest {
       );
 
       initialiseController(
-              String.format("levels-adjust invalid_input 120 255 %s " +
-                              "levels-adjusted-input-image",
+              String.format("levels-adjust invalid_input 120 255 %s "
+                              + "levels-adjusted-input-image",
                       INITIAL_IMAGE_NAME),
               output,
               inputImage);
@@ -2564,8 +2564,8 @@ public class ControllerIntegrationTest {
       );
 
       initialiseController(
-              String.format("levels-adjust 10 invalid_value 255 %s " +
-                              "levels-adjusted-input-image",
+              String.format("levels-adjust 10 invalid_value 255 %s "
+                              + "levels-adjusted-input-image",
                       INITIAL_IMAGE_NAME),
               output,
               inputImage);
@@ -2586,8 +2586,8 @@ public class ControllerIntegrationTest {
       );
 
       initialiseController(
-              String.format("levels-adjust 10 120 invalid_value %s " +
-                              "levels-adjusted-input-image",
+              String.format("levels-adjust 10 120 invalid_value %s "
+                              + "levels-adjusted-input-image",
                       INITIAL_IMAGE_NAME),
               output,
               inputImage);

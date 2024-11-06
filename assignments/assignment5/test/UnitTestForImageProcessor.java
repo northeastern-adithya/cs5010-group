@@ -37,7 +37,6 @@ import model.pixels.Pixel;
 import model.pixels.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
-import utility.IOUtils;
 import view.input.ConsoleInput;
 import view.input.UserInput;
 import view.output.ConsoleOutput;
@@ -3168,7 +3167,7 @@ public class UnitTestForImageProcessor {
     public void testSepia() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                      new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage(ImageProcessingRequest.builder().imageName(
@@ -3187,7 +3186,7 @@ public class UnitTestForImageProcessor {
     public void testValueComponent() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                      new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent(ImageProcessingRequest.builder().imageName(
@@ -3284,7 +3283,7 @@ public class UnitTestForImageProcessor {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       String[] args = new String[]{"test_resources/test_valid_script.txt",
-              "invalid command line"};
+          "invalid command line"};
       ImageProcessorApp.main(args);
       assertTrue(outContent.toString().contains("Successfully executed the "
               + "script file."));
@@ -3410,7 +3409,7 @@ public class UnitTestForImageProcessor {
 
       assertEquals(histogram.getPixel(0, 255), new RGB(0, 0, 255));
       assertEquals(histogram.getPixel(0, 0), new RGB(0, 255, 0));
-      for(int i = 0; i < 255; i++) {
+      for (int i = 0; i < 255; i++) {
         assertEquals(histogram.getPixel(255, i), new RGB(0, 0, 255));
       }
     }

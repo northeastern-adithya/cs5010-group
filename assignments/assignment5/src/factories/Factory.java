@@ -45,7 +45,7 @@ public class Factory {
                                                           UserOutput output,
                                                           ImageProcessingService processor,
                                                           ControllerType type) {
-    if(ControllerType.COMMAND_LINE.equals(type)){
+    if (ControllerType.COMMAND_LINE.equals(type)) {
       return new CommandLineImageProcessorController(input, output, processor);
     }
     return new InteractiveImageProcessorController(input, output, processor);
