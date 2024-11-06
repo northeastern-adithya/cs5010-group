@@ -251,26 +251,6 @@ public class HaarCompression implements Compression {
   }
 
   /**
-   * Compresses the given 2D integer array by the given percentage.
-   * Compression is done by first applying the Haar transform to the data,
-   * then removing data less than the threshold value.
-   * Invhaar is then applies on the threshold data to get the compressed data.
-   * Method is package protected for testing this function individually.
-   *
-   * @param data       the data to compress
-   * @param percentage the percentage by which to compress the data
-   * @return the new compressed data
-   */
-  static int[][] compress(int[][] data, int percentage) {
-    // Apply haar transformation.
-    double[][] haarData = haar(toDoubleArray(data));
-    // Remove data less than threshold
-    double[][] thresholdData = computeDataWithThreshold(haarData, percentage);
-    // Convert back to integer data
-    return fromDoubleArray(invhaar(thresholdData));
-  }
-
-  /**
    * Uses the haarData to compute threshold value and then absolute values less
    * than threshold are set to 0.
    *
@@ -381,6 +361,26 @@ public class HaarCompression implements Compression {
       }
     }
     return Factory.createImage(newPixelArray);
+  }
+
+  /**
+   * Compresses the given 2D integer array by the given percentage.
+   * Compression is done by first applying the Haar transform to the data,
+   * then removing data less than the threshold value.
+   * Invhaar is then applies on the threshold data to get the compressed data.
+   * Method is package protected for testing this function individually.
+   *
+   * @param data       the data to compress
+   * @param percentage the percentage by which to compress the data
+   * @return the new compressed data
+   */
+  static int[][] compress(int[][] data, int percentage) {
+    // Apply haar transformation.
+    double[][] haarData = haar(toDoubleArray(data));
+    // Remove data less than threshold
+    double[][] thresholdData = computeDataWithThreshold(haarData, percentage);
+    // Convert back to integer data
+    return fromDoubleArray(invhaar(thresholdData));
   }
 
 }
