@@ -15,11 +15,12 @@ import java.util.Optional;
 
 import controller.ExecutionStatus;
 import controller.ImageProcessorController;
-import controller.SimpleImageProcessorController;
+import controller.InteractiveImageProcessorController;
 import app.ImageProcessorApp;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.ControllerType;
 import model.enumeration.FilterOption;
 import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
@@ -2771,12 +2772,13 @@ public class UnitTestForImageProcessor {
       ImageProcessingService processor = Factory.createImageProcessor(memory);
 
       ImageProcessorController controller =
-              Factory.createController(userInput, userOutput, processor);
+              Factory.createController(userInput, userOutput, processor,
+                      ControllerType.INTERACTIVE);
 
       assertNotNull("Controller should not be null", controller);
       assertTrue("Controller should be instance of "
                       + "SimpleImageProcessorController",
-              controller instanceof SimpleImageProcessorController);
+              controller instanceof InteractiveImageProcessorController);
     }
 
     @Test
@@ -3166,7 +3168,7 @@ public class UnitTestForImageProcessor {
     public void testSepia() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                  new RGB(100, 100, 100)}});
+                      new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.sepiaImage(ImageProcessingRequest.builder().imageName(
@@ -3185,7 +3187,7 @@ public class UnitTestForImageProcessor {
     public void testValueComponent() throws ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                  new RGB(100, 100, 100)}});
+                      new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent(ImageProcessingRequest.builder().imageName(
@@ -3275,7 +3277,28 @@ public class UnitTestForImageProcessor {
       assertTrue(outContent.toString().contains("Successfully executed the "
               + "script file."));
       System.setOut(System.out);
+    }
 
+    @Test
+    public void testMainWithTwoCommandLineArguments() {
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      String[] args = new String[]{"test_resources/test_valid_script.txt",
+              "invalid command line"};
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString().contains("Successfully executed the "
+              + "script file."));
+      System.setOut(System.out);
+    }
+
+    @Test
+    public void testMainWithInvalidCommandLineArguments() {
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      String[] args = new String[]{"invalid command line"};
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString().contains("Error reading script file"));
+      System.setOut(System.out);
     }
   }
 

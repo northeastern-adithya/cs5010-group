@@ -7,7 +7,7 @@ import java.io.StringReader;
 import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import factories.Factory;
-import model.enumeration.UserCommand;
+import model.enumeration.ControllerType;
 import utility.StringUtils;
 
 /**
@@ -26,7 +26,8 @@ public class ImageProcessorApp {
     ImageProcessorController controller = Factory.createController(
             Factory.createUserInput(createReadableFromArgs(args)),
             Factory.createUserOutput(System.out),
-            Factory.createImageProcessor(Factory.getImageMemory())
+            Factory.createImageProcessor(Factory.getImageMemory()),
+            getControllerType(args)
     );
     while (true) {
       try {
@@ -39,31 +40,44 @@ public class ImageProcessorApp {
 
   /**
    * Creates a Readable object from the command line arguments.
-   * If command line arguments are not provided, it reads from the standard
+   * If command line arguments are not provided, it reads from the system
    * input.
-   * File name is expected as the first argument.
+   * If command line is args are provided, it reads from the string provided.
    *
    * @param args The command line arguments.
    * @return a readable object to read inputs from.
    */
   private static Readable createReadableFromArgs(String[] args) {
-    if (args.length == 0 || StringUtils.isNullOrEmpty(args[0])) {
-      return new InputStreamReader(System.in);
+    if (containsCommandLineArgs(args)) {
+      return new StringReader(String.join(" ",args));
     } else {
-      return formRunScriptCommand(args[0]);
+      return new InputStreamReader(System.in);
     }
   }
 
   /**
-   * Forms a command to run a script file.
-   * Has a default input as run fileName quit.
+   * Checks if the command line arguments are provided.
    *
-   * @param fileName The name of the file to run with its location.
-   * @return a readable object to read inputs from.
+   * @param args The command line arguments.
+   * @return true if the command line arguments are provided, false otherwise.
    */
-  private static Readable formRunScriptCommand(String fileName) {
-    return new StringReader(String.format("%s %s %s",
-            UserCommand.RUN.getCommand(),
-            fileName, UserCommand.QUIT.getCommand()));
+  private static boolean containsCommandLineArgs(String[] args) {
+    return args.length > 0 && StringUtils.isNotNullOrEmpty(args[0]);
+  }
+
+  /**
+   * Returns the controller type based on the command line arguments.
+   * If command line arguments are provided, it returns the command line
+   * controller type. Otherwise, it returns the interactive controller type.
+   *
+   * @param args The command line arguments.
+   * @return the controller type.
+   */
+  private static ControllerType getControllerType(String[] args) {
+    if (containsCommandLineArgs(args)) {
+      return ControllerType.COMMAND_LINE;
+    } else {
+      return ControllerType.INTERACTIVE;
+    }
   }
 }

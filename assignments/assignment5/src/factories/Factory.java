@@ -4,10 +4,12 @@ import java.util.Objects;
 
 import compressors.Compression;
 import compressors.HaarCompression;
+import controller.CommandLineImageProcessorController;
 import controller.ImageProcessorController;
-import controller.SimpleImageProcessorController;
+import controller.InteractiveImageProcessorController;
 import exception.ImageProcessorException;
 import model.enumeration.CompressionType;
+import model.enumeration.ControllerType;
 import model.enumeration.PixelType;
 import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
@@ -36,12 +38,17 @@ public class Factory {
    * @param input     The input collector from user.
    * @param output    The output collector from user.
    * @param processor The processor service to perform operations on the image.
+   * @param type      The type of controller to create.
    * @return the controller to control the view and model
    */
   public static ImageProcessorController createController(UserInput input,
                                                           UserOutput output,
-                                                          ImageProcessingService processor) {
-    return new SimpleImageProcessorController(input, output, processor);
+                                                          ImageProcessingService processor,
+                                                          ControllerType type) {
+    if(ControllerType.COMMAND_LINE.equals(type)){
+      return new CommandLineImageProcessorController(input, output, processor);
+    }
+    return new InteractiveImageProcessorController(input, output, processor);
   }
 
 

@@ -13,6 +13,7 @@ import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
+import model.enumeration.ControllerType;
 import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
@@ -70,7 +71,7 @@ public class ControllerIntegrationTest {
     ImageProcessingService processingService =
             Factory.createImageProcessor(imageMemory);
     controller = Factory.createController(userInput, userOutput,
-            processingService);
+            processingService, ControllerType.INTERACTIVE);
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);
   }
 
