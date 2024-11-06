@@ -1,5 +1,4 @@
 import org.junit.AfterClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -8,20 +7,17 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Comparator;
 
 import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.enumeration.ImageType;
 import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import services.ImageProcessingService;
-import utility.IOUtils;
 import view.input.UserInput;
 import view.output.UserOutput;
 
@@ -2152,7 +2148,7 @@ public class ControllerIntegrationTest {
             output,
             null);
     assertThrows(ImageProcessingRunTimeException.QuitException.class,
-            () -> controller.processCommands());
+        () -> controller.processCommands());
 
     assertTrue(output.toString().contains("Error reading script file: "
             + "test_resources/invalid_file.txt"));
@@ -2259,9 +2255,9 @@ public class ControllerIntegrationTest {
     assertTrue(output.toString()
             .contains("Successfully combined the RGB components."));
     Image expectedImage = Factory.createImage(createPixels(new int[][]{
-                    {16711937, 66047},
-                    {130817, 8487297}
-            }
+            {16711937, 66047},
+            {130817, 8487297}
+        }
     ));
     assertEquals(expectedImage, imageMemory.getImage("combinedImage"));
   }
@@ -2476,8 +2472,8 @@ public class ControllerIntegrationTest {
               inputImage);
 
       controller.processCommands();
-      assertTrue(output.toString().contains("Successfully color corrected the" +
-              " image."));
+      assertTrue(output.toString().contains("Successfully color corrected the"
+              + " image."));
 
       Image expectedImage = Factory.createImage(
               new Pixel[][]{
@@ -2487,8 +2483,8 @@ public class ControllerIntegrationTest {
                               Factory.createRGBPixel(251, 251, 251)}
               }
       );
-      assertEquals(expectedImage, imageMemory.getImage("color-corrected-input" +
-              "-image"));
+      assertEquals(expectedImage, imageMemory.getImage("color-corrected-input"
+              + "-image"));
 
     } catch (Exception e) {
       fail("Unexpected exception: " + e.getMessage());
@@ -2509,15 +2505,15 @@ public class ControllerIntegrationTest {
       );
 
       initialiseController(
-              String.format("levels-adjust 10 120 255 %s " +
-                              "levels-adjusted-input-image",
+              String.format("levels-adjust 10 120 255 %s "
+                              + "levels-adjusted-input-image",
                       INITIAL_IMAGE_NAME),
               output,
               inputImage);
 
       controller.processCommands();
-      assertTrue(output.toString().contains("Successfully adjusted the levels" +
-              " of the image to "
+      assertTrue(output.toString().contains("Successfully adjusted the levels"
+              + " of the image to "
               + "black:10, mid:120, white:255."));
 
       Image expectedImage = Factory.createImage(
@@ -2528,8 +2524,8 @@ public class ControllerIntegrationTest {
                               Factory.createRGBPixel(251, 251, 251)}
               }
       );
-      assertEquals(expectedImage, imageMemory.getImage("levels-adjusted-input" +
-              "-image"));
+      assertEquals(expectedImage, imageMemory.getImage("levels-adjusted-input"
+              + "-image"));
 
     } catch (Exception e) {
       fail("Unexpected exception: " + e.getMessage());
@@ -2590,9 +2586,9 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertThrows(
             ImageProcessorException.NotFoundException.class,
-            () -> imageMemory.getImage("blurImage"));
-    assertTrue(output.toString().contains("The percentage must be between 0 " +
-            "and 100"));
+       () -> imageMemory.getImage("blurImage"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
   }
 
   @Test
@@ -2619,9 +2615,9 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertThrows(
             ImageProcessorException.NotFoundException.class,
-            () -> imageMemory.getImage("blurImage"));
-    assertTrue(output.toString().contains("The percentage must be between 0 " +
-            "and 100"));
+        () -> imageMemory.getImage("blurImage"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
   }
 
   @Test
@@ -2703,9 +2699,9 @@ public class ControllerIntegrationTest {
             )
     ), imageMemory.getImage("sharpenImage"));
 
-    assertTrue(output.toString().contains("Successfully sharpened the image" +
-            ".\n" +
-            "Invalid command: invalid"));
+    assertTrue(output.toString().contains("Successfully sharpened the image"
+            + ".\n"
+            + "Invalid command: invalid"));
   }
 
   @Test
@@ -2738,9 +2734,9 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertThrows(
             ImageProcessorException.NotFoundException.class,
-            () -> imageMemory.getImage("sharpenImage"));
-    assertTrue(output.toString().contains("The percentage must be between 0 " +
-            "and 100"));
+          () -> imageMemory.getImage("sharpenImage"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
   }
 
   @Test
@@ -2757,7 +2753,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithGreaterThanHundredPercentageSplitView()
+          throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 101",
@@ -2767,13 +2764,14 @@ public class ControllerIntegrationTest {
     controller.processCommands();
     assertThrows(
             ImageProcessorException.NotFoundException.class,
-            () -> imageMemory.getImage("sharpenImage"));
-    assertTrue(output.toString().contains("The percentage must be between 0 " +
-            "and 100"));
+        () -> imageMemory.getImage("sharpenImage"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
   }
 
   @Test
-  public void testSharpenWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithThirtyPercentageSplitView()
+          throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 30",
