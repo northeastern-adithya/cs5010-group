@@ -18,7 +18,8 @@ import model.pixels.Pixel;
 import model.visual.Image;
 
 /**
- * Utility class for IO operations.
+ * Utility class for reading and writing images.
+ * Provides methods to read and write images from and to files.
  */
 public class IOUtils {
 
