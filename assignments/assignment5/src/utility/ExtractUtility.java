@@ -10,9 +10,15 @@ import model.pixels.Pixel;
 import model.pixels.RGB;
 import model.visual.Image;
 
+/**
+ * Utility class that contains methods to extract information from an image.
+ */
 public class ExtractUtility {
   private static final int HISTOGRAM_SIZE = 256;
 
+  /**
+   * Private constructor to prevent instantiation of this utility class.
+   */
   private ExtractUtility() {
     throw new IllegalStateException("Utility class");
   }
@@ -29,14 +35,16 @@ public class ExtractUtility {
 
     int maxFreq = findMaxFrequency(redFreq, greenFreq, blueFreq);
 
-    BufferedImage histogramImage = createHistogramImage(redFreq, greenFreq, blueFreq, maxFreq);
+    BufferedImage histogramImage = createHistogramImage(redFreq, greenFreq,
+            blueFreq, maxFreq);
 
     Pixel[][] histogramPixels = convertBufferedImageToPixels(histogramImage);
 
     return Factory.createImage(histogramPixels);
   }
 
-  private static int[] calculateColorFrequencies(Image image, Function<Pixel, Integer> transformation) {
+  private static int[] calculateColorFrequencies(Image image, Function<Pixel,
+          Integer> transformation) {
     int[] colorFrequencies = new int[HISTOGRAM_SIZE];
     for (int column = 0; column < image.getWidth(); column++) {
       for (int row = 0; row < image.getHeight(); row++) {
@@ -48,14 +56,16 @@ public class ExtractUtility {
   }
 
   /**
-   * Finds the maximum frequency among the red, green, and blue frequency arrays.
+   * Finds the maximum frequency among the red, green, and blue frequency
+   * arrays.
    *
-   * @param redFreq the frequency array for the red channel
+   * @param redFreq   the frequency array for the red channel
    * @param greenFreq the frequency array for the green channel
-   * @param blueFreq the frequency array for the blue channel
+   * @param blueFreq  the frequency array for the blue channel
    * @return the maximum frequency value among the three channels
    */
-  private static int findMaxFrequency(int[] redFreq, int[] greenFreq, int[] blueFreq) {
+  private static int findMaxFrequency(int[] redFreq, int[] greenFreq,
+                                      int[] blueFreq) {
     int maxFreq = 0;
     for (int i = 0; i < HISTOGRAM_SIZE; i++) {
       maxFreq = Math.max(maxFreq, redFreq[i]);
@@ -68,15 +78,18 @@ public class ExtractUtility {
   /**
    * Creates a histogram image from the red, green, and blue frequency arrays.
    *
-   * @param redFreq the frequency array for the red channel
+   * @param redFreq   the frequency array for the red channel
    * @param greenFreq the frequency array for the green channel
-   * @param blueFreq the frequency array for the blue channel
-   * @param maxFreq the maximum frequency value among the three channels
+   * @param blueFreq  the frequency array for the blue channel
+   * @param maxFreq   the maximum frequency value among the three channels
    * @return a new BufferedImage representing the histogram
    */
-  private static BufferedImage createHistogramImage(int[] redFreq, int[] greenFreq,
-                                             int[] blueFreq, int maxFreq) {
-    BufferedImage histogramImage = new BufferedImage(HISTOGRAM_SIZE, HISTOGRAM_SIZE, BufferedImage.TYPE_INT_RGB);
+  private static BufferedImage createHistogramImage(int[] redFreq,
+                                                    int[] greenFreq,
+                                                    int[] blueFreq,
+                                                    int maxFreq) {
+    BufferedImage histogramImage = new BufferedImage(HISTOGRAM_SIZE,
+            HISTOGRAM_SIZE, BufferedImage.TYPE_INT_RGB);
     Graphics2D g2d = histogramImage.createGraphics();
 
     g2d.setColor(Color.WHITE);
@@ -88,12 +101,12 @@ public class ExtractUtility {
     }
 
     for (int x = 0; x < 255; x++) {
-      int currRedHeight = (int)((redFreq[x] * 255.0) / maxFreq);
-      int nextRedHeight = (int)((redFreq[x + 1] * 255.0) / maxFreq);
-      int currGreenHeight = (int)((greenFreq[x] * 255.0) / maxFreq);
-      int nextGreenHeight = (int)((greenFreq[x + 1] * 255.0) / maxFreq);
-      int currBlueHeight = (int)((blueFreq[x] * 255.0) / maxFreq);
-      int nextBlueHeight = (int)((blueFreq[x + 1] * 255.0) / maxFreq);
+      int currRedHeight = (int) ((redFreq[x] * 255.0) / maxFreq);
+      int nextRedHeight = (int) ((redFreq[x + 1] * 255.0) / maxFreq);
+      int currGreenHeight = (int) ((greenFreq[x] * 255.0) / maxFreq);
+      int nextGreenHeight = (int) ((greenFreq[x + 1] * 255.0) / maxFreq);
+      int currBlueHeight = (int) ((blueFreq[x] * 255.0) / maxFreq);
+      int nextBlueHeight = (int) ((blueFreq[x + 1] * 255.0) / maxFreq);
 
       g2d.setColor(Color.RED);
       g2d.drawLine(x, 255 - currRedHeight, x + 1, 255 - nextRedHeight);

@@ -17,10 +17,9 @@ public class TestHaarCompression {
   public void testPadToSquareMatrix() {
     double[][] matrix = new double[][]{{1, 2}, {3, 4}, {5, 6}};
     double[][] paddedMatrix = HaarCompression.padToSquareMatrix(matrix);
-    double[][] expectedMatrix = new double[][]{{1, 2, 0, 0}, {3, 4, 0, 0}
-            , {5
-            , 6,
-            0, 0}, {0, 0, 0, 0}};
+    double[][] expectedMatrix = new double[][]{
+        {1, 2, 0, 0}, {3, 4, 0, 0},
+        {5, 6, 0, 0}, {0, 0, 0, 0}};
     assertArrayEquals(expectedMatrix, paddedMatrix);
   }
 
@@ -29,13 +28,13 @@ public class TestHaarCompression {
   public void testTransform() {
     double[] row = new double[]{5, 3, 2, 4, 2, 1, 0, 3};
     double[] expectedRowOne = new double[]{5.65685424949238,
-            4.242640687119285, 2.1213203435596424, 2.1213203435596424,
-            1.414213562373095, -1.414213562373095, 0.7071067811865475,
-            -2.1213203435596424};
+        4.242640687119285, 2.1213203435596424, 2.1213203435596424,
+        1.414213562373095, -1.414213562373095, 0.7071067811865475,
+        -2.1213203435596424};
     assertArrayEquals(expectedRowOne, HaarCompression.transform(row, 8),
             0.0001);
     double[] expectedRowTwo = new double[]{6.999999999999998,
-            2.9999999999999996, 0.9999999999999999, 0.0};
+        2.9999999999999996, 0.9999999999999999, 0.0};
     assertArrayEquals(expectedRowTwo,
             HaarCompression.transform(expectedRowOne, 4), 0.0001);
   }
@@ -64,10 +63,10 @@ public class TestHaarCompression {
 
 
   @Test
-  public  void  testCompress(){
+  public void testCompress() {
     int[][] data = new int[][]{{1, 2}, {3, 4}};
-    int[][] expectedData = new int[][]{{1,1},{3,3}};
-    int[][] compressedData = HaarCompression.compress(data,10);
+    int[][] expectedData = new int[][]{{1, 1}, {3, 3}};
+    int[][] compressedData = HaarCompression.compress(data, 10);
     assertArrayEquals(expectedData, compressedData);
   }
 

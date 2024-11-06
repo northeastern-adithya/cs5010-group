@@ -56,7 +56,7 @@ public class ImageProcessorApp {
 
   /**
    * Forms a command to run a script file.
-   * Has a default input as run <fileName> quit.
+   * Has a default input as run fileName quit.
    *
    * @param fileName The name of the file to run with its location.
    * @return a readable object to read inputs from.

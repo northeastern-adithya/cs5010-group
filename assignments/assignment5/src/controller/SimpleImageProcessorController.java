@@ -661,8 +661,8 @@ public class SimpleImageProcessorController implements ImageProcessorController 
                     .destinationImageName(arguments.get(1))
                     .build()
     );
-    return new ExecutionStatus(true, "Successfully created histogram of the " +
-            "image.");
+    return new ExecutionStatus(true, "Successfully created histogram of the "
+            + "image.");
   }
 
   /**
