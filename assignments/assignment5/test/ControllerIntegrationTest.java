@@ -3624,7 +3624,6 @@ public class ControllerIntegrationTest {
             output,
             randomImage);
     controller.processCommands();
-    getImageArray(imageMemory.getImage("compressedImage"));
 
     assertEquals(Factory.createImage(
             createPixels(new int[][]{
@@ -3644,7 +3643,6 @@ public class ControllerIntegrationTest {
     initialiseController(String.format("compress 25 %s compressedImage",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
-    getImageArray(imageMemory.getImage("compressedImage"));
 
     assertEquals(Factory.createImage(
             createPixels(new int[][]{
@@ -3663,7 +3661,6 @@ public class ControllerIntegrationTest {
     initialiseController(String.format("compress 50 %s compressedImage",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
-    getImageArray(imageMemory.getImage("compressedImage"));
 
     assertEquals(Factory.createImage(
             createPixels(new int[][]{
@@ -3682,7 +3679,6 @@ public class ControllerIntegrationTest {
     initialiseController(String.format("compress 75 %s compressedImage",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
-    getImageArray(imageMemory.getImage("compressedImage"));
 
     assertEquals(Factory.createImage(
             createPixels(new int[][]{
@@ -3701,7 +3697,6 @@ public class ControllerIntegrationTest {
     initialiseController(String.format("compress 100 %s compressedImage",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
-    getImageArray(imageMemory.getImage("compressedImage"));
 
     assertEquals(Factory.createImage(
             createPixels(new int[][]{
@@ -3833,34 +3828,65 @@ public class ControllerIntegrationTest {
     }
   }
 
-
   @Test
-  public void testCompression() {
+  public void compressionWithInvalidCommandAfterCompressing() {
     StringBuilder output = new StringBuilder();
-    int compression = 10;
-    initialiseController(
-            String.format("load test_resources/input/random.ppm randomImage "
-                            + "compress %s randomImage compressedImage%s"
-                            + " save test_resources/input/compressedImage%s" +
-                            ".png "
-                            + "compressedImage%s",
-                    compression, compression, compression, compression),
-            output, null);
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("compress 0 %s compressedImage invalid",
+            INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command: invalid"));
   }
 
+  @Test
+  public void compressionWithNegativeCompressionPercentage() {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("compress -1 %s compressedImage",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid compression percentage"));
+  }
 
-  void getImageArray(Image image) {
-    int[][] imageArray = new int[image.getHeight()][image.getWidth()];
-    for (int i = 0; i < image.getHeight(); i++) {
-      for (int j = 0; j < image.getWidth(); j++) {
-        Pixel pixel = image.getPixel(i, j);
-        int pixelVal =
-                (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-        imageArray[i][j] = pixelVal;
-      }
-    }
-    System.out.println(Arrays.deepToString(imageArray));
+  @Test
+  public void compressionWithGreaterThanHundredCompressionPercentage() {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("compress 101 %s compressedImage",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid compression percentage"));
+  }
+
+  @Test
+  public void compressionWithInvalidCompressionPercentage() {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("compress invalid %s compressedImage",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid compression percentage"));
+  }
+
+  @Test
+  public void compressionWithInvalidImageName() {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController("compress 0 invalid compressedImage",
+            output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Image with name invalid not found " +
+            "in memory"));
+  }
+
+  @Test
+  public void testCompressionWithInvalidDestinationName() {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("compress 0 %s",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertTrue(output.toString().contains("Invalid command parameters."));
   }
 
 }

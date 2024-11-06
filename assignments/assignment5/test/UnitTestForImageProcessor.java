@@ -3082,6 +3082,18 @@ public class UnitTestForImageProcessor {
       System.setIn(System.in);
       System.setOut(System.out);
     }
+
+    @Test
+    public void testMainWithCommandLineArguments() {
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      String[] args = new String[]{"test_resources/test_valid_script.txt"};
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString().contains("Successfully executed the "
+              + "script file."));
+      System.setOut(System.out);
+
+    }
   }
 
   /**
