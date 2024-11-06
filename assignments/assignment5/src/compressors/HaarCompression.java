@@ -131,13 +131,13 @@ public class HaarCompression implements Compression {
 
   /**
    * Validates the given percentage for image compression.
-   * Percentage must be between 0 and 100 exclusive.
+   * Percentage must be between 0 and 100 inclusive.
    *
    * @param percentage the percentage to compress the image by
    * @throws ImageProcessorException if the percentage is invalid
    */
   private static void validatePercentage(int percentage) throws ImageProcessorException {
-    if (percentage <= 0 || percentage >= 100) {
+    if (percentage < 0 || percentage > 100) {
       throw new ImageProcessorException("Invalid compression percentage");
     }
   }
@@ -323,6 +323,10 @@ public class HaarCompression implements Compression {
             .toArray();
     int thresholdIndex =
             (int) Math.floor((double) (sortedData.length * percentage) / 100);
+    // Returns the last value if the threshold index is greater than the length.
+    if (thresholdIndex >= sortedData.length) {
+      return sortedData[sortedData.length - 1];
+    }
     return sortedData[thresholdIndex];
   }
 

@@ -9,7 +9,6 @@ import exception.ImageProcessingRunTimeException;
 import factories.Factory;
 import model.enumeration.UserCommand;
 import utility.StringUtils;
-import view.input.UserInput;
 
 /**
  * The main class for the Image Processor application.
