@@ -3022,8 +3022,8 @@ public class ControllerIntegrationTest {
                     }
             )
     ), imageMemory.getImage("redComponent"));
-    assertTrue(output.toString().contains("Successfully created red " +
-            "component"));
+    assertTrue(output.toString().contains("Successfully created red "
+            + "component"));
   }
 
   @Test
@@ -3052,8 +3052,8 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(randomImage, imageMemory.getImage("redComponent"));
-    assertTrue(output.toString().contains("Successfully created red " +
-            "component"));
+    assertTrue(output.toString().contains("Successfully created red "
+            + "component"));
   }
 
   @Test
@@ -3089,8 +3089,8 @@ public class ControllerIntegrationTest {
                     }
             )
     ), imageMemory.getImage("redComponent"));
-    assertTrue(output.toString().contains("Successfully created red " +
-            "component"));
+    assertTrue(output.toString().contains("Successfully created red "
+            + "component"));
   }
 
   @Test
@@ -3110,8 +3110,8 @@ public class ControllerIntegrationTest {
                     }
             )
     ), imageMemory.getImage("redComponent"));
-    assertTrue(output.toString().contains("Successfully created red " +
-     "component"));
+    assertTrue(output.toString().contains("Successfully created red "
+            + "component"));
   }
 
   @Test
@@ -3131,8 +3131,130 @@ public class ControllerIntegrationTest {
                     }
             )
     ), imageMemory.getImage("redComponent"));
-    assertTrue(output.toString().contains("Successfully created red " +
-     "component"));
+    assertTrue(output.toString().contains("Successfully created red "
+            + "component"));
+  }
+
+  @Test
+  public void testBlueComponentWithInvalidOptionalParameter() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent " +
+            "invalid", INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    getImageArray(imageMemory.getImage("blueComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {0, 16777215, 0}, {8421504, 0, 16777215}
+    })), imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
+  }
+
+  @Test
+  public void testBlueComponentWithZeroPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent 0",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    getImageArray(imageMemory.getImage("blueComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {0, 16777215, 0}, {8421504, 0, 16777215}
+    })), imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
+  }
+
+  @Test
+  public void testBlueComponentWithNegativePercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent -1",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertThrows(
+            ImageProcessorException.NotFoundException.class,
+            () -> imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
+  }
+
+  @Test
+  public void testBlueComponentWithHundredPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent 100",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    assertEquals(randomImage, imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("Successfully created blue "
+            + "component."));
+  }
+
+  @Test
+  public void testBlueComponentWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent 101",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage("blueComponent");
+    });
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
+  }
+
+  @Test
+  public void testBlueComponentWithThirtyPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent 30",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    getImageArray(imageMemory.getImage("blueComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {0, 16777215, 0}, {8421504, 0, 16777215}
+    })), imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("Successfully created blue " +
+            "component."));
+  }
+
+  @Test
+  public void testBlueComponentWithFiftyPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent 50",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    getImageArray(imageMemory.getImage("blueComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {16711680, 16777215, 0}, {8421504, 0, 16777215}
+    })), imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("Successfully created blue " +
+            "component."));
+  }
+
+  @Test
+  public void testBlueComponentWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("blue-component %s blueComponent 75",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    getImageArray(imageMemory.getImage("blueComponent"));
+    assertEquals(Factory.createImage(createPixels(new int[][]{
+            {16711680, 255, 0}, {8421504, 16711680, 16777215}
+    })), imageMemory.getImage("blueComponent"));
+    assertTrue(output.toString().contains("Successfully created blue " +
+            "component."));
   }
 
 
