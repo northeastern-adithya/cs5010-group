@@ -21,12 +21,12 @@ import view.input.UserInput;
 import view.output.UserOutput;
 
 /**
- * SimpleImageProcessorController class that implements the
+ * InteractiveImageProcessorController class that implements the
  * ImageProcessorController interface and processes the commands entered by
  * the user.
  * It handles communication with user along with controlling the model.
  */
-public class SimpleImageProcessorController implements ImageProcessorController {
+public class InteractiveImageProcessorController implements ImageProcessorController {
 
   /**
    * Comment prefix to ignore the comments in the script file.
@@ -35,7 +35,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
   /**
    * UserInput object to get the user input.
    */
-  private final UserInput userInput;
+  protected final UserInput userInput;
   /**
    * UserOutput object to display the output to the user.
    */
@@ -54,9 +54,9 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @param imageProcessingService ImageProcessingService object.
    * @throws NullPointerException if input, userOutput or imageProcessor is null
    */
-  public SimpleImageProcessorController(UserInput userInput,
-                                        UserOutput userOutput,
-                                        ImageProcessingService imageProcessingService) {
+  public InteractiveImageProcessorController(UserInput userInput,
+                                             UserOutput userOutput,
+                                             ImageProcessingService imageProcessingService) {
     validateInput(userInput, userOutput, imageProcessingService);
     this.userInput = userInput;
     this.userOutput = userOutput;
@@ -520,7 +520,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeRunCommand(Scanner scanner) throws ImageProcessorException {
+  protected ExecutionStatus executeRunCommand(Scanner scanner) throws ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 1);
     String scriptFile = arguments.get(0);
     if (Objects.isNull(scriptFile)) {
@@ -606,7 +606,7 @@ public class SimpleImageProcessorController implements ImageProcessorController 
    *
    * @param message message to be displayed
    */
-  private void displayMessage(String message) {
+  protected void displayMessage(String message) {
     if (StringUtils.isNotNullOrEmpty(message)) {
       this.userOutput.displayMessage(message);
     }
