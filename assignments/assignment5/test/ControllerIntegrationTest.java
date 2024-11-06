@@ -2510,7 +2510,7 @@ public class ControllerIntegrationTest {
 
       initialiseController(
               String.format("levels-adjust 10 120 255 %s " +
-               "levels-adjusted-input-image",
+                              "levels-adjusted-input-image",
                       INITIAL_IMAGE_NAME),
               output,
               inputImage);
@@ -2529,7 +2529,7 @@ public class ControllerIntegrationTest {
               }
       );
       assertEquals(expectedImage, imageMemory.getImage("levels-adjusted-input" +
-       "-image"));
+              "-image"));
 
     } catch (Exception e) {
       fail("Unexpected exception: " + e.getMessage());
@@ -2540,10 +2540,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithInvalidOptionalParameter() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage invalid",
+    initialiseController(String.format("blur %s blurImage invalid",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2556,8 +2554,8 @@ public class ControllerIntegrationTest {
             )
     ), imageMemory.getImage("blurImage"));
 
-    assertTrue(output.toString().contains("Successfully blurred the image.\n" +
-            "Invalid command: invalid"));
+    assertTrue(output.toString().contains("Successfully blurred the image.\n"
+            + "Invalid command: invalid"));
 
 
   }
@@ -2566,10 +2564,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithZeroPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage 0",
+    initialiseController(String.format("blur %s blurImage 0",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
     assertEquals(Factory.createImage(
@@ -2587,10 +2583,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithNegativePercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage -1",
+    initialiseController(String.format("blur %s blurImage -1",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2605,10 +2599,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage 100",
+    initialiseController(String.format("blur %s blurImage 100",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2620,10 +2612,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage 101",
+    initialiseController(String.format("blur %s blurImage 101",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2638,10 +2628,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithThirtyPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage 30",
+    initialiseController(String.format("blur %s blurImage 30",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2660,10 +2648,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithFiftyPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage 50",
+    initialiseController(String.format("blur %s blurImage 50",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2682,10 +2668,8 @@ public class ControllerIntegrationTest {
   public void testBlurWithSeventyFivePercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "blur " +
-                    INITIAL_IMAGE_NAME +
-                    " blurImage 75",
+    initialiseController(String.format("blur %s blurImage 75",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2705,14 +2689,11 @@ public class ControllerIntegrationTest {
   public void testSharpenWithInvalidOptionalParameter() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage invalid",
+    initialiseController(String.format("sharpen %s sharpenImage invalid",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sharpenImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2723,7 +2704,7 @@ public class ControllerIntegrationTest {
     ), imageMemory.getImage("sharpenImage"));
 
     assertTrue(output.toString().contains("Successfully sharpened the image" +
-     ".\n" +
+            ".\n" +
             "Invalid command: invalid"));
   }
 
@@ -2731,13 +2712,10 @@ public class ControllerIntegrationTest {
   public void testSharpenWithZeroPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage 0",
+    initialiseController(String.format("sharpen %s sharpenImage 0",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sharpenImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2753,10 +2731,8 @@ public class ControllerIntegrationTest {
   public void testSharpenWithNegativePercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage -1",
+    initialiseController(String.format("sharpen %s sharpenImage -1",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2771,10 +2747,8 @@ public class ControllerIntegrationTest {
   public void testSharpenWithHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage 100",
+    initialiseController(String.format("sharpen %s sharpenImage 100",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2786,10 +2760,8 @@ public class ControllerIntegrationTest {
   public void testSharpenWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage 101",
+    initialiseController(String.format("sharpen %s sharpenImage 101",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2804,14 +2776,11 @@ public class ControllerIntegrationTest {
   public void testSharpenWithThirtyPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage 30",
+    initialiseController(String.format("sharpen %s sharpenImage 30",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sharpenImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2827,14 +2796,11 @@ public class ControllerIntegrationTest {
   public void testSharpenWithFiftyPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage 50",
+    initialiseController(String.format("sharpen %s sharpenImage 50",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sharpenImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2850,14 +2816,11 @@ public class ControllerIntegrationTest {
   public void testSharpenWithSeventyFivePercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sharpen " +
-                    INITIAL_IMAGE_NAME +
-                    " sharpenImage 75",
+    initialiseController(String.format("sharpen %s sharpenImage 75",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sharpenImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2873,14 +2836,11 @@ public class ControllerIntegrationTest {
   public void testSepiaWithInvalidOptionalParameter() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage invalid",
+    initialiseController(String.format("sepia %s sepiaImage invalid",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sepiaImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2891,7 +2851,7 @@ public class ControllerIntegrationTest {
     ), imageMemory.getImage("sepiaImage"));
 
     assertTrue(output.toString().contains("Successfully converted the image " +
-     "to sepia.\n" +
+            "to sepia.\n" +
             "Invalid command: invalid"));
   }
 
@@ -2899,13 +2859,10 @@ public class ControllerIntegrationTest {
   public void testSepiaWithZeroPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage 0",
+    initialiseController(String.format("sepia %s sepiaImage 0",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sepiaImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2915,17 +2872,15 @@ public class ControllerIntegrationTest {
             )
     ), imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("Successfully converted the image " +
-     "to sepia."));
+            "to sepia."));
   }
 
   @Test
   public void testSepiaWithNegativePercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage -1",
+    initialiseController(String.format("sepia %s sepiaImage -1",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2933,33 +2888,29 @@ public class ControllerIntegrationTest {
             ImageProcessorException.NotFoundException.class,
             () -> imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("The percentage must be between 0 " +
-     "and 100"));
+            "and 100"));
   }
 
   @Test
   public void testSepiaWithHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage 100",
+    initialiseController(String.format("sepia %s sepiaImage 100",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
     assertEquals(randomImage, imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("Successfully converted the image " +
-     "to sepia."));
+            "to sepia."));
   }
 
   @Test
   public void testSepiaWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage 101",
+    initialiseController(String.format("sepia %s sepiaImage 101",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
@@ -2967,21 +2918,18 @@ public class ControllerIntegrationTest {
             ImageProcessorException.NotFoundException.class,
             () -> imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("The percentage must be between 0 " +
-     "and 100"));
+            "and 100"));
   }
 
   @Test
   public void testSepiaWithThirtyPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage 30",
+    initialiseController(String.format("sepia %s sepiaImage 30",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sepiaImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -2991,21 +2939,18 @@ public class ControllerIntegrationTest {
             )
     ), imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("Successfully converted the image " +
-     "to sepia."));
+            "to sepia."));
   }
 
   @Test
   public void testSepiaWithFiftyPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage 50",
+    initialiseController(String.format("sepia %s sepiaImage 50",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sepiaImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -3015,21 +2960,18 @@ public class ControllerIntegrationTest {
             )
     ), imageMemory.getImage("sepiaImage"));
     assertTrue(output.toString().contains("Successfully converted the image " +
-     "to sepia."));
+            "to sepia."));
   }
 
   @Test
   public void testSepiaWithSeventyFivePercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(
-            "sepia " +
-                    INITIAL_IMAGE_NAME +
-                    " sepiaImage 75",
+    initialiseController(String.format("sepia %s sepiaImage 75",
+                    INITIAL_IMAGE_NAME),
             output, randomImage);
 
     controller.processCommands();
-    getArrayFromImage(imageMemory.getImage("sepiaImage"));
     assertEquals(Factory.createImage(
             createPixels(
                     new int[][]{
@@ -3038,18 +2980,169 @@ public class ControllerIntegrationTest {
                     }
             )
     ), imageMemory.getImage("sepiaImage"));
-    assertTrue(output.toString().contains("Successfully converted the image " +
-     "to sepia."));
+    assertTrue(output.toString().contains("Successfully converted the image "
+            + "to sepia."));
+  }
+
+  @Test
+  public void testRedComponentWithInvalidOptionalParameter() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent invalid",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16777215, 0, 0},
+                            {8421504, 16777215, 0}
+                    }
+            )
+    ), imageMemory.getImage("redComponent"));
+
+    assertTrue(output.toString().contains("Successfully created red component"
+            + ".\nInvalid command: invalid"));
+  }
+
+  @Test
+  public void testRedComponentWithZeroPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent 0",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16777215, 0, 0},
+                            {8421504, 16777215, 0}
+                    }
+            )
+    ), imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("Successfully created red " +
+            "component"));
+  }
+
+  @Test
+  public void testRedComponentWithNegativePercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent -1",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertThrows(
+            ImageProcessorException.NotFoundException.class,
+            () -> imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
+  }
+
+  @Test
+  public void testRedComponentWithHundredPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent 100",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertEquals(randomImage, imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("Successfully created red " +
+            "component"));
+  }
+
+  @Test
+  public void testRedComponentWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent 101",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertThrows(
+            ImageProcessorException.NotFoundException.class,
+            () -> imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("The percentage must be between 0 "
+            + "and 100"));
+  }
+
+  @Test
+  public void testRedComponentWithThirtyPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent 30",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16777215, 0, 0},
+                            {8421504, 16777215, 0}
+                    }
+            )
+    ), imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("Successfully created red " +
+            "component"));
+  }
+
+  @Test
+  public void testRedComponentWithFiftyPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent 50",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16711680, 0, 0},
+                            {8421504, 16777215, 0}
+                    }
+            )
+    ), imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("Successfully created red " +
+     "component"));
+  }
+
+  @Test
+  public void testRedComponentWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = randomRectangleImage();
+    initialiseController(String.format("red-component %s redComponent 75",
+                    INITIAL_IMAGE_NAME),
+            output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(
+            createPixels(
+                    new int[][]{
+                            {16711680, 255, 0},
+                            {8421504, 16711680, 0}
+                    }
+            )
+    ), imageMemory.getImage("redComponent"));
+    assertTrue(output.toString().contains("Successfully created red " +
+     "component"));
   }
 
 
-  void getArrayFromImage(Image image) {
+  void getImageArray(Image image) {
     int[][] imageArray = new int[image.getHeight()][image.getWidth()];
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
         Pixel pixel = image.getPixel(i, j);
         int pixelVal =
-         (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
+                (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
         imageArray[i][j] = pixelVal;
       }
     }
