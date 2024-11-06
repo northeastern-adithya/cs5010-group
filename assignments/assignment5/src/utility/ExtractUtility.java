@@ -100,24 +100,29 @@ public class ExtractUtility {
       g2d.drawLine(0, i, 256, i);
     }
 
-    for (int x = 0; x < 255; x++) {
-      int currRedHeight = (int) ((redFreq[x] * 255.0) / maxFreq);
-      int nextRedHeight = (int) ((redFreq[x + 1] * 255.0) / maxFreq);
-      int currGreenHeight = (int) ((greenFreq[x] * 255.0) / maxFreq);
-      int nextGreenHeight = (int) ((greenFreq[x + 1] * 255.0) / maxFreq);
-      int currBlueHeight = (int) ((blueFreq[x] * 255.0) / maxFreq);
-      int nextBlueHeight = (int) ((blueFreq[x + 1] * 255.0) / maxFreq);
-
-      g2d.setColor(Color.RED);
-      g2d.drawLine(x, 255 - currRedHeight, x + 1, 255 - nextRedHeight);
-      g2d.setColor(Color.GREEN);
-      g2d.drawLine(x, 255 - currGreenHeight, x + 1, 255 - nextGreenHeight);
-      g2d.setColor(Color.BLUE);
-      g2d.drawLine(x, 255 - currBlueHeight, x + 1, 255 - nextBlueHeight);
-    }
+    drawHistogramLine(g2d, Color.RED, redFreq, maxFreq);
+    drawHistogramLine(g2d, Color.GREEN, greenFreq, maxFreq);
+    drawHistogramLine(g2d, Color.BLUE, blueFreq, maxFreq);
 
     g2d.dispose();
     return histogramImage;
+  }
+
+  /**
+   * Draws a histogram line for a specific color channel.
+   *
+   * @param g2d the Graphics2D object used for drawing
+   * @param color the color of the histogram line
+   * @param freq the frequency array for the color channel
+   * @param maxFreq the maximum frequency value among the three channels
+   */
+  private static void drawHistogramLine(Graphics2D g2d, Color color, int[] freq, int maxFreq) {
+    g2d.setColor(color);
+    for (int x = 0; x < 255; x++) {
+      int currHeight = (int) ((freq[x] * (HISTOGRAM_SIZE - 1f)) / maxFreq);
+      int nextHeight = (int) ((freq[x + 1] * (HISTOGRAM_SIZE - 1f)) / maxFreq);
+      g2d.drawLine(x, HISTOGRAM_SIZE - 1 - currHeight, x + 1, HISTOGRAM_SIZE - 1 - nextHeight);
+    }
   }
 
   /**
