@@ -9,7 +9,7 @@ import controller.ImageProcessorController;
 import controller.InteractiveImageProcessorController;
 import exception.ImageProcessorException;
 import model.enumeration.CompressionType;
-import model.enumeration.ControllerType;
+import controller.ControllerType;
 import model.enumeration.PixelType;
 import model.memory.HashMapMemory;
 import model.memory.ImageMemory;

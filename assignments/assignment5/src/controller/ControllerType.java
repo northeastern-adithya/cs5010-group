@@ -1,4 +1,4 @@
-package model.enumeration;
+package controller;
 
 /**
  * Enumeration representing the types of controllers.

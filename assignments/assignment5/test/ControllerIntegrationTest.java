@@ -13,7 +13,7 @@ import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.enumeration.ControllerType;
+import controller.ControllerType;
 import model.enumeration.PixelType;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;

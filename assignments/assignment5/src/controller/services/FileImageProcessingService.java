@@ -10,7 +10,6 @@ import model.enumeration.ImageType;
 import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import utility.ExtractUtility;
 import utility.IOUtils;
 import utility.StringUtils;
 
@@ -275,7 +274,7 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
-            () -> new ImageProcessorException("Levels not provided")
+        () -> new ImageProcessorException("Levels not provided")
     );
     int black = levels.getBlack();
     int white = levels.getWhite();

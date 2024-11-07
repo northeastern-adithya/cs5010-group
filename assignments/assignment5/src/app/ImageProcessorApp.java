@@ -7,7 +7,7 @@ import java.io.StringReader;
 import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import factories.Factory;
-import model.enumeration.ControllerType;
+import controller.ControllerType;
 import utility.StringUtils;
 
 /**

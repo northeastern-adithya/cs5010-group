@@ -28,7 +28,7 @@ public interface Image {
    *               (positive values increase brightness, negative values
    *               decrease brightness)
    * @return the image with the adjusted brightness by creating a new image
-   * object.
+   *         object.
    */
   Image adjustImageBrightness(int factor);
 
@@ -52,7 +52,7 @@ public interface Image {
    * Creates a new image with the red component of the pixels.
    *
    * @return the image with the red component of the pixels by creating a new
-   * image object.
+   *         image object.
    */
   Image createRedComponent();
 
@@ -60,7 +60,7 @@ public interface Image {
    * Creates a new image with the green component of the pixels.
    *
    * @return the image with the green component of the pixels by creating a
-   * new image object.
+   *         new image object.
    */
   Image createGreenComponent();
 
@@ -68,7 +68,7 @@ public interface Image {
    * Creates a new image with the blue component of the pixels.
    *
    * @return the image with the blue component of the pixels by creating a
-   * new image object.
+   *         new image object.
    */
   Image createBlueComponent();
 
@@ -110,7 +110,7 @@ public interface Image {
    * Returns a new image with the horizontal flip of the original image.
    *
    * @return the image with the horizontal flip of the original image
-   * by creating a new image object.
+   *         by creating a new image object.
    */
   Image horizontalFlip();
 
@@ -118,7 +118,7 @@ public interface Image {
    * Returns a new image with the vertical flip of the original image.
    *
    * @return the image with the vertical flip of the original image by
-   * creating a new image object.
+   *         creating a new image object.
    */
   Image verticalFlip();
 
@@ -128,7 +128,7 @@ public interface Image {
    *
    * @param filterOption the filter to apply to the image
    * @return the image with the filter applied to the original image by
-   * creating a new image object.
+   *         creating a new image object.
    */
   Image applyFilter(FilterOption filterOption);
 
