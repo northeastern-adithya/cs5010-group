@@ -4303,7 +4303,8 @@ public class UnitTestForImageProcessor {
         Image image = IOUtils.read("test_resources/input/random.png", ImageType.PNG);
         Image actual = ExtractUtility.createHistogram(image);
 
-        for(int[] res : result) {
+        for (int[] res : result) {
+
           int r = res[0];
           int g = res[1];
           int b = res[2];

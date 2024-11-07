@@ -9,7 +9,7 @@
 - Open the project in an IDE.
 - ### Interactive Mode Using IntelliJ IDEA
   - run `src/app/ImageProcessorApp.java`
-  - execute the command `run sample-script.txt` on the console (If you face any errors while loading the file, make sure the project root is set to current working directory.).
+  - execute the command `run res/sample-script.txt` on the console (If you face any errors while loading the file, make sure the project root is set to current working directory.).
   - The console in the beginning will display the list of commands that can be executed.
   - If the list needs to be viewed again type `help` in the console or refer to [USEME.md](USEME.md).
 - ### Running the application from JAR file
@@ -19,7 +19,7 @@
     - `java -jar res/assignment5.jar`
     - This will open up an interactive console where you can enter commands similar to the interactive mode in IntelliJ IDEA.
   - If you need to directly execute the script file:
-    - `java -jar res/assignment5.jar sample-script.txt`
+    - `java -jar res/assignment5.jar res/sample_script.txt`
     - If you face any errors make sure you are in the project directory and not in res folder.
 - Output images will be saved in `res/` folder.
 - Script image file is in `res/sample_input.png` 

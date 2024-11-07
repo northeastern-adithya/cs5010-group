@@ -69,20 +69,24 @@ intensity-component sample-image sample-image-intensity-component
 save res/image_intensity_component.png sample-image-intensity-component
 
 # 16. Compress the image by 90 and save
-compress 90 sample-image sample-image-compressed
-save res/image_compressed.png sample-image-compressed
+compress 90 sample-image sample-image-compressed_90
+save res/image_compressed_90.png sample-image-compressed_90
 
-# 17. Extract histogram and save
-histogram sample-image sample-image-histogram
-save res/image_histogram.png sample-image-histogram
-
-# 18. Color correct the image and save
+# 17. Color correct the image and save
 color-correct sample-image sample-image-color-corrected
 save res/image_color_corrected.png sample-image-color-corrected
 
-# 19. Level adjust the image and save
+# 18. Level adjust the image and save
 levels-adjust 20 100 255 sample-image sample-image-level-adjusted
-save res/image_level_adjusted.png sample-image-level-adjusted
+save res/image_level_adjusted_mid100.png sample-image-level-adjusted
+
+# 20. Extract histogram and save
+histogram sample-image-compressed_90 sample-image-histogram_compressed
+histogram sample-image-color-corrected sample-image-histogram_color_corrected
+histogram sample-image-level-adjusted sample-image-histogram_level_adjust
+save res/image_histogram_compressed.png sample-image-histogram_compressed
+save res/image_histogram_color_corrected.png sample-image-histogram_color_corrected
+save res/image_histogram_level_adjust.png sample-image-histogram_level_adjust
 
 # 20. Blur the image with 50% split view and save
 blur sample-image sample-image-blurred 50
@@ -96,23 +100,25 @@ save res/image_sharpen_split_50.png sample-image-sharpened
 red-component sample-image sample-image-red-component 50
 save res/image_red_component_split_50.png sample-image-red-component
 
-# 23. Green component with 50% split view and save
-green-component sample-image sample-image-green-component 50
-save res/image_green_component_split_50.png sample-image-green-component
-
-# 24. Blue component with 50% split view and save
-blue-component sample-image sample-image-blue-component 50
-save res/image_blue_component_split_50.png sample-image-blue-component
-
-# 25. Sepia component with 50% split view and save
+# 23. Sepia component with 50% split view and save
 sepia sample-image sample-image-sepia 50
 save res/image_sepia_split_50.png sample-image-sepia
 
-# 26. Color correct the image with 50% split view and save
+# 24. Color correct the image with 50% split view and save
 color-correct sample-image sample-image-color-corrected 50
 save res/image_color_corrected_split_50.png sample-image-color-corrected
 
-# 27. Level adjust the image with 50% split view and save
+# 25. Level adjust the image with 50% split view and save
 levels-adjust 20 100 255 sample-image sample-image-level-adjusted 50
 save res/image_level_adjusted_split_50.png sample-image-level-adjusted
+
+# 26. Compress the image by 50 and save
+compress 50 sample-image sample-image-compressed_50
+save res/image_compressed_50.png sample-image-compressed_50
+
+# 27. Level adjust the image and save
+levels-adjust 20 30 255 sample-image sample-image-level-adjusted
+save res/image_level_adjusted_mid30.png sample-image-level-adjusted
+
+
 
