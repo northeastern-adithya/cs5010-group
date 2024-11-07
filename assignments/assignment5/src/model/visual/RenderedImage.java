@@ -308,7 +308,7 @@ public class RenderedImage implements Image {
   }
 
   /**
-   * Combines this image with another image provided in param
+   * Combines this image with another image provided in the argument.
    *
    * @param image      the image to combine with
    * @param percentage the percentage of the first image(current image on which

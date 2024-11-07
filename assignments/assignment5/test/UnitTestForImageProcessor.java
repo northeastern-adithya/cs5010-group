@@ -20,7 +20,7 @@ import app.ImageProcessorApp;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import model.enumeration.ControllerType;
+import controller.ControllerType;
 import model.enumeration.FilterOption;
 import model.memory.ImageMemory;
 import model.request.ImageProcessingRequest;
