@@ -40,10 +40,16 @@ public class HashMapMemory implements ImageMemory {
   @Override
   public Image getImage(String imageName) throws ImageProcessorException.NotFoundException {
     return Optional.ofNullable(memory.get(imageName)).orElseThrow(
-        () -> new ImageProcessorException.NotFoundException(
-                String.format("Image with name %s not found in memory", imageName)
-        )
+            () -> new ImageProcessorException.NotFoundException(
+                    String.format("Image with name %s not found in memory",
+                            imageName)
+            )
     );
+  }
+
+  @Override
+  public void clearMemory() {
+    memory.clear();
   }
 
   @Override

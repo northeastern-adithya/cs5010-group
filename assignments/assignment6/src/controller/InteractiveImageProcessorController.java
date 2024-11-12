@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -84,8 +85,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    execute(Factory.createUserInput(
-            new StringReader(UserCommand.HELP.getCommand())));
+    userOutput.displayCommands(Arrays.stream(UserCommand.values()).toList());
   }
 
   @Override
@@ -169,6 +169,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
         return executeColorCorrectionCommand(scanner);
       case LEVELS_ADJUST:
         return executeLevelsAdjustCommand(scanner);
+      case CLEAR:
+        return executeClearCommand();
       case HELP:
         return executeHelpCommand();
       case QUIT:
@@ -597,7 +599,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @return ExecutionStatus information of the execution.
    */
   private ExecutionStatus executeHelpCommand() {
-    return new ExecutionStatus(true, UserCommand.getUserCommands());
+    displayCommands();
+    return new ExecutionStatus(true, "");
   }
 
 
@@ -720,5 +723,10 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
     } catch (NumberFormatException e) {
       throw new ImageProcessorException("Invalid levels provided.");
     }
+  }
+
+  private ExecutionStatus executeClearCommand() {
+    imageProcessingService.clearMemory();
+    return new ExecutionStatus(true, "Successfully cleared the memory.");
   }
 }

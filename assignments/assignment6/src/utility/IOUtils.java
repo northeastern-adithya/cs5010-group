@@ -131,26 +131,31 @@ public class IOUtils {
   }
 
 
+  public static BufferedImage toBufferedImage(Image image) {
+    BufferedImage bufferedImage = new BufferedImage(
+            image.getWidth(),
+            image.getHeight(),
+            BufferedImage.TYPE_INT_RGB
+    );
+    int width = image.getWidth();
+    int height = image.getHeight();
+
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        Pixel pixel = image.getPixel(row, col);
+        int rgb =
+                (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
+        bufferedImage.setRGB(col, row, rgb);
+      }
+    }
+    return bufferedImage;
+  }
+
   private static void writeImageUsingImageIO(Image image, String path)
           throws ImageProcessorException {
     try {
       String extension = getExtensionFromPath(path);
-      BufferedImage bufferedImage = new BufferedImage(
-              image.getWidth(),
-              image.getHeight(),
-              BufferedImage.TYPE_INT_RGB
-      );
-      int width = image.getWidth();
-      int height = image.getHeight();
-
-      for (int row = 0; row < height; row++) {
-        for (int col = 0; col < width; col++) {
-          Pixel pixel = image.getPixel(row, col);
-          int rgb =
-                  (pixel.getRed() << 16) | (pixel.getGreen() << 8) | pixel.getBlue();
-          bufferedImage.setRGB(col, row, rgb);
-        }
-      }
+      BufferedImage bufferedImage = toBufferedImage(image);
       File outputFile = new File(path);
       if (!ImageIO.write(bufferedImage, extension, outputFile)) {
         throw new ImageProcessorException(String.format(
@@ -207,6 +212,10 @@ public class IOUtils {
    */
   public static String getExtensionFromPath(String imagePath) {
     return imagePath.substring(imagePath.lastIndexOf('.') + 1);
+  }
+
+  public static String getImageNameFromPath(String imagePath) {
+    return imagePath.substring(imagePath.lastIndexOf('/') + 1);
   }
 
 }

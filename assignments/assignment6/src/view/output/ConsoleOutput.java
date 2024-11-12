@@ -1,9 +1,14 @@
 package view.output;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import exception.ImageProcessingRunTimeException;
+import model.enumeration.UserCommand;
+import model.visual.Image;
 
 /**
  * Represents the output to the user.
@@ -38,5 +43,24 @@ public class ConsoleOutput implements UserOutput {
               String.format("Error displaying message:%s", message), e
       );
     }
+  }
+
+  @Override
+  public void displayCommands(List<UserCommand> commands)
+          throws ImageProcessingRunTimeException.DisplayException {
+    for (UserCommand command : commands) {
+      displayMessage(command.getDescription());
+    }
+  }
+
+  @Override
+  public void addActionListener(ActionListener listener) {
+    // Not needed for console output.
+  }
+
+  @Override
+  public void displayImage(Image image, Image histogram) throws ImageProcessingRunTimeException.DisplayException {
+    throw new ImageProcessingRunTimeException.DisplayException("Displaying "
+            + "image is not supported in console output");
   }
 }

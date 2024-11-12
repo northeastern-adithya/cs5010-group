@@ -41,21 +41,31 @@ public class ImageProcessingRunTimeException extends RuntimeException {
     public DisplayException(String message, Throwable cause) {
       super(message, cause);
     }
-  }
-
-
-  /**
-   * An exception that is thrown when the user wants to quit the program.
-   */
-  public static class QuitException extends ImageProcessingRunTimeException {
 
     /**
-     * Constructs a new QuitException with the given message.
+     * Constructs a new DisplayException with the given message.
      *
-     * @param message the message of this QuitException
+     * @param message the message of this DisplayException
      */
-    public QuitException(String message) {
+    public DisplayException(String message) {
       super(message);
     }
+
   }
-}
+
+
+    /**
+     * An exception that is thrown when the user wants to quit the program.
+     */
+    public static class QuitException extends ImageProcessingRunTimeException {
+
+      /**
+       * Constructs a new QuitException with the given message.
+       *
+       * @param message the message of this QuitException
+       */
+      public QuitException(String message) {
+        super(message);
+      }
+    }
+  }
