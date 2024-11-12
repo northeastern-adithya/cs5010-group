@@ -26,7 +26,7 @@ public class ImageProcessorApp {
   public static void main(String[] args) {
     ImageProcessorController controller = Factory.createController(
             Factory.createUserInput(createReadableFromArgs(args)),
-            Factory.createUserOutput(System.out),
+            Factory.createUserOutput(System.out, ControllerType.GUI),
             Factory.createImageProcessor(Factory.getImageMemory()),
             getControllerType(args)
     );
@@ -50,7 +50,7 @@ public class ImageProcessorApp {
    */
   private static Readable createReadableFromArgs(String[] args) {
     if (containsCommandLineArgs(args)) {
-      return new StringReader(String.join(" ",args));
+      return new StringReader(String.join(" ", args));
     } else {
       return new InputStreamReader(System.in);
     }
@@ -78,7 +78,7 @@ public class ImageProcessorApp {
     if (containsCommandLineArgs(args)) {
       return ControllerType.COMMAND_LINE;
     } else {
-      return ControllerType.INTERACTIVE;
+      return ControllerType.GUI;
     }
   }
 }

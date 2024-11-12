@@ -5,6 +5,7 @@ import java.util.Objects;
 import compressors.Compression;
 import compressors.HaarCompression;
 import controller.CommandLineImageProcessorController;
+import controller.GUIImageProcessorController;
 import controller.ImageProcessorController;
 import controller.InteractiveImageProcessorController;
 import exception.ImageProcessorException;
@@ -22,6 +23,7 @@ import controller.services.ImageProcessingService;
 import view.input.ConsoleInput;
 import view.input.UserInput;
 import view.output.ConsoleOutput;
+import view.output.GUIOutput;
 import view.output.UserOutput;
 
 /**
@@ -47,6 +49,8 @@ public class Factory {
                                                           ControllerType type) {
     if (ControllerType.COMMAND_LINE.equals(type)) {
       return new CommandLineImageProcessorController(input, output, processor);
+    }else if (ControllerType.GUI.equals(type)) {
+      return new GUIImageProcessorController(input, output, processor);
     }
     return new InteractiveImageProcessorController(input, output, processor);
   }
@@ -206,7 +210,11 @@ public class Factory {
    * @param output the output stream to write the user output
    * @return the UserOutput object
    */
-  public static UserOutput createUserOutput(Appendable output) {
+  public static UserOutput createUserOutput(Appendable output,
+                                            ControllerType type) {
+    if(ControllerType.GUI.equals(type)){
+      return new GUIOutput();
+    }
     return new ConsoleOutput(output);
   }
 

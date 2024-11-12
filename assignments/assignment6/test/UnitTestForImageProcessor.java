@@ -2769,7 +2769,7 @@ public class UnitTestForImageProcessor {
     @Test
     public void testCreateController() {
       UserInput userInput = Factory.createUserInput(input);
-      UserOutput userOutput = Factory.createUserOutput(output);
+      UserOutput userOutput = Factory.createUserOutput(output,ControllerType.INTERACTIVE);
       ImageProcessingService processor = Factory.createImageProcessor(memory);
 
       ImageProcessorController controller =
@@ -2890,7 +2890,7 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testCreateUserOutput() {
-      UserOutput userOutput = Factory.createUserOutput(output);
+      UserOutput userOutput = Factory.createUserOutput(output,ControllerType.INTERACTIVE);
 
       assertNotNull("User output should not be null", userOutput);
     }

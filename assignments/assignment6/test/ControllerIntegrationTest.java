@@ -66,7 +66,7 @@ public class ControllerIntegrationTest {
   private void initialiseController(String input, StringBuilder output,
                                     Image initialImage) {
     UserInput userInput = Factory.createUserInput(new StringReader(input));
-    UserOutput userOutput = Factory.createUserOutput(output);
+    UserOutput userOutput = Factory.createUserOutput(output,ControllerType.INTERACTIVE);
     imageMemory = Factory.getImageMemory();
     ImageProcessingService processingService =
             Factory.createImageProcessor(imageMemory);

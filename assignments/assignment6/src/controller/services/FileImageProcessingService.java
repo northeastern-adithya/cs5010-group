@@ -274,7 +274,7 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
-        () -> new ImageProcessorException("Levels not provided")
+            () -> new ImageProcessorException("Levels not provided")
     );
     int black = levels.getBlack();
     int white = levels.getWhite();
@@ -287,6 +287,16 @@ public class FileImageProcessingService implements ImageProcessingService {
               request.getPercentage().get());
     }
     memory.addImage(request.getDestinationImageName(), levelsAdjust);
+  }
+
+  @Override
+  public Image getImage(String imageName) throws ImageProcessorException {
+    return memory.getImage(imageName);
+  }
+
+  @Override
+  public void clearMemory() {
+    memory.clearMemory();
   }
 
   /**

@@ -94,16 +94,21 @@ public enum UserCommand {
           + "another image with the given name."),
   COLOR_CORRECT("color-correct", "color-correct image-name dest-image-name p: "
           + "Color correct the given image and store the result in another "
-          + "image with the given name.P is an optional parameter for split view."),
+          + "image with the given name.P is an optional parameter for split " +
+          "view."),
   LEVELS_ADJUST("levels-adjust", "levels-adjust b m w image-name "
           + "dest-image-name p: "
           + "Adjust the levels of the given image and store the result in "
-          + "another image with the given name.P is an optional parameter for split view."),
+          + "another image with the given name.P is an optional parameter for" +
+          " split view."),
   RUN("run", "run script-file: "
           + "Load and run the script commands in the specified file."),
 
+  CLEAR("clear", "clear: Clear the program's memory."),
+
   QUIT("quit", "quit: Quit the program."),
-  HELP("help", "help: Print this help message."),;
+  HELP("help", "help: Print this help message."),
+  ;
 
   /**
    * Command which the user can give.
@@ -132,16 +137,7 @@ public enum UserCommand {
    */
   public static Optional<UserCommand> getCommand(String command) {
     return Arrays.stream(UserCommand.values()).filter(
-        userCommand -> userCommand.command.equals(command)).findFirst();
-  }
-
-  /**
-   * Gets the command value from command type.
-   *
-   * @return the command value
-   */
-  public String getCommand() {
-    return command;
+            userCommand -> userCommand.command.equals(command)).findFirst();
   }
 
   /**
@@ -156,5 +152,18 @@ public enum UserCommand {
     }
 
     return userCommands.toString();
+  }
+
+  /**
+   * Gets the command value from command type.
+   *
+   * @return the command value
+   */
+  public String getCommand() {
+    return command;
+  }
+
+  public String getDescription() {
+    return description;
   }
 }

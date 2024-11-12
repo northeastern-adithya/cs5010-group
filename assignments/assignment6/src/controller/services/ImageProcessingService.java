@@ -2,6 +2,7 @@ package controller.services;
 
 import exception.ImageProcessorException;
 import model.request.ImageProcessingRequest;
+import model.visual.Image;
 
 /**
  * Service class to help with
@@ -211,4 +212,9 @@ public interface ImageProcessingService {
    * @throws ImageProcessorException if the image cannot have its levels adjusted.
    */
   void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException;
+
+
+  Image getImage(String imageName) throws ImageProcessorException;
+
+  void clearMemory();
 }

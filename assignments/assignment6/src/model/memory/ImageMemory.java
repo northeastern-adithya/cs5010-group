@@ -12,17 +12,22 @@ public interface ImageMemory {
 
   /**
    * Adds an image to the memory.
+   *
    * @param imageName the name of the image
-   * @param image the image to be added
+   * @param image     the image to be added
    */
   void addImage(String imageName, Image image);
 
   /**
    * Retrieves an image from the memory.
+   *
    * @param imageName the name of the image to retrieve
    * @return the image with the given name
-   * @throws ImageProcessorException.NotFoundException if the image with the given name is not found
+   * @throws ImageProcessorException.NotFoundException if the image with the
+   * given name is not found
    */
   Image getImage(String imageName) throws ImageProcessorException.NotFoundException;
+
+  void clearMemory();
 
 }
