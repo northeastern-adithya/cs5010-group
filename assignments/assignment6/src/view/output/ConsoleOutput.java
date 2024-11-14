@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import controller.Features;
 import exception.ImageProcessingRunTimeException;
 import model.enumeration.UserCommand;
 import model.visual.Image;
@@ -54,8 +55,8 @@ public class ConsoleOutput implements UserOutput {
   }
 
   @Override
-  public void addActionListener(ActionListener listener) {
-    // Not needed for console output.
+  public void addFeatures(Features features) {
+    // not required
   }
 
   @Override

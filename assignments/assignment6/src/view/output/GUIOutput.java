@@ -1,112 +1,82 @@
+// GUIOutput.java
 package view.output;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import controller.Features;
+import model.visual.Image;
+import view.components.CommandComponent;
+import javax.swing.*;
 import java.util.List;
 import java.util.Objects;
-
-import javax.swing.*;
-
-import exception.ImageProcessingRunTimeException;
 import model.enumeration.UserCommand;
-import model.visual.Image;
 import utility.IOUtils;
 
 public class GUIOutput extends JFrame implements UserOutput {
-
-  private JPanel mainPanel;
-  private JPanel commandPanel;
-
-  private JPanel imagePanel;
-  private JPanel histogramPanel;
+  private final JPanel mainPanel;
+  private final CommandComponent commandPanel;
+  private final JPanel imagePanel;
+  private final JPanel histogramPanel;
 
   public GUIOutput() {
     super();
     this.setTitle("Image Processing Application");
     this.setSize(600, 900);
-    buildMainPanel();
-    buildCommandPanel();
-    buildImagePanel();
-    buildHistogramPanel();
+
+    // Initialize panels
+    mainPanel = new JPanel();
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+
+    commandPanel = new CommandComponent();
+    imagePanel = new JPanel();
+    imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
+    imagePanel.add(new JLabel("Image: "));
+
+    histogramPanel = new JPanel();
+    histogramPanel.setLayout(new BoxLayout(histogramPanel, BoxLayout.Y_AXIS));
+    histogramPanel.add(new JLabel("Histogram: "));
+
+    // Add scroll panes
+    mainPanel.add(new JScrollPane(commandPanel));
+    mainPanel.add(new JScrollPane(imagePanel));
+    mainPanel.add(new JScrollPane(histogramPanel));
+
     this.add(mainPanel);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     this.setVisible(true);
   }
 
-  private void buildMainPanel() {
-    mainPanel = new JPanel();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-  }
-
-  private void buildCommandPanel() {
-    commandPanel = new JPanel();
-    commandPanel.setLayout(new BoxLayout(commandPanel, BoxLayout.Y_AXIS));
-    commandPanel.add(new JLabel("Commands: "));
-    JScrollPane scrollPane = new JScrollPane(commandPanel);
-    mainPanel.add(scrollPane);
-  }
-
-  private void buildImagePanel() {
-    imagePanel = new JPanel();
-    imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
-    imagePanel.add(new JLabel("Image: "));
-    JScrollPane scrollPane = new JScrollPane(imagePanel);
-    mainPanel.add(scrollPane);
-  }
-
-  private void buildHistogramPanel() {
-    histogramPanel = new JPanel();
-    histogramPanel.setLayout(new BoxLayout(histogramPanel, BoxLayout.Y_AXIS));
-    histogramPanel.add(new JLabel("Histogram: "));
-    JScrollPane scrollPane = new JScrollPane(histogramPanel);
-    mainPanel.add(scrollPane);
-  }
-
   @Override
-  public void displayMessage(String message) throws ImageProcessingRunTimeException.DisplayException {
+  public void displayMessage(String message) {
     JOptionPane.showMessageDialog(this, message, "Error",
             JOptionPane.ERROR_MESSAGE);
   }
 
   @Override
-  public void displayCommands(List<UserCommand> commands) throws ImageProcessingRunTimeException.DisplayException {
+  public void displayCommands(List<UserCommand> commands) {
     commandPanel.removeAll();
     for (UserCommand command : commands) {
-      JButton button = new JButton(command.getCommand());
-      button.setActionCommand(command.getCommand());
-      commandPanel.add(button);
+      commandPanel.addCommandButton(command.getCommand());
     }
     commandPanel.revalidate();
     commandPanel.repaint();
   }
 
   @Override
-  public void addActionListener(ActionListener listener) {
-    for (Component component : commandPanel.getComponents()) {
-      if (component instanceof JButton button) {
-        button.addActionListener(listener);
-      }
-    }
+  public void addFeatures(Features features) {
+    commandPanel.addFeatures(features);
   }
 
   @Override
-  public void displayImage(Image image, Image histogram) throws ImageProcessingRunTimeException.DisplayException {
+  public void displayImage(Image image, Image histogram) {
     displayImageToPanel(imagePanel, image);
     displayImageToPanel(histogramPanel, histogram);
   }
 
   private void displayImageToPanel(JPanel panel, Image image) {
-    if (Objects.isNull(image)) {
-      panel.removeAll();
-      panel.revalidate();
-      panel.repaint();
-      return;
-    }
     panel.removeAll();
-    JLabel imageLabel =
-            new JLabel(new ImageIcon(IOUtils.toBufferedImage(image)));
-    panel.add(imageLabel);
+    if (Objects.nonNull(image)) {
+      JLabel imageLabel = new JLabel(new ImageIcon(IOUtils.toBufferedImage(image)));
+      panel.add(imageLabel);
+    }
     panel.revalidate();
     panel.repaint();
   }

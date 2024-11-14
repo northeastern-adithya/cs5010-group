@@ -49,7 +49,7 @@ public class Factory {
                                                           ControllerType type) {
     if (ControllerType.COMMAND_LINE.equals(type)) {
       return new CommandLineImageProcessorController(input, output, processor);
-    }else if (ControllerType.GUI.equals(type)) {
+    } else if (ControllerType.GUI.equals(type)) {
       return new GUIImageProcessorController(input, output, processor);
     }
     return new InteractiveImageProcessorController(input, output, processor);
@@ -299,6 +299,4 @@ public class Factory {
               + " 100");
     }
   }
-
-
 }

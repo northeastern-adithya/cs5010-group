@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import controller.Features;
 import exception.ImageProcessingRunTimeException;
 import model.enumeration.UserCommand;
 import model.visual.Image;
@@ -28,7 +29,7 @@ public interface UserOutput {
           throws ImageProcessingRunTimeException.DisplayException;
 
 
-  void addActionListener(ActionListener listener);
+  void addFeatures(Features features);
 
   void displayImage(Image image, Image histogram) throws ImageProcessingRunTimeException.DisplayException;
 }

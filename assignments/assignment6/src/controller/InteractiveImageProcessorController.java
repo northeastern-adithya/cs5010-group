@@ -85,7 +85,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    userOutput.displayCommands(Arrays.stream(UserCommand.values()).toList());
+    userOutput.displayCommands(List.of(UserCommand.values()));
   }
 
   @Override

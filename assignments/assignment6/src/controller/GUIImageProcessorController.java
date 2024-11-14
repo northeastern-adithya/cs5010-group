@@ -1,47 +1,33 @@
+// Updated GUIImageProcessorController.java
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import controller.services.ImageProcessingService;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.enumeration.ImageType;
 import model.enumeration.UserCommand;
 import model.request.ImageProcessingRequest;
+import controller.services.ImageProcessingService;
 import model.visual.Image;
-import utility.IOUtils;
-import utility.StringUtils;
 import view.input.UserInput;
 import view.output.UserOutput;
+import utility.IOUtils;
+import utility.StringUtils;
 
-public class GUIImageProcessorController implements ActionListener,
-        ImageProcessorController {
-
+public class GUIImageProcessorController implements ImageProcessorController, Features {
   private final UserInput userInput;
   private final UserOutput userOutput;
   private final ImageProcessingService imageProcessingService;
-
   private String imageToDisplay = null;
 
-  /**
-   * Constructor to initialize the SimpleImageProcessorController.
-   * Initializes and displays the commands to the user.
-   *
-   * @param userInput              input coming from user.
-   * @param userOutput             output to be displayed to user.
-   * @param imageProcessingService ImageProcessingService object.
-   * @throws NullPointerException if input, userOutput or imageProcessor is null
-   */
   public GUIImageProcessorController(UserInput userInput,
                                      UserOutput userOutput,
                                      ImageProcessingService imageProcessingService) {
@@ -58,43 +44,13 @@ public class GUIImageProcessorController implements ActionListener,
                     )
             )
     );
-    this.userOutput.addActionListener(this);
+    this.userOutput.addFeatures(this);
   }
 
   @Override
-  public void actionPerformed(ActionEvent e) {
-    Optional<UserCommand> userCommand =
-            UserCommand.getCommand(e.getActionCommand());
-    if (userCommand.isPresent()) {
-      try {
-        handleUserCommand(userCommand.get());
-      } catch (ImageProcessorException exception) {
-        userOutput.displayMessage(exception.getMessage());
-      }
-    }
-  }
-
-  private void handleUserCommand(UserCommand command) throws ImageProcessorException {
-    switch (command) {
-      case LOAD:
-        handleLoadCommand();
-        break;
-      case SAVE:
-        handleSaveCommand();
-        break;
-      case SEPIA:
-        handleSepiaCommand();
-        break;
-      case CLEAR:
-        handleClearCommand();
-        break;
-    }
-  }
-
-  private void handleLoadCommand() throws ImageProcessorException {
+  public void loadImage() throws ImageProcessorException {
     if (Objects.nonNull(imageToDisplay)) {
-      throw new ImageProcessorException("Save the current image already " +
-              "loaded before loading a new one");
+      throw new ImageProcessorException("Save the current image already loaded before loading a new one");
     }
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showOpenDialog(null);
@@ -109,19 +65,8 @@ public class GUIImageProcessorController implements ActionListener,
     }
   }
 
-  private JFileChooser createFileChooseWithFilter() {
-    JFileChooser fileChooser = new JFileChooser(".");
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Images",
-            ImageType.JPEG.getExtension(),
-            ImageType.PNG.getExtension(),
-            ImageType.PPM.getExtension(),
-            ImageType.JPG.getExtension());
-    fileChooser.setFileFilter(filter);
-    return fileChooser;
-  }
-
-  private void handleSaveCommand() throws ImageProcessorException {
+  @Override
+  public void saveImage() throws ImageProcessorException {
     validateImageToApplyCommand();
     JFileChooser fchooser = createFileChooseWithFilter();
     int returnState = fchooser.showSaveDialog(null);
@@ -133,6 +78,55 @@ public class GUIImageProcessorController implements ActionListener,
               .build());
       updateImageToDisplay(null);
     }
+  }
+
+  @Override
+  public void applySepia() throws ImageProcessorException {
+    validateImageToApplyCommand();
+    showSplitView((percentage, updateImageToDisplay) -> {
+      try {
+        handleSepiaCommand(percentage, updateImageToDisplay);
+      } catch (ImageProcessorException e) {
+        userOutput.displayMessage(e.getMessage());
+      }
+    });
+  }
+
+  @Override
+  public void clearMemory() throws ImageProcessorException {
+    imageProcessingService.clearMemory();
+    updateImageToDisplay(null);
+  }
+
+  private void handleSepiaCommand(Integer percentage,
+                                  boolean updateImageToDisplay) throws ImageProcessorException {
+    String sepiaImageName = createDestinationImageName(imageToDisplay,
+            UserCommand.SEPIA);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(imageToDisplay)
+            .destinationImageName(sepiaImageName)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.sepiaImage(request);
+    if (updateImageToDisplay) {
+      updateImageToDisplay(sepiaImageName);
+    } else {
+      updateViewToDisplay(sepiaImageName);
+    }
+  }
+
+
+
+  private JFileChooser createFileChooseWithFilter() {
+    JFileChooser fileChooser = new JFileChooser(".");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "Images",
+            ImageType.JPEG.getExtension(),
+            ImageType.PNG.getExtension(),
+            ImageType.PPM.getExtension(),
+            ImageType.JPG.getExtension());
+    fileChooser.setFileFilter(filter);
+    return fileChooser;
   }
 
   private void updateViewToDisplay(String imageName) throws ImageProcessorException {
@@ -187,23 +181,6 @@ public class GUIImageProcessorController implements ActionListener,
     });
   }
 
-
-  private void handleSepiaCommand(Integer percentage,
-                                  boolean updateImageToDisplay) throws ImageProcessorException {
-    String sepiaImageName = createDestinationImageName(imageToDisplay,
-            UserCommand.SEPIA);
-    ImageProcessingRequest request = ImageProcessingRequest.builder()
-            .imageName(imageToDisplay)
-            .destinationImageName(sepiaImageName)
-            .percentage(percentage)
-            .build();
-    imageProcessingService.sepiaImage(request);
-    if (updateImageToDisplay) {
-      updateImageToDisplay(sepiaImageName);
-    } else {
-      updateViewToDisplay(sepiaImageName);
-    }
-  }
 
   private void handleClearCommand() throws ImageProcessorException {
     imageProcessingService.clearMemory();
