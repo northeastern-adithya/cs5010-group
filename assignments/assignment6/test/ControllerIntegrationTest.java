@@ -9,18 +9,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 
+
 import controller.ImageProcessorController;
+import controller.InteractiveImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
-import controller.ControllerType;
 import model.enumeration.PixelType;
+import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import controller.services.ImageProcessingService;
-import view.input.UserInput;
-import view.output.UserOutput;
+import view.input.ConsoleInput;
+import view.output.ConsoleOutput;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -36,7 +38,7 @@ public class ControllerIntegrationTest {
 
   private static final String INITIAL_IMAGE_NAME = "initialImage";
   private ImageProcessorController controller;
-  private ImageMemory imageMemory;
+  private ImageMemory<Image> imageMemory;
 
   /**
    * Cleans up output directory after test is run.
@@ -66,14 +68,14 @@ public class ControllerIntegrationTest {
 
   private void initialiseController(String input, StringBuilder output,
                                     Image initialImage) {
-    UserInput userInput = Factory.createUserInput(new StringReader(input));
-    UserOutput userOutput = Factory.createUserOutput(output,
-            ControllerType.INTERACTIVE);
-    imageMemory = Factory.getImageMemory();
+    imageMemory = new HashMapMemory();
     ImageProcessingService processingService =
             Factory.createImageProcessor(imageMemory);
-    controller = Factory.createController(userInput, userOutput,
-            processingService, ControllerType.INTERACTIVE);
+    controller = new InteractiveImageProcessorController(
+            new ConsoleInput(new StringReader(input)),
+            new ConsoleOutput(output),
+            processingService
+    );
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);
   }
 

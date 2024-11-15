@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import factories.Factory;
 import model.enumeration.UserCommand;
 import model.request.ImageProcessingRequest;
 import controller.services.ImageProcessingService;
 import utility.StringUtils;
+import view.input.ConsoleInput;
 import view.input.UserInput;
 import view.output.DisplayMessageType;
 import view.output.UserOutput;
@@ -539,7 +539,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
         if (shouldSkipLine(line)) {
           continue;
         }
-        execute(Factory.createUserInput(new StringReader(line)));
+        execute(new ConsoleInput(new StringReader(line)));
       }
 
     } catch (IOException e) {
