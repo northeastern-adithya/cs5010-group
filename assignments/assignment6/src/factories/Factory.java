@@ -2,17 +2,16 @@ package factories;
 
 import java.util.Objects;
 
+import app.parsers.ArgumentParser;
+import app.parsers.CommandLineArgumentParser;
+import app.parsers.GUIArgumentParser;
+import app.parsers.InteractiveArgumentParser;
 import compressors.Compression;
 import compressors.HaarCompression;
-import controller.CommandLineImageProcessorController;
-import controller.GUIImageProcessorController;
-import controller.ImageProcessorController;
-import controller.InteractiveImageProcessorController;
+import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.enumeration.CompressionType;
-import controller.ControllerType;
 import model.enumeration.PixelType;
-import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.pixels.RGB;
@@ -20,11 +19,7 @@ import model.visual.Image;
 import model.visual.RenderedImage;
 import controller.services.FileImageProcessingService;
 import controller.services.ImageProcessingService;
-import view.input.ConsoleInput;
-import view.input.UserInput;
-import view.output.ConsoleOutput;
-import view.output.GUIOutput;
-import view.output.UserOutput;
+import utility.StringUtils;
 
 /**
  * Factory class to create objects for the Image Processor application.
@@ -34,26 +29,6 @@ public class Factory {
     //Empty private constructor to prevent instantiation.
   }
 
-  /**
-   * Creates an ImageProcessorController to control view and model.
-   *
-   * @param input     The input collector from user.
-   * @param output    The output collector from user.
-   * @param processor The processor service to perform operations on the image.
-   * @param type      The type of controller to create.
-   * @return the controller to control the view and model
-   */
-  public static ImageProcessorController createController(UserInput input,
-                                                          UserOutput output,
-                                                          ImageProcessingService processor,
-                                                          ControllerType type) {
-    if (ControllerType.COMMAND_LINE.equals(type)) {
-      return new CommandLineImageProcessorController(input, output, processor);
-    } else if (ControllerType.GUI.equals(type)) {
-      return new GUIImageProcessorController(output, processor);
-    }
-    return new InteractiveImageProcessorController(input, output, processor);
-  }
 
 
   /**
@@ -63,7 +38,8 @@ public class Factory {
    * @return the image object with the given pixel array
    * @throws ImageProcessorException if the pixel array is null
    */
-  public static Image createImage(Pixel[][] pixels) throws ImageProcessorException {
+  public static Image createImage(Pixel[][] pixels) throws
+          ImageProcessorException {
     return new RenderedImage(pixels);
   }
 
@@ -82,7 +58,8 @@ public class Factory {
   public static Image combineRGBComponents(Image redComponent,
                                            Image greenComponent,
                                            Image blueComponent)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateRGBComponents(redComponent, greenComponent, blueComponent);
     int height = redComponent.getHeight();
     int width = redComponent.getWidth();
@@ -111,7 +88,9 @@ public class Factory {
   private static void validateRGBComponents(Image redComponent,
                                             Image greenComponent,
                                             Image blueComponent)
-          throws ImageProcessorException, NullPointerException {
+          throws
+          ImageProcessorException,
+          NullPointerException {
     Objects.requireNonNull(redComponent, "Red component cannot be null");
     Objects.requireNonNull(greenComponent, "Green component cannot be null");
     Objects.requireNonNull(blueComponent, "Blue component cannot be null");
@@ -122,17 +101,6 @@ public class Factory {
       throw new ImageProcessorException("The RGB components must have the "
               + "same dimensions");
     }
-  }
-
-  /**
-   * Creates an ImageMemory object to store the
-   * images in memory.
-   * Images are stored in memory based on their implementation.
-   *
-   * @return the ImageMemory object
-   */
-  public static ImageMemory<Image> getImageMemory() {
-    return new HashMapMemory();
   }
 
   /**
@@ -156,7 +124,8 @@ public class Factory {
    *                                                         not implemented
    */
   public static Pixel createPixel(int pixel, PixelType type)
-          throws ImageProcessorException.NotImplementedException {
+          throws
+          ImageProcessorException.NotImplementedException {
     if (type == PixelType.RGB) {
       return createRGBPixel(pixel);
     } else {
@@ -192,32 +161,8 @@ public class Factory {
     return new RGB(red, green, blue);
   }
 
-  /**
-   * Creates a UserInput object to read user input.
-   * Inputs are read from the given input stream.
-   *
-   * @param input the readable object to read the user input
-   * @return the UserInput object
-   */
-  public static UserInput createUserInput(Readable input) {
-    return new ConsoleInput(input);
-  }
 
 
-  /**
-   * Creates a UserOutput object to write user output.
-   * Outputs are written to the given output stream.
-   *
-   * @param output the output stream to write the user output
-   * @return the UserOutput object
-   */
-  public static UserOutput createUserOutput(Appendable output,
-                                            ControllerType type) {
-    if (ControllerType.GUI.equals(type)) {
-      return new GUIOutput();
-    }
-    return new ConsoleOutput(output);
-  }
 
   /**
    * Creates a Compression object based on the given type.
@@ -229,7 +174,8 @@ public class Factory {
    *                                                         implemented
    */
   public static Compression createCompression(CompressionType type)
-          throws ImageProcessorException.NotImplementedException {
+          throws
+          ImageProcessorException.NotImplementedException {
 
     if (CompressionType.HAAR.equals(type)) {
       return new HaarCompression();
@@ -252,7 +198,8 @@ public class Factory {
    *                                 dimensions or the percentage is invalid
    */
   public static Image combineImage(Image firstImage, Image secondImage,
-                                   int percentage) throws ImageProcessorException {
+                                   int percentage) throws
+          ImageProcessorException {
     validateImageDimensions(firstImage, secondImage);
     validatePercentage(percentage);
     int height = firstImage.getHeight();
@@ -279,7 +226,8 @@ public class Factory {
    *                                 dimensions
    */
   private static void validateImageDimensions(Image firstImage,
-                                              Image secondImage) throws ImageProcessorException {
+                                              Image secondImage) throws
+          ImageProcessorException {
     if (firstImage.getWidth() != secondImage.getWidth()
             || firstImage.getHeight() != secondImage.getHeight()) {
       throw new ImageProcessorException("The images must have the same "
@@ -294,10 +242,47 @@ public class Factory {
    * @param percentage the percentage to validate
    * @throws ImageProcessorException if the percentage is invalid
    */
-  private static void validatePercentage(int percentage) throws ImageProcessorException {
+  private static void validatePercentage(int percentage) throws
+          ImageProcessorException {
     if (percentage < 0 || percentage > 100) {
       throw new ImageProcessorException("The percentage must be between 0 and"
               + " 100");
     }
+  }
+
+
+  /**
+   * Creates an ArgumentParser object based on the given command line arguments.
+   *
+   * @param args the command line arguments
+   * @return the ArgumentParser object based on the given command line arguments
+   * @throws ImageProcessingRunTimeException.QuitException if there is an error
+   *                                                      creating the parser
+   */
+  public static ArgumentParser getArgumentParser(String[] args) throws
+          ImageProcessingRunTimeException.QuitException {
+    if (containsCommandLineArgs(args)) {
+      String firstArgument = args[0];
+      if (firstArgument.equals("-file")) {
+        return new CommandLineArgumentParser();
+      } else if (firstArgument.equals("-text")) {
+        return new InteractiveArgumentParser();
+      } else {
+        throw new ImageProcessingRunTimeException.QuitException(
+                String.format("Invalid argument provided%s", firstArgument));
+      }
+    } else {
+      return new GUIArgumentParser();
+    }
+  }
+
+  /**
+   * Checks if the command line arguments are provided.
+   *
+   * @param args The command line arguments.
+   * @return true if the command line arguments are provided, false otherwise.
+   */
+  private static boolean containsCommandLineArgs(String[] args) {
+    return args.length > 0 && StringUtils.isNotNullOrEmpty(args[0]);
   }
 }
