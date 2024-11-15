@@ -2,6 +2,7 @@ package utility;
 
 import java.util.Objects;
 
+import exception.ImageProcessorException;
 import factories.Factory;
 import model.enumeration.FilterOption;
 import model.pixels.Pixel;
@@ -27,9 +28,10 @@ public class FilterUtils {
    * @param image        the image to apply the filter to
    * @param filterOption the filter option to apply
    * @return the image with the filter applied
+   * @throws ImageProcessorException if the filter cannot be applied
    */
   public static Image applyFilter(Image image, FilterOption filterOption)
-          throws NullPointerException {
+          throws ImageProcessorException {
     Objects.requireNonNull(image);
     Objects.requireNonNull(filterOption);
     int width = image.getWidth();

@@ -14,5 +14,8 @@ public enum ControllerType {
   COMMAND_LINE,
 
 
+  /**
+   * GUI controller type.
+   */
   GUI;
 }

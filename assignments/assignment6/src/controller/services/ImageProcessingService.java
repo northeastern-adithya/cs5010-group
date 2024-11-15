@@ -209,12 +209,23 @@ public interface ImageProcessingService {
    * @param request the request to adjust the levels of the image.
    *                Contains the name of the image, the destination image,
    *                and the levels to adjust the image by.
-   * @throws ImageProcessorException if the image cannot have its levels adjusted.
+   * @throws ImageProcessorException if the image cannot have its levels
+   *                                 adjusted.
    */
   void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException;
 
 
+  /**
+   * Gets the image from memory using the given name.
+   *
+   * @param imageName the name of the image to get.
+   * @return the image with the given name.
+   * @throws ImageProcessorException if the image cannot be retrieved.
+   */
   Image getImage(String imageName) throws ImageProcessorException;
 
+  /**
+   * Clears the memory present in the service.
+   */
   void clearMemory();
 }

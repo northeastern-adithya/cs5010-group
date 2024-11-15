@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
+import exception.ImageProcessorException;
 import factories.Factory;
 import model.pixels.Pixel;
 import model.pixels.RGB;
@@ -20,15 +21,16 @@ public class ExtractUtility {
    * Private constructor to prevent instantiation of this utility class.
    */
   private ExtractUtility() {
-    throw new IllegalStateException("Utility class");
+    // Private constructor to prevent instantiation
   }
 
   /**
    * Creates a histogram image from the current image.
    *
    * @return a new Image representing the histogram of the current image
+   * @throws ImageProcessorException if the histogram cannot be created
    */
-  public static Image createHistogram(Image image) {
+  public static Image createHistogram(Image image) throws ImageProcessorException {
     int[] redFreq = calculateColorFrequencies(image, Pixel::getRed);
     int[] greenFreq = calculateColorFrequencies(image, Pixel::getGreen);
     int[] blueFreq = calculateColorFrequencies(image, Pixel::getBlue);
@@ -46,7 +48,7 @@ public class ExtractUtility {
   /**
    * Calculates the frequency of a specific color channel in the given image.
    *
-   * @param image the image to analyze
+   * @param image          the image to analyze
    * @param transformation a function that extracts the color value from a pixel
    * @return an array representing the frequency of each color value (0-255)
    */
@@ -119,17 +121,19 @@ public class ExtractUtility {
   /**
    * Draws a histogram line for a specific color channel.
    *
-   * @param g2d the Graphics2D object used for drawing
-   * @param color the color of the histogram line
-   * @param freq the frequency array for the color channel
+   * @param g2d     the Graphics2D object used for drawing
+   * @param color   the color of the histogram line
+   * @param freq    the frequency array for the color channel
    * @param maxFreq the maximum frequency value among the three channels
    */
-  private static void drawHistogramLine(Graphics2D g2d, Color color, int[] freq, int maxFreq) {
+  private static void drawHistogramLine(Graphics2D g2d, Color color,
+                                        int[] freq, int maxFreq) {
     g2d.setColor(color);
     for (int x = 0; x < 255; x++) {
       int currHeight = (int) ((freq[x] * (HISTOGRAM_SIZE - 1f)) / maxFreq);
       int nextHeight = (int) ((freq[x + 1] * (HISTOGRAM_SIZE - 1f)) / maxFreq);
-      g2d.drawLine(x, HISTOGRAM_SIZE - 1 - currHeight, x + 1, HISTOGRAM_SIZE - 1 - nextHeight);
+      g2d.drawLine(x, HISTOGRAM_SIZE - 1 - currHeight, x + 1,
+              HISTOGRAM_SIZE - 1 - nextHeight);
     }
   }
 

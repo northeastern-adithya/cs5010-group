@@ -46,7 +46,8 @@ public class HaarCompression implements Compression {
 
   /**
    * Applies the Haar transform to the given 2D double array
-   * Pads the data to a square matrix, then iteratively applies the Haar transform
+   * Pads the data to a square matrix, then iteratively applies the Haar
+   * transform
    * to rows and columns until the matrix length is reduced to 1.
    *
    * @param data the 2D double array to apply the Haar transform to
@@ -95,7 +96,6 @@ public class HaarCompression implements Compression {
 
   /**
    * Applies the inverse Haar transform to the given 2D double array.
-   * Is package protected for testing this function individually.
    *
    * @param data the 2D double array to apply the inverse Haar transform to
    * @return the new 2D double array with the inverse Haar transform applied
@@ -147,14 +147,13 @@ public class HaarCompression implements Compression {
    * Applies the haar transform by calculating
    * the normalised average and normalised difference of the data.
    * reading two values at a time.
-   * Is package protected for testing this function individually.
    *
    * @param data   the data to apply the transform to
    * @param length the length of the data to apply the transform to
    * @return the transformed data
    */
   private double[] transform(double[] data,
-                            int length) {
+                             int length) {
     double[] transformedData = new double[length];
     int halfLength = length / 2;
     for (int i = 0; i < halfLength; i++) {
@@ -173,7 +172,6 @@ public class HaarCompression implements Compression {
   /**
    * Pads the given 2D double array to a square matrix.
    * Pads to the nearest power of 2 taking the maximum of the row and column.
-   * Is package protected for testing this function individually.
    *
    * @param data the 2D double array to pad
    * @return the new square matrix
@@ -260,7 +258,7 @@ public class HaarCompression implements Compression {
    * @return the data with values greater than threshold value
    */
   private double[][] computeDataWithThreshold(double[][] haarData,
-                                                     int percentage) {
+                                              int percentage) {
     int height = haarData.length;
     int width = haarData[0].length;
     // Get the threshold value
@@ -369,7 +367,6 @@ public class HaarCompression implements Compression {
    * Compression is done by first applying the Haar transform to the data,
    * then removing data less than the threshold value.
    * Invhaar is then applies on the threshold data to get the compressed data.
-   * Method is package protected for testing this function individually.
    *
    * @param data       the data to compress
    * @param percentage the percentage by which to compress the data

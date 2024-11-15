@@ -6,6 +6,7 @@ import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import controller.services.ImageProcessingService;
 import view.input.UserInput;
+import view.output.DisplayMessageType;
 import view.output.UserOutput;
 
 /**
@@ -40,9 +41,10 @@ public class CommandLineImageProcessorController extends InteractiveImageProcess
     try {
       Scanner scanner = new Scanner(userInput.getUserInput());
       executeRunCommand(scanner);
-      displayMessage("Successfully executed the script file.");
+      displayMessage("Successfully executed the script file.",
+              DisplayMessageType.INFO);
     } catch (ImageProcessorException e) {
-      displayMessage(e.getMessage());
+      displayMessage(e.getMessage(), DisplayMessageType.ERROR);
     }
     throw new ImageProcessingRunTimeException.QuitException("Quitting the "
             + "program");

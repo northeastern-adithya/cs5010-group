@@ -1,11 +1,15 @@
-// CommandComponent.java
 package view.components;
 
 import controller.Features;
-import javax.swing.*;
+import model.enumeration.UserCommand;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;*
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A component that maps UI button actions to Features interface methods.
@@ -13,47 +17,66 @@ import java.util.List;
 public class CommandComponent extends JPanel {
   private final List<Features> featureListeners = new ArrayList<>();
 
+  /**
+   * Constructs a CommandComponent object.
+   * This object is used to map UI button actions to Features interface methods.
+   */
   public CommandComponent() {
-    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    super();
   }
 
   /**
-   * Adds a features listener to receive notifications of user actions
+   * Adds a feature to the list of feature listeners.
    */
   public void addFeatures(Features features) {
     this.featureListeners.add(features);
   }
 
   /**
-   * Adds a command button with the specified action command
+   * Adds a command button with the specified action command.
    */
-  public void addCommandButton(String commandName) {
-    JButton button = new JButton(commandName);
-    button.setActionCommand(commandName.toLowerCase());
+  public void addCommandButton(UserCommand command) {
+    JButton button = new JButton(command.getCommand());
+    button.setActionCommand(command.getCommand());
     button.addActionListener(this::handleAction);
     this.add(button);
   }
 
-  private void handleAction(ActionEvent e) {
-    String command = e.getActionCommand();
-    for (Features f : featureListeners) {
-      try {
-        switch (command) {
-          case "load":
-            f.loadImage();
-            break;
-          case "save":
-            f.saveImage();
-            break;
-          case "sepia":
-            f.applySepia();
-            break;
-          case "clear":
-            f.clearMemory();
-            break;
-        }
-      } catch (Exception ex) {
-        // Exceptions are handled by the Features implementation
+  /**
+   * Handles the event when a button is clicked.
+   *
+   * @param event the event that occurred
+   */
+  private void handleAction(ActionEvent event) {
+    Optional<UserCommand> userCommand =
+            UserCommand.getCommand(event.getActionCommand());
+    userCommand.ifPresent(this::handleUserCommand);
+  }
+
+  /**
+   * Handles the user command by calling the appropriate method in the
+   * Features interface.
+   *
+   * @param command the user command to be handled
+   */
+  private void handleUserCommand(UserCommand command) {
+    for (Features feature : featureListeners) {
+      switch (command) {
+        case LOAD:
+          feature.loadImage();
+          break;
+        case SAVE:
+          feature.saveImage();
+          break;
+        case SEPIA:
+          feature.applySepia();
+          break;
+        case CLEAR:
+          feature.clearMemory();
+          break;
+        default:
+          // Invalid Command - Do nothing
+          break;
       }
     }
   }

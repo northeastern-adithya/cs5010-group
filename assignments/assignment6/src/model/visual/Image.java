@@ -30,7 +30,7 @@ public interface Image {
    * @return the image with the adjusted brightness by creating a new image
    *         object.
    */
-  Image adjustImageBrightness(int factor);
+  Image adjustImageBrightness(int factor) throws ImageProcessorException;
 
   /**
    * Get the width of the image.
@@ -54,7 +54,7 @@ public interface Image {
    * @return the image with the red component of the pixels by creating a new
    *         image object.
    */
-  Image createRedComponent();
+  Image createRedComponent() throws ImageProcessorException;
 
   /**
    * Creates a new image with the green component of the pixels.
@@ -62,7 +62,7 @@ public interface Image {
    * @return the image with the green component of the pixels by creating a
    *         new image object.
    */
-  Image createGreenComponent();
+  Image createGreenComponent() throws ImageProcessorException;
 
   /**
    * Creates a new image with the blue component of the pixels.
@@ -70,15 +70,16 @@ public interface Image {
    * @return the image with the blue component of the pixels by creating a
    *         new image object.
    */
-  Image createBlueComponent();
+  Image createBlueComponent() throws ImageProcessorException;
 
   /**
    * Returns the luma of the image.
    * Luma has weights of 0.2126 for red, 0.7152 for green, and 0.0722 for blue.
    *
    * @return the luma of the image by creating a new image object.
+   * @throws ImageProcessorException if the luma cannot be created
    */
-  Image getLuma();
+  Image getLuma() throws ImageProcessorException;
 
   /**
    * Returns the sepia of the image.
@@ -86,16 +87,18 @@ public interface Image {
    * reddish brown tone. This is referred to as a sepia tone.
    *
    * @return the sepia of the image by creating a new image object.
+   * @throws ImageProcessorException if the sepia cannot be created
    */
-  Image getSepia();
+  Image getSepia() throws ImageProcessorException;
 
   /**
    * Returns the intensity of the image.
    * This is the average of the three components for each pixel in an image.
    *
    * @return the intensity of the image by creating a new image object.
+   * @throws ImageProcessorException if the intensity cannot be created
    */
-  Image getIntensity();
+  Image getIntensity() throws ImageProcessorException;
 
   /**
    * Returns the value of the image.
@@ -103,8 +106,9 @@ public interface Image {
    * image.
    *
    * @return the value of the image by creating a new image object.
+   * @throws ImageProcessorException if the value cannot be created
    */
-  Image getValue();
+  Image getValue() throws ImageProcessorException;
 
   /**
    * Returns a new image with the horizontal flip of the original image.
@@ -112,15 +116,16 @@ public interface Image {
    * @return the image with the horizontal flip of the original image
    *         by creating a new image object.
    */
-  Image horizontalFlip();
+  Image horizontalFlip() throws ImageProcessorException;
 
   /**
    * Returns a new image with the vertical flip of the original image.
    *
    * @return the image with the vertical flip of the original image by
    *         creating a new image object.
+   * @throws ImageProcessorException if the image cannot be flipped vertically
    */
-  Image verticalFlip();
+  Image verticalFlip() throws ImageProcessorException;
 
 
   /**
@@ -129,8 +134,9 @@ public interface Image {
    * @param filterOption the filter to apply to the image
    * @return the image with the filter applied to the original image by
    *         creating a new image object.
+   * @throws ImageProcessorException if the filter cannot be applied
    */
-  Image applyFilter(FilterOption filterOption);
+  Image applyFilter(FilterOption filterOption) throws ImageProcessorException;
 
 
   /**
@@ -158,8 +164,9 @@ public interface Image {
    * Applies color correction to the image.
    *
    * @return the color-corrected image by creating a new image object.
+   * @throws ImageProcessorException if the image cannot be color corrected
    */
-  Image colorCorrect();
+  Image colorCorrect() throws ImageProcessorException;
 
   /**
    * Combines this image with another image provided in argument.
@@ -168,6 +175,7 @@ public interface Image {
    * @param percentage the percentage of the first image(current image) on which
    *                   the function is called on.
    * @return the combined image by creating a new image object.
+   * @throws ImageProcessorException if the images cannot be combined
    */
   Image combineImages(Image image, int percentage) throws ImageProcessorException;
 
@@ -178,6 +186,7 @@ public interface Image {
    * @param type       the type of compression to apply
    * @param percentage the percentage to compress the image by
    * @return the compressed image by creating a new image object.
+   * @throws ImageProcessorException if the image cannot be compressed
    */
   Image compress(CompressionType type, int percentage) throws ImageProcessorException;
 
@@ -185,8 +194,9 @@ public interface Image {
    * Creates a histogram image from the current image.
    *
    * @return a new Image representing the histogram of the current image
+   * @throws ImageProcessorException if the histogram cannot be created
    */
-  Image histogram();
+  Image histogram() throws ImageProcessorException;
 
   /**
    * Adjusts the levels of the image.
@@ -195,6 +205,8 @@ public interface Image {
    * @param mid   the mid point
    * @param white the white point
    * @return the image with adjusted levels by creating a new image object.
+   * @throws ImageProcessorException if the image cannot have its levels
+   *                                 adjusted
    */
-  Image levelsAdjust(int black, int mid, int white);
+  Image levelsAdjust(int black, int mid, int white) throws ImageProcessorException;
 }
