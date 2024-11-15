@@ -24,7 +24,7 @@ public class FileImageProcessingService implements ImageProcessingService {
   /**
    * ImageMemory object to store and retrieve images.
    */
-  private final ImageMemory memory;
+  private final ImageMemory<Image> memory;
 
   /**
    * Constructor to initialize the FileImageProcessingService.
@@ -32,7 +32,7 @@ public class FileImageProcessingService implements ImageProcessingService {
    * @param memory ImageMemory object
    * @throws NullPointerException if memory is null
    */
-  public FileImageProcessingService(ImageMemory memory) {
+  public FileImageProcessingService(ImageMemory<Image> memory) {
     Objects.requireNonNull(memory, "Memory cannot be null");
     this.memory = memory;
   }
@@ -274,7 +274,7 @@ public class FileImageProcessingService implements ImageProcessingService {
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     ImageProcessingRequest.Levels levels = request.getLevels().orElseThrow(
-            () -> new ImageProcessorException("Levels not provided")
+        () -> new ImageProcessorException("Levels not provided")
     );
     int black = levels.getBlack();
     int white = levels.getWhite();

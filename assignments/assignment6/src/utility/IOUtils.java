@@ -131,6 +131,12 @@ public class IOUtils {
   }
 
 
+  /**
+   * Converts an Image object to a BufferedImage object.
+   *
+   * @param image the Image object to convert.
+   * @return the BufferedImage object.
+   */
   public static BufferedImage toBufferedImage(Image image) {
     BufferedImage bufferedImage = new BufferedImage(
             image.getWidth(),

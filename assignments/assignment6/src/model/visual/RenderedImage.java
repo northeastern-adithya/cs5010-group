@@ -30,13 +30,13 @@ public class RenderedImage implements Image {
    * Constructs a RenderedImage object with the given pixel array.
    *
    * @param pixels the pixel array of the image
-   * @throws NullPointerException     if the pixel array is null.
-   * @throws IllegalArgumentException if the pixel array is empty.
+   * @throws ImageProcessorException if the pixel array is empty.
    */
-  public RenderedImage(Pixel[][] pixels) {
+  public RenderedImage(Pixel[][] pixels)
+          throws ImageProcessorException {
     Objects.requireNonNull(pixels, "Pixel array cannot be null");
     if (pixels.length == 0 || pixels[0].length == 0) {
-      throw new IllegalArgumentException("Pixel array cannot be empty");
+      throw new ImageProcessorException("Pixel array cannot be empty");
     }
     this.pixels = pixels;
   }
@@ -58,42 +58,42 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image createRedComponent() {
+  public Image createRedComponent() throws ImageProcessorException {
     return transformImage(Pixel::createRedComponent);
   }
 
   @Override
-  public Image createGreenComponent() {
+  public Image createGreenComponent() throws ImageProcessorException {
     return transformImage(Pixel::createGreenComponent);
   }
 
   @Override
-  public Image createBlueComponent() {
+  public Image createBlueComponent() throws ImageProcessorException {
     return transformImage(Pixel::createBlueComponent);
   }
 
   @Override
-  public Image adjustImageBrightness(int factor) {
+  public Image adjustImageBrightness(int factor) throws ImageProcessorException {
     return transformImage(pixel -> pixel.adjustBrightness(factor));
   }
 
   @Override
-  public Image getLuma() {
+  public Image getLuma() throws ImageProcessorException {
     return transformImage(Pixel::getLuma);
   }
 
   @Override
-  public Image getSepia() {
+  public Image getSepia() throws ImageProcessorException {
     return transformImage(Pixel::getSepia);
   }
 
   @Override
-  public Image getIntensity() {
+  public Image getIntensity() throws ImageProcessorException {
     return transformImage(Pixel::getIntensity);
   }
 
   @Override
-  public Image getValue() {
+  public Image getValue() throws ImageProcessorException {
     return transformImage(Pixel::getValue);
   }
 
@@ -105,7 +105,7 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image horizontalFlip() {
+  public Image horizontalFlip() throws ImageProcessorException {
     int height = this.getHeight();
     int width = this.getWidth();
     Pixel[][] newPixelArray = new Pixel[height][width];
@@ -119,7 +119,7 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image verticalFlip() {
+  public Image verticalFlip() throws ImageProcessorException {
     int height = this.getHeight();
     int width = this.getWidth();
     Pixel[][] newPixelArray = new Pixel[height][width];
@@ -132,7 +132,7 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image applyFilter(FilterOption filterOption) {
+  public Image applyFilter(FilterOption filterOption) throws ImageProcessorException {
     return FilterUtils.applyFilter(this, filterOption);
   }
 
@@ -155,7 +155,8 @@ public class RenderedImage implements Image {
    * Helper method to transform the image using the given transformation.
    * Transformation is applied to each pixel in the image.
    */
-  private Image transformImage(Function<Pixel, Pixel> transformation) {
+  private Image transformImage(Function<Pixel, Pixel> transformation)
+          throws ImageProcessorException {
     int height = this.getHeight();
     int width = this.getWidth();
     Pixel[][] newPixelArray = new Pixel[height][width];
@@ -209,7 +210,7 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image colorCorrect() {
+  public Image colorCorrect() throws ImageProcessorException {
     int width = getWidth();
     int height = getHeight();
 
@@ -276,12 +277,12 @@ public class RenderedImage implements Image {
    * @param mid   the mid point value (0-255)
    * @param white the white point value (0-255)
    * @return a new Image with adjusted levels
-   * @throws IllegalArgumentException if any of the values are out of range
-   *                                  (0-255)
-   *                                  or not in ascending order
+   * @throws ImageProcessorException if any of the values are out of range
+   *                                 (0-255)
+   *                                 or not in ascending order
    */
   @Override
-  public Image levelsAdjust(int black, int mid, int white) throws IllegalArgumentException {
+  public Image levelsAdjust(int black, int mid, int white) throws ImageProcessorException {
     validateLevels(black, mid, white);
 
     double a = fittingCoefficientA(black, mid, white);
@@ -328,7 +329,7 @@ public class RenderedImage implements Image {
   }
 
   @Override
-  public Image histogram() {
+  public Image histogram() throws ImageProcessorException {
     return ExtractUtility.createHistogram(this);
   }
 
@@ -338,17 +339,17 @@ public class RenderedImage implements Image {
    * @param black the black point value
    * @param mid   the mid point value
    * @param white the white point value
-   * @throws IllegalArgumentException if any of the values are out of range
-   *                                  (0-255)
-   *                                  or not in ascending order
+   * @throws ImageProcessorException if any of the values are out of range
+   *                                 (0-255)
+   *                                 or not in ascending order
    */
   private void validateLevels(int black, int mid, int white)
-          throws IllegalArgumentException {
+          throws ImageProcessorException {
     if (black < 0 || black > 255 || mid < 0 || mid > 255 || white < 0 || white > 255) {
-      throw new IllegalArgumentException("Levels must be between 0 and 255");
+      throw new ImageProcessorException("Levels must be between 0 and 255");
     }
     if (black >= mid || mid >= white) {
-      throw new IllegalArgumentException("Levels must be in ascending order");
+      throw new ImageProcessorException("Levels must be in ascending order");
     }
   }
 

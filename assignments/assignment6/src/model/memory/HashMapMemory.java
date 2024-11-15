@@ -12,7 +12,7 @@ import utility.StringUtils;
 /**
  * A class that represents a memory that stores images in a HashMap.
  */
-public class HashMapMemory implements ImageMemory {
+public class HashMapMemory implements ImageMemory<Image> {
   /**
    * A map that stores images.
    * The key is the name of the image and the value is the image.
@@ -40,10 +40,10 @@ public class HashMapMemory implements ImageMemory {
   @Override
   public Image getImage(String imageName) throws ImageProcessorException.NotFoundException {
     return Optional.ofNullable(memory.get(imageName)).orElseThrow(
-            () -> new ImageProcessorException.NotFoundException(
+        () -> new ImageProcessorException.NotFoundException(
                     String.format("Image with name %s not found in memory",
                             imageName)
-            )
+        )
     );
   }
 

@@ -54,7 +54,8 @@ public class ControllerIntegrationTest {
     }
   }
 
-  private static void deleteDirectory(Path path) throws IOException {
+  private static void deleteDirectory(Path path) throws
+          IOException {
     if (Files.exists(path)) {
       Files.walk(path)
               .sorted(Comparator.reverseOrder())
@@ -66,7 +67,8 @@ public class ControllerIntegrationTest {
   private void initialiseController(String input, StringBuilder output,
                                     Image initialImage) {
     UserInput userInput = Factory.createUserInput(new StringReader(input));
-    UserOutput userOutput = Factory.createUserOutput(output,ControllerType.INTERACTIVE);
+    UserOutput userOutput = Factory.createUserOutput(output,
+            ControllerType.INTERACTIVE);
     imageMemory = Factory.getImageMemory();
     ImageProcessingService processingService =
             Factory.createImageProcessor(imageMemory);
@@ -77,7 +79,8 @@ public class ControllerIntegrationTest {
 
   // Save And Tests
   @Test
-  public void testSaveCommandWithInvalidImageName() {
+  public void testSaveCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("save test_resources/output invalidImageName",
             output, redImage());
@@ -89,7 +92,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLoadCommandWithInvalidExtension() {
+  public void testLoadCommandWithInvalidExtension() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("load test_resources.txt invalidImageName",
             output, redImage());
@@ -102,7 +106,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLoadWithInvalidPath() {
+  public void testLoadWithInvalidPath() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("load invalidPath.png invalidImageName",
             output, redImage());
@@ -121,7 +126,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void loadFromPngToPng() throws ImageProcessorException {
+  public void loadFromPngToPng() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
@@ -149,7 +155,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void loadAndSaveFromPPMToPPM() throws ImageProcessorException {
+  public void loadAndSaveFromPPMToPPM() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
@@ -175,7 +182,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void loadAndSaveFromPPMToPNG() throws ImageProcessorException {
+  public void loadAndSaveFromPPMToPNG() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
@@ -201,7 +209,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void loadAndSaveFromPNGToPPM() throws ImageProcessorException {
+  public void loadAndSaveFromPNGToPPM() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             new StringBuilder()
@@ -276,7 +285,8 @@ public class ControllerIntegrationTest {
 
   // RED COMPONENT TESTS
   @Test
-  public void testCreateRedComponentWithPureRedImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -293,7 +303,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithPureBlueImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -310,7 +321,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithPureGreenImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -327,7 +339,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithPureGreyImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -344,7 +357,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithPureWhiteImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -361,7 +375,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithPureBlackImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -378,7 +393,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentCommandWithInvalidImageName() {
+  public void testRedComponentCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "red-component invalidImageName redComponent",
@@ -390,7 +406,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentCommandWithInvalidDestinationImageName() {
+  public void testRedComponentCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s", INITIAL_IMAGE_NAME),
@@ -401,7 +418,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithRandomImage() throws ImageProcessorException {
+  public void testCreateRedComponentWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("red-component %s redComponent", INITIAL_IMAGE_NAME),
@@ -418,7 +436,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateRedComponentWithoutImageName() {
+  public void testCreateRedComponentWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("red-component", output, blueImage());
     controller.processCommands();
@@ -427,7 +446,8 @@ public class ControllerIntegrationTest {
 
   // GREEN COMPONENT TESTS
   @Test
-  public void testCreateGreenComponentWithPureRedImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -445,7 +465,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithPureBlueImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -463,7 +484,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithPureGreenImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -481,7 +503,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithPureGreyImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -499,7 +522,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithPureWhiteImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -517,7 +541,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithPureBlackImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -535,7 +560,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentCommandWithInvalidImageName() {
+  public void testGreenComponentCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "green-component invalidImageName greenComponent",
@@ -547,7 +573,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentCommandWithInvalidDestinationImageName() {
+  public void testGreenComponentCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s", INITIAL_IMAGE_NAME),
@@ -558,7 +585,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithRandomImage() throws ImageProcessorException {
+  public void testCreateGreenComponentWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("green-component %s greenComponent",
@@ -576,7 +604,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateGreenComponentWithoutImageName() {
+  public void testCreateGreenComponentWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("green-component", output, blueImage());
     controller.processCommands();
@@ -585,7 +614,8 @@ public class ControllerIntegrationTest {
 
   // BLUE COMPONENT TESTS
   @Test
-  public void testCreateBlueComponentWithPureRedImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("blue-component %s blueComponent",
@@ -603,7 +633,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithPureBlueImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("blue-component %s blueComponent",
@@ -621,7 +652,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithPureGreenImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(
             String.format("blue-component %s blueComponent",
@@ -639,7 +671,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithPureGreyImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blue-component %s blueComponent",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -654,7 +687,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithPureWhiteImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blue-component %s blueComponent",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -669,7 +703,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithPureBlackImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blue-component %s blueComponent",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -684,7 +719,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentCommandWithInvalidImageName() {
+  public void testBlueComponentCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("blue-component invalidImageName blueComponent",
             output, blueImage());
@@ -694,7 +730,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentCommandWithInvalidDestinationImageName() {
+  public void testBlueComponentCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blue-component %s",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -703,7 +740,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithRandomImage() throws ImageProcessorException {
+  public void testCreateBlueComponentWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blue-component %s blueComponent",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -718,7 +756,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateBlueComponentWithoutImageName() throws ImageProcessorException {
+  public void testCreateBlueComponentWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("blue-component", output, blueImage());
     controller.processCommands();
@@ -727,7 +766,8 @@ public class ControllerIntegrationTest {
 
   // VALUE COMPONENT TESTS
   @Test
-  public void testCreateValueComponentWithPureRedImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -742,7 +782,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithPureBlueImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -757,7 +798,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithPureGreenImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -772,7 +814,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithPureGreyImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -787,7 +830,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithPureWhiteImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -802,7 +846,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithPureBlackImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -817,7 +862,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testValueComponentCommandWithInvalidImageName() {
+  public void testValueComponentCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("value-component invalidImageName valueComponent",
             output, redImage());
@@ -827,7 +873,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testValueComponentCommandWithInvalidDestinationImageName() {
+  public void testValueComponentCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -836,7 +883,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithRandomImage() throws ImageProcessorException {
+  public void testCreateValueComponentWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("value-component %s valueComponent",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -851,7 +899,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateValueComponentWithoutImageName() throws ImageProcessorException {
+  public void testCreateValueComponentWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("value-component", output, blueImage());
     controller.processCommands();
@@ -860,7 +909,8 @@ public class ControllerIntegrationTest {
 
   // INTENSITY COMPONENT TESTS
   @Test
-  public void testCreateIntensityComponentWithPureRedImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, redImage());
@@ -875,7 +925,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithPureBlueImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, blueImage());
@@ -890,7 +941,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithPureGreenImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, greenImage());
@@ -905,7 +957,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithPureGreyImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, greyImage());
@@ -920,7 +973,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithPureWhiteImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, whiteImage());
@@ -935,7 +989,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithPureBlackImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, blackImage());
@@ -950,7 +1005,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testIntensityComponentCommandWithInvalidImageName() {
+  public void testIntensityComponentCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("intensity-component invalidImageName "
             + "intensityComponent", output, redImage());
@@ -960,7 +1016,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testIntensityComponentCommandWithInvalidDestinationImageName() {
+  public void testIntensityComponentCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -969,7 +1026,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithRandomImage() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("intensity-component %s "
             + "intensityComponent", INITIAL_IMAGE_NAME), output, randomImage());
@@ -984,7 +1042,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateIntensityComponentWithoutImageName() throws ImageProcessorException {
+  public void testCreateIntensityComponentWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("intensity-component", output, blueImage());
     controller.processCommands();
@@ -993,7 +1052,8 @@ public class ControllerIntegrationTest {
 
   // LUMA COMPONENT TESTS
   @Test
-  public void testCreateLumaComponentWithPureRedImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1008,7 +1068,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithPureBlueImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -1023,7 +1084,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithPureGreenImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -1038,7 +1100,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithPureGreyImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -1053,7 +1116,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithPureWhiteImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1068,7 +1132,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithPureBlackImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -1083,7 +1148,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLumaComponentCommandWithInvalidImageName() {
+  public void testLumaComponentCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("luma-component invalidImageName lumaComponent",
             output, redImage());
@@ -1093,7 +1159,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLumaComponentCommandWithInvalidDestinationImageName() {
+  public void testLumaComponentCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1102,7 +1169,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithRandomImage() throws ImageProcessorException {
+  public void testCreateLumaComponentWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("luma-component %s lumaComponent",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1118,7 +1186,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCreateLumaComponentWithoutImageName() throws ImageProcessorException {
+  public void testCreateLumaComponentWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("luma-component", output, blueImage());
     controller.processCommands();
@@ -1127,7 +1196,8 @@ public class ControllerIntegrationTest {
 
   // HORIZONTAL FLIP TESTS
   @Test
-  public void testHorizontalFlipWithPureRedImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1142,7 +1212,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithPureBlueImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -1157,7 +1228,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithPureGreenImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -1172,7 +1244,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithPureGreyImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -1187,7 +1260,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithPureWhiteImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1202,7 +1276,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithPureBlackImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -1217,7 +1292,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipCommandWithInvalidImageName() {
+  public void testHorizontalFlipCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("horizontal-flip invalidImageName horizontalFlip",
             output, redImage());
@@ -1227,7 +1303,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipCommandWithInvalidDestinationImageName() {
+  public void testHorizontalFlipCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1236,7 +1313,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithRandomImage() throws ImageProcessorException {
+  public void testHorizontalFlipWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("horizontal-flip %s horizontalFlip",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1251,7 +1329,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testHorizontalFlipWithoutImageName() {
+  public void testHorizontalFlipWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("horizontal-flip", output, blueImage());
     controller.processCommands();
@@ -1260,7 +1339,8 @@ public class ControllerIntegrationTest {
 
   // VERTICAL FLIP TESTS
   @Test
-  public void testVerticalFlipWithPureRedImage() throws ImageProcessorException {
+  public void testVerticalFlipWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1275,7 +1355,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithPureBlueImage() throws ImageProcessorException {
+  public void testVerticalFlipWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -1290,7 +1371,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithPureGreenImage() throws ImageProcessorException {
+  public void testVerticalFlipWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -1305,7 +1387,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithPureGreyImage() throws ImageProcessorException {
+  public void testVerticalFlipWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -1320,7 +1403,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithPureWhiteImage() throws ImageProcessorException {
+  public void testVerticalFlipWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1335,7 +1419,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithPureBlackImage() throws ImageProcessorException {
+  public void testVerticalFlipWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -1350,7 +1435,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipCommandWithInvalidImageName() {
+  public void testVerticalFlipCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("vertical-flip invalidImageName verticalFlip",
             output, redImage());
@@ -1360,7 +1446,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipCommandWithInvalidDestinationImageName() {
+  public void testVerticalFlipCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1369,7 +1456,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithRandomImage() throws ImageProcessorException {
+  public void testVerticalFlipWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("vertical-flip %s verticalFlip",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1384,7 +1472,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testVerticalFlipWithoutImageName() {
+  public void testVerticalFlipWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("vertical-flip", output, blueImage());
     controller.processCommands();
@@ -1393,7 +1482,8 @@ public class ControllerIntegrationTest {
 
   // Brighten tests
   @Test
-  public void testBrightenWithPositiveFactor() throws ImageProcessorException {
+  public void testBrightenWithPositiveFactor() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("brighten 1 %s brighten",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1408,7 +1498,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenWithNegativeFactor() throws ImageProcessorException {
+  public void testBrightenWithNegativeFactor() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("brighten -1 %s brighten",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1423,7 +1514,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenWithZeroFactor() throws ImageProcessorException {
+  public void testBrightenWithZeroFactor() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("brighten 0 %s brighten",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1438,7 +1530,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenWithInvalidFactor() {
+  public void testBrightenWithInvalidFactor() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("brighten invalidFactor %s brighten",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1448,7 +1541,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenCommandWithInvalidImageName() {
+  public void testBrightenCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("brighten 1 invalidImageName brighten", output,
             redImage());
@@ -1458,7 +1552,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenCommandWithInvalidDestinationImageName() {
+  public void testBrightenCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("brighten 1 %s", INITIAL_IMAGE_NAME),
             output, redImage());
@@ -1467,7 +1562,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBrightenCommandWithoutImageName() {
+  public void testBrightenCommandWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("brighten 1", output, redImage());
     controller.processCommands();
@@ -1476,7 +1572,8 @@ public class ControllerIntegrationTest {
 
   // RGB Split tests
   @Test
-  public void testRGBSplitOfPureRedImage() throws ImageProcessorException {
+  public void testRGBSplitOfPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s redImage greenImage "
             + "blueImage", INITIAL_IMAGE_NAME), output, redImage());
@@ -1501,7 +1598,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitOfPureBlueImage() throws ImageProcessorException {
+  public void testRGBSplitOfPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s redImage greenImage "
             + "blueImage", INITIAL_IMAGE_NAME), output, blueImage());
@@ -1526,7 +1624,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitOfPureGreenImage() throws ImageProcessorException {
+  public void testRGBSplitOfPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s redImage greenImage "
             + "blueImage", INITIAL_IMAGE_NAME), output, greenImage());
@@ -1551,7 +1650,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitOfPureGreyImage() throws ImageProcessorException {
+  public void testRGBSplitOfPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s redImage greenImage "
             + "blueImage", INITIAL_IMAGE_NAME), output, greyImage());
@@ -1576,7 +1676,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitOfPureWhiteImage() throws ImageProcessorException {
+  public void testRGBSplitOfPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s redImage greenImage "
             + "blueImage", INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1601,7 +1702,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitOfPureBlackImage() throws ImageProcessorException {
+  public void testRGBSplitOfPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s redImage greenImage "
             + "blueImage", INITIAL_IMAGE_NAME), output, blackImage());
@@ -1626,7 +1728,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitCommandWithInvalidImageName() {
+  public void testRGBSplitCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("rgb-split invalidImageName redImage greenImage "
             + "blueImage", output, redImage());
@@ -1636,7 +1739,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitCommandWithInvalidDestinationImageName() {
+  public void testRGBSplitCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("rgb-split %s", INITIAL_IMAGE_NAME),
             output, redImage());
@@ -1645,7 +1749,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBSplitWithoutImageName() {
+  public void testRGBSplitWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("rgb-split", output, blueImage());
     controller.processCommands();
@@ -1654,7 +1759,8 @@ public class ControllerIntegrationTest {
 
   // Blur tests
   @Test
-  public void testBlurImageWithPureRedImage() throws ImageProcessorException {
+  public void testBlurImageWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1668,7 +1774,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurImageWithPureBlueImage() throws ImageProcessorException {
+  public void testBlurImageWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -1682,7 +1789,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurImageWithPureGreenImage() throws ImageProcessorException {
+  public void testBlurImageWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -1696,7 +1804,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurImageWithPureGreyImage() throws ImageProcessorException {
+  public void testBlurImageWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -1710,7 +1819,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurImageWithPureWhiteImage() throws ImageProcessorException {
+  public void testBlurImageWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1724,7 +1834,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurImageWithPureBlackImage() throws ImageProcessorException {
+  public void testBlurImageWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -1738,7 +1849,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurCommandWithInvalidImageName() {
+  public void testBlurCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("blur invalidImageName blurImage", output, redImage());
     controller.processCommands();
@@ -1747,7 +1859,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurCommandWithInvalidDestinationImageName() {
+  public void testBlurCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s", INITIAL_IMAGE_NAME), output,
             redImage());
@@ -1759,7 +1872,8 @@ public class ControllerIntegrationTest {
   // Sharpen tests
 
   @Test
-  public void testBlurImageWithRandomImage() throws ImageProcessorException {
+  public void testBlurImageWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("blur %s blurImage",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1774,7 +1888,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurImageWithoutImageName() {
+  public void testBlurImageWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("blur", output, blueImage());
     controller.processCommands();
@@ -1782,7 +1897,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithPureRedImage() throws ImageProcessorException {
+  public void testSharpenImageWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1796,7 +1912,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithPureBlueImage() throws ImageProcessorException {
+  public void testSharpenImageWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -1810,7 +1927,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithPureGreenImage() throws ImageProcessorException {
+  public void testSharpenImageWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -1824,7 +1942,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithPureGreyImage() throws ImageProcessorException {
+  public void testSharpenImageWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -1838,7 +1957,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithPureWhiteImage() throws ImageProcessorException {
+  public void testSharpenImageWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1852,7 +1972,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithPureBlackImage() throws ImageProcessorException {
+  public void testSharpenImageWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -1866,7 +1987,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenCommandWithInvalidImageName() {
+  public void testSharpenCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("sharpen invalidImageName sharpenImage", output,
             redImage());
@@ -1876,7 +1998,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenCommandWithInvalidDestinationImageName() {
+  public void testSharpenCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s", INITIAL_IMAGE_NAME),
             output, redImage());
@@ -1885,7 +2008,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithRandomImage() throws ImageProcessorException {
+  public void testSharpenImageWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sharpen %s sharpenImage",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -1899,7 +2023,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenImageWithoutImageName() {
+  public void testSharpenImageWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("sharpen", output, blueImage());
     controller.processCommands();
@@ -1908,7 +2033,8 @@ public class ControllerIntegrationTest {
 
   // Sepia tests
   @Test
-  public void testSepiaImageWithPureRedImage() throws ImageProcessorException {
+  public void testSepiaImageWithPureRedImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, redImage());
@@ -1923,7 +2049,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithPureBlueImage() throws ImageProcessorException {
+  public void testSepiaImageWithPureBlueImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, blueImage());
@@ -1938,7 +2065,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithPureGreenImage() throws ImageProcessorException {
+  public void testSepiaImageWithPureGreenImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, greenImage());
@@ -1953,7 +2081,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithPureGreyImage() throws ImageProcessorException {
+  public void testSepiaImageWithPureGreyImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, greyImage());
@@ -1968,7 +2097,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithPureWhiteImage() throws ImageProcessorException {
+  public void testSepiaImageWithPureWhiteImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, whiteImage());
@@ -1983,7 +2113,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithPureBlackImage() throws ImageProcessorException {
+  public void testSepiaImageWithPureBlackImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, blackImage());
@@ -1998,7 +2129,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaCommandWithInvalidImageName() {
+  public void testSepiaCommandWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("sepia invalidImageName sepiaImage", output,
             redImage());
@@ -2008,7 +2140,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaCommandWithInvalidDestinationImageName() {
+  public void testSepiaCommandWithInvalidDestinationImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s", INITIAL_IMAGE_NAME),
             output, redImage());
@@ -2017,7 +2150,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithRandomImage() throws ImageProcessorException {
+  public void testSepiaImageWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController(String.format("sepia %s sepiaImage",
             INITIAL_IMAGE_NAME), output, randomImage());
@@ -2032,7 +2166,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaImageWithoutImageName() {
+  public void testSepiaImageWithoutImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("sepia", output, blueImage());
     controller.processCommands();
@@ -2041,7 +2176,8 @@ public class ControllerIntegrationTest {
 
   // Tests for RGB combine
   @Test
-  public void testRGBCombineWithPureRedGreenBlueImages() throws ImageProcessorException {
+  public void testRGBCombineWithPureRedGreenBlueImages() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("rgb-combine combinedImage redImage greenImage "
             + "blueImage", output, redImage());
@@ -2059,7 +2195,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBCombineWithAllWhiteImages() throws ImageProcessorException {
+  public void testRGBCombineWithAllWhiteImages() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("rgb-combine combinedImage redImage greenImage "
             + "blueImage", output, whiteImage());
@@ -2077,7 +2214,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBCombineWithAllBlackImages() throws ImageProcessorException {
+  public void testRGBCombineWithAllBlackImages() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("rgb-combine combinedImage redImage greenImage "
             + "blueImage", output, blackImage());
@@ -2095,7 +2233,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRGBCombineWithRandomImage() throws ImageProcessorException {
+  public void testRGBCombineWithRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     initialiseController("rgb-combine combinedImage redImage greenImage "
             + "blueImage", output, randomImage());
@@ -2180,7 +2319,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void testVerticalAndHorizontalFlipCombined() throws ImageProcessorException {
+  public void testVerticalAndHorizontalFlipCombined() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomImage();
     initialiseController(
@@ -2235,7 +2375,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void rgbSplitAndCombineCombined() throws ImageProcessorException {
+  public void rgbSplitAndCombineCombined() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomImage();
     initialiseController(
@@ -2265,7 +2406,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void performMultipleOperationsOntheSameImage() throws ImageProcessorException {
+  public void performMultipleOperationsOntheSameImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image blackImage = blackImage();
     initialiseController(
@@ -2287,7 +2429,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void performMultipleOperationsOnRandomImage() throws ImageProcessorException {
+  public void performMultipleOperationsOnRandomImage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image blackImage = randomImage();
     initialiseController(
@@ -2317,7 +2460,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void testWithMultipleBlurs() throws ImageProcessorException {
+  public void testWithMultipleBlurs() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image blackImage = randomImage();
     initialiseController(
@@ -2346,7 +2490,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testWithMultipleSharpen() throws ImageProcessorException {
+  public void testWithMultipleSharpen() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image blackImage = randomImage();
     initialiseController(
@@ -2375,7 +2520,8 @@ public class ControllerIntegrationTest {
   }
 
 
-  private Image redImage() {
+  private Image redImage() throws
+          ImageProcessorException {
     int[][] redArray = new int[][]{
             {16711680, 16711680},
             {16711680, 16711680}
@@ -2383,7 +2529,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(redArray));
   }
 
-  private Image blueImage() {
+  private Image blueImage() throws
+          ImageProcessorException {
     int[][] blueArray = new int[][]{
             {255, 255},
             {255, 255}
@@ -2391,7 +2538,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(blueArray));
   }
 
-  private Image greenImage() {
+  private Image greenImage() throws
+          ImageProcessorException {
     int[][] greenArray = new int[][]{
             {65280, 65280},
             {65280, 65280}
@@ -2399,7 +2547,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(greenArray));
   }
 
-  private Image greyImage() {
+  private Image greyImage() throws
+          ImageProcessorException {
     int[][] greyArray = new int[][]{
             {8421504, 8421504},
             {8421504, 8421504}
@@ -2407,7 +2556,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(greyArray));
   }
 
-  private Image whiteImage() {
+  private Image whiteImage() throws
+          ImageProcessorException {
     int[][] whiteArray = new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
@@ -2415,7 +2565,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(whiteArray));
   }
 
-  private Image blackImage() {
+  private Image blackImage() throws
+          ImageProcessorException {
     int[][] blackArray = new int[][]{
             {0, 0},
             {0, 0}
@@ -2423,7 +2574,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(blackArray));
   }
 
-  private Image randomImage() {
+  private Image randomImage() throws
+          ImageProcessorException {
     int[][] randomArray = new int[][]{
             {16711680, 255},
             {65280, 8421504}
@@ -2431,7 +2583,8 @@ public class ControllerIntegrationTest {
     return Factory.createImage(createPixels(randomArray));
   }
 
-  private Image randomRectangleImage() {
+  private Image randomRectangleImage() throws
+          ImageProcessorException {
     int[][] randomArray = new int[][]{
             {16711680, 255, 65280},
             {8421504, 16711680, 255}
@@ -2538,7 +2691,7 @@ public class ControllerIntegrationTest {
     try {
       StringBuilder output = new StringBuilder();
       Image inputImage = Factory.createImage(
-              new Pixel[][]{{Factory.createRGBPixel(0,0,0)}}
+              new Pixel[][]{{Factory.createRGBPixel(0, 0, 0)}}
       );
 
       initialiseController(
@@ -2560,7 +2713,7 @@ public class ControllerIntegrationTest {
     try {
       StringBuilder output = new StringBuilder();
       Image inputImage = Factory.createImage(
-              new Pixel[][]{{Factory.createRGBPixel(0,0,0)}}
+              new Pixel[][]{{Factory.createRGBPixel(0, 0, 0)}}
       );
 
       initialiseController(
@@ -2582,7 +2735,7 @@ public class ControllerIntegrationTest {
     try {
       StringBuilder output = new StringBuilder();
       Image inputImage = Factory.createImage(
-              new Pixel[][]{{Factory.createRGBPixel(0,0,0)}}
+              new Pixel[][]{{Factory.createRGBPixel(0, 0, 0)}}
       );
 
       initialiseController(
@@ -2600,7 +2753,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testBlurWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage invalid",
@@ -2624,7 +2778,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage 0",
@@ -2643,7 +2798,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage -1",
@@ -2659,7 +2815,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage 100",
@@ -2679,7 +2836,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage 101",
@@ -2695,7 +2853,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage 30",
@@ -2715,7 +2874,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage 50",
@@ -2735,7 +2895,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlurWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testBlurWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blur %s blurImage 75",
@@ -2756,7 +2917,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void testSharpenWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testSharpenWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage invalid",
@@ -2779,7 +2941,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 0",
@@ -2798,7 +2961,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage -1",
@@ -2814,7 +2978,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 100",
@@ -2823,19 +2988,20 @@ public class ControllerIntegrationTest {
 
     controller.processCommands();
     assertEquals(Factory.createImage(
-            createPixels(
-                    new int[][]{
-                            {16711743, 10444799, 1044335},
-                            {16736415, 16736159, 995327}
-                    }
-            )),
+                    createPixels(
+                            new int[][]{
+                                    {16711743, 10444799, 1044335},
+                                    {16736415, 16736159, 995327}
+                            }
+                    )),
             imageMemory.getImage("sharpenImage"));
     assertTrue(output.toString().contains("Successfully sharpened the image."));
   }
 
   @Test
   public void testSharpenWithGreaterThanHundredPercentageSplitView()
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 101",
@@ -2852,7 +3018,8 @@ public class ControllerIntegrationTest {
 
   @Test
   public void testSharpenWithThirtyPercentageSplitView()
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 30",
@@ -2872,7 +3039,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 50",
@@ -2892,7 +3060,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSharpenWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testSharpenWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sharpen %s sharpenImage 75",
@@ -2912,7 +3081,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testSepiaWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage invalid",
@@ -2935,7 +3105,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage 0",
@@ -2955,7 +3126,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage -1",
@@ -2971,7 +3143,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage 100",
@@ -2992,7 +3165,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage 101",
@@ -3008,7 +3182,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage 30",
@@ -3029,7 +3204,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage 50",
@@ -3050,7 +3226,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testSepiaWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testSepiaWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("sepia %s sepiaImage 75",
@@ -3071,7 +3248,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testRedComponentWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent invalid",
@@ -3093,7 +3271,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testRedComponentWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent 0",
@@ -3113,7 +3292,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testRedComponentWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent -1",
@@ -3129,7 +3309,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testRedComponentWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent 100",
@@ -3145,7 +3326,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithGreaterThanHundredPercentageSplitView() {
+  public void testRedComponentWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent 101",
@@ -3161,7 +3343,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testRedComponentWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent 30",
@@ -3182,7 +3365,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testRedComponentWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent 50",
@@ -3203,7 +3387,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testRedComponentWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testRedComponentWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("red-component %s redComponent 75",
@@ -3224,7 +3409,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testBlueComponentWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent "
@@ -3239,7 +3425,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testBlueComponentWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent 0",
@@ -3254,7 +3441,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testBlueComponentWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent -1",
@@ -3268,7 +3456,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testBlueComponentWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent 100",
@@ -3283,7 +3472,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithGreaterThanHundredPercentageSplitView() {
+  public void testBlueComponentWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent 101",
@@ -3298,7 +3488,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testBlueComponentWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent 30",
@@ -3313,7 +3504,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testBlueComponentWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent 50",
@@ -3328,7 +3520,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testBlueComponentWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testBlueComponentWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("blue-component %s blueComponent 75",
@@ -3343,7 +3536,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testGreenComponentWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent "
@@ -3358,7 +3552,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testGreenComponentWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent 0",
@@ -3374,7 +3569,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testGreenComponentWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent -1",
@@ -3388,7 +3584,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testGreenComponentWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent "
@@ -3408,7 +3605,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentWithGreaterThanHundredPercentageSplitView() {
+  public void testGreenComponentWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent "
@@ -3423,7 +3621,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testGreenComponentWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testGreenComponentWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent 30",
@@ -3439,7 +3638,8 @@ public class ControllerIntegrationTest {
 
   @Test
   public void testGreenComponentWithFiftyPercentageSplitView()
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent 50",
@@ -3455,7 +3655,8 @@ public class ControllerIntegrationTest {
 
   @Test
   public void testGreenComponentWithSeventyFivePercentageSplitView()
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent 75",
@@ -3470,7 +3671,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testLevelAdjustmentWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3487,7 +3689,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testLevelAdjustmentWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3503,7 +3706,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testLevelAdjustmentWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3518,7 +3722,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testLevelAdjustmentWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3532,7 +3737,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithGreaterThanHundredPercentageSplitView() {
+  public void testLevelAdjustmentWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3548,7 +3754,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testLevelAdjustmentWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3564,7 +3771,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testLevelAdjustmentWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testLevelAdjustmentWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3581,7 +3789,8 @@ public class ControllerIntegrationTest {
 
   @Test
   public void testLevelAdjustmentWithSeventyFivePercentageSplitView()
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
@@ -3598,7 +3807,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void testColorCorrectionWithInvalidOptionalParameter() throws ImageProcessorException {
+  public void testColorCorrectionWithInvalidOptionalParameter() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3613,7 +3823,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testColorCorrectionWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testColorCorrectionWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3628,7 +3839,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testColorCorrectionWithNegativePercentageSplitView() {
+  public void testColorCorrectionWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3642,7 +3854,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testColorCorrectionWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testColorCorrectionWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3655,7 +3868,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testColorCorrectionWithGreaterThanHundredPercentageSplitView() {
+  public void testColorCorrectionWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3670,7 +3884,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testColorCorrectionWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testColorCorrectionWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3685,7 +3900,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testColorCorrectionWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testColorCorrectionWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3701,7 +3917,8 @@ public class ControllerIntegrationTest {
 
   @Test
   public void testColorCorrectionWithSeventyFivePercentageSplitView()
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
@@ -3717,7 +3934,8 @@ public class ControllerIntegrationTest {
 
 
   @Test
-  public void testCompressionWithZeroPercentage() throws ImageProcessorException {
+  public void testCompressionWithZeroPercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 0 %s compressedImage",
@@ -3738,7 +3956,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithTwentyFivePercentage() throws ImageProcessorException {
+  public void testCompressionWithTwentyFivePercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 25 %s compressedImage",
@@ -3756,7 +3975,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithFiftyPercentage() throws ImageProcessorException {
+  public void testCompressionWithFiftyPercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 50 %s compressedImage",
@@ -3774,7 +3994,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithSeventyFivePercentage() throws ImageProcessorException {
+  public void testCompressionWithSeventyFivePercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 75 %s compressedImage",
@@ -3792,7 +4013,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithHundredPercentage() throws ImageProcessorException {
+  public void testCompressionWithHundredPercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 100 %s compressedImage",
@@ -3810,7 +4032,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithPNGToPNGAndPPMFormats() throws IOException {
+  public void testCompressionWithPNGToPNGAndPPMFormats() throws
+          IOException {
     for (int compression = 0; compression <= 100; compression++) {
       StringBuilder output = new StringBuilder();
       initialiseController(
@@ -3851,7 +4074,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithJPGToPNGAndPPMFormats() throws IOException {
+  public void testCompressionWithJPGToPNGAndPPMFormats() throws
+          IOException {
     for (int compression = 0; compression <= 100; compression++) {
       StringBuilder output = new StringBuilder();
       initialiseController(
@@ -3900,7 +4124,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithPPMToPPM() throws IOException {
+  public void testCompressionWithPPMToPPM() throws
+          IOException {
     for (int compression = 0; compression <= 100; compression++) {
       StringBuilder output = new StringBuilder();
       initialiseController(
@@ -3929,7 +4154,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void compressionWithInvalidCommandAfterCompressing() {
+  public void compressionWithInvalidCommandAfterCompressing() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 0 %s compressedImage invalid",
@@ -3939,7 +4165,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void compressionWithNegativeCompressionPercentage() {
+  public void compressionWithNegativeCompressionPercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress -1 %s compressedImage",
@@ -3949,7 +4176,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void compressionWithGreaterThanHundredCompressionPercentage() {
+  public void compressionWithGreaterThanHundredCompressionPercentage() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 101 %s compressedImage",
@@ -3959,7 +4187,9 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void compressionWithInvalidCompressionPercentage() {
+  public void compressionWithInvalidCompressionPercentage()
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress invalid %s compressedImage",
@@ -3969,7 +4199,8 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void compressionWithInvalidImageName() {
+  public void compressionWithInvalidImageName() throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController("compress 0 invalid compressedImage",
@@ -3980,7 +4211,9 @@ public class ControllerIntegrationTest {
   }
 
   @Test
-  public void testCompressionWithInvalidDestinationName() {
+  public void testCompressionWithInvalidDestinationName()
+          throws
+          ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("compress 0 %s",

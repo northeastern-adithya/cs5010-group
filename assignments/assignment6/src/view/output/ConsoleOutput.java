@@ -1,11 +1,11 @@
 package view.output;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import controller.Features;
 import exception.ImageProcessingRunTimeException;
 import model.enumeration.UserCommand;
 import model.visual.Image;
@@ -34,7 +34,7 @@ public class ConsoleOutput implements UserOutput {
   }
 
   @Override
-  public void displayMessage(String message)
+  public void displayMessage(String message, DisplayMessageType messageType)
           throws ImageProcessingRunTimeException.DisplayException {
     try {
       this.output.append(message).append("\n");
@@ -45,22 +45,31 @@ public class ConsoleOutput implements UserOutput {
     }
   }
 
+
   @Override
   public void displayCommands(List<UserCommand> commands)
           throws ImageProcessingRunTimeException.DisplayException {
     for (UserCommand command : commands) {
-      displayMessage(command.getDescription());
+      displayMessage(command.getDescription(), DisplayMessageType.INFO);
     }
   }
 
   @Override
-  public void addActionListener(ActionListener listener) {
-    // Not needed for console output.
+  public void addFeatures(Features features) {
+    // Do nothing as this is console output
   }
 
   @Override
-  public void displayImage(Image image, Image histogram) throws ImageProcessingRunTimeException.DisplayException {
+  public void displayImage(Image image, Image histogram)
+          throws ImageProcessingRunTimeException.DisplayException {
     throw new ImageProcessingRunTimeException.DisplayException("Displaying "
             + "image is not supported in console output");
+  }
+
+  @Override
+  public void clearImage() throws ImageProcessingRunTimeException.DisplayException {
+    throw new ImageProcessingRunTimeException.DisplayException(
+            "Clearing image is not supported in console output"
+    );
   }
 }

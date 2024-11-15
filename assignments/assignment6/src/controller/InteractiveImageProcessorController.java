@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,6 +18,7 @@ import model.request.ImageProcessingRequest;
 import controller.services.ImageProcessingService;
 import utility.StringUtils;
 import view.input.UserInput;
+import view.output.DisplayMessageType;
 import view.output.UserOutput;
 
 /**
@@ -85,7 +85,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    userOutput.displayCommands(Arrays.stream(UserCommand.values()).toList());
+    userOutput.displayCommands(List.of(UserCommand.values()));
   }
 
   @Override
@@ -102,13 +102,17 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
         Optional<UserCommand> command = UserCommand.getCommand(userInput);
         if (command.isPresent()) {
           ExecutionStatus status = executeCommand(command.get(), scanner);
-          displayMessage(status.getMessage());
+          displayMessage(status.getMessage(),
+                  status.isSuccess() ? DisplayMessageType.INFO :
+                          DisplayMessageType.ERROR
+          );
         } else {
-          displayMessage(String.format("Invalid command: %s", userInput));
+          displayMessage(String.format("Invalid command: %s", userInput),
+                  DisplayMessageType.ERROR);
         }
       }
     } catch (ImageProcessorException e) {
-      displayMessage(e.getMessage());
+      displayMessage(e.getMessage(), DisplayMessageType.ERROR);
     }
   }
 
@@ -542,7 +546,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
       // Quit the application if an error occurs while reading the script file.
       String errorMessage = String.format("Error reading script file: %s, %s",
               scriptFile, e.getMessage());
-      displayMessage(errorMessage);
+      displayMessage(errorMessage, DisplayMessageType.ERROR);
       throw new ImageProcessingRunTimeException.QuitException(errorMessage);
     }
 
@@ -607,11 +611,13 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   /**
    * Displays the message to the user.
    *
-   * @param message message to be displayed
+   * @param message     message to be displayed
+   * @param messageType type of the message
    */
-  protected void displayMessage(String message) {
+  protected void displayMessage(String message,
+                                DisplayMessageType messageType) {
     if (StringUtils.isNotNullOrEmpty(message)) {
-      this.userOutput.displayMessage(message);
+      this.userOutput.displayMessage(message, messageType);
     }
   }
 
@@ -725,6 +731,11 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
     }
   }
 
+  /**
+   * Executes the clear command.
+   *
+   * @return ExecutionStatus information of the execution
+   */
   private ExecutionStatus executeClearCommand() {
     imageProcessingService.clearMemory();
     return new ExecutionStatus(true, "Successfully cleared the memory.");

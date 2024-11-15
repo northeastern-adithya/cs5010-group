@@ -8,7 +8,7 @@ import model.visual.Image;
  * The memory can store images and retrieve them by their name.
  * Memory is stored depending on the implementation.
  */
-public interface ImageMemory {
+public interface ImageMemory<T> {
 
   /**
    * Adds an image to the memory.
@@ -24,9 +24,9 @@ public interface ImageMemory {
    * @param imageName the name of the image to retrieve
    * @return the image with the given name
    * @throws ImageProcessorException.NotFoundException if the image with the
-   * given name is not found
+   *                                                   given name is not found
    */
-  Image getImage(String imageName) throws ImageProcessorException.NotFoundException;
+  T getImage(String imageName) throws ImageProcessorException.NotFoundException;
 
   void clearMemory();
 

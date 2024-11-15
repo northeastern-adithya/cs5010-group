@@ -49,8 +49,8 @@ public class Factory {
                                                           ControllerType type) {
     if (ControllerType.COMMAND_LINE.equals(type)) {
       return new CommandLineImageProcessorController(input, output, processor);
-    }else if (ControllerType.GUI.equals(type)) {
-      return new GUIImageProcessorController(input, output, processor);
+    } else if (ControllerType.GUI.equals(type)) {
+      return new GUIImageProcessorController(output, processor);
     }
     return new InteractiveImageProcessorController(input, output, processor);
   }
@@ -61,8 +61,9 @@ public class Factory {
    *
    * @param pixels the pixel array to create the image
    * @return the image object with the given pixel array
+   * @throws ImageProcessorException if the pixel array is null
    */
-  public static Image createImage(Pixel[][] pixels) {
+  public static Image createImage(Pixel[][] pixels) throws ImageProcessorException {
     return new RenderedImage(pixels);
   }
 
@@ -130,7 +131,7 @@ public class Factory {
    *
    * @return the ImageMemory object
    */
-  public static ImageMemory getImageMemory() {
+  public static ImageMemory<Image> getImageMemory() {
     return new HashMapMemory();
   }
 
@@ -140,7 +141,7 @@ public class Factory {
    * @param memory the memory to store images
    * @return the ImageProcessingService object
    */
-  public static ImageProcessingService createImageProcessor(ImageMemory memory) {
+  public static ImageProcessingService createImageProcessor(ImageMemory<Image> memory) {
     return new FileImageProcessingService(memory);
   }
 
@@ -212,7 +213,7 @@ public class Factory {
    */
   public static UserOutput createUserOutput(Appendable output,
                                             ControllerType type) {
-    if(ControllerType.GUI.equals(type)){
+    if (ControllerType.GUI.equals(type)) {
       return new GUIOutput();
     }
     return new ConsoleOutput(output);
@@ -299,6 +300,4 @@ public class Factory {
               + " 100");
     }
   }
-
-
 }

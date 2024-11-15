@@ -40,7 +40,7 @@ public class ImageProcessorException extends Exception {
   }
 
   /**
-   An exception that is thrown when a method is not implemented.
+   * An exception that is thrown when a method is not implemented.
    */
   public static class NotImplementedException extends ImageProcessorException {
 
