@@ -512,7 +512,7 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
-    public void testGetUserInput() {
+    public void testGetUserInput() throws ImageProcessorException{
       StringReader reader = new StringReader("test input");
       ConsoleInput consoleInput = new ConsoleInput(reader);
       assertEquals(reader, consoleInput.getUserInput());
