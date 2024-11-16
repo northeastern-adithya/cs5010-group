@@ -2,9 +2,9 @@ package view.components;
 
 import controller.Features;
 import model.enumeration.UserCommand;
+import view.input.UserInput;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;

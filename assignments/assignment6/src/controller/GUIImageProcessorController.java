@@ -1,17 +1,11 @@
 package controller;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import model.enumeration.ImageType;
 import model.enumeration.UserCommand;
 import model.memory.ImageMemory;
 import model.memory.StringMemory;
@@ -82,20 +76,15 @@ public class GUIImageProcessorController implements ImageProcessorController,
               if (isImageLoaded()) {
                 throw new ImageProcessorException("Save the current image "
                         + "before loading a new one");
-              }
-              JFileChooser fileChooser = createFileChooseWithFilter();
-              int returnState = fileChooser.showOpenDialog(null);
-              if (returnState == JFileChooser.APPROVE_OPTION) {
-                File f = fileChooser.getSelectedFile();
-                String imageName =
-                        IOUtils.getImageNameFromPath(f.getAbsolutePath());
-                imageProcessingService.loadImage(ImageProcessingRequest.builder()
-                        .imagePath(f.getAbsolutePath())
-                        .imageName(imageName)
-                        .build());
-                updateImageToDisplay(imageName);
-              }
             }
+            String imagePath = userInput.interactiveImageLoadPathInput();
+            String imageName = IOUtils.getImageNameFromPath(imagePath);
+            imageProcessingService.loadImage(ImageProcessingRequest.builder()
+                      .imagePath(imagePath)
+                      .imageName(imageName)
+                      .build());
+            updateImageToDisplay(imageName);
+        }
     );
   }
 
@@ -130,19 +119,15 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void saveImage() {
     executeImageOperation(
-            () -> {
-              validateImageLoaded();
-              JFileChooser fchooser = createFileChooseWithFilter();
-              int returnState = fchooser.showSaveDialog(null);
-              if (returnState == JFileChooser.APPROVE_OPTION) {
-                File file = fchooser.getSelectedFile();
-                imageProcessingService.saveImage(ImageProcessingRequest.builder()
-                        .imagePath(file.getAbsolutePath())
-                        .imageName(getImageToDisplay())
-                        .build());
-                this.clearMemory();
-              }
-            }
+        () -> {
+            validateImageLoaded();
+            String destinationImagePath = userInput.interactiveImageSavePathInput();
+            imageProcessingService.saveImage(ImageProcessingRequest.builder()
+                      .imagePath(destinationImagePath)
+                      .imageName(getImageToDisplay())
+                      .build());
+            this.clearMemory();
+        }
     );
   }
 
@@ -306,24 +291,6 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
-
-  /**
-   * Creates a file chooser with the image filter.
-   * Supported image formats are JPEG, PNG, PPM, and JPG.
-   *
-   * @return the file chooser with the image filter
-   */
-  private JFileChooser createFileChooseWithFilter() {
-    JFileChooser fileChooser = new JFileChooser(".");
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Images",
-            ImageType.JPEG.getExtension(),
-            ImageType.PNG.getExtension(),
-            ImageType.PPM.getExtension(),
-            ImageType.JPG.getExtension());
-    fileChooser.setFileFilter(filter);
-    return fileChooser;
-  }
 
   /**
    * Updates the image view only.

@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import model.enumeration.UserCommand;
 import utility.IOUtils;
+import view.input.GUIInput;
 
 /**
  * Represents the output to the user.

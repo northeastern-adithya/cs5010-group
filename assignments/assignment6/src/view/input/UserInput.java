@@ -4,7 +4,10 @@ package view.input;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
+import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
+
+import exception.ImageProcessingRunTimeException;
 
 /**
  * Represents the user input.
@@ -44,4 +47,8 @@ public interface UserInput {
    * @return the slider input
    */
   Optional<Integer> getSliderInput();
+
+  String interactiveImageLoadPathInput() throws ImageProcessingRunTimeException.DisplayException;
+
+  String interactiveImageSavePathInput() throws ImageProcessingRunTimeException.DisplayException;
 }

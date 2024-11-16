@@ -6,6 +6,8 @@ import java.util.function.IntConsumer;
 
 import exception.ImageProcessorException;
 
+import exception.ImageProcessingRunTimeException;
+
 /**
  * Represents all the inputs
  * taken from command line.
@@ -45,5 +47,13 @@ public class ConsoleInput implements UserInput {
     return Optional.empty();
   }
 
+  @Override
+  public String interactiveImageLoadPathInput() {
+    throw new ImageProcessingRunTimeException.DisplayException("Not supported for console input");
+  }
 
+  @Override
+  public String interactiveImageSavePathInput() {
+    throw new ImageProcessingRunTimeException.DisplayException("Not supported for console input");
+  }
 }
