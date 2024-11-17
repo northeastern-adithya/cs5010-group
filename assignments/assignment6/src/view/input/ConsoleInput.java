@@ -6,7 +6,7 @@ import java.util.function.IntConsumer;
 
 import exception.ImageProcessorException;
 
-import exception.ImageProcessingRunTimeException;
+import exception.ImageProcessorException;
 
 /**
  * Represents all the inputs
@@ -48,12 +48,12 @@ public class ConsoleInput implements UserInput {
   }
 
   @Override
-  public String interactiveImageLoadPathInput() {
-    throw new ImageProcessingRunTimeException.DisplayException("Not supported for console input");
+  public String interactiveImageLoadPathInput() throws ImageProcessorException {
+    throw new ImageProcessorException("Not supported for console input");
   }
 
   @Override
-  public String interactiveImageSavePathInput() {
-    throw new ImageProcessingRunTimeException.DisplayException("Not supported for console input");
+  public String interactiveImageSavePathInput() throws ImageProcessorException {
+    throw new ImageProcessorException("Not supported for console input");
   }
 }

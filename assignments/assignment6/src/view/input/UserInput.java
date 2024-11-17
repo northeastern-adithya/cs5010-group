@@ -3,11 +3,7 @@ package view.input;
 
 import java.util.Optional;
 import java.util.function.IntConsumer;
-
-import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-
-import exception.ImageProcessingRunTimeException;
 
 /**
  * Represents the user input.
@@ -48,7 +44,19 @@ public interface UserInput {
    */
   Optional<Integer> getSliderInput();
 
-  String interactiveImageLoadPathInput() throws ImageProcessingRunTimeException.DisplayException;
+  /**
+   * Prompts the user for the path to load an image interactively.
+   *
+   * @return the path to load the image
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  String interactiveImageLoadPathInput() throws ImageProcessorException;
 
-  String interactiveImageSavePathInput() throws ImageProcessingRunTimeException.DisplayException;
+  /**
+   * Prompts the user for the path to save an image interactively.
+   *
+   * @return the path to save the image
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  String interactiveImageSavePathInput() throws ImageProcessorException;
 }

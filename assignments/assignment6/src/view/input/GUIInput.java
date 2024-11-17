@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
+import exception.ImageProcessorException;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import exception.ImageProcessorException;
 import model.enumeration.ImageType;
 
 public class GUIInput implements UserInput {
@@ -71,26 +71,26 @@ public class GUIInput implements UserInput {
   }
 
   @Override
-  public String interactiveImageLoadPathInput() {
+  public String interactiveImageLoadPathInput() throws ImageProcessorException {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showOpenDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
       File f = fileChooser.getSelectedFile();
       return f.getAbsolutePath();
     } else {
-      throw new IllegalArgumentException("Invalid file path");
+      throw new ImageProcessorException("Invalid file path");
     }
   }
 
   @Override
-  public String interactiveImageSavePathInput() {
+  public String interactiveImageSavePathInput() throws ImageProcessorException {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showSaveDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
       File f = fileChooser.getSelectedFile();
       return f.getAbsolutePath();
     } else {
-      throw new IllegalArgumentException("Invalid file path");
+      throw new ImageProcessorException("Invalid file path");
     }
   }
 
