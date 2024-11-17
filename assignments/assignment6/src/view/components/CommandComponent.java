@@ -74,6 +74,18 @@ public class CommandComponent extends JPanel {
         case CLEAR:
           feature.clearMemory();
           break;
+        case VERTICAL_FLIP:
+          feature.verticalFlip();
+          break;
+        case HORIZONTAL_FLIP:
+          feature.horizontalFlip();
+          break;
+        case LUMA_COMPONENT:
+          feature.getLuma();
+          break;
+        case COLOR_CORRECT:
+          feature.colorCorrect();
+          break;
         case RED_COMPONENT:
           feature.redComponent();
           break;

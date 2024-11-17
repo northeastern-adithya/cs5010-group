@@ -60,4 +60,24 @@ public interface Features {
    */
   void compressImage();
 
+
+  /**
+   * Flips the image vertically.
+   */
+  void verticalFlip();
+
+  /**
+   * Flips the image horizontally.
+   */
+  void horizontalFlip();
+
+  /**
+   * Gets the luma of the image.
+   */
+  void getLuma();
+
+  /**
+   * Color corrects the image.
+   */
+  void colorCorrect();
 }

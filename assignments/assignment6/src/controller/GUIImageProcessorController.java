@@ -64,6 +64,11 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.SHARPEN,
                     UserCommand.COMPRESS,
                     UserCommand.CLEAR
+                    UserCommand.CLEAR,
+                    UserCommand.VERTICAL_FLIP,
+                    UserCommand.HORIZONTAL_FLIP,
+                    UserCommand.LUMA_COMPONENT,
+                    UserCommand.COLOR_CORRECT
             )
     );
     this.userOutput.addFeatures(this);
@@ -200,6 +205,76 @@ public class GUIImageProcessorController implements ImageProcessorController,
             }
     );
 
+  }
+
+  @Override
+  public void verticalFlip() {
+    executeImageOperation(
+        () -> {
+            String verticalFlipImageName = createDestinationImageName(
+                    getImageToDisplay(), UserCommand.VERTICAL_FLIP);
+            ImageProcessingRequest request = ImageProcessingRequest.builder()
+                    .imageName(getImageToDisplay())
+                    .destinationImageName(verticalFlipImageName)
+                    .build();
+            imageProcessingService.verticalFlip(request);
+            updateImageToDisplay(verticalFlipImageName);
+        }
+    );
+  }
+
+  @Override
+  public void horizontalFlip() {
+    executeImageOperation(
+        () -> {
+            String horizontalFlipImageName = createDestinationImageName(
+                    getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
+            ImageProcessingRequest request = ImageProcessingRequest.builder()
+                    .imageName(getImageToDisplay())
+                    .destinationImageName(horizontalFlipImageName)
+                    .build();
+            imageProcessingService.horizontalFlip(request);
+            updateImageToDisplay(horizontalFlipImageName);
+        }
+    );
+  }
+
+  @Override
+  public void getLuma() {
+    executeImageOperation(
+        () -> {
+            String lumaImageName = createDestinationImageName(
+                    getImageToDisplay(), UserCommand.LUMA_COMPONENT);
+            ImageProcessingRequest request = ImageProcessingRequest.builder()
+                    .imageName(getImageToDisplay())
+                    .destinationImageName(lumaImageName)
+                    .build();
+            imageProcessingService.createLumaComponent(request);
+            updateImageToDisplay(lumaImageName);
+        }
+    );
+  }
+
+  @Override
+  public void colorCorrect() {
+    executeImageOperation(
+        () -> {
+          showSplitView(this::handleColorCorrectCommand);
+        }
+    );
+  }
+
+  private String handleColorCorrectCommand(Integer percentage) throws
+          ImageProcessorException {
+    String colorCorrectImageName = createDestinationImageName(
+            getImageToDisplay(), UserCommand.COLOR_CORRECT);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(colorCorrectImageName)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.colorCorrect(request);
+    return colorCorrectImageName;
   }
 
   /**
