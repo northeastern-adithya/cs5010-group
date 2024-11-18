@@ -99,9 +99,9 @@ public class GUIInput implements UserInput {
   public int[] interactiveThreeLevelInput() throws ImageProcessorException {
     JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
 
-    JSpinner blackSpinner = buildSpinner(0, 0, 255, 1);
-    JSpinner midSpinner = buildSpinner(128, 0, 255, 1);
-    JSpinner whiteSpinner = buildSpinner(255, 0, 255, 1);
+    JSpinner blackSpinner = buildSpinner(0);
+    JSpinner midSpinner = buildSpinner(128);
+    JSpinner whiteSpinner = buildSpinner(255);
 
     configureLevelSpinnerListeners(blackSpinner, midSpinner, whiteSpinner);
 
@@ -175,8 +175,8 @@ public class GUIInput implements UserInput {
     });
   }
 
-  private JSpinner buildSpinner(int value, int minimum, int maximum, int stepSize) {
-    SpinnerNumberModel model = new SpinnerNumberModel(value, minimum, maximum, stepSize);
+  private JSpinner buildSpinner(int defaultValue) {
+    SpinnerNumberModel model = new SpinnerNumberModel(defaultValue, 0, 255, 1);
     return new JSpinner(model);
   }
 
