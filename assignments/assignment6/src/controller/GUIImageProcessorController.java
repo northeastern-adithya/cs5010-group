@@ -62,6 +62,11 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.LOAD,
                     UserCommand.SAVE,
                     UserCommand.SEPIA,
+                    UserCommand.RED_COMPONENT,
+                    UserCommand.GREEN_COMPONENT,
+                    UserCommand.BLUE_COMPONENT,
+                    UserCommand.BLUR,
+                    UserCommand.SHARPEN,
                     UserCommand.CLEAR
             )
     );
@@ -151,6 +156,107 @@ public class GUIImageProcessorController implements ImageProcessorController,
               clearImage();
             }
     );
+  }
+
+  @Override
+  public void blueComponent() {
+    executeImageOperation(
+            () -> {
+              showSplitView(percentage -> createComponent(percentage,
+                      UserCommand.BLUE_COMPONENT));
+            }
+    );
+  }
+
+  @Override
+  public void blurImage() {
+    executeImageOperation(
+            () -> {
+              showSplitView(this::createBlurImage);
+            }
+    );
+  }
+
+  @Override
+  public void sharpenImage() {
+    executeImageOperation(
+            () -> {
+              showSplitView(this::createSharpenImage);
+            }
+    );
+  }
+
+  private String createSharpenImage(Integer percentage) throws
+          ImageProcessorException {
+    String sharpenImageName = createDestinationImageName(getImageToDisplay(),
+            UserCommand.SHARPEN);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(sharpenImageName)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.sharpenImage(request);
+    return sharpenImageName;
+  }
+
+  private String createBlurImage(Integer percentage) throws
+          ImageProcessorException {
+    String blurImageName = createDestinationImageName(getImageToDisplay(),
+            UserCommand.BLUR);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(blurImageName)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.blurImage(request);
+    return blurImageName;
+  }
+
+  @Override
+  public void redComponent() {
+    executeImageOperation(
+            () -> {
+              showSplitView(percentage -> createComponent(percentage,
+                      UserCommand.RED_COMPONENT));
+            }
+    );
+  }
+
+  @Override
+  public void greenComponent() {
+    executeImageOperation(
+            () -> {
+              showSplitView(percentage -> createComponent(percentage,
+                      UserCommand.GREEN_COMPONENT));
+            }
+    );
+  }
+
+  private String createComponent(Integer percentage, UserCommand command) throws
+          ImageProcessorException {
+    String imageName = createDestinationImageName(getImageToDisplay(),
+            command);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(imageName)
+            .percentage(percentage)
+            .build();
+    switch (command) {
+      case RED_COMPONENT:
+        imageProcessingService.createRedComponent(request);
+        break;
+      case GREEN_COMPONENT:
+        imageProcessingService.createGreenComponent(request);
+        break;
+      case BLUE_COMPONENT:
+        imageProcessingService.createBlueComponent(request);
+        break;
+      default:
+        throw new ImageProcessorException(
+                String.format("Invalid command for creating "
+                        + "component: %s", command));
+    }
+    return imageName;
   }
 
   /**
