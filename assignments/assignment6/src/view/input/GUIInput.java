@@ -37,13 +37,19 @@ public class GUIInput implements UserInput {
     return result == JOptionPane.OK_OPTION;
   }
 
-  private JSlider createSlider(JLabel valueLable) {
+  /**
+   * Creates a slider with a value label.
+   *
+   * @param valueLabel the label to display the value of the slider
+   * @return the slider
+   */
+  private JSlider createSlider(JLabel valueLabel) {
     JSlider slider = new JSlider(0, 100, 100);
     slider.setMajorTickSpacing(10);
     slider.setMinorTickSpacing(1);
     slider.setPaintTicks(true);
     slider.setPaintLabels(true);
-    slider.addChangeListener(e -> valueLable.setText("Value: " + slider.getValue()));
+    slider.addChangeListener(e -> valueLabel.setText("Value: " + slider.getValue()));
     return slider;
   }
 
