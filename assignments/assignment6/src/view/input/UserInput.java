@@ -59,4 +59,12 @@ public interface UserInput {
    * @throws ImageProcessorException if there is an error getting the input
    */
   String interactiveImageSavePathInput() throws ImageProcessorException;
+
+  /**
+   * Prompts the user for the levels to apply interactively.
+   *
+   * @return the levels to apply
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  int[] interactiveThreeLevelInput() throws ImageProcessorException;
 }

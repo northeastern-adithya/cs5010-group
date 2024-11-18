@@ -104,6 +104,9 @@ public class CommandComponent extends JPanel {
         case COMPRESS:
           feature.compressImage();
           break;
+        case LEVELS_ADJUST:
+          feature.levelsAdjust();
+          break;
         default:
           // Invalid Command - Do nothing
           break;

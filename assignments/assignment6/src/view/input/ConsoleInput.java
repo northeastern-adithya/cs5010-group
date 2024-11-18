@@ -56,4 +56,9 @@ public class ConsoleInput implements UserInput {
   public String interactiveImageSavePathInput() throws ImageProcessorException {
     throw new ImageProcessorException("Not supported for console input");
   }
+
+  @Override
+  public int[] interactiveThreeLevelInput() throws ImageProcessorException {
+    throw new ImageProcessorException("Not supported for console input");
+  }
 }

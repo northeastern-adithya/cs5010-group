@@ -63,12 +63,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.BLUR,
                     UserCommand.SHARPEN,
                     UserCommand.COMPRESS,
-                    UserCommand.CLEAR
                     UserCommand.CLEAR,
                     UserCommand.VERTICAL_FLIP,
                     UserCommand.HORIZONTAL_FLIP,
                     UserCommand.LUMA_COMPONENT,
-                    UserCommand.COLOR_CORRECT
+                    UserCommand.COLOR_CORRECT,
+                    UserCommand.LEVELS_ADJUST
             )
     );
     this.userOutput.addFeatures(this);
@@ -259,22 +259,43 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void colorCorrect() {
     executeImageOperation(
         () -> {
-          showSplitView(this::handleColorCorrectCommand);
+          showSplitView(
+                  percentage -> executeSplitViewCommand(percentage,
+                          UserCommand.COLOR_CORRECT)
+          );
         }
     );
   }
 
-  private String handleColorCorrectCommand(Integer percentage) throws
+  @Override
+  public void levelsAdjust(){
+    executeImageOperation(
+            () -> {
+              int[] levels = userInput.interactiveThreeLevelInput();
+              int blackLevel = levels[0];
+              int midLevel = levels[1];
+              int whiteLevel = levels[2];
+              showSplitView(
+                      percentage -> handleLevelsAdjustment(percentage, blackLevel, midLevel, whiteLevel)
+              );
+            }
+    );
+  }
+
+  private String handleLevelsAdjustment(int percentage, int blackLevel, int midLevel, int whiteLevel) throws
           ImageProcessorException {
-    String colorCorrectImageName = createDestinationImageName(
-            getImageToDisplay(), UserCommand.COLOR_CORRECT);
+    validateImageLoaded();
+    String levelsImageName = createDestinationImageName(getImageToDisplay(),
+            UserCommand.LEVELS_ADJUST);
+
     ImageProcessingRequest request = ImageProcessingRequest.builder()
             .imageName(getImageToDisplay())
-            .destinationImageName(colorCorrectImageName)
+            .destinationImageName(levelsImageName)
+            .levels(blackLevel, midLevel, whiteLevel)
             .percentage(percentage)
             .build();
-    imageProcessingService.colorCorrect(request);
-    return colorCorrectImageName;
+    imageProcessingService.levelsAdjust(request);
+    return levelsImageName;
   }
 
   /**
@@ -313,6 +334,9 @@ public class GUIImageProcessorController implements ImageProcessorController,
         break;
       case SHARPEN:
         imageProcessingService.sharpenImage(request);
+        break;
+      case COLOR_CORRECT:
+        imageProcessingService.colorCorrect(request);
         break;
       default:
         throw new ImageProcessorException(

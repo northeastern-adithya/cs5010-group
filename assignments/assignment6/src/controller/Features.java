@@ -80,4 +80,9 @@ public interface Features {
    * Color corrects the image.
    */
   void colorCorrect();
+
+  /**
+   * Adjusts the levels of the image.
+   */
+  void levelsAdjust();
 }

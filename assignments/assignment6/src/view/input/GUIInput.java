@@ -1,5 +1,6 @@
 package view.input;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Optional;
 import java.util.function.IntConsumer;
@@ -94,6 +95,42 @@ public class GUIInput implements UserInput {
     }
   }
 
+  @Override
+  public int[] interactiveThreeLevelInput() throws ImageProcessorException {
+    JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
+
+    JSpinner blackSpinner = buildSpinner(0, 0, 255, 1);
+    JSpinner midSpinner = buildSpinner(128, 0, 255, 1);
+    JSpinner whiteSpinner = buildSpinner(255, 0, 255, 1);
+
+    configureLevelSpinnerListeners(blackSpinner, midSpinner, whiteSpinner);
+
+    disableSpinnerTextEditing(blackSpinner, midSpinner, whiteSpinner);
+
+    // Add components to panel
+    panel.add(new JLabel("Black Point:"));
+    panel.add(blackSpinner);
+    panel.add(new JLabel("Mid Point:"));
+    panel.add(midSpinner);
+    panel.add(new JLabel("White Point:"));
+    panel.add(whiteSpinner);
+
+    // Show dialog
+    int result = JOptionPane.showConfirmDialog(null, panel,
+            "Level Adjustment", JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE);
+
+    if (result == JOptionPane.OK_OPTION) {
+      return new int[]{
+              (Integer) blackSpinner.getValue(),
+              (Integer) midSpinner.getValue(),
+              (Integer) whiteSpinner.getValue()
+      };
+    } else {
+      throw new ImageProcessorException("Level adjustment cancelled");
+    }
+  }
+
   private JFileChooser createFileChooseWithFilter() {
     JFileChooser fileChooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -105,4 +142,52 @@ public class GUIInput implements UserInput {
     fileChooser.setFileFilter(filter);
     return fileChooser;
   }
+
+  private void configureLevelSpinnerListeners(JSpinner blackSpinner, JSpinner midSpinner, JSpinner whiteSpinner) {
+    // Add change listeners to maintain black < mid < white relationship
+    blackSpinner.addChangeListener(e -> {
+      int blackVal = (Integer) blackSpinner.getValue();
+      int midVal = (Integer) midSpinner.getValue();
+      if (blackVal >= midVal) {
+        blackSpinner.setValue(midVal - 1);
+      }
+    });
+
+    midSpinner.addChangeListener(e -> {
+      int blackVal = (Integer) blackSpinner.getValue();
+      int midVal = (Integer) midSpinner.getValue();
+      int whiteVal = (Integer) whiteSpinner.getValue();
+
+      if (midVal <= blackVal) {
+        midSpinner.setValue(blackVal + 1);
+      }
+      if (midVal >= whiteVal) {
+        midSpinner.setValue(whiteVal - 1);
+      }
+    });
+
+    whiteSpinner.addChangeListener(e -> {
+      int midVal = (Integer) midSpinner.getValue();
+      int whiteVal = (Integer) whiteSpinner.getValue();
+      if (whiteVal <= midVal) {
+        whiteSpinner.setValue(midVal + 1);
+      }
+    });
+  }
+
+  private JSpinner buildSpinner(int value, int minimum, int maximum, int stepSize) {
+    SpinnerNumberModel model = new SpinnerNumberModel(value, minimum, maximum, stepSize);
+    return new JSpinner(model);
+  }
+
+  private void disableSpinnerTextEditing(JSpinner blackSpinner, JSpinner midSpinner, JSpinner whiteSpinner) {
+    disableTextEditing(blackSpinner);
+    disableTextEditing(midSpinner);
+    disableTextEditing(whiteSpinner);
+  }
+
+  private void disableTextEditing(JSpinner spinner) {
+    ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
+  }
+
 }
