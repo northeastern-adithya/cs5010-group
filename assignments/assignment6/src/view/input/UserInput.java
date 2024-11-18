@@ -1,6 +1,7 @@
 package view.input;
 
 
+import java.util.Optional;
 import java.util.function.IntConsumer;
 
 import exception.ImageProcessorException;
@@ -14,16 +15,19 @@ public interface UserInput {
   /**
    * Get the user input
    * which the user is communicating.
+   *
    * @return the readable
-   *         which the user has communicating.
+   * which the user has communicating.
    * @throws ImageProcessorException if there is any exception when returning
    *                                 inputstream.
    */
-  Readable getUserInput() throws ImageProcessorException;
+  Readable getUserInput() throws
+          ImageProcessorException;
 
 
   /**
    * Confirm the split view.
+   *
    * @param updateImageCallback the callback function to update the image.
    * @return true if the user confirms the split view false otherwise.
    * @throws ImageProcessorException if there is any exception when getting
@@ -31,4 +35,13 @@ public interface UserInput {
    */
   boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException;
+
+
+  /**
+   * Returns the slider input.
+   * Is present if the user has entered a value.
+   * Otherwise, empty.
+   * @return the slider input
+   */
+  Optional<Integer> getSliderInput();
 }

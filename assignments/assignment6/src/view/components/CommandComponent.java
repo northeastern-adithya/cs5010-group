@@ -74,6 +74,24 @@ public class CommandComponent extends JPanel {
         case CLEAR:
           feature.clearMemory();
           break;
+        case RED_COMPONENT:
+          feature.redComponent();
+          break;
+        case GREEN_COMPONENT:
+          feature.greenComponent();
+          break;
+        case BLUE_COMPONENT:
+          feature.blueComponent();
+          break;
+        case BLUR:
+          feature.blurImage();
+          break;
+        case SHARPEN:
+          feature.sharpenImage();
+          break;
+        case COMPRESS:
+          feature.compressImage();
+          break;
         default:
           // Invalid Command - Do nothing
           break;

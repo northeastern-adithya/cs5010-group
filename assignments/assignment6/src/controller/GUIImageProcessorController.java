@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 import javax.swing.JFileChooser;
@@ -62,6 +63,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.LOAD,
                     UserCommand.SAVE,
                     UserCommand.SEPIA,
+                    UserCommand.RED_COMPONENT,
+                    UserCommand.GREEN_COMPONENT,
+                    UserCommand.BLUE_COMPONENT,
+                    UserCommand.BLUR,
+                    UserCommand.SHARPEN,
+                    UserCommand.COMPRESS,
                     UserCommand.CLEAR
             )
     );
@@ -92,6 +99,11 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Validates if an image is loaded in memory.
+   *
+   * @throws ImageProcessorException if no image is loaded
+   */
   private void validateImageLoaded() throws
           ImageProcessorException {
     if (!isImageLoaded()) {
@@ -138,7 +150,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void applySepia() {
     executeImageOperation(
             () -> {
-              showSplitView(this::handleSepiaCommand);
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.SEPIA)
+              );
             }
     );
   }
@@ -153,26 +168,142 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
-  /**
-   * Handles the sepia command.
-   *
-   * @param percentage the split percentage of the image to be displayed.
-   * @return the name of the image after applying the sepia command.
-   * @throws ImageProcessorException if there is an error applying the sepia
-   *                                 command
-   */
-  private String handleSepiaCommand(Integer percentage) throws
-          ImageProcessorException {
+  @Override
+  public void blueComponent() {
+    executeImageOperation(
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.BLUE_COMPONENT)
+              );
+            }
+    );
+  }
 
-    String sepiaImageName = createDestinationImageName(getImageToDisplay(),
-            UserCommand.SEPIA);
+  @Override
+  public void blurImage() {
+    executeImageOperation(
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.BLUR)
+              );
+            }
+    );
+  }
+
+  @Override
+  public void sharpenImage() {
+    executeImageOperation(
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.SHARPEN)
+              );
+            }
+    );
+  }
+
+  @Override
+  public void compressImage() {
+    executeImageOperation(
+            () -> {
+              Optional<Integer> percentage = userInput.getSliderInput();
+              if (percentage.isPresent()) {
+                compressImage(percentage.get());
+              }
+            }
+    );
+
+  }
+
+  /**
+   * Runs the split view command.
+   *
+   * @param percentage the percentage of the image to be displayed
+   * @param command    the command to be applied
+   * @return the name of the image after applying the split view command
+   * @throws ImageProcessorException if there is an error applying the command
+   */
+  private String executeSplitViewCommand(Integer percentage, UserCommand command) throws
+          ImageProcessorException {
+    validateImageLoaded();
+    String imageName = createDestinationImageName(getImageToDisplay(),
+            command);
     ImageProcessingRequest request = ImageProcessingRequest.builder()
             .imageName(getImageToDisplay())
-            .destinationImageName(sepiaImageName)
+            .destinationImageName(imageName)
             .percentage(percentage)
             .build();
-    imageProcessingService.sepiaImage(request);
-    return sepiaImageName;
+    switch (command) {
+      case RED_COMPONENT:
+        imageProcessingService.createRedComponent(request);
+        break;
+      case GREEN_COMPONENT:
+        imageProcessingService.createGreenComponent(request);
+        break;
+      case BLUE_COMPONENT:
+        imageProcessingService.createBlueComponent(request);
+        break;
+      case SEPIA:
+        imageProcessingService.sepiaImage(request);
+        break;
+      case BLUR:
+        imageProcessingService.blurImage(request);
+        break;
+      case SHARPEN:
+        imageProcessingService.sharpenImage(request);
+        break;
+      default:
+        throw new ImageProcessorException(
+                String.format("Invalid command for split view: %s", command));
+    }
+    return imageName;
+  }
+
+  /**
+   * Compresses the image by the given percentage.
+   *
+   * @param percentage the percentage by which the image is to be compressed
+   * @throws ImageProcessorException if there is an error compressing the image
+   */
+  private void compressImage(Integer percentage) throws
+          ImageProcessorException {
+    validateImageLoaded();
+    String compressImageName = createDestinationImageName(getImageToDisplay(),
+            UserCommand.COMPRESS);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(compressImageName)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.compressImage(request);
+    updateImageToDisplay(compressImageName);
+  }
+
+
+  @Override
+  public void redComponent() {
+    executeImageOperation(
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.RED_COMPONENT)
+              );
+            }
+    );
+  }
+
+  @Override
+  public void greenComponent() {
+    executeImageOperation(
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.GREEN_COMPONENT)
+              );
+            }
+    );
   }
 
 
