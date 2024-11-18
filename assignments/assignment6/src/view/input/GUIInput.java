@@ -20,7 +20,8 @@ public class GUIInput implements UserInput {
   @Override
   public boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException {
-    JSlider slider = createSlider();
+    JLabel value = new JLabel("Value: 100");
+    JSlider slider = createSlider(value);
     slider.addChangeListener(e -> {
       if (!slider.getValueIsAdjusting()) {
         updateImageCallback.accept(slider.getValue());
@@ -29,27 +30,31 @@ public class GUIInput implements UserInput {
     JPanel panel = new JPanel();
     panel.add(new JLabel("Split View"));
     panel.add(slider);
+    panel.add(value);
     int result = JOptionPane.showConfirmDialog(null, panel, "Split View",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
     return result == JOptionPane.OK_OPTION;
   }
 
-  private JSlider createSlider() {
+  private JSlider createSlider(JLabel valueLable) {
     JSlider slider = new JSlider(0, 100, 100);
     slider.setMajorTickSpacing(10);
     slider.setMinorTickSpacing(1);
     slider.setPaintTicks(true);
     slider.setPaintLabels(true);
+    slider.addChangeListener(e -> valueLable.setText("Value: " + slider.getValue()));
     return slider;
   }
 
   @Override
   public Optional<Integer> getSliderInput() {
-    JSlider slider = createSlider();
+    JLabel value = new JLabel("Value: 100");
+    JSlider slider = createSlider(value);
     JPanel panel = new JPanel();
     panel.add(new JLabel("Enter the value"));
     panel.add(slider);
+    panel.add(value);
     int result = JOptionPane.showConfirmDialog(null, panel, "Slider",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
     if (result == JOptionPane.OK_OPTION) {
