@@ -54,4 +54,10 @@ public interface Features {
    */
   void sharpenImage();
 
+
+  /**
+   * Compresses the image by the given percentage.
+   */
+  void compressImage();
+
 }

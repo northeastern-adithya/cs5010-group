@@ -1,6 +1,7 @@
 package view.input;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.IntConsumer;
 
 import exception.ImageProcessorException;
@@ -37,6 +38,11 @@ public class ConsoleInput implements UserInput {
   public boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException {
     throw new ImageProcessorException("Slider not supported in console input");
+  }
+
+  @Override
+  public Optional<Integer> getSliderInput(){
+    return Optional.empty();
   }
 
 

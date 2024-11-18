@@ -89,6 +89,9 @@ public class CommandComponent extends JPanel {
         case SHARPEN:
           feature.sharpenImage();
           break;
+        case COMPRESS:
+          feature.compressImage();
+          break;
         default:
           // Invalid Command - Do nothing
           break;

@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 import javax.swing.JFileChooser;
@@ -67,6 +68,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.BLUE_COMPONENT,
                     UserCommand.BLUR,
                     UserCommand.SHARPEN,
+                    UserCommand.COMPRESS,
                     UserCommand.CLEAR
             )
     );
@@ -186,8 +188,36 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  @Override
+  public void compressImage() {
+    executeImageOperation(
+            () -> {
+              Optional<Integer> percentage = userInput.getSliderInput();
+              if (percentage.isPresent()) {
+                compressImage(percentage.get());
+              }
+            }
+    );
+
+  }
+
+  private void compressImage(Integer percentage) throws
+          ImageProcessorException {
+    validateImageLoaded();
+    String compressImageName = createDestinationImageName(getImageToDisplay(),
+            UserCommand.COMPRESS);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(compressImageName)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.compressImage(request);
+    updateImageToDisplay(compressImageName);
+  }
+
   private String createSharpenImage(Integer percentage) throws
           ImageProcessorException {
+    validateImageLoaded();
     String sharpenImageName = createDestinationImageName(getImageToDisplay(),
             UserCommand.SHARPEN);
     ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -201,6 +231,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
 
   private String createBlurImage(Integer percentage) throws
           ImageProcessorException {
+    validateImageLoaded();
     String blurImageName = createDestinationImageName(getImageToDisplay(),
             UserCommand.BLUR);
     ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -232,8 +263,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+
   private String createComponent(Integer percentage, UserCommand command) throws
           ImageProcessorException {
+    validateImageLoaded();
     String imageName = createDestinationImageName(getImageToDisplay(),
             command);
     ImageProcessingRequest request = ImageProcessingRequest.builder()
