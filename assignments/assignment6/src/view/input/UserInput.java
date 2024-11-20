@@ -4,6 +4,7 @@ package view.input;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 import exception.ImageProcessorException;
+import model.request.ImageProcessingRequest;
 
 /**
  * Represents the user input.
@@ -66,5 +67,5 @@ public interface UserInput {
    * @return the levels to apply
    * @throws ImageProcessorException if there is an error getting the input
    */
-  int[] interactiveThreeLevelInput() throws ImageProcessorException;
+  ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException;
 }

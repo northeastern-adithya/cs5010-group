@@ -3,6 +3,7 @@ package app.parsers;
 import controller.GUIImageProcessorController;
 import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
+import model.memory.StringMemory;
 import view.input.GUIInput;
 import view.output.GUIOutput;
 
@@ -18,8 +19,8 @@ public class GUIArgumentParser extends AbstractArgumentParser {
     return new GUIImageProcessorController(
             new GUIInput(),
             new GUIOutput(),
-            createService()
-
+            createService(),
+            new StringMemory()
     );
   }
 }
