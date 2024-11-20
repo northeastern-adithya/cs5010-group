@@ -108,6 +108,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.png"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+                    randomImage.histogram().toString()));
     assertEquals("random.png", stringMemory.getImage(""));
     features.saveImage();
 
@@ -158,6 +160,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.ppm"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.ppm", stringMemory.getImage(""));
     features.saveImage();
 
@@ -208,6 +212,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.ppm"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.ppm", stringMemory.getImage(""));
     features.saveImage();
 
@@ -258,6 +264,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.png"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.png", stringMemory.getImage(""));
     features.saveImage();
 
@@ -405,6 +413,8 @@ public class GUIControllerTests {
     assertTrue(output.toString().contains(
             expectedImage.toString()
     ));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -436,6 +446,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -467,6 +479,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -498,6 +512,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -529,6 +545,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -560,6 +578,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -591,6 +611,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   // GREEN COMPONENT TESTS
@@ -623,6 +645,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -654,6 +678,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -685,6 +711,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -716,6 +744,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -747,6 +777,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -778,6 +810,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -809,6 +843,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
 
@@ -842,6 +878,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -873,6 +911,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -904,6 +944,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -935,6 +977,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -966,6 +1010,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -997,6 +1043,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -1028,6 +1076,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
 
