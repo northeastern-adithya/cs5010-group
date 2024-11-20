@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
@@ -50,12 +51,15 @@ public class MockInput implements UserInput {
   @Override
   public boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException {
+    if(getSliderInput().isPresent() && Objects.nonNull(updateImageCallback)){
+      updateImageCallback.accept(getSliderInput().get());
+    }
     return this.confirmSplitView;
   }
 
   @Override
   public Optional<Integer> getSliderInput() {
-    return Optional.of(this.sliderInput);
+    return Optional.ofNullable(this.sliderInput);
   }
 
   @Override
