@@ -1478,7 +1478,7 @@ public class UnitTestForImageProcessor {
               + "P is an optional parameter for split view.\n"
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
-              + "clear: Clear the program's memory.\n"
+              + "reset: Resets the program's memory.\n"
               + "quit: Quit the program.\n"
               + "help: Print this help message.\n";
 
