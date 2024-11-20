@@ -1052,6 +1052,210 @@ public class GUIControllerTests {
             stringMemory);
   }
 
+  // BLUR TESTS
+  @Test
+  public void testBlurWithPureRedImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.redImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {9371648, 9371648},
+            {9371648, 9371648}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureGreenImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greenImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {36608, 36608},
+            {36608, 36608}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureBlueImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blueImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {143, 143},
+            {143, 143}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureGreyImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greyImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {4737096, 4737096},
+            {4737096, 4737096}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureWhiteImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.whiteImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {9408399, 9408399},
+            {9408399, 9408399}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureBlackImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blackImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithRandomImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {4663079, 3088207},
+            {3100447, 3096383}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
   private ImageMemory<Image> initialiseImageMemory() {
     return new HashMapMemory();
   }
