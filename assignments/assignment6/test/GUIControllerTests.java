@@ -395,12 +395,16 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
-    }));
+                    {16777215, 16777215},
+                    {16777215, 16777215}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+
+    assertTrue(output.toString().contains(
+            expectedImage.toString()
+    ));
   }
 
   @Test
@@ -424,12 +428,14 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+                    {0, 0},
+                    {0, 0}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
   }
 
   @Test
@@ -453,12 +459,14 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+                    {0, 0},
+                    {0, 0}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
   }
 
   @Test
@@ -482,12 +490,14 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {8421504, 8421504},
-            {8421504, 8421504}
-    }));
+                    {8421504, 8421504},
+                    {8421504, 8421504}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
   }
 
   @Test
@@ -511,12 +521,14 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
-    }));
+                    {16777215, 16777215},
+                    {16777215, 16777215}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
   }
 
   @Test
@@ -540,12 +552,14 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+                    {0, 0},
+                    {0, 0}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
   }
 
   @Test
@@ -569,12 +583,232 @@ public class GUIControllerTests {
     features.redComponent();
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777215, 0},
-            {0, 8421504}
-    }));
+                    {16777215, 0},
+                    {0, 8421504}
+            }));
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
                     UserCommand.RED_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  // GREEN COMPONENT TESTS
+  @Test
+  public void testCreateGreenComponentWithPureGreenImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greenImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16777215, 16777215},
+                    {16777215, 16777215}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithPureRedImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.redImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithPureBlueImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blueImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithPureGreyImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greyImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {8421504, 8421504},
+                    {8421504, 8421504}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithPureWhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.whiteImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16777215, 16777215},
+                    {16777215, 16777215}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithPureBlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blackImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCreateGreenComponentWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.greenComponent();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {16777215, 8421504}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.GREEN_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
   }
 
 
