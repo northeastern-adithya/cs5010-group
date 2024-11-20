@@ -74,6 +74,11 @@ public class GUIImageProcessorController implements ImageProcessorController,
     this.userOutput.addFeatures(this);
   }
 
+  /**
+   * Loads an image from a file system path into the application.
+   * Validates that no unsaved image is currently loaded before proceeding.
+   * Updates the display with the newly loaded image.
+   */
   @Override
   public void loadImage() {
     executeImageOperation(
@@ -121,6 +126,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     return StringUtils.isNotNullOrEmpty(imageName);
   }
 
+  /**
+   * Saves the currently displayed image to a specified file system location.
+   * Clears the current image from memory after saving.
+   */
   @Override
   public void saveImage() {
     executeImageOperation(
@@ -136,6 +145,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Applies a sepia tone filter to the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void applySepia() {
     executeImageOperation(
@@ -148,6 +161,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Clears the current image and associated data from memory.
+   * Resets the display to its initial state.
+   */
   @Override
   public void reset() {
     executeImageOperation(
@@ -158,6 +175,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Extracts and displays the blue color component of the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void blueComponent() {
     executeImageOperation(
@@ -170,6 +191,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Applies a Gaussian blur filter to the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void blurImage() {
     executeImageOperation(
@@ -182,6 +207,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Applies a sharpening filter to the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void sharpenImage() {
     executeImageOperation(
@@ -194,6 +223,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Compresses the current image by a specified percentage.
+   * Presents a slider interface for selecting the compression level.
+   */
   @Override
   public void compressImage() {
     executeImageOperation(
@@ -207,6 +240,9 @@ public class GUIImageProcessorController implements ImageProcessorController,
 
   }
 
+  /**
+   * Flips the current image vertically around its horizontal axis.
+   */
   @Override
   public void verticalFlip() {
     executeImageOperation(
@@ -223,6 +259,9 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Flips the current image horizontally around its vertical axis.
+   */
   @Override
   public void horizontalFlip() {
     executeImageOperation(
@@ -239,6 +278,9 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Extracts and displays the luma component of the current image.
+   */
   @Override
   public void getLuma() {
     executeImageOperation(
@@ -255,6 +297,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Color corrects the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void colorCorrect() {
     executeImageOperation(
@@ -267,6 +313,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Adjusts the levels of the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void levelsAdjust(){
     executeImageOperation(
@@ -282,6 +332,17 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Handles the levels adjustment operation.
+   *
+   * @param percentage the percentage of the image to be displayed
+   * @param blackLevel the black level
+   * @param midLevel   the middle level
+   * @param whiteLevel the white level
+   * @return the name of the image after applying the levels adjustment
+   * @throws ImageProcessorException if there is an error applying the levels
+   *                                 adjustment
+   */
   private String handleLevelsAdjustment(int percentage, int blackLevel, int midLevel, int whiteLevel) throws
           ImageProcessorException {
     validateImageLoaded();
@@ -366,6 +427,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   }
 
 
+  /**
+   * Creates the red component of the image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void redComponent() {
     executeImageOperation(
@@ -378,6 +443,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Creates the green component of the image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void greenComponent() {
     executeImageOperation(
@@ -534,6 +603,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    */
   @FunctionalInterface
   private interface ImageOperation {
+
     /**
      * Runs the image operation.
      *
