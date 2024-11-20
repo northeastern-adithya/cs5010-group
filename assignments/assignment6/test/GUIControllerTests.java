@@ -2,7 +2,11 @@ import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 import controller.Features;
@@ -108,6 +112,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.png"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.png", stringMemory.getImage(""));
     features.saveImage();
 
@@ -158,6 +164,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.ppm"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.ppm", stringMemory.getImage(""));
     features.saveImage();
 
@@ -208,6 +216,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.ppm"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.ppm", stringMemory.getImage(""));
     features.saveImage();
 
@@ -258,6 +268,8 @@ public class GUIControllerTests {
     assertEquals(randomImage, imageMemory.getImage("random.png"));
     assertTrue(output.toString().contains(
             randomImage.toString()));
+    assertTrue(output.toString().contains(
+            randomImage.histogram().toString()));
     assertEquals("random.png", stringMemory.getImage(""));
     features.saveImage();
 
@@ -405,6 +417,8 @@ public class GUIControllerTests {
     assertTrue(output.toString().contains(
             expectedImage.toString()
     ));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -436,6 +450,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -467,6 +483,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -498,6 +516,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -529,6 +549,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -560,6 +582,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -591,6 +615,8 @@ public class GUIControllerTests {
                     UserCommand.RED_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   // GREEN COMPONENT TESTS
@@ -623,6 +649,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -654,6 +682,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -685,6 +715,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -716,6 +748,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -747,6 +781,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -778,6 +814,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -809,6 +847,8 @@ public class GUIControllerTests {
                     UserCommand.GREEN_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
 
@@ -842,6 +882,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -873,6 +915,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -904,6 +948,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -935,6 +981,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -966,6 +1014,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -997,6 +1047,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
   @Test
@@ -1028,6 +1080,8 @@ public class GUIControllerTests {
                     UserCommand.BLUE_COMPONENT)));
     assertTrue(output.toString().contains(
             expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
   }
 
 
@@ -1050,6 +1104,814 @@ public class GUIControllerTests {
             new MockOutput(log),
             new FileImageProcessingService(imageMemory),
             stringMemory);
+  }
+
+  // BLUR TESTS
+  @Test
+  public void testBlurWithPureRedImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.redImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {9371648, 9371648},
+            {9371648, 9371648}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureGreenImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greenImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {36608, 36608},
+            {36608, 36608}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureBlueImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blueImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {143, 143},
+            {143, 143}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureGreyImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greyImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {4737096, 4737096},
+            {4737096, 4737096}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureWhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.whiteImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {9408399, 9408399},
+            {9408399, 9408399}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithPureBlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blackImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testBlurWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.blurImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {4663079, 3088207},
+            {3100447, 3096383}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.BLUR)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+
+  // SHARPEN TESTS
+  @Test
+  public void testSharpenWithPureRedImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.redImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 16711680},
+            {16711680, 16711680}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureGreenImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greenImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {65280, 65280},
+            {65280, 65280}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureBlueImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blueImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {255, 255},
+            {255, 255}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureGreyImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greyImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {14737632, 14737632},
+            {14737632, 14737632}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureWhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.whiteImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureBlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blackImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16736095, 6250495},
+            {6291295, 12566463}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  // COMPRESSION TESTS
+  @Test
+  public void testCompressionWithZeroPercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            0,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {14618624, 2101487, 61200},
+            {6328432, 16715776, 255}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COMPRESS)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCompressionWithTwentyFivePercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            25,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16723968, 4206767, 61200},
+            {4206767, 16723968, 255}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COMPRESS)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCompressionWithFiftyPercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            50,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6225920, 175, 48976},
+            {175, 6225920, 80}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COMPRESS)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCompressionWithSeventyFivePercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            75,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 96, 0},
+            {96, 0, 0}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COMPRESS)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCompressionWithHundredPercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            100,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0, 0},
+            {0, 0, 0}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COMPRESS)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testCompressionWithPNGToPNGAndPPMFormats() throws
+          IOException {
+    for (int compression = 0; compression <= 100; compression++) {
+      ImageMemory<Image> imageMemory = initialiseImageMemory();
+      ImageMemory<String> stringMemory = initialiseStringMemory();
+      StringBuilder output = new StringBuilder();
+      initialiseController(
+              "",
+              true,
+              compression,
+              "test_resources/input/random.png",
+              String.format(
+                      "test_resources/output/compressedImage%s.png",
+                      compression),
+              null,
+              stringMemory,
+              imageMemory,
+              output);
+
+      features.loadImage();
+      features.compressImage();
+      features.saveImage();
+
+      initialiseController(
+              "",
+              true,
+              compression,
+              "test_resources/input/random.png",
+              String.format(
+                      "test_resources/output/compressedImage%s.ppm",
+                      compression),
+              null,
+              stringMemory,
+              imageMemory,
+              output);
+
+      features.loadImage();
+      features.compressImage();
+      features.saveImage();
+
+
+      Path currentFilePath = Paths.get(
+              "test_resources/input/random.png"
+      );
+      Path compressedPngPath = Paths.get(
+              String.format("test_resources/output/compressedImage%s.png",
+                      compression)
+      );
+
+
+      Path compressedPpmPath = Paths.get(
+              String.format("test_resources/output/compressedImage%s.ppm",
+                      compression)
+      );
+
+      assertTrue(Files.exists(currentFilePath));
+      assertTrue(Files.exists(compressedPngPath));
+      assertTrue(Files.exists(compressedPpmPath));
+
+      assertTrue(Files.size(compressedPngPath) <= Files.size(currentFilePath));
+      assertTrue(Files.size(compressedPpmPath) <= Files.size(currentFilePath));
+    }
+  }
+
+  @Test
+  public void testCompressionWithJPGToPNGAndPPMFormats() throws
+          IOException {
+    for (int compression = 0; compression <= 100; compression++) {
+      ImageMemory<Image> imageMemory = initialiseImageMemory();
+      ImageMemory<String> stringMemory = initialiseStringMemory();
+      StringBuilder output = new StringBuilder();
+      initialiseController(
+              "",
+              true,
+              compression,
+              "test_resources/input/random.jpg",
+              String.format(
+                      "test_resources/output/compressedImage%s.png",
+                      compression),
+              null,
+              stringMemory,
+              imageMemory,
+              output);
+
+      features.loadImage();
+      features.compressImage();
+      features.saveImage();
+
+      initialiseController(
+              "",
+              true,
+              compression,
+              "test_resources/input/random.jpg",
+              String.format(
+                      "test_resources/output/compressedImage%s.ppm",
+                      compression),
+              null,
+              stringMemory,
+              imageMemory,
+              output);
+
+      features.loadImage();
+      features.compressImage();
+      features.saveImage();
+
+
+      Path currentFilePath = Paths.get(
+              "test_resources/input/random.jpg"
+      );
+      Path compressedPngPath = Paths.get(
+              String.format("test_resources/output/compressedImage%s.png",
+                      compression)
+      );
+
+
+      Path compressedPpmPath = Paths.get(
+              String.format("test_resources/output/compressedImage%s.ppm",
+                      compression)
+      );
+
+      assertTrue(Files.exists(currentFilePath));
+      assertTrue(Files.exists(compressedPngPath));
+      assertTrue(Files.exists(compressedPpmPath));
+
+      assertTrue(Files.size(compressedPngPath) <= Files.size(currentFilePath));
+      assertTrue(Files.size(compressedPpmPath) <= Files.size(currentFilePath));
+    }
+  }
+
+  @Test
+  public void testCompressionWithPPMToPPM() throws
+          IOException {
+    for (int compression = 0; compression <= 100; compression++) {
+      ImageMemory<Image> imageMemory = initialiseImageMemory();
+      ImageMemory<String> stringMemory = initialiseStringMemory();
+      StringBuilder output = new StringBuilder();
+      initialiseController(
+              "",
+              true,
+              compression,
+              "test_resources/input/random.ppm",
+              String.format(
+                      "test_resources/output/compressedImage%s.ppm",
+                      compression),
+              null,
+              stringMemory,
+              imageMemory,
+              output);
+
+      features.loadImage();
+      features.compressImage();
+      features.saveImage();
+
+      Path currentFilePath = Paths.get(
+              "test_resources/input/random.ppm"
+      );
+      Path compressedPpmPath = Paths.get(
+              String.format("test_resources/output/compressedImage%s.ppm",
+                      compression)
+      );
+      assertTrue(Files.exists(currentFilePath));
+      assertTrue(Files.exists(compressedPpmPath));
+      assertTrue(Files.size(compressedPpmPath) <= Files.size(currentFilePath));
+    }
+  }
+
+
+  @Test
+  public void compressionWithNegativeCompressionPercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            -1,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    assertTrue(output.toString().contains(
+            "Invalid compression percentage"));
+
+  }
+
+  @Test
+  public void compressionWithGreaterThanHundredCompressionPercentage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            101,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.compressImage();
+    assertTrue(output.toString().contains(
+            "Invalid compression percentage"));
   }
 
   private ImageMemory<Image> initialiseImageMemory() {
