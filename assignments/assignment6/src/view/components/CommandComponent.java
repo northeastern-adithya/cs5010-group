@@ -41,6 +41,16 @@ public class CommandComponent extends JPanel {
     this.add(button);
   }
 
+
+  /**
+   * Calls the features to act on closing the window.
+   */
+  public void closeWindow() {
+    for(Features feature : featureListeners) {
+      feature.closeWindow();
+    }
+  }
+
   /**
    * Handles the event when a button is clicked.
    *

@@ -240,6 +240,22 @@ public class GUIImageProcessorController implements ImageProcessorController,
 
   }
 
+  @Override
+  public void closeWindow() {
+    executeImageOperation(
+            () -> {
+              if (isImageLoaded()) {
+                displayMessage("Save the current image before closing the "
+                        + "window", DisplayMessageType.ERROR);
+                userOutput.doNotCloseWindow();
+              } else {
+                userOutput.closeWindow();
+              }
+            }
+    );
+
+  }
+
   /**
    * Flips the current image vertically around its horizontal axis.
    */
@@ -367,7 +383,8 @@ public class GUIImageProcessorController implements ImageProcessorController,
    * @return the name of the image after applying the split view command
    * @throws ImageProcessorException if there is an error applying the command
    */
-  private String executeSplitViewCommand(Integer percentage, UserCommand command) throws
+  private String executeSplitViewCommand(Integer percentage,
+                                         UserCommand command) throws
           ImageProcessorException {
     validateImageLoaded();
     String imageName = createDestinationImageName(getImageToDisplay(),
