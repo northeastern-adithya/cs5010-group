@@ -3,8 +3,7 @@ package view.components;
 import controller.Features;
 import model.enumeration.UserCommand;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -71,8 +70,20 @@ public class CommandComponent extends JPanel {
         case SEPIA:
           feature.applySepia();
           break;
-        case CLEAR:
-          feature.clearMemory();
+        case RESET:
+          feature.reset();
+          break;
+        case VERTICAL_FLIP:
+          feature.verticalFlip();
+          break;
+        case HORIZONTAL_FLIP:
+          feature.horizontalFlip();
+          break;
+        case LUMA_COMPONENT:
+          feature.getLuma();
+          break;
+        case COLOR_CORRECT:
+          feature.colorCorrect();
           break;
         case RED_COMPONENT:
           feature.redComponent();
@@ -91,6 +102,9 @@ public class CommandComponent extends JPanel {
           break;
         case COMPRESS:
           feature.compressImage();
+          break;
+        case LEVELS_ADJUST:
+          feature.levelsAdjust();
           break;
         default:
           // Invalid Command - Do nothing

@@ -25,8 +25,7 @@ public interface Features {
   /**
    * Clears the memory of the image processing application.
    */
-  void clearMemory();
-
+  void reset();
 
   /**
    * Creates the red component of the image.
@@ -60,4 +59,29 @@ public interface Features {
    */
   void compressImage();
 
+
+  /**
+   * Flips the image vertically.
+   */
+  void verticalFlip();
+
+  /**
+   * Flips the image horizontally.
+   */
+  void horizontalFlip();
+
+  /**
+   * Gets the luma of the image.
+   */
+  void getLuma();
+
+  /**
+   * Color corrects the image.
+   */
+  void colorCorrect();
+
+  /**
+   * Adjusts the levels of the image.
+   */
+  void levelsAdjust();
 }

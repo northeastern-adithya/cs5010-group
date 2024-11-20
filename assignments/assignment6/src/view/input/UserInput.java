@@ -3,7 +3,6 @@ package view.input;
 
 import java.util.Optional;
 import java.util.function.IntConsumer;
-
 import exception.ImageProcessorException;
 
 /**
@@ -44,4 +43,28 @@ public interface UserInput {
    * @return the slider input
    */
   Optional<Integer> getSliderInput();
+
+  /**
+   * Prompts the user for the path to load an image interactively.
+   *
+   * @return the path to load the image
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  String interactiveImageLoadPathInput() throws ImageProcessorException;
+
+  /**
+   * Prompts the user for the path to save an image interactively.
+   *
+   * @return the path to save the image
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  String interactiveImageSavePathInput() throws ImageProcessorException;
+
+  /**
+   * Prompts the user for the levels to apply interactively.
+   *
+   * @return the levels to apply
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  int[] interactiveThreeLevelInput() throws ImageProcessorException;
 }

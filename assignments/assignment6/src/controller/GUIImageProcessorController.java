@@ -1,17 +1,11 @@
 package controller;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import model.enumeration.ImageType;
 import model.enumeration.UserCommand;
 import model.memory.ImageMemory;
 import model.memory.StringMemory;
@@ -69,12 +63,22 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.BLUR,
                     UserCommand.SHARPEN,
                     UserCommand.COMPRESS,
-                    UserCommand.CLEAR
+                    UserCommand.VERTICAL_FLIP,
+                    UserCommand.HORIZONTAL_FLIP,
+                    UserCommand.LUMA_COMPONENT,
+                    UserCommand.COLOR_CORRECT,
+                    UserCommand.LEVELS_ADJUST,
+                    UserCommand.RESET
             )
     );
     this.userOutput.addFeatures(this);
   }
 
+  /**
+   * Loads an image from a file system path into the application.
+   * Validates that no unsaved image is currently loaded before proceeding.
+   * Updates the display with the newly loaded image.
+   */
   @Override
   public void loadImage() {
     executeImageOperation(
@@ -82,20 +86,15 @@ public class GUIImageProcessorController implements ImageProcessorController,
               if (isImageLoaded()) {
                 throw new ImageProcessorException("Save the current image "
                         + "before loading a new one");
-              }
-              JFileChooser fileChooser = createFileChooseWithFilter();
-              int returnState = fileChooser.showOpenDialog(null);
-              if (returnState == JFileChooser.APPROVE_OPTION) {
-                File f = fileChooser.getSelectedFile();
-                String imageName =
-                        IOUtils.getImageNameFromPath(f.getAbsolutePath());
-                imageProcessingService.loadImage(ImageProcessingRequest.builder()
-                        .imagePath(f.getAbsolutePath())
-                        .imageName(imageName)
-                        .build());
-                updateImageToDisplay(imageName);
-              }
             }
+            String imagePath = userInput.interactiveImageLoadPathInput();
+            String imageName = IOUtils.getImageNameFromPath(imagePath);
+            imageProcessingService.loadImage(ImageProcessingRequest.builder()
+                      .imagePath(imagePath)
+                      .imageName(imageName)
+                      .build());
+            updateImageToDisplay(imageName);
+        }
     );
   }
 
@@ -127,25 +126,29 @@ public class GUIImageProcessorController implements ImageProcessorController,
     return StringUtils.isNotNullOrEmpty(imageName);
   }
 
+  /**
+   * Saves the currently displayed image to a specified file system location.
+   * Clears the current image from memory after saving.
+   */
   @Override
   public void saveImage() {
     executeImageOperation(
-            () -> {
-              validateImageLoaded();
-              JFileChooser fchooser = createFileChooseWithFilter();
-              int returnState = fchooser.showSaveDialog(null);
-              if (returnState == JFileChooser.APPROVE_OPTION) {
-                File file = fchooser.getSelectedFile();
-                imageProcessingService.saveImage(ImageProcessingRequest.builder()
-                        .imagePath(file.getAbsolutePath())
-                        .imageName(getImageToDisplay())
-                        .build());
-                this.clearMemory();
-              }
-            }
+        () -> {
+            validateImageLoaded();
+            String destinationImagePath = userInput.interactiveImageSavePathInput();
+            imageProcessingService.saveImage(ImageProcessingRequest.builder()
+                      .imagePath(destinationImagePath)
+                      .imageName(getImageToDisplay())
+                      .build());
+            this.reset();
+        }
     );
   }
 
+  /**
+   * Applies a sepia tone filter to the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void applySepia() {
     executeImageOperation(
@@ -158,8 +161,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Clears the current image and associated data from memory.
+   * Resets the display to its initial state.
+   */
   @Override
-  public void clearMemory() {
+  public void reset() {
     executeImageOperation(
             () -> {
               imageProcessingService.clearMemory();
@@ -168,6 +175,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Extracts and displays the blue color component of the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void blueComponent() {
     executeImageOperation(
@@ -180,6 +191,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Applies a Gaussian blur filter to the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void blurImage() {
     executeImageOperation(
@@ -192,6 +207,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Applies a sharpening filter to the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void sharpenImage() {
     executeImageOperation(
@@ -204,6 +223,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Compresses the current image by a specified percentage.
+   * Presents a slider interface for selecting the compression level.
+   */
   @Override
   public void compressImage() {
     executeImageOperation(
@@ -215,6 +238,125 @@ public class GUIImageProcessorController implements ImageProcessorController,
             }
     );
 
+  }
+
+  /**
+   * Flips the current image vertically around its horizontal axis.
+   */
+  @Override
+  public void verticalFlip() {
+    executeImageOperation(
+        () -> {
+            String verticalFlipImageName = createDestinationImageName(
+                    getImageToDisplay(), UserCommand.VERTICAL_FLIP);
+            ImageProcessingRequest request = ImageProcessingRequest.builder()
+                    .imageName(getImageToDisplay())
+                    .destinationImageName(verticalFlipImageName)
+                    .build();
+            imageProcessingService.verticalFlip(request);
+            updateImageToDisplay(verticalFlipImageName);
+        }
+    );
+  }
+
+  /**
+   * Flips the current image horizontally around its vertical axis.
+   */
+  @Override
+  public void horizontalFlip() {
+    executeImageOperation(
+        () -> {
+            String horizontalFlipImageName = createDestinationImageName(
+                    getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
+            ImageProcessingRequest request = ImageProcessingRequest.builder()
+                    .imageName(getImageToDisplay())
+                    .destinationImageName(horizontalFlipImageName)
+                    .build();
+            imageProcessingService.horizontalFlip(request);
+            updateImageToDisplay(horizontalFlipImageName);
+        }
+    );
+  }
+
+  /**
+   * Extracts and displays the luma component of the current image.
+   */
+  @Override
+  public void getLuma() {
+    executeImageOperation(
+        () -> {
+            String lumaImageName = createDestinationImageName(
+                    getImageToDisplay(), UserCommand.LUMA_COMPONENT);
+            ImageProcessingRequest request = ImageProcessingRequest.builder()
+                    .imageName(getImageToDisplay())
+                    .destinationImageName(lumaImageName)
+                    .build();
+            imageProcessingService.createLumaComponent(request);
+            updateImageToDisplay(lumaImageName);
+        }
+    );
+  }
+
+  /**
+   * Color corrects the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
+  @Override
+  public void colorCorrect() {
+    executeImageOperation(
+        () -> {
+          showSplitView(
+                  percentage -> executeSplitViewCommand(percentage,
+                          UserCommand.COLOR_CORRECT)
+          );
+        }
+    );
+  }
+
+  /**
+   * Adjusts the levels of the current image.
+   * Shows a split view preview of the effect before applying it.
+   */
+  @Override
+  public void levelsAdjust(){
+    executeImageOperation(
+            () -> {
+              int[] levels = userInput.interactiveThreeLevelInput();
+              int blackLevel = levels[0];
+              int midLevel = levels[1];
+              int whiteLevel = levels[2];
+              showSplitView(
+                      percentage -> handleLevelsAdjustment(percentage, blackLevel, midLevel, whiteLevel)
+              );
+            }
+    );
+  }
+
+  /**
+   * Handles the levels adjustment operation.
+   *
+   * @param percentage the percentage of the image to be displayed
+   * @param blackLevel the black level
+   * @param midLevel   the middle level
+   * @param whiteLevel the white level
+   * @return the name of the image after applying the levels adjustment
+   * @throws ImageProcessorException if there is an error applying the levels
+   *                                 adjustment
+   */
+  private String handleLevelsAdjustment(int percentage, int blackLevel, int midLevel, int whiteLevel) throws
+          ImageProcessorException {
+    validateImageLoaded();
+    String levelsImageName = createDestinationImageName(getImageToDisplay(),
+            UserCommand.LEVELS_ADJUST);
+
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(levelsImageName)
+            .levels(blackLevel, midLevel, whiteLevel)
+            .percentage(percentage)
+            .build();
+    imageProcessingService.levelsAdjust(request);
+    return levelsImageName;
   }
 
   /**
@@ -254,6 +396,9 @@ public class GUIImageProcessorController implements ImageProcessorController,
       case SHARPEN:
         imageProcessingService.sharpenImage(request);
         break;
+      case COLOR_CORRECT:
+        imageProcessingService.colorCorrect(request);
+        break;
       default:
         throw new ImageProcessorException(
                 String.format("Invalid command for split view: %s", command));
@@ -282,6 +427,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   }
 
 
+  /**
+   * Creates the red component of the image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void redComponent() {
     executeImageOperation(
@@ -294,6 +443,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Creates the green component of the image.
+   * Shows a split view preview of the effect before applying it.
+   */
   @Override
   public void greenComponent() {
     executeImageOperation(
@@ -306,24 +459,6 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
-
-  /**
-   * Creates a file chooser with the image filter.
-   * Supported image formats are JPEG, PNG, PPM, and JPG.
-   *
-   * @return the file chooser with the image filter
-   */
-  private JFileChooser createFileChooseWithFilter() {
-    JFileChooser fileChooser = new JFileChooser(".");
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Images",
-            ImageType.JPEG.getExtension(),
-            ImageType.PNG.getExtension(),
-            ImageType.PPM.getExtension(),
-            ImageType.JPG.getExtension());
-    fileChooser.setFileFilter(filter);
-    return fileChooser;
-  }
 
   /**
    * Updates the image view only.
@@ -468,6 +603,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    */
   @FunctionalInterface
   private interface ImageOperation {
+
     /**
      * Runs the image operation.
      *
