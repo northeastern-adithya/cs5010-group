@@ -16,19 +16,20 @@ public enum UserCommand {
   SAVE("save", "save image-path image-name: "
           + "Save the image with the given name to the specified path "
           + "which should include the name of the file."),
-  RED_COMPONENT("red-component", "red-component image-name dest-image-name p: "
+  RED_COMPONENT("red-component", "red-component image-name dest-image-name "
+          + "split p: "
           + "Create an image with the red-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
           + "destination name.P is an optional parameter for split view."),
   GREEN_COMPONENT("green-component", "green-component image-name "
-          + "dest-image-name p: "
+          + "dest-image-name split p: "
           + "Create an image with the green-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
           + "destination name.P is an optional parameter for split view."),
   BLUE_COMPONENT("blue-component", "blue-component image-name dest-image-name"
-          + " p: "
+          + " split p: "
           + "Create an image with the blue-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
@@ -75,13 +76,13 @@ public enum UserCommand {
           + "blue "
           + "into a single image that gets its red, green and blue components "
           + "from the three images respectively."),
-  BLUR("blur", "blur image-name dest-image-name p: "
+  BLUR("blur", "blur image-name dest-image-name split p: "
           + "blur the given image and store the result in another image with "
           + "the given name.P is an optional parameter for split view."),
-  SHARPEN("sharpen", "sharpen image-name dest-image-name p: "
+  SHARPEN("sharpen", "sharpen image-name dest-image-name split p: "
           + "sharpen the given image and store the result in another image "
           + "with the given name.P is an optional parameter for split view."),
-  SEPIA("sepia", "sepia image-name dest-image-name p: "
+  SEPIA("sepia", "sepia image-name dest-image-name split p: "
           + "produce a sepia-toned version of the given image "
           + "and store the result in another image with the given name."
           + "P is an optional parameter for split view."),
@@ -92,12 +93,13 @@ public enum UserCommand {
   HISTOGRAM("histogram", "histogram image-name dest-image-name: "
           + "Create a histogram of the given image and store the result in "
           + "another image with the given name."),
-  COLOR_CORRECT("color-correct", "color-correct image-name dest-image-name p: "
+  COLOR_CORRECT("color-correct", "color-correct image-name dest-image-name "
+          + "split p: "
           + "Color correct the given image and store the result in another "
           + "image with the given name.P is an optional parameter for split "
           + "view."),
   LEVELS_ADJUST("levels-adjust", "levels-adjust b m w image-name "
-          + "dest-image-name p: "
+          + "dest-image-name split p: "
           + "Adjust the levels of the given image and store the result in "
           + "another image with the given name.P is an optional parameter for"
           + " split view."),
@@ -107,8 +109,7 @@ public enum UserCommand {
   CLEAR("clear", "clear: Clear the program's memory."),
 
   QUIT("quit", "quit: Quit the program."),
-  HELP("help", "help: Print this help message."),
-  ;
+  HELP("help", "help: Print this help message."),;
 
   /**
    * Command which the user can give.
