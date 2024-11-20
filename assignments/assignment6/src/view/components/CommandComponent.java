@@ -2,7 +2,6 @@ package view.components;
 
 import controller.Features;
 import model.enumeration.UserCommand;
-import view.input.UserInput;
 
 import javax.swing.*;
 
