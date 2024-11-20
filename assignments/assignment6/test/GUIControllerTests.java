@@ -1256,6 +1256,211 @@ public class GUIControllerTests {
             expectedImage.toString()));
   }
 
+
+  // SHARPEN TESTS
+  @Test
+  public void testSharpenWithPureRedImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.redImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 16711680},
+            {16711680, 16711680}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureGreenImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greenImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {65280, 65280},
+            {65280, 65280}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureBlueImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blueImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {255, 255},
+            {255, 255}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureGreyImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.greyImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {14737632, 14737632},
+            {14737632, 14737632}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureWhiteImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.whiteImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithPureBlackImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.blackImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
+  @Test
+  public void testSharpenWithRandomImage() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16736095, 6250495},
+            {6291295, 12566463}
+    }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SHARPEN)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+  }
+
   private ImageMemory<Image> initialiseImageMemory() {
     return new HashMapMemory();
   }
