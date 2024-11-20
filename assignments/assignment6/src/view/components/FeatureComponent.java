@@ -13,14 +13,14 @@ import java.util.Optional;
 /**
  * A component that maps UI button actions to Features interface methods.
  */
-public class CommandComponent extends JPanel {
+public class FeatureComponent extends JPanel {
   private final List<Features> featureListeners = new ArrayList<>();
 
   /**
    * Constructs a CommandComponent object.
    * This object is used to map UI button actions to Features interface methods.
    */
-  public CommandComponent() {
+  public FeatureComponent() {
     super();
   }
 

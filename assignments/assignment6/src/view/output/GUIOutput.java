@@ -3,7 +3,7 @@ package view.output;
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
 import model.visual.Image;
-import view.components.CommandComponent;
+import view.components.FeatureComponent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -30,7 +30,7 @@ import utility.IOUtils;
  */
 public class GUIOutput extends JFrame implements UserOutput {
   private final JPanel mainPanel;
-  private final CommandComponent commandPanel;
+  private final FeatureComponent featurePanel;
   private final JPanel imagePanel;
   private final JPanel histogramPanel;
 
@@ -44,7 +44,7 @@ public class GUIOutput extends JFrame implements UserOutput {
     this.setSize(600, 900);
     // Initialising panels
     mainPanel = new JPanel();
-    commandPanel = new CommandComponent();
+    featurePanel = new FeatureComponent();
     imagePanel = new JPanel();
     histogramPanel = new JPanel();
 
@@ -60,7 +60,7 @@ public class GUIOutput extends JFrame implements UserOutput {
             new WindowAdapter() {
               @Override
               public void windowClosing(WindowEvent e) {
-                commandPanel.closeWindow();
+                featurePanel.closeWindow();
               }
             }
     );
@@ -86,8 +86,8 @@ public class GUIOutput extends JFrame implements UserOutput {
    * Builds the command panel of the GUI.
    */
   private void buildCommandPanel() {
-    commandPanel.setLayout(new BoxLayout(commandPanel, BoxLayout.Y_AXIS));
-    commandPanel.setBorder(new TitledBorder("Commands"));
+    featurePanel.setLayout(new BoxLayout(featurePanel, BoxLayout.Y_AXIS));
+    featurePanel.setBorder(new TitledBorder("Commands"));
   }
 
   /**
@@ -116,7 +116,7 @@ public class GUIOutput extends JFrame implements UserOutput {
    * Adds scroll panes to the main panel.
    */
   private void addScrollPanes() {
-    mainPanel.add(new JScrollPane(commandPanel));
+    mainPanel.add(new JScrollPane(featurePanel));
     mainPanel.add(new JScrollPane(imagePanel));
     mainPanel.add(new JScrollPane(histogramPanel));
   }
@@ -137,17 +137,17 @@ public class GUIOutput extends JFrame implements UserOutput {
 
   @Override
   public void displayCommands(List<UserCommand> commands) {
-    commandPanel.removeAll();
+    featurePanel.removeAll();
     for (UserCommand command : commands) {
-      commandPanel.addCommandButton(command);
+      featurePanel.addCommandButton(command);
     }
-    commandPanel.revalidate();
-    commandPanel.repaint();
+    featurePanel.revalidate();
+    featurePanel.repaint();
   }
 
   @Override
   public void addFeatures(Features features) {
-    commandPanel.addFeatures(features);
+    featurePanel.addFeatures(features);
   }
 
   @Override
