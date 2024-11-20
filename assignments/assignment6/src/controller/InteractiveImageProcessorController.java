@@ -173,8 +173,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
         return executeColorCorrectionCommand(scanner);
       case LEVELS_ADJUST:
         return executeLevelsAdjustCommand(scanner);
-      case CLEAR:
-        return executeClearCommand();
+      case RESET:
+        return executeResetCommand();
       case HELP:
         return executeHelpCommand();
       case QUIT:
@@ -736,8 +736,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *
    * @return ExecutionStatus information of the execution
    */
-  private ExecutionStatus executeClearCommand() {
+  private ExecutionStatus executeResetCommand() {
     imageProcessingService.clearMemory();
-    return new ExecutionStatus(true, "Successfully cleared the memory.");
+    return new ExecutionStatus(true, "Successfully reset the memory.");
   }
 }

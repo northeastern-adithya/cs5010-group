@@ -25,8 +25,7 @@ public interface Features {
   /**
    * Clears the memory of the image processing application.
    */
-  void clearMemory();
-
+  void reset();
 
   /**
    * Creates the red component of the image.

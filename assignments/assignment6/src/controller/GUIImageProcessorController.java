@@ -63,12 +63,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.BLUR,
                     UserCommand.SHARPEN,
                     UserCommand.COMPRESS,
-                    UserCommand.CLEAR,
                     UserCommand.VERTICAL_FLIP,
                     UserCommand.HORIZONTAL_FLIP,
                     UserCommand.LUMA_COMPONENT,
                     UserCommand.COLOR_CORRECT,
-                    UserCommand.LEVELS_ADJUST
+                    UserCommand.LEVELS_ADJUST,
+                    UserCommand.RESET
             )
     );
     this.userOutput.addFeatures(this);
@@ -131,7 +131,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
                       .imagePath(destinationImagePath)
                       .imageName(getImageToDisplay())
                       .build());
-            this.clearMemory();
+            this.reset();
         }
     );
   }
@@ -149,7 +149,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   }
 
   @Override
-  public void clearMemory() {
+  public void reset() {
     executeImageOperation(
             () -> {
               imageProcessingService.clearMemory();

@@ -71,8 +71,8 @@ public class CommandComponent extends JPanel {
         case SEPIA:
           feature.applySepia();
           break;
-        case CLEAR:
-          feature.clearMemory();
+        case RESET:
+          feature.reset();
           break;
         case VERTICAL_FLIP:
           feature.verticalFlip();

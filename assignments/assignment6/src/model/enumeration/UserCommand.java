@@ -104,7 +104,7 @@ public enum UserCommand {
   RUN("run", "run script-file: "
           + "Load and run the script commands in the specified file."),
 
-  CLEAR("clear", "clear: Clear the program's memory."),
+  RESET("reset", "reset: Resets the program's memory."),
 
   QUIT("quit", "quit: Quit the program."),
   HELP("help", "help: Print this help message."),

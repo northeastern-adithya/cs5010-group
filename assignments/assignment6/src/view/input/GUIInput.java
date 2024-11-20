@@ -143,36 +143,36 @@ public class GUIInput implements UserInput {
     return fileChooser;
   }
 
-  private void configureLevelSpinnerListeners(JSpinner blackSpinner, JSpinner midSpinner, JSpinner whiteSpinner) {
-    // Add change listeners to maintain black < mid < white relationship
-    blackSpinner.addChangeListener(e -> {
-      int blackVal = (Integer) blackSpinner.getValue();
-      int midVal = (Integer) midSpinner.getValue();
-      if (blackVal >= midVal) {
-        blackSpinner.setValue(midVal - 1);
-      }
-    });
+  private void configureLevelSpinnerListeners(JSpinner... spinners) {
+    // Verify we have at least two spinners to compare
+    if (spinners.length < 2) {
+      return;
+    }
 
-    midSpinner.addChangeListener(e -> {
-      int blackVal = (Integer) blackSpinner.getValue();
-      int midVal = (Integer) midSpinner.getValue();
-      int whiteVal = (Integer) whiteSpinner.getValue();
+    // Add change listeners to each spinner
+    for (int i = 0; i < spinners.length; i++) {
+      final int currentIndex = i;
+      spinners[i].addChangeListener(e -> {
+        int currentValue = (Integer) spinners[currentIndex].getValue();
 
-      if (midVal <= blackVal) {
-        midSpinner.setValue(blackVal + 1);
-      }
-      if (midVal >= whiteVal) {
-        midSpinner.setValue(whiteVal - 1);
-      }
-    });
+        // Check against previous spinner (ensure current value is greater)
+        if (currentIndex > 0) {
+          int previousValue = (Integer) spinners[currentIndex - 1].getValue();
+          if (currentValue <= previousValue) {
+            spinners[currentIndex].setValue(previousValue + 1);
+            return; // Return to avoid potential circular updates
+          }
+        }
 
-    whiteSpinner.addChangeListener(e -> {
-      int midVal = (Integer) midSpinner.getValue();
-      int whiteVal = (Integer) whiteSpinner.getValue();
-      if (whiteVal <= midVal) {
-        whiteSpinner.setValue(midVal + 1);
-      }
-    });
+        // Check against next spinner (ensure current value is lesser)
+        if (currentIndex < spinners.length - 1) {
+          int nextValue = (Integer) spinners[currentIndex + 1].getValue();
+          if (currentValue >= nextValue) {
+            spinners[currentIndex].setValue(nextValue - 1);
+          }
+        }
+      });
+    }
   }
 
   private JSpinner buildSpinner(int defaultValue) {
