@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
@@ -33,6 +34,12 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Comment prefix to ignore the comments in the script file.
    */
   private static final String COMMENT_PREFIX = "#";
+
+
+  /**
+   * Split command to indicate the optional split percentage.
+   */
+  private static final String SPLIT_COMMAND = "split";
   /**
    * UserInput object to get the user input.
    */
@@ -75,7 +82,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    */
   private void validateInput(UserInput input, UserOutput output,
                              ImageProcessingService imageProcessor)
-          throws ImageProcessingRunTimeException.QuitException {
+          throws
+          ImageProcessingRunTimeException.QuitException {
     Objects.requireNonNull(input, "UserInput cannot be null");
     Objects.requireNonNull(output, "UserOutput cannot be null");
     Objects.requireNonNull(imageProcessor, "ImageProcessor cannot be null");
@@ -89,7 +97,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   }
 
   @Override
-  public void processCommands() throws ImageProcessingRunTimeException.QuitException {
+  public void processCommands() throws
+          ImageProcessingRunTimeException.QuitException {
     execute(userInput);
   }
 
@@ -129,7 +138,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                                       quit the application.
    */
   private ExecutionStatus executeCommand(UserCommand command, Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     switch (command) {
       case LOAD:
         return executeLoadCommand(scanner);
@@ -193,7 +203,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeLoadCommand(Scanner scanner) throws ImageProcessorException {
+  private ExecutionStatus executeLoadCommand(Scanner scanner) throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.loadImage(ImageProcessingRequest
             .builder()
@@ -210,7 +221,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeSaveCommand(Scanner scanner) throws ImageProcessorException {
+  private ExecutionStatus executeSaveCommand(Scanner scanner) throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.saveImage(ImageProcessingRequest
             .builder()
@@ -228,14 +240,15 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeRedComponentCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createRedComponent(ImageProcessingRequest
             .builder()
             .imageName(arguments.get(0))
             .destinationImageName(arguments.get(1))
             // Optional percentage argument to get the split view.
-            .percentage(extractOptionalIntArgument(scanner).orElse(null))
+            .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
             .build());
     return new ExecutionStatus(true, "Successfully created red component.");
   }
@@ -249,14 +262,15 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeBlueComponentCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createBlueComponent(ImageProcessingRequest
             .builder()
             .imageName(arguments.get(0))
             .destinationImageName(arguments.get(1))
             // Optional percentage argument to get the split view.
-            .percentage(extractOptionalIntArgument(scanner).orElse(null))
+            .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
             .build());
     return new ExecutionStatus(true, "Successfully created blue component.");
   }
@@ -270,7 +284,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeGreenComponentCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createGreenComponent(
             ImageProcessingRequest
@@ -278,7 +293,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
                     // Optional percentage argument to get the split view.
-                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                    .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully created green component.");
@@ -293,7 +308,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeValueComponentCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createValueComponent(ImageProcessingRequest
             .builder()
@@ -311,7 +327,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeLumaComponentCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createLumaComponent(ImageProcessingRequest
             .builder()
@@ -329,7 +346,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeIntensityComponentCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.createIntensityComponent(ImageProcessingRequest
             .builder()
@@ -348,7 +366,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeHorizontalFlipCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.horizontalFlip(ImageProcessingRequest
             .builder()
@@ -367,7 +386,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeVerticalFlipCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.verticalFlip(ImageProcessingRequest
             .builder()
@@ -386,7 +406,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeBrightenCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     if (!scanner.hasNextInt()) {
       throw new ImageProcessorException("Invalid factor provided for "
               + "brightening the image.");
@@ -412,7 +433,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeRgbSplitCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 4);
     imageProcessingService.rgbSplit(
             ImageProcessingRequest
@@ -436,7 +458,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeRgbCombineCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 4);
     imageProcessingService.rgbCombine(
             ImageProcessingRequest
@@ -459,7 +482,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeBlurCommand(Scanner scanner) throws ImageProcessorException {
+  private ExecutionStatus executeBlurCommand(Scanner scanner) throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.blurImage(
             ImageProcessingRequest
@@ -467,7 +491,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
                     // Optional percentage argument to get the split view.
-                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                    .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully blurred the image.");
@@ -481,7 +505,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeSharpenCommand(Scanner scanner) throws ImageProcessorException {
+  private ExecutionStatus executeSharpenCommand(Scanner scanner) throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.sharpenImage(
             ImageProcessingRequest
@@ -489,7 +514,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
                     // Optional percentage argument to get the split view.
-                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                    .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully sharpened the image.");
@@ -503,7 +528,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  private ExecutionStatus executeSepiaCommand(Scanner scanner) throws ImageProcessorException {
+  private ExecutionStatus executeSepiaCommand(Scanner scanner) throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.sepiaImage(
             ImageProcessingRequest
@@ -511,7 +537,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
                     // Optional percentage argument to get the split view.
-                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                    .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully converted the image to "
@@ -526,7 +552,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if an error occurs while executing the
    *                                 command
    */
-  protected ExecutionStatus executeRunCommand(Scanner scanner) throws ImageProcessorException {
+  protected ExecutionStatus executeRunCommand(Scanner scanner) throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 1);
     String scriptFile = arguments.get(0);
     if (Objects.isNull(scriptFile)) {
@@ -574,7 +601,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * @throws ImageProcessorException if the number of arguments is invalid.
    */
   private List<String> extractArguments(Scanner scanner, int numberOfArguments)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = new ArrayList<>();
     while (numberOfArguments-- > 0) {
       if (!scanner.hasNext()) {
@@ -586,14 +614,20 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   }
 
   /**
-   * Extracts the optional integer argument from the scanner.
+   * Extracts the optional split percentage argument from the scanner.
    *
    * @param scanner scanner to read the argument
-   * @return optional integer argument
+   * @return optional split percentage
    */
-  private Optional<Integer> extractOptionalIntArgument(Scanner scanner) {
-    return scanner.hasNextInt() ? Optional.of(scanner.nextInt()) :
-            Optional.empty();
+  private Optional<Integer> extractOptionalSplitPercentage(Scanner scanner) {
+    if (scanner.hasNext(Pattern.compile(SPLIT_COMMAND))) {
+      String next = scanner.next();
+      if (next.equals(SPLIT_COMMAND)) {
+        return scanner.hasNextInt() ? Optional.of(scanner.nextInt()) :
+                Optional.empty();
+      }
+    }
+    return Optional.empty();
   }
 
 
@@ -631,7 +665,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeCompressionCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 3);
     try {
       int compressionPercentage = Integer.parseInt(arguments.get(0));
@@ -661,7 +696,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeHistogramCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.histogram(
             ImageProcessingRequest
@@ -683,7 +719,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeColorCorrectionCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 2);
     imageProcessingService.colorCorrect(
             ImageProcessingRequest
@@ -691,7 +728,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
                     // Optional percentage argument to get the split view.
-                    .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                    .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully color corrected the image.");
@@ -706,7 +743,8 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    *                                 command
    */
   private ExecutionStatus executeLevelsAdjustCommand(Scanner scanner)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     List<String> arguments = extractArguments(scanner, 5);
     try {
       int black = Integer.parseInt(arguments.get(0));
@@ -719,7 +757,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                       .destinationImageName(arguments.get(4))
                       .levels(black, mid, white)
                       // Optional percentage argument to get the split view.
-                      .percentage(extractOptionalIntArgument(scanner).orElse(null))
+                      .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                       .build()
       );
       return new ExecutionStatus(true,

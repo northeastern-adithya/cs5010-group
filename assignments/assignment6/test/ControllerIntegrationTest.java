@@ -2784,7 +2784,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blur %s blurImage 0",
+    initialiseController(String.format("blur %s blurImage split 0",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
@@ -2804,7 +2804,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blur %s blurImage -1",
+    initialiseController(String.format("blur %s blurImage split -1",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -2842,7 +2842,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blur %s blurImage 101",
+    initialiseController(String.format("blur %s blurImage split 101",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -2859,7 +2859,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blur %s blurImage 30",
+    initialiseController(String.format("blur %s blurImage split 30",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -2880,7 +2880,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blur %s blurImage 50",
+    initialiseController(String.format("blur %s blurImage split 50",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -2901,7 +2901,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blur %s blurImage 75",
+    initialiseController(String.format("blur %s blurImage split 75",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -2947,7 +2947,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sharpen %s sharpenImage 0",
+    initialiseController(String.format("sharpen %s sharpenImage split 0",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
@@ -2967,7 +2967,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sharpen %s sharpenImage -1",
+    initialiseController(String.format("sharpen %s sharpenImage split -1",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3006,7 +3006,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sharpen %s sharpenImage 101",
+    initialiseController(String.format("sharpen %s sharpenImage split 101",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3024,7 +3024,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sharpen %s sharpenImage 30",
+    initialiseController(String.format("sharpen %s sharpenImage split 30",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3045,7 +3045,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sharpen %s sharpenImage 50",
+    initialiseController(String.format("sharpen %s sharpenImage split 50",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3066,7 +3066,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sharpen %s sharpenImage 75",
+    initialiseController(String.format("sharpen %s sharpenImage split 75",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3111,7 +3111,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sepia %s sepiaImage 0",
+    initialiseController(String.format("sepia %s sepiaImage split 0",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
@@ -3132,7 +3132,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sepia %s sepiaImage -1",
+    initialiseController(String.format("sepia %s sepiaImage split -1",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3171,7 +3171,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sepia %s sepiaImage 101",
+    initialiseController(String.format("sepia %s sepiaImage split 101",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3188,7 +3188,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sepia %s sepiaImage 30",
+    initialiseController(String.format("sepia %s sepiaImage split 30",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3210,7 +3210,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sepia %s sepiaImage 50",
+    initialiseController(String.format("sepia %s sepiaImage split 50",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3232,7 +3232,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("sepia %s sepiaImage 75",
+    initialiseController(String.format("sepia %s sepiaImage split 75",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3277,7 +3277,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("red-component %s redComponent 0",
+    initialiseController(String.format("red-component %s redComponent split 0",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
     controller.processCommands();
@@ -3298,7 +3298,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("red-component %s redComponent -1",
+    initialiseController(String.format("red-component %s redComponent split -1",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3332,7 +3332,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("red-component %s redComponent 101",
+    initialiseController(String.format("red-component %s redComponent split "
+                            + "101",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3349,7 +3350,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("red-component %s redComponent 30",
+    initialiseController(String.format("red-component %s redComponent split 30",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3371,7 +3372,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("red-component %s redComponent 50",
+    initialiseController(String.format("red-component %s redComponent split 50",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3393,7 +3394,7 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("red-component %s redComponent 75",
+    initialiseController(String.format("red-component %s redComponent split 75",
                     INITIAL_IMAGE_NAME),
             output, randomImage);
 
@@ -3431,7 +3432,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blue-component %s blueComponent 0",
+    initialiseController(String.format("blue-component %s blueComponent split"
+                    + " 0",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3447,7 +3449,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blue-component %s blueComponent -1",
+    initialiseController(String.format("blue-component %s blueComponent split"
+                   + " -1",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
     assertThrows(
@@ -3478,7 +3481,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blue-component %s blueComponent 101",
+    initialiseController(String.format("blue-component %s blueComponent split"
+                    + " 101",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3494,7 +3498,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blue-component %s blueComponent 30",
+    initialiseController(String.format("blue-component %s blueComponent split"
+                   +  " 30",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3510,7 +3515,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blue-component %s blueComponent 50",
+    initialiseController(String.format("blue-component %s blueComponent split"
+                    + " 50",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3526,7 +3532,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("blue-component %s blueComponent 75",
+    initialiseController(String.format("blue-component %s blueComponent split"
+                    + " 75",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3558,7 +3565,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("green-component %s greenComponent 0",
+    initialiseController(String.format("green-component %s greenComponent "
+                    + "split 0",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3575,7 +3583,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("green-component %s greenComponent -1",
+    initialiseController(String.format("green-component %s greenComponent "
+                    + "split -1",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
     assertThrows(
@@ -3612,7 +3621,7 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("green-component %s greenComponent "
-            + "101", INITIAL_IMAGE_NAME), output, randomImage);
+            + "split 101", INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
     assertThrows(ImageProcessorException.NotFoundException.class, () -> {
@@ -3627,7 +3636,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("green-component %s greenComponent 30",
+    initialiseController(String.format("green-component %s greenComponent "
+                    + "split 30",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3644,7 +3654,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("green-component %s greenComponent 50",
+    initialiseController(String.format("green-component %s greenComponent "
+                    + "split 50",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3661,7 +3672,8 @@ public class ControllerIntegrationTest {
           ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
-    initialiseController(String.format("green-component %s greenComponent 75",
+    initialiseController(String.format("green-component %s greenComponent "
+                    + "split 75",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3713,7 +3725,7 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
-                    + "levelAdjustedImage -1",
+                    + "levelAdjustedImage split -1",
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
     assertThrows(
@@ -3744,7 +3756,7 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("levels-adjust 0 128 255 %s "
-                    + "levelAdjustedImage 101",
+                    + "levelAdjustedImage split 101",
             INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
@@ -3846,7 +3858,7 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
-            + "-1", INITIAL_IMAGE_NAME), output, randomImage);
+            + "split -1", INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
     assertThrows(
             ImageProcessorException.NotFoundException.class,
@@ -3875,7 +3887,7 @@ public class ControllerIntegrationTest {
     StringBuilder output = new StringBuilder();
     Image randomImage = randomRectangleImage();
     initialiseController(String.format("color-correct %s colorCorrectedImage "
-            + "101", INITIAL_IMAGE_NAME), output, randomImage);
+            + "split 101", INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
     assertThrows(ImageProcessorException.NotFoundException.class, () -> {
