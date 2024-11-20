@@ -4,6 +4,7 @@ import java.util.List;
 
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
+import exception.ImageProcessorException;
 import model.enumeration.UserCommand;
 import model.visual.Image;
 
@@ -24,7 +25,8 @@ public interface UserOutput {
    *                                                          message
    */
   void displayMessage(String message, DisplayMessageType messageType)
-          throws ImageProcessingRunTimeException.DisplayException;
+          throws
+          ImageProcessingRunTimeException.DisplayException;
 
 
   /**
@@ -37,7 +39,8 @@ public interface UserOutput {
    *                                                          commands
    */
   void displayCommands(List<UserCommand> commands)
-          throws ImageProcessingRunTimeException.DisplayException;
+          throws
+          ImageProcessingRunTimeException.DisplayException;
 
 
   /**
@@ -59,7 +62,8 @@ public interface UserOutput {
    *                                                          image
    */
   void displayImage(Image image, Image histogram)
-          throws ImageProcessingRunTimeException.DisplayException;
+          throws
+          ImageProcessingRunTimeException.DisplayException;
 
   /**
    * Clears the image from the output.
@@ -68,5 +72,18 @@ public interface UserOutput {
    *                                                          error clearing
    *                                                          the image
    */
-  void clearImage() throws ImageProcessingRunTimeException.DisplayException;
+  void clearImage() throws
+          ImageProcessingRunTimeException.DisplayException;
+
+
+  /**
+   * Closes the window.
+   */
+  void closeWindow() throws
+          ImageProcessingRunTimeException.QuitException;
+
+  /**
+   * Does not close the window.
+   */
+  void doNotCloseWindow();
 }

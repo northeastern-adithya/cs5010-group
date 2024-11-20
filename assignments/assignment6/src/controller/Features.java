@@ -59,6 +59,11 @@ public interface Features {
    */
   void compressImage();
 
+  /**
+   * Performs the required operations before closing the window.
+   */
+  void closeWindow();
+
 
   /**
    * Flips the image vertically.

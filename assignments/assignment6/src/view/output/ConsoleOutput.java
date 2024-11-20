@@ -72,4 +72,16 @@ public class ConsoleOutput implements UserOutput {
             "Clearing image is not supported in console output"
     );
   }
+
+  @Override
+  public void closeWindow() {
+    throw new ImageProcessingRunTimeException.QuitException(
+            "Exiting the program."
+    );
+  }
+
+  @Override
+  public void doNotCloseWindow() {
+    // Do nothing as console always stays open.
+  }
 }

@@ -16,6 +16,8 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,7 +56,14 @@ public class GUIOutput extends JFrame implements UserOutput {
     addScrollPanes();
 
     this.add(mainPanel);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    addWindowListener(
+            new WindowAdapter() {
+              @Override
+              public void windowClosing(WindowEvent e) {
+                commandPanel.closeWindow();
+              }
+            }
+    );
     this.setVisible(true);
   }
 
@@ -115,7 +124,8 @@ public class GUIOutput extends JFrame implements UserOutput {
 
   @Override
   public void displayMessage(String message, DisplayMessageType messageType)
-          throws ImageProcessingRunTimeException.DisplayException {
+          throws
+          ImageProcessingRunTimeException.DisplayException {
     if (Objects.requireNonNull(messageType) == DisplayMessageType.INFO) {
       JOptionPane.showMessageDialog(this, message, "Info",
               JOptionPane.INFORMATION_MESSAGE);
@@ -147,9 +157,20 @@ public class GUIOutput extends JFrame implements UserOutput {
   }
 
   @Override
-  public void clearImage() throws ImageProcessingRunTimeException.DisplayException {
+  public void clearImage() throws
+          ImageProcessingRunTimeException.DisplayException {
     clearPanel(imagePanel);
     clearPanel(histogramPanel);
+  }
+
+  @Override
+  public void closeWindow() {
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  }
+
+  @Override
+  public void doNotCloseWindow() {
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
   }
 
   /**
