@@ -7,6 +7,7 @@ import java.util.function.IntConsumer;
 import exception.ImageProcessorException;
 
 import exception.ImageProcessorException;
+import model.request.ImageProcessingRequest;
 
 /**
  * Represents all the inputs
@@ -93,7 +94,7 @@ public class ConsoleInput implements UserInput {
    * @throws ImageProcessorException always, with message indicating the operation is not supported
    */
   @Override
-  public int[] interactiveThreeLevelInput() throws ImageProcessorException {
+  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException {
     throw new ImageProcessorException("Not supported for console input");
   }
 }

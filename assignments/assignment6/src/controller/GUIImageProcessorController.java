@@ -29,7 +29,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   private final UserInput userInput;
   private final UserOutput userOutput;
   private final ImageProcessingService imageProcessingService;
-  private final ImageMemory<String> imageToDisplay = new StringMemory();
+  private final ImageMemory<String> imageToDisplay;
 
   /**
    * Constructs a GUIImageProcessorController object with the given
@@ -42,12 +42,14 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public GUIImageProcessorController(
 
           UserInput userInput, UserOutput userOutput,
-          ImageProcessingService imageProcessingService) {
+          ImageProcessingService imageProcessingService,
+          ImageMemory<String> imageToDisplay) {
 
     Objects.requireNonNull(userInput, "UserInput cannot be null");
     Objects.requireNonNull(userOutput, "UserOutput cannot be null");
     Objects.requireNonNull(imageProcessingService, "ImageProcessingService "
             + "cannot be null");
+    Objects.requireNonNull(imageToDisplay, "ImageToDisplay cannot be null");
     this.imageProcessingService = imageProcessingService;
 
     this.userInput = userInput;
@@ -71,6 +73,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.RESET
             )
     );
+    this.imageToDisplay = imageToDisplay;
     this.userOutput.addFeatures(this);
   }
 
@@ -337,10 +340,11 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void levelsAdjust(){
     executeImageOperation(
             () -> {
-              int[] levels = userInput.interactiveThreeLevelInput();
-              int blackLevel = levels[0];
-              int midLevel = levels[1];
-              int whiteLevel = levels[2];
+              ImageProcessingRequest.Levels levels =
+                      userInput.interactiveThreeLevelInput();
+              int blackLevel = levels.getBlack();
+              int midLevel = levels.getMid();
+              int whiteLevel = levels.getWhite();
               showSplitView(
                       percentage -> handleLevelsAdjustment(percentage, blackLevel, midLevel, whiteLevel)
               );

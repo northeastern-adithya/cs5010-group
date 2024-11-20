@@ -10,6 +10,7 @@ import exception.ImageProcessorException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.enumeration.ImageType;
+import model.request.ImageProcessingRequest;
 
 /**
  * A graphical user interface implementation of the UserInput interface that provides
@@ -143,7 +144,7 @@ public class GUIInput implements UserInput {
    * @throws ImageProcessorException If the operation is cancelled
    */
   @Override
-  public int[] interactiveThreeLevelInput() throws ImageProcessorException {
+  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException {
     JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
 
     JSpinner blackSpinner = buildSpinner(0);
@@ -168,11 +169,10 @@ public class GUIInput implements UserInput {
             JOptionPane.PLAIN_MESSAGE);
 
     if (result == JOptionPane.OK_OPTION) {
-      return new int[]{
+      return new ImageProcessingRequest.Levels(
               (Integer) blackSpinner.getValue(),
               (Integer) midSpinner.getValue(),
-              (Integer) whiteSpinner.getValue()
-      };
+              (Integer) whiteSpinner.getValue());
     } else {
       throw new ImageProcessorException("Level adjustment cancelled");
     }
