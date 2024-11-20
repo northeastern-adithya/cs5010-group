@@ -2154,8 +2154,7 @@ public class GUIControllerTests {
                       {6234159, 6233935, 2039631}
               }));
       assertEquals(expectedFinalImage,
-              imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
-                      UserCommand.BLUR)));
+              imageMemory.getImage(stringMemory.getImage("")));
       assertTrue(output.toString().contains(
               expectedFinalImage.toString()));
 
@@ -2170,6 +2169,246 @@ public class GUIControllerTests {
               expectedSplitViewImage.histogram().toString()));
     }
   }
+
+  // SHARPEN SPLIT VIEW TESTS
+  @Test
+  public void testSharpenWithZeroPercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            0,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711743, 10444799, 1044335},
+                    {16736415, 16736159, 995327}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+
+    Image expectedSplitViewImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255, 65280},
+                    {8421504, 16711680, 255}
+            }));
+    assertTrue(output.toString().contains(
+            expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(
+            expectedSplitViewImage.histogram().toString()));
+  }
+
+  @Test
+  public void testSharpenWithNegativePercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            -1,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    assertTrue(output.toString().contains(
+            "The percentage must be between 0 and 100"));
+  }
+
+  @Test
+  public void testSharpenWithHundredPercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            100,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255, 65280},
+                    {8421504, 16711680, 255}
+            }));
+    assertEquals(expectedImage,
+            imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+
+    Image expectedSplitViewImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711743, 10444799, 1044335},
+                    {16736415, 16736159, 995327}
+            }));
+    assertTrue(output.toString().contains(
+            expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(
+            expectedSplitViewImage.histogram().toString()));
+  }
+
+  @Test
+  public void testSharpenWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            101,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    assertTrue(output.toString().contains(
+            "The percentage must be between 0 and 100"));
+  }
+
+  @Test
+  public void testSharpenWithThirtyPercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            30,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedFinalImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711743, 10444799, 1044335},
+                    {16736415, 16736159, 995327}
+            }));
+    assertEquals(expectedFinalImage,
+            imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(
+            expectedFinalImage.toString()));
+
+    Image expectedSplitViewImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255, 65280},
+                    {8421504, 16711680, 255}
+            }));
+    assertTrue(output.toString().contains(
+            expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(
+            expectedSplitViewImage.histogram().toString()));
+  }
+
+  @Test
+  public void testSharpenWithFiftyPercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            50,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedFinalImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255, 65280},
+                    {8421504, 16711680, 255}
+            }));
+    assertEquals(expectedFinalImage,
+            imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(
+            expectedFinalImage.toString()));
+    Image expectedSplitViewImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711743, 255, 65280},
+                    {16736415, 16711680, 255}
+            }));
+    assertTrue(output.toString().contains(
+            expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(
+            expectedSplitViewImage.histogram().toString()));
+  }
+
+  @Test
+  public void testSharpenWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            75,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.sharpenImage();
+    Image expectedFinalImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711743, 10444799, 1044335},
+                    {16736415, 16736159, 995327}
+            }));
+    assertEquals(expectedFinalImage,
+            imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(
+            expectedFinalImage.toString()));
+
+    Image expectedSplitViewImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711743, 10444799, 65280},
+                    {16736415, 16736159, 255}
+            }));
+    assertTrue(output.toString().contains(
+            expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(
+            expectedSplitViewImage.histogram().toString()));
+  }
+
 
 
   private ImageMemory<Image> initialiseImageMemory() {
