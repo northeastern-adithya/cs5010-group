@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
@@ -43,8 +44,12 @@ public class MockOutput implements UserOutput {
   @Override
   public void displayImage(Image image, Image histogram) throws
           ImageProcessingRunTimeException.DisplayException {
-    log(image.toString());
-    log(histogram.toString());
+    if (Objects.nonNull(image)) {
+      log(image.toString());
+    }
+    if (Objects.nonNull(histogram)) {
+      log(histogram.toString());
+    }
   }
 
   @Override
