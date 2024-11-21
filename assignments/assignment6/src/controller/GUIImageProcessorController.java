@@ -363,13 +363,13 @@ public class GUIImageProcessorController implements ImageProcessorController,
   /**
    * Adjusts the levels of the current image.
    * Shows a split view preview of the effect before applying it.
+   * @param levels the levels object representing black, mid and white levels.
+   *
    */
   @Override
-  public void levelsAdjust() {
+  public void levelsAdjust(ImageProcessingRequest.Levels levels) {
     executeImageOperation(
             () -> {
-              ImageProcessingRequest.Levels levels =
-                      guiView.interactiveThreeLevelInput();
               int blackLevel = levels.getBlack();
               int midLevel = levels.getMid();
               int whiteLevel = levels.getWhite();

@@ -73,14 +73,6 @@ public interface GUIView extends UserView {
           ImageProcessorException;
 
   /**
-   * Prompts the user for the levels to apply interactively.
-   *
-   * @return the levels to apply
-   * @throws ImageProcessorException if there is an error getting the input
-   */
-  ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException;
-
-  /**
    * Prompts the user for the scaling factors to apply interactively.
    *
    * @return the scaling factors to apply

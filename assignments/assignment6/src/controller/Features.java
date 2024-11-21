@@ -1,5 +1,7 @@
 package controller;
 
+import model.request.ImageProcessingRequest;
+
 /**
  * Features interface that represents the features provided by the image
  * processing application.
@@ -90,8 +92,9 @@ public interface Features {
 
   /**
    * Adjusts the levels of the image.
+   * @param levels  the levels object representing black, mid and white levels.
    */
-  void levelsAdjust();
+  void levelsAdjust(ImageProcessingRequest.Levels levels);
 
   /**
    * Downscale the image.

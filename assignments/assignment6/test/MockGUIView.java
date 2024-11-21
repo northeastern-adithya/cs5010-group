@@ -16,7 +16,6 @@ public class MockGUIView implements GUIView {
   private final Readable readable;
   private final boolean confirmSplitView;
   private final Integer sliderInput;
-  private final ImageProcessingRequest.Levels interactiveThreeLevelInput;
   private final StringBuilder log;
 
   /**
@@ -25,17 +24,14 @@ public class MockGUIView implements GUIView {
    * @param readable                   the readable input
    * @param confirmSplitView           the confirm split view input
    * @param sliderInput                the slider input
-   * @param interactiveThreeLevelInput the interactive three level input
    * @param log                        the log to log the output
    */
   public MockGUIView(Readable readable, boolean confirmSplitView,
                      Integer sliderInput,
-                     ImageProcessingRequest.Levels interactiveThreeLevelInput,
                      StringBuilder log) {
     this.readable = readable;
     this.confirmSplitView = confirmSplitView;
     this.sliderInput = sliderInput;
-    this.interactiveThreeLevelInput = interactiveThreeLevelInput;
     this.log = log;
   }
 
@@ -50,12 +46,6 @@ public class MockGUIView implements GUIView {
   }
 
 
-
-  @Override
-  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws
-          ImageProcessorException {
-    return this.interactiveThreeLevelInput;
-  }
 
   @Override
   public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws

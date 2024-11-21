@@ -3,13 +3,11 @@ package view.gui;
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
-import model.enumeration.ImageType;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -200,146 +198,6 @@ public class SwingView extends JFrame implements GUIView {
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
     return result == JOptionPane.OK_OPTION;
-  }
-
-  /**
-   * Displays a dialog for adjusting three-level image settings (black point,
-   * mid point, and white point).
-   * The dialog ensures that the values maintain proper ordering (black < mid
-   * < white).
-   *
-   * @return An array of three integers representing the black, mid, and
-   * white points respectively
-   * @throws ImageProcessorException If the operation is cancelled
-   */
-  @Override
-  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws
-          ImageProcessorException {
-    JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
-
-    JSpinner blackSpinner = buildSpinner(0);
-    JSpinner midSpinner = buildSpinner(128);
-    JSpinner whiteSpinner = buildSpinner(255);
-
-    configureLevelSpinnerListeners(blackSpinner, midSpinner, whiteSpinner);
-
-    disableSpinnerTextEditing(blackSpinner, midSpinner, whiteSpinner);
-
-    // Add components to panel
-    panel.add(new JLabel("Black Point:"));
-    panel.add(blackSpinner);
-    panel.add(new JLabel("Mid Point:"));
-    panel.add(midSpinner);
-    panel.add(new JLabel("White Point:"));
-    panel.add(whiteSpinner);
-
-    // Show dialog
-    int result = JOptionPane.showConfirmDialog(null, panel,
-            "Level Adjustment", JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE);
-
-    if (result == JOptionPane.OK_OPTION) {
-      return new ImageProcessingRequest.Levels(
-              (Integer) blackSpinner.getValue(),
-              (Integer) midSpinner.getValue(),
-              (Integer) whiteSpinner.getValue());
-    } else {
-      throw new ImageProcessorException("Level adjustment cancelled");
-    }
-  }
-
-  /**
-   * Creates a file chooser with appropriate image file filters.
-   *
-   * @return A configured JFileChooser that only shows supported image file
-   * types
-   */
-  private JFileChooser createFileChooseWithFilter() {
-    JFileChooser fileChooser = new JFileChooser(".");
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Images",
-            ImageType.JPEG.getExtension(),
-            ImageType.PNG.getExtension(),
-            ImageType.PPM.getExtension(),
-            ImageType.JPG.getExtension());
-    fileChooser.setFileFilter(filter);
-    return fileChooser;
-  }
-
-  /**
-   * Configures change listeners for a series of spinners to maintain proper
-   * ordering.
-   * Ensures that each spinner's value is greater than the previous spinner
-   * and less
-   * than the next spinner.
-   *
-   * @param spinners Variable number of JSpinner components to be configured
-   */
-  private void configureLevelSpinnerListeners(JSpinner... spinners) {
-    // Verify we have at least two spinners to compare
-    if (spinners.length < 2) {
-      return;
-    }
-
-    // Add change listeners to each spinner
-    for (int i = 0; i < spinners.length; i++) {
-      final int currentIndex = i;
-      spinners[i].addChangeListener(e -> {
-        int currentValue = (Integer) spinners[currentIndex].getValue();
-
-        // Check against previous spinner (ensure current value is greater)
-        if (currentIndex > 0) {
-          int previousValue = (Integer) spinners[currentIndex - 1].getValue();
-          if (currentValue <= previousValue) {
-            spinners[currentIndex].setValue(previousValue + 1);
-            return; // Return to avoid potential circular updates
-          }
-        }
-
-        // Check against next spinner (ensure current value is lesser)
-        if (currentIndex < spinners.length - 1) {
-          int nextValue = (Integer) spinners[currentIndex + 1].getValue();
-          if (currentValue >= nextValue) {
-            spinners[currentIndex].setValue(nextValue - 1);
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Creates a number spinner with specified default value and range 0-255.
-   *
-   * @param defaultValue The initial value for the spinner
-   * @return A configured JSpinner with appropriate model and range
-   */
-  private JSpinner buildSpinner(int defaultValue) {
-    SpinnerNumberModel model = new SpinnerNumberModel(defaultValue, 0, 255, 1);
-    return new JSpinner(model);
-  }
-
-  /**
-   * Disables text editing for multiple spinners.
-   *
-   * @param blackSpinner The spinner for black point
-   * @param midSpinner   The spinner for mid point
-   * @param whiteSpinner The spinner for white point
-   */
-  private void disableSpinnerTextEditing(JSpinner blackSpinner,
-                                         JSpinner midSpinner,
-                                         JSpinner whiteSpinner) {
-    disableTextEditing(blackSpinner);
-    disableTextEditing(midSpinner);
-    disableTextEditing(whiteSpinner);
-  }
-
-  /**
-   * Disables text editing for a single spinner component.
-   *
-   * @param spinner The JSpinner component to disable text editing for
-   */
-  private void disableTextEditing(JSpinner spinner) {
-    ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
   }
 
   @Override

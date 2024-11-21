@@ -56,7 +56,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -75,7 +74,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -98,7 +96,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -125,7 +122,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -146,7 +142,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -173,7 +168,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -194,7 +188,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -221,7 +214,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -242,7 +234,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -269,7 +260,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -289,7 +279,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -311,7 +300,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -330,7 +318,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -348,7 +335,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -370,7 +356,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -404,7 +389,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -434,7 +418,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -466,7 +449,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -496,7 +478,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -528,7 +509,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -558,7 +538,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -591,7 +570,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -621,7 +599,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -653,7 +630,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -683,7 +659,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -715,7 +690,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -746,7 +720,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -776,7 +749,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -810,7 +782,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -840,7 +811,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -872,7 +842,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -902,7 +871,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -934,7 +902,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -964,7 +931,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -996,7 +962,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1025,7 +990,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1051,7 +1015,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1085,7 +1048,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1117,7 +1079,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1151,7 +1112,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1181,7 +1141,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1206,7 +1165,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1240,7 +1198,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1272,7 +1229,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             false,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1306,7 +1262,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1336,7 +1291,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1362,7 +1316,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1396,7 +1349,6 @@ public class GUIControllerTests {
             "",
             false,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1428,7 +1380,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1463,7 +1414,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1494,7 +1444,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1520,7 +1469,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1555,7 +1503,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1588,7 +1535,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1623,7 +1569,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1654,7 +1599,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1680,7 +1624,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1715,7 +1658,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1748,7 +1690,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1783,7 +1724,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1817,7 +1757,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -1847,7 +1786,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -1882,11 +1820,10 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            levels,
             stringMemory,
             imageMemory,
             output);
-    features.levelsAdjust();
+    features.levelsAdjust(levels);
 
     assertThrows(ImageProcessorException.NotFoundException.class, () -> {
       imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1911,11 +1848,10 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            levels,
             stringMemory,
             imageMemory,
             output);
-    features.levelsAdjust();
+    features.levelsAdjust(levels);
 
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
@@ -1952,11 +1888,10 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            levels,
             stringMemory,
             imageMemory,
             output);
-    features.levelsAdjust();
+    features.levelsAdjust(levels);
 
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
@@ -1996,11 +1931,10 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            levels,
             stringMemory,
             imageMemory,
             output);
-    features.levelsAdjust();
+    features.levelsAdjust(levels);
 
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
@@ -2039,11 +1973,10 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            levels,
             stringMemory,
             imageMemory,
             output);
-    features.levelsAdjust();
+    features.levelsAdjust(levels);
 
     getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
             UserCommand.LEVELS_ADJUST)));
@@ -2083,11 +2016,10 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            levels,
             stringMemory,
             imageMemory,
             output);
-    features.levelsAdjust();
+    features.levelsAdjust(levels);
 
     getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
             UserCommand.LEVELS_ADJUST)));
@@ -2109,7 +2041,6 @@ public class GUIControllerTests {
 
   private void initialiseController(String input, boolean confirmSplitView,
                                     Integer sliderInput,
-                                    ImageProcessingRequest.Levels interactiveThreeLevelInput,
                                     ImageMemory<String> stringMemory,
                                     ImageMemory<Image> imageMemory,
                                     StringBuilder log) {
@@ -2117,8 +2048,7 @@ public class GUIControllerTests {
             new MockGUIView(
                     new StringReader(input),
                     confirmSplitView,
-                    sliderInput,
-                    interactiveThreeLevelInput, log),
+                    sliderInput,log),
             new FileImageProcessingService(imageMemory),
             stringMemory);
   }
@@ -2135,7 +2065,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2165,7 +2094,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2193,7 +2121,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2223,7 +2150,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2251,7 +2177,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2281,7 +2206,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2309,7 +2233,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2341,7 +2264,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2369,7 +2291,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2399,7 +2320,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2427,7 +2347,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2457,7 +2376,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2486,7 +2404,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2514,7 +2431,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2545,7 +2461,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2573,7 +2488,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2603,7 +2517,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2631,7 +2544,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2661,7 +2573,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2689,7 +2600,6 @@ public class GUIControllerTests {
               "",
               true,
               null,
-              null,
               stringMemory,
               imageMemory,
               output);
@@ -2703,7 +2613,6 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              null,
               null,
               stringMemory,
               imageMemory,
@@ -2750,7 +2659,6 @@ public class GUIControllerTests {
               "",
               true,
               null,
-              null,
               stringMemory,
               imageMemory,
               output);
@@ -2764,7 +2672,6 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              null,
               null,
               stringMemory,
               imageMemory,
@@ -2811,7 +2718,6 @@ public class GUIControllerTests {
               "",
               true,
               null,
-              null,
               stringMemory,
               imageMemory,
               output);
@@ -2848,7 +2754,6 @@ public class GUIControllerTests {
             "",
             true,
             null,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2869,7 +2774,6 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            null,
             null,
             stringMemory,
             imageMemory,
@@ -2893,7 +2797,6 @@ public class GUIControllerTests {
             "",
             true,
             0,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2932,7 +2835,6 @@ public class GUIControllerTests {
             "",
             false,
             -1,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2953,7 +2855,6 @@ public class GUIControllerTests {
             "",
             false,
             100,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -2992,7 +2893,6 @@ public class GUIControllerTests {
             "",
             false,
             101,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3013,7 +2913,6 @@ public class GUIControllerTests {
             "",
             true,
             30,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3053,7 +2952,6 @@ public class GUIControllerTests {
               "",
               false,
               50,
-              null,
               stringMemory,
               imageMemory,
               output);
@@ -3093,7 +2991,6 @@ public class GUIControllerTests {
               "",
               true,
               75,
-              null,
               stringMemory,
               imageMemory,
               output);
@@ -3133,7 +3030,6 @@ public class GUIControllerTests {
             "",
             true,
             0,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3171,7 +3067,6 @@ public class GUIControllerTests {
             "",
             false,
             -1,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3192,7 +3087,6 @@ public class GUIControllerTests {
             "",
             false,
             100,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3230,7 +3124,6 @@ public class GUIControllerTests {
             "",
             false,
             101,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3251,7 +3144,6 @@ public class GUIControllerTests {
             "",
             true,
             30,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3289,7 +3181,6 @@ public class GUIControllerTests {
             "",
             false,
             50,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3326,7 +3217,6 @@ public class GUIControllerTests {
             "",
             true,
             75,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3366,7 +3256,6 @@ public class GUIControllerTests {
             "",
             true,
             0,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3402,7 +3291,6 @@ public class GUIControllerTests {
             "",
             false,
             -1,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3423,7 +3311,6 @@ public class GUIControllerTests {
             "",
             false,
             100,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3459,7 +3346,6 @@ public class GUIControllerTests {
             "",
             false,
             101,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3480,7 +3366,6 @@ public class GUIControllerTests {
             "",
             true,
             30,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3516,7 +3401,6 @@ public class GUIControllerTests {
             "",
             false,
             50,
-            null,
             stringMemory,
             imageMemory,
             output);
@@ -3551,7 +3435,6 @@ public class GUIControllerTests {
             "",
             true,
             75,
-            null,
             stringMemory,
             imageMemory,
             output);
