@@ -8,13 +8,12 @@ import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.enumeration.UserCommand;
 import model.memory.ImageMemory;
-import model.memory.StringMemory;
 import model.request.ImageProcessingRequest;
 import controller.services.ImageProcessingService;
 import model.visual.Image;
-import view.input.UserInput;
-import view.output.DisplayMessageType;
-import view.output.UserOutput;
+import view.DisplayMessageType;
+import view.gui.GUIInput;
+import view.gui.GUIOutput;
 import utility.IOUtils;
 import utility.StringUtils;
 
@@ -26,35 +25,49 @@ import utility.StringUtils;
 public class GUIImageProcessorController implements ImageProcessorController,
         Features {
 
-  private final UserInput userInput;
-  private final UserOutput userOutput;
+  /**
+   * GUI input to get the input from the user.
+   */
+  private final GUIInput guiInput;
+  /**
+   * GUI output to display the output to the user
+   */
+  private final GUIOutput guiOutput;
+  /**
+   * ImageProcessingService object to process the image.
+   */
   private final ImageProcessingService imageProcessingService;
+
+  /**
+   * ImageMemory object to store the image currently under working.
+   */
   private final ImageMemory<String> imageToDisplay;
 
   /**
    * Constructs a GUIImageProcessorController object with the given
-   * UserOutput and ImageProcessingService.
+   * GUIInput, GUIOutput and ImageProcessingService.
    *
-   * @param userInput              the input from the user.
-   * @param userOutput             the output to be displayed to user.
+   * @param guiInput               guiInput to interact with user and get input
+   * @param guiOutput              guiOutput to interact with user and
+   *                               display output
    * @param imageProcessingService the image processing service.
+   * @param imageToDisplay         the image currently display.
    */
   public GUIImageProcessorController(
-
-          UserInput userInput, UserOutput userOutput,
+          GUIInput guiInput,
+          GUIOutput guiOutput,
           ImageProcessingService imageProcessingService,
           ImageMemory<String> imageToDisplay) {
 
-    Objects.requireNonNull(userInput, "UserInput cannot be null");
-    Objects.requireNonNull(userOutput, "UserOutput cannot be null");
+    Objects.requireNonNull(guiInput, "GUI Input cannot be null");
+    Objects.requireNonNull(guiOutput, "GUI Output cannot be null");
     Objects.requireNonNull(imageProcessingService, "ImageProcessingService "
             + "cannot be null");
     Objects.requireNonNull(imageToDisplay, "ImageToDisplay cannot be null");
     this.imageProcessingService = imageProcessingService;
-
-    this.userInput = userInput;
-    this.userOutput = userOutput;
-    this.userOutput.displayCommands(
+    this.guiInput = guiInput;
+    this.guiOutput = guiOutput;
+    this.guiOutput.displayCommands(
             List.of(
                     UserCommand.LOAD,
                     UserCommand.SAVE,
@@ -75,7 +88,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
             )
     );
     this.imageToDisplay = imageToDisplay;
-    this.userOutput.addFeatures(this);
+    this.guiOutput.addFeatures(this);
   }
 
   /**
@@ -91,10 +104,14 @@ public class GUIImageProcessorController implements ImageProcessorController,
                 throw new ImageProcessorException("Save the current image "
                         + "before loading a new one");
               }
-              String imagePath = userInput.interactiveImageLoadPathInput();
-              String imageName = IOUtils.getImageNameFromPath(imagePath);
+              Optional<String> imagePath =
+                      guiInput.interactiveImageLoadPathInput();
+              if (imagePath.isEmpty()) {
+                return;
+              }
+              String imageName = IOUtils.getImageNameFromPath(imagePath.get());
               imageProcessingService.loadImage(ImageProcessingRequest.builder()
-                      .imagePath(imagePath)
+                      .imagePath(imagePath.get())
                       .imageName(imageName)
                       .build());
               updateImageToDisplay(imageName);
@@ -139,10 +156,13 @@ public class GUIImageProcessorController implements ImageProcessorController,
     executeImageOperation(
             () -> {
               validateImageLoaded();
-              String destinationImagePath =
-                      userInput.interactiveImageSavePathInput();
+              Optional<String> destinationImagePath =
+                      guiInput.interactiveImageSavePathInput();
+              if (destinationImagePath.isEmpty()) {
+                return;
+              }
               imageProcessingService.saveImage(ImageProcessingRequest.builder()
-                      .imagePath(destinationImagePath)
+                      .imagePath(destinationImagePath.get())
                       .imageName(getImageToDisplay())
                       .build());
               this.reset();
@@ -157,12 +177,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void applySepia() {
     executeImageOperation(
-            () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.SEPIA)
-              );
-            }
+            () -> showSplitView(
+                    percentage -> executeSplitViewCommand(percentage,
+                            UserCommand.SEPIA)
+            )
     );
   }
 
@@ -187,9 +205,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void blueComponent() {
     executeImageOperation(
-            () -> {
-              createComponent(UserCommand.BLUE_COMPONENT);
-            }
+            () -> createComponent(UserCommand.BLUE_COMPONENT)
     );
   }
 
@@ -200,12 +216,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void blurImage() {
     executeImageOperation(
-            () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.BLUR)
-              );
-            }
+            () -> showSplitView(
+                    percentage -> executeSplitViewCommand(percentage,
+                            UserCommand.BLUR)
+            )
     );
   }
 
@@ -216,12 +230,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void sharpenImage() {
     executeImageOperation(
-            () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.SHARPEN)
-              );
-            }
+            () -> showSplitView(
+                    percentage -> executeSplitViewCommand(percentage,
+                            UserCommand.SHARPEN)
+            )
     );
   }
 
@@ -233,7 +245,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void compressImage() {
     executeImageOperation(
             () -> {
-              Optional<Integer> percentage = userInput.getSliderInput();
+              Optional<Integer> percentage = guiInput.getSliderInput();
               if (percentage.isPresent()) {
                 compressImage(percentage.get());
               }
@@ -249,31 +261,37 @@ public class GUIImageProcessorController implements ImageProcessorController,
               if (isImageLoaded()) {
                 displayMessage("Save the current image before closing the "
                         + "window", DisplayMessageType.ERROR);
-                userOutput.doNotCloseWindow();
+                guiOutput.doNotCloseWindow();
               } else {
-                userOutput.closeWindow();
+                guiOutput.closeWindow();
               }
             }
     );
 
   }
 
-  // In Controller class
+
   @Override
   public void downscaleImage() {
     executeImageOperation(() -> {
       String scaledImageName = createDestinationImageName(
               getImageToDisplay(), UserCommand.DOWNSCALE);
-      ImageProcessingRequest.ScalingFactors factors = userInput.interactiveScalingFactorsInput();
+      Optional<ImageProcessingRequest.ScalingFactors> factors =
+              guiInput.interactiveScalingFactorsInput();
+      if (factors.isEmpty()) {
+        return;
+      }
       ImageProcessingRequest request = ImageProcessingRequest.builder()
               .imageName(getImageToDisplay())
               .destinationImageName(scaledImageName)
-              .scalingFactors(factors.getWidthFactor(), factors.getHeightFactor())
+              .scalingFactors(factors.get().getWidthFactor(),
+                      factors.get().getHeightFactor())
               .build();
       imageProcessingService.downscaleImage(request);
       updateImageToDisplay(scaledImageName);
     });
   }
+
   /**
    * Flips the current image vertically around its horizontal axis.
    */
@@ -281,7 +299,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void verticalFlip() {
     executeImageOperation(
             () -> {
-            validateImageLoaded();
+              validateImageLoaded();
               String verticalFlipImageName = createDestinationImageName(
                       getImageToDisplay(), UserCommand.VERTICAL_FLIP);
               ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -301,7 +319,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void horizontalFlip() {
     executeImageOperation(
             () -> {
-            validateImageLoaded();
+              validateImageLoaded();
               String horizontalFlipImageName = createDestinationImageName(
                       getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
               ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -320,12 +338,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void getLuma() {
     executeImageOperation(
-            () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.LUMA_COMPONENT)
-              );
-            }
+            () -> showSplitView(
+                    percentage -> executeSplitViewCommand(percentage,
+                            UserCommand.LUMA_COMPONENT)
+            )
     );
   }
 
@@ -336,12 +352,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void colorCorrect() {
     executeImageOperation(
-            () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.COLOR_CORRECT)
-              );
-            }
+            () -> showSplitView(
+                    percentage -> executeSplitViewCommand(percentage,
+                            UserCommand.COLOR_CORRECT)
+            )
     );
   }
 
@@ -353,8 +367,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void levelsAdjust() {
     executeImageOperation(
             () -> {
-              ImageProcessingRequest.Levels levels =
-                      userInput.interactiveThreeLevelInput();
+              Optional<ImageProcessingRequest.Levels> optionalLevels =
+                      guiInput.interactiveThreeLevelInput();
+              if (optionalLevels.isEmpty()) {
+                return;
+              }
+              ImageProcessingRequest.Levels levels = optionalLevels.get();
               int blackLevel = levels.getBlack();
               int midLevel = levels.getMid();
               int whiteLevel = levels.getWhite();
@@ -463,9 +481,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void redComponent() {
     executeImageOperation(
-            () -> {
-              createComponent(UserCommand.RED_COMPONENT);
-            }
+            () -> createComponent(UserCommand.RED_COMPONENT)
     );
   }
 
@@ -501,9 +517,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void greenComponent() {
     executeImageOperation(
-            () -> {
-              createComponent(UserCommand.GREEN_COMPONENT);
-            }
+            () -> createComponent(UserCommand.GREEN_COMPONENT)
     );
   }
 
@@ -523,7 +537,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
       return;
     }
     Image image = imageProcessingService.getImage(imageName);
-    userOutput.displayImage(image, null);
+    guiOutput.displayImage(image, null);
   }
 
   /**
@@ -542,7 +556,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
     }
     imageToDisplay.addImage(imageName, null);
     Image image = imageProcessingService.getImage(imageName);
-    userOutput.displayImage(image, image.histogram());
+    guiOutput.displayImage(image, image.histogram());
   }
 
 
@@ -551,7 +565,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    */
   private void clearImage() {
     imageToDisplay.clearMemory();
-    userOutput.clearImage();
+    guiOutput.clearImage();
   }
 
   /**
@@ -566,7 +580,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
     validateImageLoaded();
     String splitImageName = splitView.run(100);
     updateImageViewOnly(splitImageName);
-    boolean confirmSplitView = userInput.confirmSplitView(
+    boolean confirmSplitView = guiInput.confirmSplitView(
             percentage -> {
               try {
                 String imageName = splitView.run(percentage);
@@ -612,7 +626,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    */
   private void displayMessage(String message, DisplayMessageType messageType) {
     if (StringUtils.isNotNullOrEmpty(message)) {
-      this.userOutput.displayMessage(
+      this.guiOutput.displayMessage(
               message, messageType
       );
     }

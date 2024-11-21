@@ -1,47 +1,15 @@
-package view.output;
-
-import java.util.List;
+package view.gui;
 
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
-import exception.ImageProcessorException;
-import model.enumeration.UserCommand;
 import model.visual.Image;
+import view.UserOutput;
 
 /**
- * Represents the output to the user.
- * This output is displayed through the console.
+ * Represents the graphic output which is used to interact with the user.
+ * User can use this to view output through a graphical user interface.
  */
-public interface UserOutput {
-
-  /**
-   * Displays the message to the user.
-   *
-   * @param message     the message to be displayed
-   * @param messageType the type of message to be displayed
-   * @throws ImageProcessingRunTimeException.DisplayException if there is an
-   *                                                          error
-   *                                                          displaying the
-   *                                                          message
-   */
-  void displayMessage(String message, DisplayMessageType messageType)
-          throws
-          ImageProcessingRunTimeException.DisplayException;
-
-
-  /**
-   * Displays the commands to the user.
-   *
-   * @param commands the list of commands to be displayed
-   * @throws ImageProcessingRunTimeException.DisplayException if there is an
-   *                                                          error
-   *                                                          displaying the
-   *                                                          commands
-   */
-  void displayCommands(List<UserCommand> commands)
-          throws
-          ImageProcessingRunTimeException.DisplayException;
-
+public interface GUIOutput extends UserOutput {
 
   /**
    * Adds the features that can be executed by user to the output.

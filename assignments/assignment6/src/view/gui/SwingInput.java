@@ -1,49 +1,30 @@
-package view.input;
+package view.gui;
 
 import java.awt.*;
 import java.io.File;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
-import exception.ImageProcessorException;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import model.enumeration.ImageType;
 import model.request.ImageProcessingRequest;
 
 /**
- * A graphical user interface implementation of the UserInput interface that provides
- * various GUI components for user interaction in an image processing application.
- * This class manages dialog boxes, file choosers, sliders, and spinners for collecting
- * user input in a visual manner.
+ * Represents the input that the user can provide through the GUI using
+ * Java swing library.
  */
-public class GUIInput implements UserInput {
+public class SwingInput implements GUIInput {
 
   /**
-   * This method is not supported in the GUI implementation.
-   *
-   * @return Never returns as this method always throws an exception
-   * @throws ImageProcessorException Always throws this exception as GUI doesn't use input streams
+   * Constructs a SwingInput object to be used to interact with user.
    */
-  @Override
-  public Readable getUserInput() throws
-          ImageProcessorException {
-    throw new ImageProcessorException("No input steam in GUI");
+  public SwingInput() {
   }
 
-  /**
-   * Displays a dialog with a slider to configure split view settings and returns whether
-   * the user confirmed the operation.
-   *
-   * @param updateImageCallback A callback function that accepts an integer value representing
-   *                           the split position when the slider value changes
-   * @return true if the user clicks OK, false if they click Cancel
-   * @throws ImageProcessorException If there's an error displaying the dialog
-   */
   @Override
-  public boolean confirmSplitView(IntConsumer updateImageCallback) throws
-          ImageProcessorException {
+  public boolean confirmSplitView(IntConsumer updateImageCallback) {
     JLabel value = new JLabel("Value: 100");
     JSlider slider = createSlider(value);
     slider.addChangeListener(e -> {
@@ -77,12 +58,6 @@ public class GUIInput implements UserInput {
     return slider;
   }
 
-  /**
-   * Displays a dialog with a slider and returns the selected value if confirmed.
-   *
-   * @return An Optional containing the selected slider value if OK is clicked,
-   *         or an empty Optional if cancelled
-   */
   @Override
   public Optional<Integer> getSliderInput() {
     JLabel value = new JLabel("Value: 100");
@@ -100,51 +75,34 @@ public class GUIInput implements UserInput {
     }
   }
 
-  /**
-   * Displays a file chooser dialog for loading an image file.
-   *
-   * @return The absolute path of the selected file
-   * @throws ImageProcessorException If no file is selected or the operation is cancelled
-   */
+
   @Override
-  public String interactiveImageLoadPathInput() throws ImageProcessorException {
+  public Optional<String> interactiveImageLoadPathInput() {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showOpenDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
       File f = fileChooser.getSelectedFile();
-      return f.getAbsolutePath();
+      return Optional.of(f.getAbsolutePath());
     } else {
-      throw new ImageProcessorException("Invalid file path");
+      return Optional.empty();
     }
   }
 
-  /**
-   * Displays a file chooser dialog for saving an image file.
-   *
-   * @return The absolute path where the file should be saved
-   * @throws ImageProcessorException If no file location is selected or the operation is cancelled
-   */
+
   @Override
-  public String interactiveImageSavePathInput() throws ImageProcessorException {
+  public Optional<String> interactiveImageSavePathInput() {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showSaveDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
       File f = fileChooser.getSelectedFile();
-      return f.getAbsolutePath();
+      return Optional.of(f.getAbsolutePath());
     } else {
-      throw new ImageProcessorException("Invalid file path");
+      return Optional.empty();
     }
   }
 
-  /**
-   * Displays a dialog for adjusting three-level image settings (black point, mid point, and white point).
-   * The dialog ensures that the values maintain proper ordering (black < mid < white).
-   *
-   * @return An array of three integers representing the black, mid, and white points respectively
-   * @throws ImageProcessorException If the operation is cancelled
-   */
   @Override
-  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException {
+  public Optional<ImageProcessingRequest.Levels> interactiveThreeLevelInput() {
     JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
 
     JSpinner blackSpinner = buildSpinner(0);
@@ -169,19 +127,20 @@ public class GUIInput implements UserInput {
             JOptionPane.PLAIN_MESSAGE);
 
     if (result == JOptionPane.OK_OPTION) {
-      return new ImageProcessingRequest.Levels(
+      return Optional.of(new ImageProcessingRequest.Levels(
               (Integer) blackSpinner.getValue(),
               (Integer) midSpinner.getValue(),
-              (Integer) whiteSpinner.getValue());
+              (Integer) whiteSpinner.getValue()));
     } else {
-      throw new ImageProcessorException("Level adjustment cancelled");
+      return Optional.empty();
     }
   }
 
   /**
    * Creates a file chooser with appropriate image file filters.
    *
-   * @return A configured JFileChooser that only shows supported image file types
+   * @return A configured JFileChooser that only shows supported image file
+   * types
    */
   private JFileChooser createFileChooseWithFilter() {
     JFileChooser fileChooser = new JFileChooser(".");
@@ -196,8 +155,10 @@ public class GUIInput implements UserInput {
   }
 
   /**
-   * Configures change listeners for a series of spinners to maintain proper ordering.
-   * Ensures that each spinner's value is greater than the previous spinner and less
+   * Configures change listeners for a series of spinners to maintain proper
+   * ordering.
+   * Ensures that each spinner's value is greater than the previous spinner
+   * and less
    * than the next spinner.
    *
    * @param spinners Variable number of JSpinner components to be configured
@@ -249,10 +210,12 @@ public class GUIInput implements UserInput {
    * Disables text editing for multiple spinners.
    *
    * @param blackSpinner The spinner for black point
-   * @param midSpinner The spinner for mid point
+   * @param midSpinner   The spinner for mid point
    * @param whiteSpinner The spinner for white point
    */
-  private void disableSpinnerTextEditing(JSpinner blackSpinner, JSpinner midSpinner, JSpinner whiteSpinner) {
+  private void disableSpinnerTextEditing(JSpinner blackSpinner,
+                                         JSpinner midSpinner,
+                                         JSpinner whiteSpinner) {
     disableTextEditing(blackSpinner);
     disableTextEditing(midSpinner);
     disableTextEditing(whiteSpinner);
@@ -268,44 +231,30 @@ public class GUIInput implements UserInput {
   }
 
   @Override
-  public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws ImageProcessorException {
+  public Optional<ImageProcessingRequest.ScalingFactors> interactiveScalingFactorsInput() {
     JLabel widthValue = new JLabel("Width: 100%");
     JLabel heightValue = new JLabel("Height: 100%");
 
-    JSlider widthSlider = createPercentageSlider(widthValue, "Width: ");
-    JSlider heightSlider = createPercentageSlider(heightValue, "Height: ");
+    JSlider widthSlider = createSlider(widthValue);
+    JSlider heightSlider = createSlider(heightValue);
 
     JPanel panel = new JPanel(new GridLayout(4, 1, 5, 5));
 
-    // Add components to panel
     panel.add(widthValue);
     panel.add(widthSlider);
     panel.add(heightValue);
     panel.add(heightSlider);
 
-    // Show dialog
     int result = JOptionPane.showConfirmDialog(null, panel,
             "Downscale Image", JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE);
 
     if (result == JOptionPane.OK_OPTION) {
-      return new ImageProcessingRequest.ScalingFactors(
+      return Optional.of(new ImageProcessingRequest.ScalingFactors(
               widthSlider.getValue(),
-              heightSlider.getValue());
+              heightSlider.getValue()));
     } else {
-      throw new ImageProcessorException("Downscale cancelled");
+      return Optional.empty();
     }
-  }
-
-  private JSlider createPercentageSlider(JLabel valueLabel, String labelPrefix) {
-    JSlider slider = new JSlider(0, 100, 100);
-    slider.setMajorTickSpacing(10);
-    slider.setMinorTickSpacing(5);
-    slider.setPaintTicks(true);
-    slider.setPaintLabels(true);
-    slider.addChangeListener(e -> {
-      valueLabel.setText(labelPrefix + slider.getValue() + "%");
-    });
-    return slider;
   }
 }

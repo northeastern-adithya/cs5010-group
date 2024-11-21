@@ -7,7 +7,6 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 
 import controller.ImageProcessorController;
@@ -20,8 +19,8 @@ import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import controller.services.ImageProcessingService;
-import view.input.ConsoleInput;
-import view.output.ConsoleOutput;
+import view.text.ConsoleInput;
+import view.text.ConsoleOutput;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

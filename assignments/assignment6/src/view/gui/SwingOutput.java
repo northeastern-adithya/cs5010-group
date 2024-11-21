@@ -1,21 +1,14 @@
-package view.output;
+package view.gui;
 
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
 import model.visual.Image;
 import view.components.FeatureComponent;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -23,22 +16,22 @@ import java.util.Objects;
 
 import model.enumeration.UserCommand;
 import utility.IOUtils;
+import view.DisplayMessageType;
 
 /**
- * Represents the output to the user.
- * This output is displayed through the GUI.
+ * Represents the gui output which is implemented using the swing library.
  */
-public class GUIOutput extends JFrame implements UserOutput {
+public class SwingOutput extends JFrame implements GUIOutput {
   private final JPanel mainPanel;
   private final FeatureComponent featurePanel;
   private final JPanel imagePanel;
   private final JPanel histogramPanel;
 
   /**
-   * Constructs a GUIOutput object.
+   * Constructs a SwingOutput object.
    * This will initialise the required panels and build the layout of the GUI.
    */
-  public GUIOutput() {
+  public SwingOutput() {
     super();
     this.setTitle("Image Processing Application");
     this.setSize(600, 900);

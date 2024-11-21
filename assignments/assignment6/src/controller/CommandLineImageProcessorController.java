@@ -5,9 +5,9 @@ import java.util.Scanner;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import controller.services.ImageProcessingService;
-import view.input.UserInput;
-import view.output.DisplayMessageType;
-import view.output.UserOutput;
+import view.DisplayMessageType;
+import view.text.TextInput;
+import view.text.TextOutput;
 
 /**
  * The controller class for the command line image processor.
@@ -20,15 +20,17 @@ public class CommandLineImageProcessorController extends InteractiveImageProcess
    * Constructor to initialize the CommandLineImageProcessorController.
    * Initializes and displays the commands to the user.
    *
-   * @param userInput              input coming from user from command line.
-   * @param userOutput             output to be displayed to user.
+   * @param textInput              view used to get input from user.
+   * @param textOutput             view used to display output to the user.
    * @param imageProcessingService ImageProcessingService object.
-   * @throws NullPointerException if input, userOutput or imageProcessor is null
+   * @throws NullPointerException if text view or imageProcessor is
+   *                              null
    */
-  public CommandLineImageProcessorController(UserInput userInput,
-                                             UserOutput userOutput,
-                                             ImageProcessingService imageProcessingService) {
-    super(userInput, userOutput, imageProcessingService);
+  public CommandLineImageProcessorController(
+          TextInput textInput,
+          TextOutput textOutput,
+          ImageProcessingService imageProcessingService) {
+    super(textInput, textOutput,imageProcessingService);
   }
 
   /**
@@ -39,7 +41,7 @@ public class CommandLineImageProcessorController extends InteractiveImageProcess
   @Override
   public void processCommands() {
     try {
-      Scanner scanner = new Scanner(userInput.getUserInput());
+      Scanner scanner = new Scanner(textInput.getUserInput());
       executeRunCommand(scanner);
       displayMessage("Successfully executed the script file.",
               DisplayMessageType.INFO);

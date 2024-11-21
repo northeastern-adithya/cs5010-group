@@ -1,27 +1,38 @@
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.IntConsumer;
 
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
+import exception.ImageProcessorException;
 import model.enumeration.UserCommand;
+import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import view.output.DisplayMessageType;
-import view.output.UserOutput;
+import view.DisplayMessageType;
+import view.gui.GUIOutput;
 
 /**
- * A mock output class that logs the output to a StringBuilder.
+ * Represents the mock gui output which is used for testing purposes.
  */
-public class MockOutput implements UserOutput {
+public class MockGUIOutput implements GUIOutput {
   private final StringBuilder log;
 
   /**
-   * Constructor for the MockOutput class.
+   * Constructor for the MockInput class.
    *
-   * @param log the log to append the output to
+   * @param readable                      the readable input
+   * @param confirmSplitView              the confirm split view input
+   * @param sliderInput                   the slider input
+   * @param interactiveImageLoadPathInput the interactive image load path input
+   * @param interactiveImageSavePathInput the interactive image save path input
+   * @param interactiveThreeLevelInput    the interactive three level input
+   * @param log                           the log to log the output
    */
-  public MockOutput(StringBuilder log) {
+  public MockGUIOutput(StringBuilder log) {
     this.log = log;
   }
+
 
   @Override
   public void displayMessage(String message, DisplayMessageType messageType) throws

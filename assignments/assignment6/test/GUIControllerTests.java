@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,10 +18,8 @@ import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.memory.StringMemory;
 import model.pixels.Pixel;
-import model.pixels.RGB;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import model.visual.RenderedImage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -55,13 +52,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             "test_resources.txt",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -77,13 +73,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             "invalidPath.png",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -102,13 +97,12 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/input/random.png",
             "test_resources/output/random-png1.png",
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -130,13 +124,12 @@ public class GUIControllerTests {
 
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/output/random-png1.png",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -154,13 +147,12 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/input/random.ppm",
             "test_resources/output/random-ppm.ppm",
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -182,13 +174,12 @@ public class GUIControllerTests {
 
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/output/random-ppm.ppm",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -206,13 +197,12 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/input/random.ppm",
             "test_resources/output/random-ppm.png",
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -234,13 +224,12 @@ public class GUIControllerTests {
 
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/output/random-ppm.png",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -258,13 +247,12 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/input/random.png",
             "test_resources/output/random-png.ppm",
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -286,13 +274,12 @@ public class GUIControllerTests {
 
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/output/random-png.ppm",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -309,13 +296,12 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/input/random.jpeg",
             "test_resources/output/random-jpeg.jpeg",
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -332,13 +318,12 @@ public class GUIControllerTests {
 
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/output/random-jpeg.jpeg",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -353,13 +338,12 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/input/random.jpg",
             "test_resources/output/random-jpg.jpg",
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -374,13 +358,12 @@ public class GUIControllerTests {
     });
 
     initialiseController(
-            "",
             false,
             null,
             "test_resources/output/random-jpg.jpg",
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.loadImage();
@@ -398,13 +381,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -433,13 +415,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -466,13 +447,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -499,13 +479,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -532,13 +511,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -565,13 +543,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -598,13 +575,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.redComponent();
@@ -632,13 +608,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -665,13 +640,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -698,13 +672,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -731,13 +704,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -764,13 +736,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -797,13 +768,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -830,13 +800,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.greenComponent();
@@ -865,13 +834,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -898,13 +866,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -931,13 +898,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -964,13 +930,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -997,13 +962,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -1030,13 +994,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -1063,13 +1026,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blueComponent();
@@ -1094,13 +1056,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.verticalFlip();
@@ -1123,20 +1084,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {65280, 8421504},
-            {16711680, 255}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {65280, 8421504},
+                    {16711680, 255}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1157,20 +1118,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16711680, 16711680},
-            {16711680, 16711680}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 16711680},
+                    {16711680, 16711680}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1191,20 +1152,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1225,20 +1186,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16777215, 16777215},
+                    {16777215, 16777215}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1256,13 +1217,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.horizontalFlip();
@@ -1284,20 +1244,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {255, 16711680},
-            {8421504, 65280}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {255, 16711680},
+                    {8421504, 65280}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1318,20 +1278,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {255, 255},
-            {255, 255}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {255, 255},
+                    {255, 255}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1352,20 +1312,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1386,20 +1346,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777215, 16777215},
-            {16777215, 16777215}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16777215, 16777215},
+                    {16777215, 16777215}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1417,13 +1377,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -1446,20 +1405,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
-            false,
+            true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {3552822, 1184274},
-            {11974326, 8421504}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {3552822, 1184274},
+                    {11974326, 8421504}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1480,20 +1439,20 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1514,21 +1473,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
-            false,
+            true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16711422, 16711422},
-            {16711422, 16711422}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711422, 16711422},
+                    {16711422, 16711422}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1549,21 +1508,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
-            false,
+            true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {3552822, 3552822},
-            {3552822, 3552822}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {3552822, 3552822},
+                    {3552822, 3552822}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1581,13 +1540,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.applySepia();
@@ -1610,21 +1568,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {6576197, 3156513},
-            {12889736, 11311479}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {6576197, 3156513},
+                    {12889736, 11311479}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1645,21 +1603,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1680,21 +1638,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777198, 16777198},
-            {16777198, 16777198}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16777198, 16777198},
+                    {16777198, 16777198}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1715,21 +1673,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {3156513, 3156513},
-            {3156513, 3156513}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {3156513, 3156513},
+                    {3156513, 3156513}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1747,13 +1705,12 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
@@ -1776,21 +1733,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16711680, 255},
-            {65280, 8421504}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255},
+                    {65280, 8421504}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1811,21 +1768,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1846,21 +1803,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16711680, 16711680},
-            {16711680, 16711680}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 16711680},
+                    {16711680, 16711680}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1881,21 +1838,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {6645093, 9934743},
-            {9934743, 16514043}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {6645093, 9934743},
+                    {9934743, 16514043}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1916,13 +1873,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
@@ -1949,21 +1905,21 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.colorCorrect();
 
     // color correction does not impact natural greys
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {688382, 8421504, 688382}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {688382, 8421504, 688382}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -1981,15 +1937,15 @@ public class GUIControllerTests {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(20, 100, 255);
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(20, 100, 255);
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             levels,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.levelsAdjust();
@@ -2011,23 +1967,24 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(20, 100, 255);
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(20, 100, 255);
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             levels,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.levelsAdjust();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16711680, 255},
-            {65280, 10724259}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255},
+                    {65280, 10724259}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -2052,23 +2009,24 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(10, 20, 50);
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(10, 20, 50);
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             levels,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.levelsAdjust();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 0},
-            {8421504, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 0},
+                    {8421504, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -2087,7 +2045,8 @@ public class GUIControllerTests {
     Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
             {657930, 13816530},
             {6645093, 8421504}
-    }));;
+    }));
+    ;
 
     getExpectedImage(randomImage);
 
@@ -2095,23 +2054,24 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(100, 200, 210);
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(100, 200, 210);
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             levels,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.levelsAdjust();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {16777215, 16777215},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16777215, 16777215},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -2130,21 +2090,23 @@ public class GUIControllerTests {
     Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
             {657930, 13816530},
             {6645093, 8421504}
-    }));;;
+    }));
+    ;
+    ;
     getExpectedImage(randomImage);
     imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(128, 129, 130);
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(128, 129, 130);
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             levels,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.levelsAdjust();
@@ -2152,10 +2114,11 @@ public class GUIControllerTests {
     getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
             UserCommand.LEVELS_ADJUST)));
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 16777215},
-            {0, 0}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 16777215},
+                    {0, 0}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -2180,15 +2143,15 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(10, 128, 235);
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(10, 128, 235);
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             levels,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.levelsAdjust();
@@ -2196,10 +2159,11 @@ public class GUIControllerTests {
     getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
             UserCommand.LEVELS_ADJUST)));
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
-            {0, 8421504},
-            {16777215, 16777215}
-    }));
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {0, 8421504},
+                    {16777215, 16777215}
+            }));
 
     assertEquals(expectedImage,
             imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
@@ -2210,23 +2174,24 @@ public class GUIControllerTests {
             expectedImage.histogram().toString()));
   }
 
-  private void initialiseController(String input, boolean confirmSplitView,
+  private void initialiseController(boolean confirmSplitView,
                                     Integer sliderInput,
                                     String interactiveImageLoadPathInput,
                                     String interactiveImageSavePathInput,
                                     ImageProcessingRequest.Levels interactiveThreeLevelInput,
+                                    ImageProcessingRequest.ScalingFactors scalingFactors,
                                     ImageMemory<String> stringMemory,
                                     ImageMemory<Image> imageMemory,
                                     StringBuilder log) {
     features = new GUIImageProcessorController(
-            new MockInput(
-                    new StringReader(input),
+            new MockGUIInput(
                     confirmSplitView,
                     sliderInput,
                     interactiveImageLoadPathInput,
                     interactiveImageSavePathInput,
-                    interactiveThreeLevelInput),
-            new MockOutput(log),
+                    interactiveThreeLevelInput,
+                    scalingFactors),
+            new MockGUIOutput(log),
             new FileImageProcessingService(imageMemory),
             stringMemory);
   }
@@ -2241,13 +2206,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2272,13 +2236,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2303,13 +2266,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2334,13 +2296,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2365,13 +2326,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2396,13 +2356,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2427,13 +2386,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -2460,13 +2418,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2491,13 +2448,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2522,13 +2478,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2553,13 +2508,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2584,13 +2538,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2615,13 +2568,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2646,13 +2598,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             null,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -2678,13 +2629,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             0,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -2709,13 +2659,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             25,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -2740,13 +2689,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             50,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -2771,13 +2719,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             75,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -2802,13 +2749,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             100,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -2832,7 +2778,6 @@ public class GUIControllerTests {
       ImageMemory<String> stringMemory = initialiseStringMemory();
       StringBuilder output = new StringBuilder();
       initialiseController(
-              "",
               true,
               compression,
               "test_resources/input/random.png",
@@ -2840,7 +2785,7 @@ public class GUIControllerTests {
                       "test_resources/output/compressedImage%s.png",
                       compression),
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
 
@@ -2849,7 +2794,6 @@ public class GUIControllerTests {
       features.saveImage();
 
       initialiseController(
-              "",
               true,
               compression,
               "test_resources/input/random.png",
@@ -2857,7 +2801,7 @@ public class GUIControllerTests {
                       "test_resources/output/compressedImage%s.ppm",
                       compression),
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
 
@@ -2897,7 +2841,6 @@ public class GUIControllerTests {
       ImageMemory<String> stringMemory = initialiseStringMemory();
       StringBuilder output = new StringBuilder();
       initialiseController(
-              "",
               true,
               compression,
               "test_resources/input/random.jpg",
@@ -2905,7 +2848,7 @@ public class GUIControllerTests {
                       "test_resources/output/compressedImage%s.png",
                       compression),
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
 
@@ -2914,7 +2857,6 @@ public class GUIControllerTests {
       features.saveImage();
 
       initialiseController(
-              "",
               true,
               compression,
               "test_resources/input/random.jpg",
@@ -2922,7 +2864,7 @@ public class GUIControllerTests {
                       "test_resources/output/compressedImage%s.ppm",
                       compression),
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
 
@@ -2962,7 +2904,6 @@ public class GUIControllerTests {
       ImageMemory<String> stringMemory = initialiseStringMemory();
       StringBuilder output = new StringBuilder();
       initialiseController(
-              "",
               true,
               compression,
               "test_resources/input/random.ppm",
@@ -2970,7 +2911,7 @@ public class GUIControllerTests {
                       "test_resources/output/compressedImage%s.ppm",
                       compression),
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
 
@@ -3001,13 +2942,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             -1,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -3025,13 +2965,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             101,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.compressImage();
@@ -3050,13 +2989,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             0,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -3091,13 +3029,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             -1,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -3114,13 +3051,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             100,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -3155,13 +3091,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             101,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -3178,13 +3113,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             30,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.blurImage();
@@ -3220,13 +3154,12 @@ public class GUIControllerTests {
       stringMemory.addImage(INITIAL_IMAGE_NAME, null);
       StringBuilder output = new StringBuilder();
       initialiseController(
-              "",
               false,
               50,
               null,
               null,
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
       features.blurImage();
@@ -3262,13 +3195,12 @@ public class GUIControllerTests {
       stringMemory.addImage(INITIAL_IMAGE_NAME, null);
       StringBuilder output = new StringBuilder();
       initialiseController(
-              "",
               true,
               75,
               null,
               null,
               null,
-              stringMemory,
+              null, stringMemory,
               imageMemory,
               output);
       features.blurImage();
@@ -3304,13 +3236,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             0,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3344,13 +3275,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             -1,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3367,13 +3297,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             100,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3407,13 +3336,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             101,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3430,13 +3358,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             30,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3470,13 +3397,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             50,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3509,13 +3435,12 @@ public class GUIControllerTests {
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             75,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.sharpenImage();
@@ -3543,20 +3468,20 @@ public class GUIControllerTests {
 
   // LUMA COMPONENT SPLIT VIEW TESTS
   @Test
-  public void testLumaWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             0,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -3580,20 +3505,20 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             -1,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -3602,20 +3527,20 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             100,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -3639,20 +3564,20 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             101,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -3661,20 +3586,20 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             30,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -3698,20 +3623,20 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             false,
             50,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
@@ -3734,20 +3659,20 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
     initialiseController(
-            "",
             true,
             75,
             null,
             null,
             null,
-            stringMemory,
+            null, stringMemory,
             imageMemory,
             output);
     features.getLuma();
