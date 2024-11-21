@@ -267,4 +267,45 @@ public class GUIInput implements UserInput {
     ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
   }
 
+  @Override
+  public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws ImageProcessorException {
+    JLabel widthValue = new JLabel("Width: 100%");
+    JLabel heightValue = new JLabel("Height: 100%");
+
+    JSlider widthSlider = createPercentageSlider(widthValue, "Width: ");
+    JSlider heightSlider = createPercentageSlider(heightValue, "Height: ");
+
+    JPanel panel = new JPanel(new GridLayout(4, 1, 5, 5));
+
+    // Add components to panel
+    panel.add(widthValue);
+    panel.add(widthSlider);
+    panel.add(heightValue);
+    panel.add(heightSlider);
+
+    // Show dialog
+    int result = JOptionPane.showConfirmDialog(null, panel,
+            "Downscale Image", JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE);
+
+    if (result == JOptionPane.OK_OPTION) {
+      return new ImageProcessingRequest.ScalingFactors(
+              widthSlider.getValue(),
+              heightSlider.getValue());
+    } else {
+      throw new ImageProcessorException("Downscale cancelled");
+    }
+  }
+
+  private JSlider createPercentageSlider(JLabel valueLabel, String labelPrefix) {
+    JSlider slider = new JSlider(0, 100, 100);
+    slider.setMajorTickSpacing(10);
+    slider.setMinorTickSpacing(5);
+    slider.setPaintTicks(true);
+    slider.setPaintLabels(true);
+    slider.addChangeListener(e -> {
+      valueLabel.setText(labelPrefix + slider.getValue() + "%");
+    });
+    return slider;
+  }
 }

@@ -68,4 +68,12 @@ public interface UserInput {
    * @throws ImageProcessorException if there is an error getting the input
    */
   ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException;
+
+  /**
+   * Prompts the user for the scaling factors to apply interactively.
+   *
+   * @return the scaling factors to apply
+   * @throws ImageProcessorException if there is an error getting the input
+   */
+  ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws ImageProcessorException;
 }

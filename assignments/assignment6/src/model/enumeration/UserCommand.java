@@ -104,11 +104,14 @@ public enum UserCommand {
           + " split view."),
   RUN("run", "run script-file: "
           + "Load and run the script commands in the specified file."),
+  DOWNSCALE("downscale", "downscale factor image-name dest-image-name: "
+          + "Downscale the given image by the given factor and store the "
+          + "result in another image with the given name."),
 
   RESET("reset", "reset: Resets the program's memory."),
 
   QUIT("quit", "quit: Quit the program."),
-  HELP("help", "help: Print this help message."),;
+  HELP("help", "help: Print this help message.");
 
   /**
    * Command which the user can give.

@@ -70,6 +70,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
                     UserCommand.LUMA_COMPONENT,
                     UserCommand.COLOR_CORRECT,
                     UserCommand.LEVELS_ADJUST,
+                    UserCommand.DOWNSCALE,
                     UserCommand.RESET
             )
     );
@@ -257,6 +258,22 @@ public class GUIImageProcessorController implements ImageProcessorController,
 
   }
 
+  // In Controller class
+  @Override
+  public void downscaleImage() {
+    executeImageOperation(() -> {
+      String scaledImageName = createDestinationImageName(
+              getImageToDisplay(), UserCommand.DOWNSCALE);
+      ImageProcessingRequest.ScalingFactors factors = userInput.interactiveScalingFactorsInput();
+      ImageProcessingRequest request = ImageProcessingRequest.builder()
+              .imageName(getImageToDisplay())
+              .destinationImageName(scaledImageName)
+              .scalingFactors(factors.getWidthFactor(), factors.getHeightFactor())
+              .build();
+      imageProcessingService.downscaleImage(request);
+      updateImageToDisplay(scaledImageName);
+    });
+  }
   /**
    * Flips the current image vertically around its horizontal axis.
    */

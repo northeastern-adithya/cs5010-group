@@ -214,6 +214,16 @@ public interface ImageProcessingService {
    */
   void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException;
 
+  /**
+   * Downscale the image by the given percentage.
+   *
+   * @param request the request to downscale the image.
+   *                Contains the name of the image, the destination image,
+   *                and the percentage to downscale the image by.
+   * @throws ImageProcessorException if the image cannot be downscaled.
+   */
+  void downscaleImage(ImageProcessingRequest request) throws ImageProcessorException;
+
 
   /**
    * Gets the image from memory using the given name.

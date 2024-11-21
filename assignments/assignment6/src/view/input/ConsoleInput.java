@@ -97,4 +97,9 @@ public class ConsoleInput implements UserInput {
   public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException {
     throw new ImageProcessorException("Not supported for console input");
   }
+
+  @Override
+  public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws ImageProcessorException {
+    throw new ImageProcessorException("Not supported for console input");
+  }
 }

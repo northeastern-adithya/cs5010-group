@@ -116,6 +116,9 @@ public class FeatureComponent extends JPanel {
         case LEVELS_ADJUST:
           feature.levelsAdjust();
           break;
+        case DOWNSCALE:
+          feature.downscaleImage();
+          break;
         default:
           // Invalid Command - Do nothing
           break;
