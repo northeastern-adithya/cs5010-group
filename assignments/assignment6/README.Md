@@ -242,9 +242,12 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
     - `controller/services`: Contains interfaces and classes for image processing services, such as `ImageProcessingService` and `SimpleImageProcessingService`.
 
 4. **Class Diagram**:
-- The class diagram ![class_diagram_raw.png](res/class_diagram_raw.png) just has classes without dependencies for cleaner view.
-- The class diagram ![class_diagram_with_dependencies.png](res/class_diagram_with_dependencies.png) has classes with dependencies to understand how the dependencies are between classes.
-- The class diagram ![complete_class_diagram.png](res/complete_class_diagram.png) has classes,dependencies and methods to see the entire structure of the project.
+- The raw class diagram just has classes without dependencies for cleaner view.
+  - location: res/raw_class_diagram.png
+- The dependencies class diagram has classes with dependencies to understand how the dependencies are between classes.
+  - location: res/raw_class_diagram_with_dependencies.png
+- The complete class diagram has classes,dependencies and methods to see the entire structure of the project.
+  - location: res/complete_class_diagram.png
 - This was done to help better understand the structure of the project and how the classes are related to each other.
 
 5. **Extra Credit**:
