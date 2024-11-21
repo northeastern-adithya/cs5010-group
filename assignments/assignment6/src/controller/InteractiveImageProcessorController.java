@@ -247,8 +247,6 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
             .builder()
             .imageName(arguments.get(0))
             .destinationImageName(arguments.get(1))
-            // Optional percentage argument to get the split view.
-            .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
             .build());
     return new ExecutionStatus(true, "Successfully created red component.");
   }
@@ -269,8 +267,6 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
             .builder()
             .imageName(arguments.get(0))
             .destinationImageName(arguments.get(1))
-            // Optional percentage argument to get the split view.
-            .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
             .build());
     return new ExecutionStatus(true, "Successfully created blue component.");
   }
@@ -292,8 +288,6 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
                     .builder()
                     .imageName(arguments.get(0))
                     .destinationImageName(arguments.get(1))
-                    // Optional percentage argument to get the split view.
-                    .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
                     .build()
     );
     return new ExecutionStatus(true, "Successfully created green component.");
@@ -333,7 +327,9 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
     imageProcessingService.createLumaComponent(ImageProcessingRequest
             .builder()
             .imageName(arguments.get(0))
-            .destinationImageName(arguments.get(1)).build());
+            .destinationImageName(arguments.get(1))
+            .percentage(extractOptionalSplitPercentage(scanner).orElse(null))
+            .build());
     return new ExecutionStatus(true, "Successfully created luma component.");
   }
 

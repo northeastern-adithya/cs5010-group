@@ -4,16 +4,27 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.Optional;
 
 
+import app.parsers.ArgumentParser;
+import app.parsers.CommandLineArgumentParser;
+import app.parsers.GUIArgumentParser;
+import app.parsers.InteractiveArgumentParser;
+import controller.CommandLineImageProcessorController;
 import controller.ExecutionStatus;
 import app.ImageProcessorApp;
+import controller.GUIImageProcessorController;
+import controller.ImageProcessorController;
+import controller.InteractiveImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import factories.Factory;
@@ -43,6 +54,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -1396,28 +1408,29 @@ public class UnitTestForImageProcessor {
               + "save image-path image-name: Save the image with the given name"
               + " to the specified path which should include the name of the "
               + "file.\n"
-              + "red-component image-name dest-image-name split p: Create an " +
+              + "red-component image-name dest-image-name: Create an " +
               "image "
               + "with the red-component of the image with the given name, and "
               + "refer to it henceforth in the program by the given "
-              + "destination name.P is an optional parameter for split view.\n"
-              + "green-component image-name dest-image-name split p: Create an "
+              + "destination name.\n"
+              + "green-component image-name dest-image-name: Create an "
               + "image with the green-component of the image with the given "
               + "name, and refer to it henceforth in the program by the given "
-              + "destination name.P is an optional parameter for split view.\n"
-              + "blue-component image-name dest-image-name split p: Create an"
+              + "destination name.\n"
+              + "blue-component image-name dest-image-name: Create an"
               + " image "
               + "with the blue-component of the image with the given name, and"
               + " refer to it henceforth in the program by the given "
-              + "destination name.P is an optional parameter for split view.\n"
+              + "destination name.\n"
               + "value-component image-name dest-image-name: Create an image "
               + "with the value-component of the image with the given name, and"
               + " refer to it henceforth in the program by the given "
               + "destination name.\n"
-              + "luma-component image-name dest-image-name: Create an image "
+              + "luma-component image-name dest-image-name split P: Create an" +
+              " image "
               + "with the luma-component of the image with the given name, and "
               + "refer to it henceforth in the program by the given destination"
-              + " name.\n"
+              + " name.P is an optional parameter for split view.\n"
               + "intensity-component image-name dest-image-name: Create an "
               + "image with the intensity-component of the image with the given"
               + " name, and refer to it henceforth in the program by the given "
@@ -3378,7 +3391,6 @@ public class UnitTestForImageProcessor {
    */
   public static class TestImageProcessorApplication {
 
-
     @Test
     public void testMainWithCommandLineArguments() {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -3401,6 +3413,112 @@ public class UnitTestForImageProcessor {
       assertTrue(outContent.toString().contains("Successfully executed the "
               + "script file."));
       System.setOut(System.out);
+    }
+  }
+
+
+  public static class TestArgumentParsers{
+
+    @Test
+    public void testArgumentParserWithNoArguments() {
+      String[] args = new String[]{};
+      ArgumentParser parser = Factory.getArgumentParser(
+              args
+      );
+      assertTrue(parser instanceof GUIArgumentParser);
+      ImageProcessorController controller =  parser.createController(args);
+      assertTrue(controller instanceof GUIImageProcessorController);
+    }
+
+    @Test
+    public void testArgumentParserWithFileArgument() throws ImageProcessorException {
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      String[] args = new String[]{"-file", "test_resources/test_valid_script"
+              + ".txt"};
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString().contains("Successfully executed the "
+              + "script file."));
+      ArgumentParser parser = Factory.getArgumentParser(
+              args
+      );
+      assertTrue(parser instanceof CommandLineArgumentParser);
+      ImageProcessorController controller = parser.createController(args);
+      assertTrue(controller instanceof CommandLineImageProcessorController);
+      Image actualImage = IOUtils.read("test_resources/output" +
+              "/saved_sample_image_red_component.png",ImageType.PNG);
+      assertEquals(
+              Factory.createImage(
+                      TestUtils.createPixels(
+                              new int[][]{{16777215, 0}, {0, 8421504}}
+                      )
+              ),
+              actualImage
+      );
+      System.setOut(System.out);
+
+    }
+
+    @Test
+    public void testArgumentParserWithInteractiveArgument()
+            throws ImageProcessorException{
+      String[] args = new String[]{"-text"};
+      ArgumentParser parser = Factory.getArgumentParser(
+              args
+      );
+      String input = "load test_resources/input/random.png sample-image\n"
+              + "red-component sample-image sample-image-red-component\n"
+              + "save test_resources/output/"
+              + "saved_sample_image_red_component.png "
+              + "sample-image-red-component\n"
+              + "quit";
+      InputStream stream =
+              new ByteArrayInputStream(input.getBytes());
+      System.setIn(stream);
+      assertTrue(parser instanceof InteractiveArgumentParser);
+      ImageProcessorController controller = parser.createController(args);
+      assertTrue(controller instanceof InteractiveImageProcessorController);
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString().contains("Successfully created red component"));
+      Image actualImage = IOUtils.read("test_resources/output" +
+              "/saved_sample_image_red_component.png",ImageType.PNG);
+      assertEquals(
+              Factory.createImage(
+                      TestUtils.createPixels(
+                              new int[][]{{16777215, 0}, {0, 8421504}}
+                      )
+              ),
+              actualImage
+      );
+      System.setIn(System.in);
+      System.setOut(System.out);
+    }
+
+    @Test
+    public void testWithInvalidArguments(){
+      String[] args = new String[]{"-invalid"};
+      assertThrows(
+              ImageProcessingRunTimeException.QuitException.class,
+              () -> Factory.getArgumentParser(args));
+    }
+
+
+    @Test
+    public void testWithInvalidFileArgument() throws ImageProcessorException{
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+      String[] args = new String[]{"-file", "invalid_file"};
+      ImageProcessorApp.main(args);
+      assertTrue(outContent.toString()
+              .contains("Error reading script file: invalid_file"));
+      ArgumentParser parser = Factory.getArgumentParser(
+              args
+      );
+      assertTrue(parser instanceof CommandLineArgumentParser);
+      ImageProcessorController controller = parser.createController(args);
+      assertTrue(controller instanceof CommandLineImageProcessorController);
     }
   }
 

@@ -89,15 +89,15 @@ public class GUIImageProcessorController implements ImageProcessorController,
               if (isImageLoaded()) {
                 throw new ImageProcessorException("Save the current image "
                         + "before loading a new one");
-            }
-            String imagePath = userInput.interactiveImageLoadPathInput();
-            String imageName = IOUtils.getImageNameFromPath(imagePath);
-            imageProcessingService.loadImage(ImageProcessingRequest.builder()
+              }
+              String imagePath = userInput.interactiveImageLoadPathInput();
+              String imageName = IOUtils.getImageNameFromPath(imagePath);
+              imageProcessingService.loadImage(ImageProcessingRequest.builder()
                       .imagePath(imagePath)
                       .imageName(imageName)
                       .build());
-            updateImageToDisplay(imageName);
-        }
+              updateImageToDisplay(imageName);
+            }
     );
   }
 
@@ -136,15 +136,16 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void saveImage() {
     executeImageOperation(
-        () -> {
-            validateImageLoaded();
-            String destinationImagePath = userInput.interactiveImageSavePathInput();
-            imageProcessingService.saveImage(ImageProcessingRequest.builder()
+            () -> {
+              validateImageLoaded();
+              String destinationImagePath =
+                      userInput.interactiveImageSavePathInput();
+              imageProcessingService.saveImage(ImageProcessingRequest.builder()
                       .imagePath(destinationImagePath)
                       .imageName(getImageToDisplay())
                       .build());
-            this.reset();
-        }
+              this.reset();
+            }
     );
   }
 
@@ -186,10 +187,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void blueComponent() {
     executeImageOperation(
             () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.BLUE_COMPONENT)
-              );
+              createComponent(UserCommand.BLUE_COMPONENT);
             }
     );
   }
@@ -265,16 +263,16 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void verticalFlip() {
     executeImageOperation(
-        () -> {
-            String verticalFlipImageName = createDestinationImageName(
-                    getImageToDisplay(), UserCommand.VERTICAL_FLIP);
-            ImageProcessingRequest request = ImageProcessingRequest.builder()
-                    .imageName(getImageToDisplay())
-                    .destinationImageName(verticalFlipImageName)
-                    .build();
-            imageProcessingService.verticalFlip(request);
-            updateImageToDisplay(verticalFlipImageName);
-        }
+            () -> {
+              String verticalFlipImageName = createDestinationImageName(
+                      getImageToDisplay(), UserCommand.VERTICAL_FLIP);
+              ImageProcessingRequest request = ImageProcessingRequest.builder()
+                      .imageName(getImageToDisplay())
+                      .destinationImageName(verticalFlipImageName)
+                      .build();
+              imageProcessingService.verticalFlip(request);
+              updateImageToDisplay(verticalFlipImageName);
+            }
     );
   }
 
@@ -284,16 +282,16 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void horizontalFlip() {
     executeImageOperation(
-        () -> {
-            String horizontalFlipImageName = createDestinationImageName(
-                    getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
-            ImageProcessingRequest request = ImageProcessingRequest.builder()
-                    .imageName(getImageToDisplay())
-                    .destinationImageName(horizontalFlipImageName)
-                    .build();
-            imageProcessingService.horizontalFlip(request);
-            updateImageToDisplay(horizontalFlipImageName);
-        }
+            () -> {
+              String horizontalFlipImageName = createDestinationImageName(
+                      getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
+              ImageProcessingRequest request = ImageProcessingRequest.builder()
+                      .imageName(getImageToDisplay())
+                      .destinationImageName(horizontalFlipImageName)
+                      .build();
+              imageProcessingService.horizontalFlip(request);
+              updateImageToDisplay(horizontalFlipImageName);
+            }
     );
   }
 
@@ -303,16 +301,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void getLuma() {
     executeImageOperation(
-        () -> {
-            String lumaImageName = createDestinationImageName(
-                    getImageToDisplay(), UserCommand.LUMA_COMPONENT);
-            ImageProcessingRequest request = ImageProcessingRequest.builder()
-                    .imageName(getImageToDisplay())
-                    .destinationImageName(lumaImageName)
-                    .build();
-            imageProcessingService.createLumaComponent(request);
-            updateImageToDisplay(lumaImageName);
-        }
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.LUMA_COMPONENT)
+              );
+            }
     );
   }
 
@@ -323,12 +317,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
   @Override
   public void colorCorrect() {
     executeImageOperation(
-        () -> {
-          showSplitView(
-                  percentage -> executeSplitViewCommand(percentage,
-                          UserCommand.COLOR_CORRECT)
-          );
-        }
+            () -> {
+              showSplitView(
+                      percentage -> executeSplitViewCommand(percentage,
+                              UserCommand.COLOR_CORRECT)
+              );
+            }
     );
   }
 
@@ -337,7 +331,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    * Shows a split view preview of the effect before applying it.
    */
   @Override
-  public void levelsAdjust(){
+  public void levelsAdjust() {
     executeImageOperation(
             () -> {
               ImageProcessingRequest.Levels levels =
@@ -346,7 +340,8 @@ public class GUIImageProcessorController implements ImageProcessorController,
               int midLevel = levels.getMid();
               int whiteLevel = levels.getWhite();
               showSplitView(
-                      percentage -> handleLevelsAdjustment(percentage, blackLevel, midLevel, whiteLevel)
+                      percentage -> handleLevelsAdjustment(percentage,
+                              blackLevel, midLevel, whiteLevel)
               );
             }
     );
@@ -363,7 +358,8 @@ public class GUIImageProcessorController implements ImageProcessorController,
    * @throws ImageProcessorException if there is an error applying the levels
    *                                 adjustment
    */
-  private String handleLevelsAdjustment(int percentage, int blackLevel, int midLevel, int whiteLevel) throws
+  private String handleLevelsAdjustment(int percentage, int blackLevel,
+                                        int midLevel, int whiteLevel) throws
           ImageProcessorException {
     validateImageLoaded();
     String levelsImageName = createDestinationImageName(getImageToDisplay(),
@@ -399,14 +395,8 @@ public class GUIImageProcessorController implements ImageProcessorController,
             .percentage(percentage)
             .build();
     switch (command) {
-      case RED_COMPONENT:
-        imageProcessingService.createRedComponent(request);
-        break;
-      case GREEN_COMPONENT:
-        imageProcessingService.createGreenComponent(request);
-        break;
-      case BLUE_COMPONENT:
-        imageProcessingService.createBlueComponent(request);
+      case LUMA_COMPONENT:
+        imageProcessingService.createLumaComponent(request);
         break;
       case SEPIA:
         imageProcessingService.sepiaImage(request);
@@ -456,12 +446,34 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void redComponent() {
     executeImageOperation(
             () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.RED_COMPONENT)
-              );
+              createComponent(UserCommand.RED_COMPONENT);
             }
     );
+  }
+
+  private void createComponent(UserCommand command) throws
+          ImageProcessorException {
+    String componentImageName = createDestinationImageName(
+            getImageToDisplay(), command);
+    ImageProcessingRequest request = ImageProcessingRequest.builder()
+            .imageName(getImageToDisplay())
+            .destinationImageName(componentImageName)
+            .build();
+    switch (command) {
+      case RED_COMPONENT:
+        imageProcessingService.createRedComponent(request);
+        break;
+      case BLUE_COMPONENT:
+        imageProcessingService.createBlueComponent(request);
+        break;
+      case GREEN_COMPONENT:
+        imageProcessingService.createGreenComponent(request);
+        break;
+      default:
+        throw new ImageProcessorException(
+                String.format("Invalid command for component: %s", command));
+    }
+    updateImageToDisplay(componentImageName);
   }
 
   /**
@@ -472,10 +484,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void greenComponent() {
     executeImageOperation(
             () -> {
-              showSplitView(
-                      percentage -> executeSplitViewCommand(percentage,
-                              UserCommand.GREEN_COMPONENT)
-              );
+              createComponent(UserCommand.GREEN_COMPONENT);
             }
     );
   }
