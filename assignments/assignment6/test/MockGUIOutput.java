@@ -10,15 +10,12 @@ import model.enumeration.UserCommand;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
 import view.DisplayMessageType;
-import view.gui.GUIView;
+import view.gui.GUIOutput;
 
-public class MockGUIView implements GUIView {
-  private final Readable readable;
-  private final boolean confirmSplitView;
-  private final Integer sliderInput;
-  private final String interactiveImageLoadPathInput;
-  private final String interactiveImageSavePathInput;
-  private final ImageProcessingRequest.Levels interactiveThreeLevelInput;
+/**
+ * Represents the mock gui output which is used for testing purposes.
+ */
+public class MockGUIOutput implements GUIOutput {
   private final StringBuilder log;
 
   /**
@@ -32,57 +29,8 @@ public class MockGUIView implements GUIView {
    * @param interactiveThreeLevelInput    the interactive three level input
    * @param log                           the log to log the output
    */
-  public MockGUIView(Readable readable, boolean confirmSplitView,
-                     Integer sliderInput,
-                     String interactiveImageLoadPathInput,
-                     String interactiveImageSavePathInput,
-                     ImageProcessingRequest.Levels interactiveThreeLevelInput,
-                     StringBuilder log) {
-    this.readable = readable;
-    this.confirmSplitView = confirmSplitView;
-    this.sliderInput = sliderInput;
-    this.interactiveImageLoadPathInput = interactiveImageLoadPathInput;
-    this.interactiveImageSavePathInput = interactiveImageSavePathInput;
-    this.interactiveThreeLevelInput = interactiveThreeLevelInput;
+  public MockGUIOutput(StringBuilder log) {
     this.log = log;
-  }
-
-  @Override
-  public boolean confirmSplitView(IntConsumer updateImageCallback) throws
-          ImageProcessorException {
-    if (getSliderInput().isPresent() && Objects.nonNull(updateImageCallback)) {
-      updateImageCallback.accept(getSliderInput().get());
-    }
-    return this.confirmSplitView;
-  }
-
-  @Override
-  public Optional<Integer> getSliderInput() {
-    return Optional.ofNullable(this.sliderInput);
-  }
-
-  @Override
-  public String interactiveImageLoadPathInput() throws
-          ImageProcessorException {
-    return this.interactiveImageLoadPathInput;
-  }
-
-  @Override
-  public String interactiveImageSavePathInput() throws
-          ImageProcessorException {
-    return this.interactiveImageSavePathInput;
-  }
-
-  @Override
-  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws
-          ImageProcessorException {
-    return this.interactiveThreeLevelInput;
-  }
-
-  @Override
-  public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws
-          ImageProcessorException {
-    return null;
   }
 
 
