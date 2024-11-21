@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 
 import controller.ImageProcessorController;
@@ -3695,6 +3696,102 @@ public class ControllerIntegrationTest {
             INITIAL_IMAGE_NAME), output, randomImage);
     controller.processCommands();
     assertTrue(output.toString().contains("Invalid command parameters."));
+  }
+
+  // SPLIT VIEW TEST FOR LUMA
+  @Test
+  public void testLumaWithZeroPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split 0", INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 255, 65280}, {8421504, 16711680, 255}
+    })), imageMemory.getImage("lumaImage"));
+    assertTrue(output.toString().contains("Successfully created luma component"));
+  }
+
+  @Test
+  public void testLumaWithNegativePercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split -1",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertThrows(ImageProcessorException.class, () -> {
+      imageMemory.getImage("lumaImage");
+    });
+    assertTrue(output.toString().contains("The percentage must be between 0 and 100"));
+  }
+
+  @Test
+  public void testLumaWithHundredPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split 100", INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{
+            {3552822, 1184274, 11974326}, {8421504, 3552822, 1184274}
+    })), imageMemory.getImage("lumaImage"));
+    assertTrue(output.toString().contains("Successfully created luma component"));
+  }
+
+  @Test
+  public void testLumaWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split 101",
+            INITIAL_IMAGE_NAME), output, randomImage);
+    controller.processCommands();
+    assertThrows(ImageProcessorException.class, () -> {
+      imageMemory.getImage("lumaImage");
+    });
+    assertTrue(output.toString().contains("The percentage must be between 0 and 100"));
+  }
+
+  @Test
+  public void testLumaWithThirtyPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split 30",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 255, 65280}, {8421504, 16711680, 255}
+    })), imageMemory.getImage("lumaImage"));
+    assertTrue(output.toString().contains("Successfully created luma component"));
+  }
+
+  @Test
+  public void testLumaWithFiftyPercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split 50",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+
+    assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{
+            {3552822, 255, 65280}, {8421504, 16711680, 255}
+    })), imageMemory.getImage("lumaImage"));
+    assertTrue(output.toString().contains("Successfully created luma component"));
+  }
+
+  @Test
+  public void testLumaWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+    StringBuilder output = new StringBuilder();
+    Image randomImage = TestUtils.randomRectangleImage();
+    initialiseController(String.format("luma-component %s lumaImage split 75",
+            INITIAL_IMAGE_NAME), output, randomImage);
+
+    controller.processCommands();
+    assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{
+            {3552822, 1184274, 65280}, {8421504, 3552822, 255}
+    })), imageMemory.getImage("lumaImage"));
+    assertTrue(output.toString().contains("Successfully created luma component"));
   }
 
 }
