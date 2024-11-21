@@ -3,7 +3,6 @@ package view.gui;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
-import exception.ImageProcessorException;
 import model.request.ImageProcessingRequest;
 
 /**

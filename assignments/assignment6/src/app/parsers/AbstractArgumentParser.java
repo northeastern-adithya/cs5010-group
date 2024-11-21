@@ -6,6 +6,7 @@ import model.memory.HashMapMemory;
 
 /**
  * AbstractArgumentParser class that implements the ArgumentParser interface.
+ * Implements common methods required by all ArgumentParsers.
  */
 public abstract class AbstractArgumentParser implements ArgumentParser {
 
