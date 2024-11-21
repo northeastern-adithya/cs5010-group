@@ -19,10 +19,8 @@ import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.memory.StringMemory;
 import model.pixels.Pixel;
-import model.pixels.RGB;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import model.visual.RenderedImage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -1133,7 +1131,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
             {65280, 8421504},
             {16711680, 255}
     }));
@@ -1167,7 +1166,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
             {16711680, 16711680},
             {16711680, 16711680}
     }));
@@ -1201,7 +1201,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 0},
             {0, 0}
     }));
@@ -1235,7 +1236,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.verticalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
     }));
@@ -1294,7 +1296,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {255, 16711680},
             {8421504, 65280}
     }));
@@ -1328,7 +1331,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
             {255, 255},
             {255, 255}
     }));
@@ -1362,7 +1366,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 0},
             {0, 0}
     }));
@@ -1396,7 +1401,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.horizontalFlip();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
             {16777215, 16777215},
             {16777215, 16777215}
     }));
@@ -1447,7 +1453,7 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "",
-            false,
+            true,
             null,
             null,
             null,
@@ -1456,7 +1462,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.getLuma();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {3552822, 1184274},
             {11974326, 8421504}
     }));
@@ -1490,7 +1497,8 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.getLuma();
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 0},
             {0, 0}
     }));
@@ -1515,7 +1523,7 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "",
-            false,
+            true,
             null,
             null,
             null,
@@ -1525,7 +1533,8 @@ public class GUIControllerTests {
             output);
     features.getLuma();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {16711422, 16711422},
             {16711422, 16711422}
     }));
@@ -1550,7 +1559,7 @@ public class GUIControllerTests {
     StringBuilder output = new StringBuilder();
     initialiseController(
             "",
-            false,
+            true,
             null,
             null,
             null,
@@ -1560,7 +1569,8 @@ public class GUIControllerTests {
             output);
     features.getLuma();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {3552822, 3552822},
             {3552822, 3552822}
     }));
@@ -1621,7 +1631,8 @@ public class GUIControllerTests {
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+Factory.createImage(TestUtils.createPixels(new int[][]{
             {6576197, 3156513},
             {12889736, 11311479}
     }));
@@ -1656,7 +1667,8 @@ public class GUIControllerTests {
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+    Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 0},
             {0, 0}
     }));
@@ -1691,7 +1703,8 @@ public class GUIControllerTests {
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {16777198, 16777198},
             {16777198, 16777198}
     }));
@@ -1726,7 +1739,8 @@ public class GUIControllerTests {
             output);
     features.applySepia();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+    Factory.createImage(TestUtils.createPixels(new int[][]{
             {3156513, 3156513},
             {3156513, 3156513}
     }));
@@ -1787,7 +1801,8 @@ public class GUIControllerTests {
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {16711680, 255},
             {65280, 8421504}
     }));
@@ -1822,7 +1837,8 @@ public class GUIControllerTests {
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+    Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 0},
             {0, 0}
     }));
@@ -1857,7 +1873,8 @@ public class GUIControllerTests {
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {16711680, 16711680},
             {16711680, 16711680}
     }));
@@ -1892,7 +1909,8 @@ public class GUIControllerTests {
             output);
     features.colorCorrect();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {6645093, 9934743},
             {9934743, 16514043}
     }));
@@ -1961,7 +1979,8 @@ public class GUIControllerTests {
     features.colorCorrect();
 
     // color correction does not impact natural greys
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {688382, 8421504, 688382}
     }));
 
@@ -1981,7 +2000,8 @@ public class GUIControllerTests {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(20, 100, 255);
+    ImageProcessingRequest.Levels levels =
+     new ImageProcessingRequest.Levels(20, 100, 255);
     initialiseController(
             "",
             true,
@@ -2011,7 +2031,8 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(20, 100, 255);
+    ImageProcessingRequest.Levels levels =
+     new ImageProcessingRequest.Levels(20, 100, 255);
     initialiseController(
             "",
             true,
@@ -2024,7 +2045,8 @@ public class GUIControllerTests {
             output);
     features.levelsAdjust();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {16711680, 255},
             {65280, 10724259}
     }));
@@ -2052,7 +2074,8 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(10, 20, 50);
+    ImageProcessingRequest.Levels levels =
+     new ImageProcessingRequest.Levels(10, 20, 50);
     initialiseController(
             "",
             true,
@@ -2065,7 +2088,8 @@ public class GUIControllerTests {
             output);
     features.levelsAdjust();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 0},
             {8421504, 0}
     }));
@@ -2087,7 +2111,8 @@ public class GUIControllerTests {
     Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
             {657930, 13816530},
             {6645093, 8421504}
-    }));;
+    }));
+    ;
 
     getExpectedImage(randomImage);
 
@@ -2095,7 +2120,8 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(100, 200, 210);
+    ImageProcessingRequest.Levels levels =
+     new ImageProcessingRequest.Levels(100, 200, 210);
     initialiseController(
             "",
             true,
@@ -2108,7 +2134,8 @@ public class GUIControllerTests {
             output);
     features.levelsAdjust();
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {16777215, 16777215},
             {0, 0}
     }));
@@ -2130,13 +2157,16 @@ public class GUIControllerTests {
     Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
             {657930, 13816530},
             {6645093, 8421504}
-    }));;;
+    }));
+    ;
+    ;
     getExpectedImage(randomImage);
     imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(128, 129, 130);
+    ImageProcessingRequest.Levels levels =
+     new ImageProcessingRequest.Levels(128, 129, 130);
     initialiseController(
             "",
             true,
@@ -2152,7 +2182,8 @@ public class GUIControllerTests {
     getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
             UserCommand.LEVELS_ADJUST)));
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 16777215},
             {0, 0}
     }));
@@ -2180,7 +2211,8 @@ public class GUIControllerTests {
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
     StringBuilder output = new StringBuilder();
-    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(10, 128, 235);
+    ImageProcessingRequest.Levels levels =
+    new ImageProcessingRequest.Levels(10, 128, 235);
     initialiseController(
             "",
             true,
@@ -2196,7 +2228,8 @@ public class GUIControllerTests {
     getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
             UserCommand.LEVELS_ADJUST)));
 
-    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+    Image expectedImage =
+     Factory.createImage(TestUtils.createPixels(new int[][]{
             {0, 8421504},
             {16777215, 16777215}
     }));
@@ -2219,14 +2252,13 @@ public class GUIControllerTests {
                                     ImageMemory<Image> imageMemory,
                                     StringBuilder log) {
     features = new GUIImageProcessorController(
-            new MockInput(
+            new MockGUIView(
                     new StringReader(input),
                     confirmSplitView,
                     sliderInput,
                     interactiveImageLoadPathInput,
                     interactiveImageSavePathInput,
-                    interactiveThreeLevelInput),
-            new MockOutput(log),
+                    interactiveThreeLevelInput, log),
             new FileImageProcessingService(imageMemory),
             stringMemory);
   }
@@ -3543,7 +3575,8 @@ public class GUIControllerTests {
 
   // LUMA COMPONENT SPLIT VIEW TESTS
   @Test
-  public void testLumaWithZeroPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithZeroPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
@@ -3580,7 +3613,8 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithNegativePercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithNegativePercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
@@ -3602,7 +3636,8 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithHundredPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithHundredPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
@@ -3639,7 +3674,8 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithGreaterThanHundredPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithGreaterThanHundredPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
@@ -3661,7 +3697,8 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithThirtyPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithThirtyPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
@@ -3698,7 +3735,8 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithFiftyPercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithFiftyPercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();
@@ -3734,7 +3772,8 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testLumaWithSeventyFivePercentageSplitView() throws ImageProcessorException {
+  public void testLumaWithSeventyFivePercentageSplitView() throws
+          ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
     ImageMemory<String> stringMemory = initialiseStringMemory();

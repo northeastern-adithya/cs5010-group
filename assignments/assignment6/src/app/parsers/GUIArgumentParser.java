@@ -4,8 +4,7 @@ import controller.GUIImageProcessorController;
 import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import model.memory.StringMemory;
-import view.input.GUIInput;
-import view.output.GUIOutput;
+import view.gui.SwingView;
 
 /**
  * A class that represents a parser for GUI arguments.
@@ -17,8 +16,7 @@ public class GUIArgumentParser extends AbstractArgumentParser {
   public ImageProcessorController createController(String[] args) throws
           ImageProcessingRunTimeException.QuitException {
     return new GUIImageProcessorController(
-            new GUIInput(),
-            new GUIOutput(),
+            new SwingView(),
             createService(),
             new StringMemory()
     );

@@ -1,28 +1,64 @@
-package view.input;
-
+package view.gui;
 
 import java.util.Optional;
 import java.util.function.IntConsumer;
+
+import controller.Features;
+import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.request.ImageProcessingRequest;
+import model.visual.Image;
+import view.UserView;
 
 /**
- * Represents the user input.
- * This input can be from any source like console, file etc.
+ * Represents the graphic view which is used to interact with the user.
+ * User can use this view and input commands through a graphical user interface.
  */
-public interface UserInput {
+public interface GUIView extends UserView {
 
   /**
-   * Get the user input
-   * which the user is communicating.
+   * Adds the features that can be executed by user to the output.
    *
-   * @return the readable
-   * which the user has communicating.
-   * @throws ImageProcessorException if there is any exception when returning
-   *                                 inputstream.
+   * @param features the features to be added
    */
-  Readable getUserInput() throws
-          ImageProcessorException;
+  void addFeatures(Features features);
+
+  /**
+   * Displays the image to the user.
+   * If image is null then output will stay the same as before.
+   *
+   * @param image     the image to be displayed
+   * @param histogram the histogram of the image to be displayed
+   * @throws ImageProcessingRunTimeException.DisplayException if there is an
+   *                                                          error
+   *                                                          displaying the
+   *                                                          image
+   */
+  void displayImage(Image image, Image histogram)
+          throws
+          ImageProcessingRunTimeException.DisplayException;
+
+  /**
+   * Clears the image from the output.
+   *
+   * @throws ImageProcessingRunTimeException.DisplayException if there is an
+   *                                                          error clearing
+   *                                                          the image
+   */
+  void clearImage() throws
+          ImageProcessingRunTimeException.DisplayException;
+
+
+  /**
+   * Closes the window.
+   */
+  void closeWindow() throws
+          ImageProcessingRunTimeException.QuitException;
+
+  /**
+   * Does not close the window.
+   */
+  void doNotCloseWindow();
 
 
   /**
@@ -76,4 +112,5 @@ public interface UserInput {
    * @throws ImageProcessorException if there is an error getting the input
    */
   ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws ImageProcessorException;
+
 }

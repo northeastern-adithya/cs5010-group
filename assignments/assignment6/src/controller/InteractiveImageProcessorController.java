@@ -1,5 +1,7 @@
 package controller;
 
+
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,10 +19,9 @@ import model.enumeration.UserCommand;
 import model.request.ImageProcessingRequest;
 import controller.services.ImageProcessingService;
 import utility.StringUtils;
-import view.input.ConsoleInput;
-import view.input.UserInput;
-import view.output.DisplayMessageType;
-import view.output.UserOutput;
+import view.DisplayMessageType;
+import view.text.ConsoleView;
+import view.text.TextView;
 
 /**
  * InteractiveImageProcessorController class that implements the
@@ -40,14 +41,11 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Split command to indicate the optional split percentage.
    */
   private static final String SPLIT_COMMAND = "split";
+
   /**
-   * UserInput object to get the user input.
+   * TextView used to communicate with user.
    */
-  protected final UserInput userInput;
-  /**
-   * UserOutput object to display the output to the user.
-   */
-  private final UserOutput userOutput;
+  protected final TextView textView;
   /**
    * ImageProcessingService object to process the image.
    */
@@ -57,17 +55,14 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Constructor to initialize the SimpleImageProcessorController.
    * Initializes and displays the commands to the user.
    *
-   * @param userInput              input coming from user.
-   * @param userOutput             output to be displayed to user.
+   * @param textView             view used to interact with the user.
    * @param imageProcessingService ImageProcessingService object.
-   * @throws NullPointerException if input, userOutput or imageProcessor is null
+   * @throws NullPointerException if input, textView or imageProcessor is null
    */
-  public InteractiveImageProcessorController(UserInput userInput,
-                                             UserOutput userOutput,
+  public InteractiveImageProcessorController(TextView textView,
                                              ImageProcessingService imageProcessingService) {
-    validateInput(userInput, userOutput, imageProcessingService);
-    this.userInput = userInput;
-    this.userOutput = userOutput;
+    validateInput(textView, imageProcessingService);
+    this.textView = textView;
     this.imageProcessingService = imageProcessingService;
     displayCommands();
   }
@@ -75,17 +70,15 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   /**
    * Validates the input given to the controller.
    *
-   * @param input          UserInput object.
-   * @param output         UserOutput object.
+   * @param textView         TextView object.
    * @param imageProcessor ImageProcessingService object.
-   * @throws NullPointerException if input, output or imageProcessor is null.
+   * @throws NullPointerException if input, textView or imageProcessor is null.
    */
-  private void validateInput(UserInput input, UserOutput output,
+  private void validateInput(TextView textView,
                              ImageProcessingService imageProcessor)
           throws
           ImageProcessingRunTimeException.QuitException {
-    Objects.requireNonNull(input, "UserInput cannot be null");
-    Objects.requireNonNull(output, "UserOutput cannot be null");
+    Objects.requireNonNull(textView, "TextView cannot be null");
     Objects.requireNonNull(imageProcessor, "ImageProcessor cannot be null");
   }
 
@@ -93,19 +86,19 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    userOutput.displayCommands(List.of(UserCommand.values()));
+    textView.displayCommands(List.of(UserCommand.values()));
   }
 
   @Override
   public void processCommands() throws
           ImageProcessingRunTimeException.QuitException {
-    execute(userInput);
+    execute(textView.getUserInput());
   }
 
 
-  private void execute(UserInput input) {
+  private void execute(Readable readable) {
     try {
-      Scanner scanner = new Scanner(input.getUserInput());
+      Scanner scanner = new Scanner(readable);
       while (scanner.hasNext()) {
         String userInput = scanner.next();
         Optional<UserCommand> command = UserCommand.getCommand(userInput);
@@ -562,7 +555,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
         if (shouldSkipLine(line)) {
           continue;
         }
-        execute(new ConsoleInput(new StringReader(line)));
+        execute(new StringReader(line));
       }
 
     } catch (IOException e) {
@@ -647,7 +640,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   protected void displayMessage(String message,
                                 DisplayMessageType messageType) {
     if (StringUtils.isNotNullOrEmpty(message)) {
-      this.userOutput.displayMessage(message, messageType);
+      this.textView.displayMessage(message, messageType);
     }
   }
 
