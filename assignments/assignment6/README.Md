@@ -248,7 +248,12 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
 - This was done to help better understand the structure of the project and how the classes are related to each other.
 
 5. **Extra Credit**:
-- We implemented 1 Extra Credit Image Downscaling. Since this was a new image processing feature we added a new method in the Image model interface and implemented the same. 
+- We implemented 1 Extra Credit Image Downscaling. Since this was a new image processing feature we added a new method in the Image.java, ImageProcessingService.java and Features.java.  
 - We added this newer feature onto the Image interface due to the fact that this was being used throughout the program and extending to a new interface(for instance ImageWithAdditionalFeatures) would lead us using the new interface everywhere in the program. This would lead us to change existing code in other places(such as ImageMemory) even though the features added had no relation to these classes. So adding additional methods to the controller, service and model classes was the best approach.
 - Downscaling feature was done using the algorithm given in the assignment description. Refer 3.1 of: https://northeastern.instructure.com/courses/192553/assignments/2493533
 - This feature is tested in the GUIController test and is implemented only by GUIController.
+- Output of this image is in res/ folder
+- `res/sample_input.png` is the input image for this feature.
+- `res/downscaled_40_height_100_width.png` represents height at 40% and width at 100%.
+- `res/downscaled_60_height_60_width.png` represents height at 60% and width at 60%.
+- `res/downscaled_80_height_40_width.png` represents height at 80% and width at 40%.
