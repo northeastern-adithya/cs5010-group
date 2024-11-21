@@ -89,4 +89,9 @@ public interface Features {
    * Adjusts the levels of the image.
    */
   void levelsAdjust();
+
+  /**
+   * Downscale the image.
+   */
+  void downscaleImage();
 }

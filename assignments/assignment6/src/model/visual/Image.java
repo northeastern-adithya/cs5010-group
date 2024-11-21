@@ -209,4 +209,13 @@ public interface Image {
    *                                 adjusted
    */
   Image levelsAdjust(int black, int mid, int white) throws ImageProcessorException;
+
+  /**
+   * Resizes the image to the specified dimensions using bilinear interpolation.
+   * @param newWidth the desired width of the resized image
+   * @param newHeight the desired height of the resized image
+   * @return a new RenderedImage with the specified dimensions
+   * @throws ImageProcessorException if the new dimensions are invalid
+   */
+  Image downscale(int newWidth, int newHeight) throws ImageProcessorException;
 }

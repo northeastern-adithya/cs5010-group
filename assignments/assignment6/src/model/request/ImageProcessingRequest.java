@@ -23,6 +23,7 @@ public class ImageProcessingRequest {
   private final String blueImageName;
   private final Integer percentage;
   private final Levels levels;
+  private final ScalingFactors scalingFactors;
 
   private ImageProcessingRequest(ImageProcessingRequestBuilder builder) {
     this.imagePath = builder.imagePath;
@@ -34,6 +35,7 @@ public class ImageProcessingRequest {
     this.blueImageName = builder.blueImageName;
     this.percentage = builder.percentage;
     this.levels = builder.levels;
+    this.scalingFactors = builder.scalingFactors;
   }
 
   /**
@@ -90,6 +92,10 @@ public class ImageProcessingRequest {
 
   public Optional<Levels> getLevels() {
     return Optional.ofNullable(levels);
+  }
+
+  public Optional<ScalingFactors> getScalingFactors() {
+    return Optional.ofNullable(scalingFactors);
   }
 
   /**
@@ -151,6 +157,7 @@ public class ImageProcessingRequest {
     private String blueImageName;
     private Integer percentage;
     private Levels levels;
+    private ScalingFactors scalingFactors;
 
     private ImageProcessingRequestBuilder() {
     }
@@ -248,6 +255,11 @@ public class ImageProcessingRequest {
       return this;
     }
 
+    public ImageProcessingRequestBuilder scalingFactors(int widthFactor, int heightFactor) {
+      this.scalingFactors = new ScalingFactors(widthFactor, heightFactor);
+      return this;
+    }
+
     /**
      * Builds an ImageProcessingRequest.
      *
@@ -318,6 +330,24 @@ public class ImageProcessingRequest {
      */
     public int getMid() {
       return mid;
+    }
+  }
+
+  public static class ScalingFactors {
+    private final int widthFactor;
+    private final int heightFactor;
+
+    public ScalingFactors(int widthFactor, int heightFactor) {
+      this.widthFactor = widthFactor;
+      this.heightFactor = heightFactor;
+    }
+
+    public int getWidthFactor() {
+      return widthFactor;
+    }
+
+    public int getHeightFactor() {
+      return heightFactor;
     }
   }
 }

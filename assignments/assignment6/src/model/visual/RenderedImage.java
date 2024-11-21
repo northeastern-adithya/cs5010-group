@@ -372,4 +372,83 @@ public class RenderedImage implements Image {
     return Math.pow(black, 2) * (255 * mid - 128 * white)
             - black * (255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2));
   }
+
+  public Image downscale(int widthFactor, int heightFactor) throws ImageProcessorException {
+    if (widthFactor <= 0 || heightFactor <= 0 || widthFactor > 100 || heightFactor > 100) {
+      throw new ImageProcessorException("Scaling factors must be within 0 and 100");
+    }
+
+    int newWidth = (int)(this.getWidth() * ((double) widthFactor / 100));
+    int newHeight = (int)(this.getHeight() * ((double) heightFactor / 100));
+
+    if(newWidth == 0 || newHeight == 0) {
+      throw new ImageProcessorException("Downscale to 1D image is not supported");
+    }
+
+    Pixel[][] newPixels = new Pixel[newHeight][newWidth];
+    double scaleX = (double) this.getWidth() / newWidth;
+    double scaleY = (double) this.getHeight() / newHeight;
+
+    for (int y = 0; y < newHeight; y++) {
+      for (int x = 0; x < newWidth; x++) {
+        // Calculate the corresponding position in the original image
+        double sourceX = x * scaleX;
+        double sourceY = y * scaleY;
+
+        // Get the four surrounding pixel coordinates
+        int x1 = (int) Math.floor(sourceX);
+        int y1 = (int) Math.floor(sourceY);
+        int x2 = Math.min(x1 + 1, this.getWidth() - 1);
+        int y2 = Math.min(y1 + 1, this.getHeight() - 1);
+
+        // Get the four surrounding pixels
+        Pixel topLeft = this.getPixel(y1, x1);
+        Pixel topRight = this.getPixel(y1, x2);
+        Pixel bottomLeft = this.getPixel(y2, x1);
+        Pixel bottomRight = this.getPixel(y2, x2);
+
+        // Calculate interpolation factors
+        double dx = sourceX - x1;
+        double dy = sourceY - y1;
+
+        // Interpolate for each color channel
+        int red = bilinearInterpolate(
+                topLeft.getRed(), topRight.getRed(),
+                bottomLeft.getRed(), bottomRight.getRed(),
+                dx, dy);
+        int green = bilinearInterpolate(
+                topLeft.getGreen(), topRight.getGreen(),
+                bottomLeft.getGreen(), bottomRight.getGreen(),
+                dx, dy);
+        int blue = bilinearInterpolate(
+                topLeft.getBlue(), topRight.getBlue(),
+                bottomLeft.getBlue(), bottomRight.getBlue(),
+                dx, dy);
+
+        newPixels[y][x] = new RGB(red, green, blue);
+      }
+    }
+
+    return new RenderedImage(newPixels);
+  }
+
+  /**
+   * Performs bilinear interpolation for a single color channel.
+   * @param c00 top-left value
+   * @param c10 top-right value
+   * @param c01 bottom-left value
+   * @param c11 bottom-right value
+   * @param dx x-axis interpolation factor
+   * @param dy y-axis interpolation factor
+   * @return interpolated value
+   */
+  private int bilinearInterpolate(int c00, int c10, int c01, int c11,
+                                  double dx, double dy) {
+    // First interpolate horizontally
+    double m = (c00 * (1 - dx) + c10 * dx);
+    double n = (c01 * (1 - dx) + c11 * dx);
+
+    // Then interpolate vertically
+    return (int) Math.round(m * (1 - dy) + n * dy);
+  }
 }

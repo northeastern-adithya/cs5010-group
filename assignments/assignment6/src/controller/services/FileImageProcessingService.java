@@ -273,6 +273,18 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
+  public void downscaleImage(ImageProcessingRequest request) throws ImageProcessorException {
+    validateStringParams(request.getImageName(),
+            request.getDestinationImageName());
+    Image image = memory.getImage(request.getImageName());
+    ImageProcessingRequest.ScalingFactors factors = request.getScalingFactors().orElseThrow(
+        () -> new ImageProcessorException("Scaling factors not provided")
+    );
+    memory.addImage(request.getDestinationImageName(),
+            image.downscale(factors.getWidthFactor(), factors.getHeightFactor()));
+  }
+
+  @Override
   public Image getImage(String imageName) throws ImageProcessorException {
     return memory.getImage(imageName);
   }
