@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.Optional;
 
 
@@ -45,9 +44,8 @@ import model.pixels.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
 import utility.IOUtils;
-import view.input.ConsoleInput;
-import view.output.ConsoleOutput;
-import view.output.DisplayMessageType;
+import view.text.ConsoleView;
+import view.DisplayMessageType;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -508,43 +506,19 @@ public class UnitTestForImageProcessor {
 
 
   /**
-   * Contains all the unit tests for user console input.
-   */
-  public static class ConsoleInputTest {
-
-    @Test
-    public void testConstructorWithValidInputStream() {
-      ConsoleInput consoleInput = new ConsoleInput(new StringReader(
-              "test input"));
-      assertNotNull(consoleInput);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testConstructorWithNullInputStream() {
-      new ConsoleInput(null);
-    }
-
-    @Test
-    public void testGetUserInput() throws ImageProcessorException{
-      StringReader reader = new StringReader("test input");
-      ConsoleInput consoleInput = new ConsoleInput(reader);
-      assertEquals(reader, consoleInput.getUserInput());
-    }
-  }
-
-
-  /**
    * Contains all the unit tests for user console output.
    */
-  public static class ConsoleOutputTest {
+  public static class ConsoleViewTest {
 
+    private StringReader stringReader;
     private StringWriter stringWriter;
-    private ConsoleOutput consoleOutput;
+    private ConsoleView consoleView;
 
     @Before
     public void setUp() {
+      stringReader = new StringReader("");
       stringWriter = new StringWriter();
-      consoleOutput = new ConsoleOutput(stringWriter);
+      consoleView = new ConsoleView(stringReader,stringWriter);
     }
 
     @Test
@@ -552,13 +526,13 @@ public class UnitTestForImageProcessor {
             throws
             ImageProcessingRunTimeException.DisplayException {
       String message = "Hello, World!";
-      consoleOutput.displayMessage(message, DisplayMessageType.INFO);
+      consoleView.displayMessage(message, DisplayMessageType.INFO);
       assertEquals("Hello, World!\n", stringWriter.toString());
     }
 
     @Test(expected = NullPointerException.class)
     public void testConstructorWithNullOutput() {
-      new ConsoleOutput(null);
+      new ConsoleView(null,null);
     }
 
     @Test(expected = ImageProcessingRunTimeException.DisplayException.class)
@@ -584,8 +558,8 @@ public class UnitTestForImageProcessor {
           throw new IOException("Forced IOException");
         }
       };
-      ConsoleOutput failingConsoleOutput = new ConsoleOutput(failingAppendable);
-      failingConsoleOutput.displayMessage("This will fail",
+      ConsoleView failingConsoleView = new ConsoleView(stringReader,failingAppendable);
+      failingConsoleView.displayMessage("This will fail",
               DisplayMessageType.ERROR);
     }
   }
@@ -1492,6 +1466,9 @@ public class UnitTestForImageProcessor {
               + "P is an optional parameter for split view.\n"
               + "run script-file: Load and run the script commands in the "
               + "specified file.\n"
+              + "downscale factor image-name dest-image-name: "
+              + "Downscale the given image by the given factor and store the "
+              + "result in another image with the given name.\n"
               + "reset: Resets the program's memory.\n"
               + "quit: Quit the program.\n"
               + "help: Print this help message.\n";

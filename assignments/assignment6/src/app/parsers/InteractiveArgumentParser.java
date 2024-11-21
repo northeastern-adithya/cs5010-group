@@ -5,8 +5,7 @@ import java.io.InputStreamReader;
 import controller.ImageProcessorController;
 import controller.InteractiveImageProcessorController;
 import exception.ImageProcessingRunTimeException;
-import view.input.ConsoleInput;
-import view.output.ConsoleOutput;
+import view.text.ConsoleView;
 
 /**
  * A class that represents a parser for interactive arguments.
@@ -19,10 +18,10 @@ public class InteractiveArgumentParser extends AbstractArgumentParser {
   public ImageProcessorController createController(String[] args) throws
           ImageProcessingRunTimeException.QuitException {
     return new InteractiveImageProcessorController(
-            new ConsoleInput(
-                    new InputStreamReader(System.in)
+            new ConsoleView(
+                    new InputStreamReader(System.in),
+                    System.out
             ),
-            new ConsoleOutput(System.out),
             createService()
     );
   }

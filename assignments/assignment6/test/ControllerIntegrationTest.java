@@ -7,7 +7,6 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 
 import controller.ImageProcessorController;
@@ -20,8 +19,7 @@ import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import controller.services.ImageProcessingService;
-import view.input.ConsoleInput;
-import view.output.ConsoleOutput;
+import view.text.ConsoleView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -53,8 +51,7 @@ public class ControllerIntegrationTest {
     ImageProcessingService processingService =
             Factory.createImageProcessor(imageMemory);
     controller = new InteractiveImageProcessorController(
-            new ConsoleInput(new StringReader(input)),
-            new ConsoleOutput(output),
+            new ConsoleView(new StringReader(input),output),
             processingService
     );
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);

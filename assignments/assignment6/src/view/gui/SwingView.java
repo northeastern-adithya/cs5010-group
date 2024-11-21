@@ -1,43 +1,186 @@
-package view.input;
+package view.gui;
+
+import controller.Features;
+import exception.ImageProcessingRunTimeException;
+import exception.ImageProcessorException;
+import model.enumeration.ImageType;
+import model.request.ImageProcessingRequest;
+import model.visual.Image;
+import view.components.FeatureComponent;
+
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
-import exception.ImageProcessorException;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import model.enumeration.ImageType;
-import model.request.ImageProcessingRequest;
+import model.enumeration.UserCommand;
+import utility.IOUtils;
+import view.DisplayMessageType;
 
 /**
- * A graphical user interface implementation of the UserInput interface that provides
- * various GUI components for user interaction in an image processing application.
- * This class manages dialog boxes, file choosers, sliders, and spinners for collecting
- * user input in a visual manner.
+ * Represents the gui view which is implemented using the swing library.
  */
-public class GUIInput implements UserInput {
+public class SwingView extends JFrame implements GUIView {
+  private final JPanel mainPanel;
+  private final FeatureComponent featurePanel;
+  private final JPanel imagePanel;
+  private final JPanel histogramPanel;
 
   /**
-   * This method is not supported in the GUI implementation.
-   *
-   * @return Never returns as this method always throws an exception
-   * @throws ImageProcessorException Always throws this exception as GUI doesn't use input streams
+   * Constructs a SwingView object.
+   * This will initialise the required panels and build the layout of the GUI.
    */
-  @Override
-  public Readable getUserInput() throws
-          ImageProcessorException {
-    throw new ImageProcessorException("No input steam in GUI");
+  public SwingView() {
+    super();
+    this.setTitle("Image Processing Application");
+    this.setSize(600, 900);
+    // Initialising panels
+    mainPanel = new JPanel();
+    featurePanel = new FeatureComponent();
+    imagePanel = new JPanel();
+    histogramPanel = new JPanel();
+
+    // Building the layout
+    buildMainPanel();
+    buildImagePanel();
+    buildCommandPanel();
+    buildHistogramPanel();
+    addScrollPanes();
+
+    this.add(mainPanel);
+    addWindowListener(
+            new WindowAdapter() {
+              @Override
+              public void windowClosing(WindowEvent e) {
+                featurePanel.closeWindow();
+              }
+            }
+    );
+    this.setVisible(true);
   }
 
   /**
-   * Displays a dialog with a slider to configure split view settings and returns whether
+   * Builds the main panel of the GUI.
+   */
+  private void buildMainPanel() {
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+  }
+
+
+  /**
+   * Builds the image panel of the GUI.
+   */
+  private void buildImagePanel() {
+    buildPanel(imagePanel, "Image", 400, 600);
+  }
+
+  /**
+   * Builds the command panel of the GUI.
+   */
+  private void buildCommandPanel() {
+    featurePanel.setLayout(new BoxLayout(featurePanel, BoxLayout.Y_AXIS));
+    featurePanel.setBorder(new TitledBorder("Commands"));
+  }
+
+  /**
+   * Builds the histogram panel of the GUI.
+   */
+  private void buildHistogramPanel() {
+    buildPanel(histogramPanel, "Histogram", 200, 600);
+  }
+
+  /**
+   * Builds a panel with the specified title, width and height.
+   *
+   * @param panel  the panel to be built
+   * @param title  the title of the panel
+   * @param width  the width of the panel
+   * @param height the height of the panel
+   */
+  private void buildPanel(JPanel panel, String title, int width, int height) {
+    panel.setLayout(new BorderLayout());
+    panel.setPreferredSize(new Dimension(width, height));
+    panel.add(new JLabel(), BorderLayout.NORTH);
+    panel.setBorder(new TitledBorder(title));
+  }
+
+  /**
+   * Adds scroll panes to the main panel.
+   */
+  private void addScrollPanes() {
+    mainPanel.add(new JScrollPane(featurePanel));
+    mainPanel.add(new JScrollPane(imagePanel));
+    mainPanel.add(new JScrollPane(histogramPanel));
+  }
+
+
+  @Override
+  public void displayMessage(String message, DisplayMessageType messageType)
+          throws
+          ImageProcessingRunTimeException.DisplayException {
+    if (Objects.requireNonNull(messageType) == DisplayMessageType.INFO) {
+      JOptionPane.showMessageDialog(this, message, "Info",
+              JOptionPane.INFORMATION_MESSAGE);
+    } else if (messageType == DisplayMessageType.ERROR) {
+      JOptionPane.showMessageDialog(this, message, "Error",
+              JOptionPane.ERROR_MESSAGE);
+    }
+  }
+
+  @Override
+  public void displayCommands(List<UserCommand> commands) {
+    featurePanel.removeAll();
+    for (UserCommand command : commands) {
+      featurePanel.addCommandButton(command);
+    }
+    featurePanel.revalidate();
+    featurePanel.repaint();
+  }
+
+  @Override
+  public void addFeatures(Features features) {
+    featurePanel.addFeatures(features);
+  }
+
+  @Override
+  public void displayImage(Image image, Image histogram) {
+    displayImageToPanel(imagePanel, image);
+    displayImageToPanel(histogramPanel, histogram);
+  }
+
+  @Override
+  public void clearImage() throws
+          ImageProcessingRunTimeException.DisplayException {
+    clearPanel(imagePanel);
+    clearPanel(histogramPanel);
+  }
+
+  @Override
+  public void closeWindow() {
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  }
+
+  @Override
+  public void doNotCloseWindow() {
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+  }
+
+  /**
+   * Displays a dialog with a slider to configure split view settings and
+   * returns whether
    * the user confirmed the operation.
    *
-   * @param updateImageCallback A callback function that accepts an integer value representing
-   *                           the split position when the slider value changes
+   * @param updateImageCallback A callback function that accepts an integer
+   *                            value representing
+   *                            the split position when the slider value changes
    * @return true if the user clicks OK, false if they click Cancel
    * @throws ImageProcessorException If there's an error displaying the dialog
    */
@@ -78,10 +221,11 @@ public class GUIInput implements UserInput {
   }
 
   /**
-   * Displays a dialog with a slider and returns the selected value if confirmed.
+   * Displays a dialog with a slider and returns the selected value if
+   * confirmed.
    *
    * @return An Optional containing the selected slider value if OK is clicked,
-   *         or an empty Optional if cancelled
+   * or an empty Optional if cancelled
    */
   @Override
   public Optional<Integer> getSliderInput() {
@@ -104,10 +248,12 @@ public class GUIInput implements UserInput {
    * Displays a file chooser dialog for loading an image file.
    *
    * @return The absolute path of the selected file
-   * @throws ImageProcessorException If no file is selected or the operation is cancelled
+   * @throws ImageProcessorException If no file is selected or the operation
+   * is cancelled
    */
   @Override
-  public String interactiveImageLoadPathInput() throws ImageProcessorException {
+  public String interactiveImageLoadPathInput() throws
+          ImageProcessorException {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showOpenDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
@@ -122,10 +268,12 @@ public class GUIInput implements UserInput {
    * Displays a file chooser dialog for saving an image file.
    *
    * @return The absolute path where the file should be saved
-   * @throws ImageProcessorException If no file location is selected or the operation is cancelled
+   * @throws ImageProcessorException If no file location is selected or the
+   * operation is cancelled
    */
   @Override
-  public String interactiveImageSavePathInput() throws ImageProcessorException {
+  public String interactiveImageSavePathInput() throws
+          ImageProcessorException {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showSaveDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
@@ -137,14 +285,18 @@ public class GUIInput implements UserInput {
   }
 
   /**
-   * Displays a dialog for adjusting three-level image settings (black point, mid point, and white point).
-   * The dialog ensures that the values maintain proper ordering (black < mid < white).
+   * Displays a dialog for adjusting three-level image settings (black point,
+   * mid point, and white point).
+   * The dialog ensures that the values maintain proper ordering (black < mid
+   * < white).
    *
-   * @return An array of three integers representing the black, mid, and white points respectively
+   * @return An array of three integers representing the black, mid, and
+   * white points respectively
    * @throws ImageProcessorException If the operation is cancelled
    */
   @Override
-  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws ImageProcessorException {
+  public ImageProcessingRequest.Levels interactiveThreeLevelInput() throws
+          ImageProcessorException {
     JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
 
     JSpinner blackSpinner = buildSpinner(0);
@@ -181,7 +333,8 @@ public class GUIInput implements UserInput {
   /**
    * Creates a file chooser with appropriate image file filters.
    *
-   * @return A configured JFileChooser that only shows supported image file types
+   * @return A configured JFileChooser that only shows supported image file
+   * types
    */
   private JFileChooser createFileChooseWithFilter() {
     JFileChooser fileChooser = new JFileChooser(".");
@@ -196,8 +349,10 @@ public class GUIInput implements UserInput {
   }
 
   /**
-   * Configures change listeners for a series of spinners to maintain proper ordering.
-   * Ensures that each spinner's value is greater than the previous spinner and less
+   * Configures change listeners for a series of spinners to maintain proper
+   * ordering.
+   * Ensures that each spinner's value is greater than the previous spinner
+   * and less
    * than the next spinner.
    *
    * @param spinners Variable number of JSpinner components to be configured
@@ -249,10 +404,12 @@ public class GUIInput implements UserInput {
    * Disables text editing for multiple spinners.
    *
    * @param blackSpinner The spinner for black point
-   * @param midSpinner The spinner for mid point
+   * @param midSpinner   The spinner for mid point
    * @param whiteSpinner The spinner for white point
    */
-  private void disableSpinnerTextEditing(JSpinner blackSpinner, JSpinner midSpinner, JSpinner whiteSpinner) {
+  private void disableSpinnerTextEditing(JSpinner blackSpinner,
+                                         JSpinner midSpinner,
+                                         JSpinner whiteSpinner) {
     disableTextEditing(blackSpinner);
     disableTextEditing(midSpinner);
     disableTextEditing(whiteSpinner);
@@ -268,7 +425,8 @@ public class GUIInput implements UserInput {
   }
 
   @Override
-  public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws ImageProcessorException {
+  public ImageProcessingRequest.ScalingFactors interactiveScalingFactorsInput() throws
+          ImageProcessorException {
     JLabel widthValue = new JLabel("Width: 100%");
     JLabel heightValue = new JLabel("Height: 100%");
 
@@ -297,7 +455,8 @@ public class GUIInput implements UserInput {
     }
   }
 
-  private JSlider createPercentageSlider(JLabel valueLabel, String labelPrefix) {
+  private JSlider createPercentageSlider(JLabel valueLabel,
+                                         String labelPrefix) {
     JSlider slider = new JSlider(0, 100, 100);
     slider.setMajorTickSpacing(10);
     slider.setMinorTickSpacing(5);
@@ -307,5 +466,35 @@ public class GUIInput implements UserInput {
       valueLabel.setText(labelPrefix + slider.getValue() + "%");
     });
     return slider;
+  }
+
+  /**
+   * Clears the panel.
+   *
+   * @param panel the panel to be cleared
+   */
+  private void clearPanel(JPanel panel) {
+    panel.removeAll();
+    panel.revalidate();
+    panel.repaint();
+  }
+
+  /**
+   * Displays the image to the panel.
+   * If the image is null, the panel will be stay the same.
+   *
+   * @param panel the panel to which the image is to be displayed
+   * @param image the image to be displayed
+   */
+  private void displayImageToPanel(JPanel panel, Image image) {
+    if (Objects.nonNull(image)) {
+      panel.removeAll();
+      JLabel imageLabel =
+              new JLabel(new ImageIcon(IOUtils.toBufferedImage(image)));
+      imageLabel.setHorizontalAlignment(JLabel.CENTER);
+      panel.add(imageLabel);
+      panel.revalidate();
+      panel.repaint();
+    }
   }
 }

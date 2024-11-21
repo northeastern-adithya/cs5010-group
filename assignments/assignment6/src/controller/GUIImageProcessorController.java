@@ -8,13 +8,11 @@ import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.enumeration.UserCommand;
 import model.memory.ImageMemory;
-import model.memory.StringMemory;
 import model.request.ImageProcessingRequest;
 import controller.services.ImageProcessingService;
 import model.visual.Image;
-import view.input.UserInput;
-import view.output.DisplayMessageType;
-import view.output.UserOutput;
+import view.DisplayMessageType;
+import view.gui.GUIView;
 import utility.IOUtils;
 import utility.StringUtils;
 
@@ -26,35 +24,39 @@ import utility.StringUtils;
 public class GUIImageProcessorController implements ImageProcessorController,
         Features {
 
-  private final UserInput userInput;
-  private final UserOutput userOutput;
+  /**
+   * GUI view to get input and display the output to the user
+   */
+  private final GUIView guiView;
+  /**
+   * ImageProcessingService object to process the image.
+   */
   private final ImageProcessingService imageProcessingService;
+
+  /**
+   * ImageMemory object to store the image currently under working.
+   */
   private final ImageMemory<String> imageToDisplay;
 
   /**
    * Constructs a GUIImageProcessorController object with the given
-   * UserOutput and ImageProcessingService.
+   * GUIView and ImageProcessingService.
    *
-   * @param userInput              the input from the user.
-   * @param userOutput             the output to be displayed to user.
+   * @param guiView                view to interact with user.
    * @param imageProcessingService the image processing service.
+   * @param imageToDisplay         the image currently display.
    */
-  public GUIImageProcessorController(
+  public GUIImageProcessorController(GUIView guiView,
+                                     ImageProcessingService imageProcessingService,
+                                     ImageMemory<String> imageToDisplay) {
 
-          UserInput userInput, UserOutput userOutput,
-          ImageProcessingService imageProcessingService,
-          ImageMemory<String> imageToDisplay) {
-
-    Objects.requireNonNull(userInput, "UserInput cannot be null");
-    Objects.requireNonNull(userOutput, "UserOutput cannot be null");
+    Objects.requireNonNull(guiView, "GUI View cannot be null");
     Objects.requireNonNull(imageProcessingService, "ImageProcessingService "
             + "cannot be null");
     Objects.requireNonNull(imageToDisplay, "ImageToDisplay cannot be null");
     this.imageProcessingService = imageProcessingService;
-
-    this.userInput = userInput;
-    this.userOutput = userOutput;
-    this.userOutput.displayCommands(
+    this.guiView = guiView;
+    this.guiView.displayCommands(
             List.of(
                     UserCommand.LOAD,
                     UserCommand.SAVE,
@@ -75,7 +77,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
             )
     );
     this.imageToDisplay = imageToDisplay;
-    this.userOutput.addFeatures(this);
+    this.guiView.addFeatures(this);
   }
 
   /**
@@ -91,7 +93,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
                 throw new ImageProcessorException("Save the current image "
                         + "before loading a new one");
               }
-              String imagePath = userInput.interactiveImageLoadPathInput();
+              String imagePath = guiView.interactiveImageLoadPathInput();
               String imageName = IOUtils.getImageNameFromPath(imagePath);
               imageProcessingService.loadImage(ImageProcessingRequest.builder()
                       .imagePath(imagePath)
@@ -140,7 +142,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
             () -> {
               validateImageLoaded();
               String destinationImagePath =
-                      userInput.interactiveImageSavePathInput();
+                      guiView.interactiveImageSavePathInput();
               imageProcessingService.saveImage(ImageProcessingRequest.builder()
                       .imagePath(destinationImagePath)
                       .imageName(getImageToDisplay())
@@ -233,7 +235,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void compressImage() {
     executeImageOperation(
             () -> {
-              Optional<Integer> percentage = userInput.getSliderInput();
+              Optional<Integer> percentage = guiView.getSliderInput();
               if (percentage.isPresent()) {
                 compressImage(percentage.get());
               }
@@ -249,31 +251,34 @@ public class GUIImageProcessorController implements ImageProcessorController,
               if (isImageLoaded()) {
                 displayMessage("Save the current image before closing the "
                         + "window", DisplayMessageType.ERROR);
-                userOutput.doNotCloseWindow();
+                guiView.doNotCloseWindow();
               } else {
-                userOutput.closeWindow();
+                guiView.closeWindow();
               }
             }
     );
 
   }
 
-  // In Controller class
+
   @Override
   public void downscaleImage() {
     executeImageOperation(() -> {
       String scaledImageName = createDestinationImageName(
               getImageToDisplay(), UserCommand.DOWNSCALE);
-      ImageProcessingRequest.ScalingFactors factors = userInput.interactiveScalingFactorsInput();
+      ImageProcessingRequest.ScalingFactors factors =
+              guiView.interactiveScalingFactorsInput();
       ImageProcessingRequest request = ImageProcessingRequest.builder()
               .imageName(getImageToDisplay())
               .destinationImageName(scaledImageName)
-              .scalingFactors(factors.getWidthFactor(), factors.getHeightFactor())
+              .scalingFactors(factors.getWidthFactor(),
+                      factors.getHeightFactor())
               .build();
       imageProcessingService.downscaleImage(request);
       updateImageToDisplay(scaledImageName);
     });
   }
+
   /**
    * Flips the current image vertically around its horizontal axis.
    */
@@ -281,7 +286,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void verticalFlip() {
     executeImageOperation(
             () -> {
-            validateImageLoaded();
+              validateImageLoaded();
               String verticalFlipImageName = createDestinationImageName(
                       getImageToDisplay(), UserCommand.VERTICAL_FLIP);
               ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -301,7 +306,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void horizontalFlip() {
     executeImageOperation(
             () -> {
-            validateImageLoaded();
+              validateImageLoaded();
               String horizontalFlipImageName = createDestinationImageName(
                       getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
               ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -354,7 +359,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
     executeImageOperation(
             () -> {
               ImageProcessingRequest.Levels levels =
-                      userInput.interactiveThreeLevelInput();
+                      guiView.interactiveThreeLevelInput();
               int blackLevel = levels.getBlack();
               int midLevel = levels.getMid();
               int whiteLevel = levels.getWhite();
@@ -523,7 +528,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
       return;
     }
     Image image = imageProcessingService.getImage(imageName);
-    userOutput.displayImage(image, null);
+    guiView.displayImage(image, null);
   }
 
   /**
@@ -542,7 +547,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
     }
     imageToDisplay.addImage(imageName, null);
     Image image = imageProcessingService.getImage(imageName);
-    userOutput.displayImage(image, image.histogram());
+    guiView.displayImage(image, image.histogram());
   }
 
 
@@ -551,7 +556,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    */
   private void clearImage() {
     imageToDisplay.clearMemory();
-    userOutput.clearImage();
+    guiView.clearImage();
   }
 
   /**
@@ -566,7 +571,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
     validateImageLoaded();
     String splitImageName = splitView.run(100);
     updateImageViewOnly(splitImageName);
-    boolean confirmSplitView = userInput.confirmSplitView(
+    boolean confirmSplitView = guiView.confirmSplitView(
             percentage -> {
               try {
                 String imageName = splitView.run(percentage);
@@ -612,7 +617,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    */
   private void displayMessage(String message, DisplayMessageType messageType) {
     if (StringUtils.isNotNullOrEmpty(message)) {
-      this.userOutput.displayMessage(
+      this.guiView.displayMessage(
               message, messageType
       );
     }

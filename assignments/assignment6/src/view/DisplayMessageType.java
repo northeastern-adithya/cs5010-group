@@ -1,4 +1,4 @@
-package view.output;
+package view;
 
 /**
  * Represents the type of message to be displayed.
