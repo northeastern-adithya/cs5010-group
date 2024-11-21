@@ -304,7 +304,6 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void getLuma() {
     executeImageOperation(
             () -> {
-            validateImageLoaded();
               showSplitView(
                       percentage -> executeSplitViewCommand(percentage,
                               UserCommand.LUMA_COMPONENT)
@@ -337,7 +336,6 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void levelsAdjust() {
     executeImageOperation(
             () -> {
-              validateImageLoaded();
               ImageProcessingRequest.Levels levels =
                       userInput.interactiveThreeLevelInput();
               int blackLevel = levels.getBlack();
