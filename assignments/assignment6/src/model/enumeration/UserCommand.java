@@ -16,33 +16,34 @@ public enum UserCommand {
   SAVE("save", "save image-path image-name: "
           + "Save the image with the given name to the specified path "
           + "which should include the name of the file."),
-  RED_COMPONENT("red-component", "red-component image-name dest-image-name "
+  RED_COMPONENT("red-component", "red-component image-name dest-image-name: "
           + "Create an image with the red-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name.P is an optional parameter for split view."),
+          + "destination name."),
   GREEN_COMPONENT("green-component", "green-component image-name "
-          + "dest-image-name "
+          + "dest-image-name: "
           + "Create an image with the green-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name.P is an optional parameter for split view."),
-  BLUE_COMPONENT("blue-component", "blue-component image-name dest-image-name"
+          + "destination name."),
+  BLUE_COMPONENT("blue-component", "blue-component image-name dest-image-name: "
           + "Create an image with the blue-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name.P is an optional parameter for split view."),
+          + "destination name."),
   VALUE_COMPONENT("value-component", "value-component image-name "
           + "dest-image-name: "
           + "Create an image with the value-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
           + "destination name."),
-  LUMA_COMPONENT("luma-component", "luma-component image-name dest-image-name: "
+  LUMA_COMPONENT("luma-component", "luma-component image-name dest-image-name"
+          + " split P: "
           + "Create an image with the luma-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
-          + "destination name."),
+          + "destination name.P is an optional parameter for split view."),
   INTENSITY_COMPONENT("intensity-component", "intensity-component image-name "
           + "dest-image-name: "
           + "Create an image with the intensity-component of the image with "
