@@ -1,13 +1,10 @@
 package view.text;
 
-import exception.ImageProcessorException;
-import view.UserView;
-
 /**
- * Represents the text based view where user interacts
- * with the program.
+ * Represents the text based input where user interacts
+ * with the program and provides input.
  */
-public interface TextView extends UserView {
+public interface TextInput {
 
   /**
    * Get the user input

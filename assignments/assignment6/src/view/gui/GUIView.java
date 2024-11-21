@@ -8,13 +8,13 @@ import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import view.UserView;
+import view.UserOutput;
 
 /**
  * Represents the graphic view which is used to interact with the user.
  * User can use this view and input commands through a graphical user interface.
  */
-public interface GUIView extends UserView {
+public interface GUIView extends UserOutput {
 
   /**
    * Adds the features that can be executed by user to the output.

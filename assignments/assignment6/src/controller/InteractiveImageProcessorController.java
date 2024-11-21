@@ -1,7 +1,6 @@
 package controller;
 
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,8 +19,8 @@ import model.request.ImageProcessingRequest;
 import controller.services.ImageProcessingService;
 import utility.StringUtils;
 import view.DisplayMessageType;
-import view.text.ConsoleView;
-import view.text.TextView;
+import view.text.TextInput;
+import view.text.TextOutput;
 
 /**
  * InteractiveImageProcessorController class that implements the
@@ -43,9 +42,17 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   private static final String SPLIT_COMMAND = "split";
 
   /**
-   * TextView used to communicate with user.
+   * TextInput used to communicate with user to get inputs.
    */
-  protected final TextView textView;
+  protected final TextInput textInput;
+
+
+  /**
+   * TextOutput used to communicate with user to display results.
+   */
+  private final TextOutput textOutput;
+
+
   /**
    * ImageProcessingService object to process the image.
    */
@@ -55,14 +62,20 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Constructor to initialize the SimpleImageProcessorController.
    * Initializes and displays the commands to the user.
    *
-   * @param textView             view used to interact with the user.
+   * @param textInput              input used to interact with the user to
+   *                               get inputs.
+   * @param textOutput             output used to interact with the user to
+   *                               display results.
    * @param imageProcessingService ImageProcessingService object.
-   * @throws NullPointerException if input, textView or imageProcessor is null
+   * @throws NullPointerException if textInput, textOutput or imageProcessor is
+   *                              null
    */
-  public InteractiveImageProcessorController(TextView textView,
+  public InteractiveImageProcessorController(TextInput textInput,
+                                             TextOutput textOutput,
                                              ImageProcessingService imageProcessingService) {
-    validateInput(textView, imageProcessingService);
-    this.textView = textView;
+    validateInput(textInput, textOutput, imageProcessingService);
+    this.textInput = textInput;
+    this.textOutput = textOutput;
     this.imageProcessingService = imageProcessingService;
     displayCommands();
   }
@@ -70,29 +83,32 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   /**
    * Validates the input given to the controller.
    *
-   * @param textView         TextView object.
+   * @param textInput      TextInput object.
+   * @param textOutput     TextOutput object.
    * @param imageProcessor ImageProcessingService object.
-   * @throws NullPointerException if input, textView or imageProcessor is null.
+   * @throws NullPointerException if input, output or imageProcessor is null.
    */
-  private void validateInput(TextView textView,
+  private void validateInput(TextInput textInput,
+                             TextOutput textOutput,
                              ImageProcessingService imageProcessor)
           throws
           ImageProcessingRunTimeException.QuitException {
-    Objects.requireNonNull(textView, "TextView cannot be null");
+    Objects.requireNonNull(textInput, "TextInput cannot be null");
     Objects.requireNonNull(imageProcessor, "ImageProcessor cannot be null");
+    Objects.requireNonNull(textOutput, "TextOutput cannot be null");
   }
 
   /**
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    textView.displayCommands(List.of(UserCommand.values()));
+    textOutput.displayCommands(List.of(UserCommand.values()));
   }
 
   @Override
   public void processCommands() throws
           ImageProcessingRunTimeException.QuitException {
-    execute(textView.getUserInput());
+    execute(textInput.getUserInput());
   }
 
 
@@ -640,7 +656,7 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
   protected void displayMessage(String message,
                                 DisplayMessageType messageType) {
     if (StringUtils.isNotNullOrEmpty(message)) {
-      this.textView.displayMessage(message, messageType);
+      this.textOutput.displayMessage(message, messageType);
     }
   }
 

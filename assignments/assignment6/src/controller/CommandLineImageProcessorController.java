@@ -6,7 +6,8 @@ import exception.ImageProcessingRunTimeException;
 import exception.ImageProcessorException;
 import controller.services.ImageProcessingService;
 import view.DisplayMessageType;
-import view.text.TextView;
+import view.text.TextInput;
+import view.text.TextOutput;
 
 /**
  * The controller class for the command line image processor.
@@ -19,14 +20,17 @@ public class CommandLineImageProcessorController extends InteractiveImageProcess
    * Constructor to initialize the CommandLineImageProcessorController.
    * Initializes and displays the commands to the user.
    *
-   * @param textView             view used to interact with the user.
+   * @param textInput              view used to get input from user.
+   * @param textOutput             view used to display output to the user.
    * @param imageProcessingService ImageProcessingService object.
    * @throws NullPointerException if text view or imageProcessor is
-   * null
+   *                              null
    */
-  public CommandLineImageProcessorController(TextView textView,
-                                             ImageProcessingService imageProcessingService) {
-    super(textView, imageProcessingService);
+  public CommandLineImageProcessorController(
+          TextInput textInput,
+          TextOutput textOutput,
+          ImageProcessingService imageProcessingService) {
+    super(textInput, textOutput,imageProcessingService);
   }
 
   /**
@@ -37,7 +41,7 @@ public class CommandLineImageProcessorController extends InteractiveImageProcess
   @Override
   public void processCommands() {
     try {
-      Scanner scanner = new Scanner(textView.getUserInput());
+      Scanner scanner = new Scanner(textInput.getUserInput());
       executeRunCommand(scanner);
       displayMessage("Successfully executed the script file.",
               DisplayMessageType.INFO);

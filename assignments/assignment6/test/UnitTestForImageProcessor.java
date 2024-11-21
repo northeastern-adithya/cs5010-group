@@ -44,8 +44,9 @@ import model.pixels.RGB;
 import model.visual.Image;
 import model.visual.RenderedImage;
 import utility.IOUtils;
-import view.text.ConsoleView;
+import view.text.ConsoleInput;
 import view.DisplayMessageType;
+import view.text.ConsoleOutput;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -512,13 +513,16 @@ public class UnitTestForImageProcessor {
 
     private StringReader stringReader;
     private StringWriter stringWriter;
-    private ConsoleView consoleView;
+    private ConsoleInput consoleInput;
+    private ConsoleOutput consoleOutput;
 
     @Before
     public void setUp() {
       stringReader = new StringReader("");
       stringWriter = new StringWriter();
-      consoleView = new ConsoleView(stringReader,stringWriter);
+      consoleInput = new ConsoleInput(stringReader);
+      consoleOutput = new ConsoleOutput(stringWriter);
+
     }
 
     @Test
@@ -526,13 +530,13 @@ public class UnitTestForImageProcessor {
             throws
             ImageProcessingRunTimeException.DisplayException {
       String message = "Hello, World!";
-      consoleView.displayMessage(message, DisplayMessageType.INFO);
+      consoleOutput.displayMessage(message, DisplayMessageType.INFO);
       assertEquals("Hello, World!\n", stringWriter.toString());
     }
 
     @Test(expected = NullPointerException.class)
     public void testConstructorWithNullOutput() {
-      new ConsoleView(null,null);
+      new ConsoleInput(null);
     }
 
     @Test(expected = ImageProcessingRunTimeException.DisplayException.class)
@@ -558,8 +562,8 @@ public class UnitTestForImageProcessor {
           throw new IOException("Forced IOException");
         }
       };
-      ConsoleView failingConsoleView = new ConsoleView(stringReader,failingAppendable);
-      failingConsoleView.displayMessage("This will fail",
+      ConsoleOutput failingConsoleOutPut = new ConsoleOutput(failingAppendable);
+      failingConsoleOutPut.displayMessage("This will fail",
               DisplayMessageType.ERROR);
     }
   }

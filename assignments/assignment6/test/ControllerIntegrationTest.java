@@ -19,7 +19,8 @@ import model.memory.ImageMemory;
 import model.pixels.Pixel;
 import model.visual.Image;
 import controller.services.ImageProcessingService;
-import view.text.ConsoleView;
+import view.text.ConsoleInput;
+import view.text.ConsoleOutput;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -51,7 +52,8 @@ public class ControllerIntegrationTest {
     ImageProcessingService processingService =
             Factory.createImageProcessor(imageMemory);
     controller = new InteractiveImageProcessorController(
-            new ConsoleView(new StringReader(input),output),
+            new ConsoleInput(new StringReader(input)),
+            new ConsoleOutput(output),
             processingService
     );
     imageMemory.addImage(INITIAL_IMAGE_NAME, initialImage);

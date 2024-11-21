@@ -9,7 +9,7 @@ import model.enumeration.UserCommand;
  * Represents the view which is used to interact with the user.
  * This is the only way we get inputs from user or display outputs to user.
  */
-public interface UserView {
+public interface UserOutput {
 
   /**
    * Displays the commands to the user.

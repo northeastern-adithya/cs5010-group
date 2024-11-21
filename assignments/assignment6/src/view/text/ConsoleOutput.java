@@ -1,21 +1,18 @@
 package view.text;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 import exception.ImageProcessingRunTimeException;
-import exception.ImageProcessorException;
 import model.enumeration.UserCommand;
 import view.DisplayMessageType;
 
 /**
- * Represents the console view where user interacts
- * with the program through console input and output.
+ * Represents the console output where program gives output to the
+ * user.
  */
-public class ConsoleView implements TextView {
-
+public class ConsoleOutput implements TextOutput {
   /**
    * The output stream to which is used
    * to communicate with user.
@@ -23,27 +20,14 @@ public class ConsoleView implements TextView {
   private final Appendable output;
 
   /**
-   * The input stream from which the user is communicating.
-   */
-  private final Readable input;
-
-  /**
-   * Constructs a Console View object with the given input and output stream.
+   * Constructs a Console Output object with the given output stream.
    *
-   * @param input  the input stream from which the user is communicating.
    * @param output the output stream to which is used to communicate with user.
    * @throws NullPointerException if the output stream is null.
    */
-  public ConsoleView(Readable input, Appendable output) {
-    Objects.requireNonNull(input, "Input cannot be null");
+  public ConsoleOutput(Appendable output) {
     Objects.requireNonNull(output, "Output cannot be null");
-    this.input = input;
     this.output = output;
-  }
-
-  @Override
-  public Readable getUserInput() {
-    return this.input;
   }
 
   @Override

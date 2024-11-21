@@ -7,7 +7,8 @@ import controller.CommandLineImageProcessorController;
 import controller.ImageProcessorController;
 import exception.ImageProcessingRunTimeException;
 import utility.StringUtils;
-import view.text.ConsoleView;
+import view.text.ConsoleInput;
+import view.text.ConsoleOutput;
 
 /**
  * A class that represents a parser for command line arguments.
@@ -20,8 +21,8 @@ public class CommandLineArgumentParser extends AbstractArgumentParser {
   public ImageProcessorController createController(String[] args) throws
           ImageProcessingRunTimeException.QuitException {
     return new CommandLineImageProcessorController(
-            new ConsoleView(new StringReader(getFileNameFromArgs(args)),
-                    System.out),
+            new ConsoleInput(new StringReader(getFileNameFromArgs(args))),
+            new ConsoleOutput(System.out),
             createService()
     );
   }
