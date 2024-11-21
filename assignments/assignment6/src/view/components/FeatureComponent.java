@@ -14,6 +14,7 @@ import javax.swing.JButton;
 
 /**
  * A component that maps UI button actions to Features interface methods.
+ * Uses swing library to create buttons and handle button clicks.
  */
 public class FeatureComponent extends JPanel {
   private final List<Features> featureListeners = new ArrayList<>();

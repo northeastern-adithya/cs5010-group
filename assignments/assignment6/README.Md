@@ -7,26 +7,30 @@
 ## Steps to Run The Program
 - Clone the repository.
 - Open the project in an IDE.
-- ### Interactive Mode Using IntelliJ IDEA
+- ### Using IntelliJ IDEA
   - run `src/app/ImageProcessorApp.java`
-  - execute the command `run res/sample-script.txt` on the console (If you face any errors while loading the file, make sure the project root is set to current working directory.).
-  - The console in the beginning will display the list of commands that can be executed.
-  - If the list needs to be viewed again type `help` in the console or refer to [USEME.md](USEME.md).
+  - This will open up the GUI where you can interact with the application.Buttons are towards the left of panel with clear names. If facing difficulty in understanding the buttons, refer to [USEME.md](USEME.md).
+  - To open the Interactive mode using console, run `src/app/ImageProcessorApp.java` with the argument `-text`.
+  - To just run a scrip file, run `src/app/ImageProcessorApp.java` with the argument `-file <path-of-script-file>`.
+  - In running the script file if you face any issues make sure you are opening the project in the root directory or give the complete path to the script file.
 - ### Running the application from JAR file
   - Open the terminal and navigate to the project directory.
   - The jar file is present in res/ folder.
   - Run the following command to execute the jar file:
-    - `java -jar res/assignment5.jar`
-    - This will open up an interactive console where you can enter commands similar to the interactive mode in IntelliJ IDEA.
+    - `java -jar res/assignment6.jar`
+    - This will open up the GUI mode similar to GUI mode in IntelliJ IDEA.
+  - If you need to run the application in Interactive mode using console:
+    - `java -jar res/assignment6.jar -text`
   - If you need to directly execute the script file:
-    - `java -jar res/assignment5.jar res/sample_script.txt`
+    - `java -jar res/assignment6.jar -file res/sample_script.txt`, where `res/sample_script.txt` is the path to the script file.
     - If you face any errors make sure you are in the project directory and not in res folder.
-- Output images will be saved in `res/` folder.
+- Output images from sample script given will be saved in `res/` folder.
 - Script image file is in `res/sample_input.png` 
 - To view test input files for test go to `test_resources/input/`
 - To test for a better image use `test_resources/input/dubai.png`
 
 ## Design changes done in the project
+### Below changes explain the design changes done from Assignment 4 to Assignment 5.
 - We didn't need to do much core design changes since the previous assignment due to MVC architecture, we could easily add new features and functionalities.
 - Added an additional package `compressors` to implement different compression techniques.
 - We added the newer features onto the Image interface due to the fact that this was being used throughout the program and extending to a new interface(for instance ImageWithAdditionalFeatures) would lead us using the new interface everywhere in the program. This would lead us to change existing code in other places(such as ImageMemory) even though the features added had no relation to these classes. So adding additional methods to the controller, service and model classes was the best approach.
@@ -34,6 +38,13 @@
 - The services was a separate package before. This was moved inside controller after discussing with the professor to help with understanding that services is an extension to controller(MVCS architecture) that handles storing images.
 - There were few methods like filter operations which were called from service directly using filter utils, this led to a question on which methods goes to model and which method gets called directly from service which was an unnecessary decision the service had to make. It made sense to move all image operations(other than load/save) to the image model since it was responsible for handling the image data, hence replaced calling filters directly but through the model. 
 - A new controller was added to handle and understand the command line arguments by simply extending the existing(InteractiveImageProcessorController) controller and changing the processCommand to help with the processing command line input. 
+
+### Below changes explain the design changes done from Assignment 5 to Assignment 6.
+- The main function was handling parsing of arguments and creating a controller before. This responsibility is now delegated to ArgumentParser interface which takes in the arguments and initializes the controller.
+- We did not change the existing controller to handle GUI but added a new controller. Similarly we did not have to change the existing views but created a new view for GUI.
+- The controller is done differently because the GUI controller acts as a call back to the GUI view(GUIInput, GUIOutput) and making the existing controller(Interactive controller) work with it would meant having GUI view return inputs from GUI the way existing controller understands which meant unnecessary responsibility for the GUI view.
+- The GUI view was created differently from TextView due to different functions and responsibilities which is evident from the functions exposed in the interfaces.
+- No changes were done from the service layer till model layer since the design followed the MVCS architecture where new view was added easily without changing the core logic.
 
 ## Image Citation
 - Testing image for script `res/sample_input.png` was taken from [dummyimage.com](https://dummyimage.com/)
@@ -48,6 +59,20 @@
 ### `app` Package
 - **Class**: `ImageProcessorApp`
     - **Purpose**: The main class for the Image Processor application. This class is responsible for creating the controller and running the application.
+- **Packages**:
+  - `parsers`
+    - **Interfaces**:
+        - `ArgumentParser`
+            - **Purpose**: Interface for argument parser. This interface is responsible for parsing the arguments and creating the controller.
+    - **Classes**:
+        - `AbstractArgumentParser`
+            - **Purpose**: Abstract class that provides common functionality for argument parsers.
+        - `CommandLineArgumentParser`
+            - **Purpose**: Concrete class that implements the `ArgumentParser` interface and process inputs required for `CommandLineImageProcessorController`.
+        - `GUIArgumentParser`
+            - **Purpose**: Concrete class that implements the `ArgumentParser` interface and provides inputs required for `GUIImageProcessorController.java`.
+        - `InteractiveArgumentParser.java`
+            - **Purpose**: Concrete class that implements the `ArgumentParser` interface and provides inputs required for `InteractiveImageProcessorController.java`.
 
 ### `compressors` Package
 - **Interfaces**:
@@ -61,17 +86,21 @@
 - **Interfaces**:
     - `ImageProcessorController`
         - **Purpose**: The controller interface for the image processor. This is responsible for handling the image module and communication with the view.
+    - `Features`
+        - **Purpose**: Interface for additional features that can be added to the controller. Also used as a callback for GUI output. 
 - **Packages**
   - `services`
     - **Interfaces**:
         - `ImageProcessingService`
             - **Purpose**: Interface for image processing services. Service class to help with all image processing operations.
       - **Classes**:
-          - `SimpleImageProcessingService`
+          - `FileImageProcessingService.java`
               - **Purpose**: FileImageProcessingService class that implements the `ImageProcessingService` interface and provides the implementation for the methods to process images. It uses the ImageMemory object to store and retrieve images.
 - **Classes**:
     - `InteractiveImageProcessorController`
         - **Purpose**: This class Implements the `ImageProcessorController` interface and processes the commands entered by the user. It provides a way for user to interact with the program.
+    - `GUIImageProcessorController`
+        - **Purpose**: This class Implements the `ImageProcessorController` interface and processes the commands entered by the user. It provides a way for user to interact with the program using GUI and also implements the `Features` interface to provide additional features.
     - `CommandLineImageProcessorController.java`
         - **Purpose**: This class Implements the `ImageProcessorController` interface and processes the commands entered by the user. It is used to understand the arguments provided through command line.
     - `ExecutionStatus`
@@ -157,21 +186,38 @@
         - **Purpose**: Utility class for extracting information from image.
 
 ### `view` Package
-- #### `input` Package
+- #### `text` Package
     - **Interfaces**:
-        - `UserInput`
-            - **Purpose**: Interface for user input. This input can be from any source like console, file etc.
+        - `TextInput`
+            - **Purpose**: Interface to get user input as text based. This input can be from any source like console, file etc.
+        - `TextOutput`
+            - **Purpose**: Interface for text output. Represents the output to the user on console or file.
     - **Classes**:
         - `ConsoleInput`
-            - **Purpose**: Concrete class that implements the `UserInput` interface and provides console-based user input.
-- #### `output` Package
-    - **Interfaces**:
-        - `UserOutput`
-            - **Purpose**: Interface for user output. Represents the output to the user.
-    - **Classes**:
+            - **Purpose**: Concrete class that implements the `TextInput` interface and provides console-based user input.
         - `ConsoleOutput`
-            - **Purpose**: Concrete class that implements the `UserOutput` interface and provides console-based user output.
-
+            - **Purpose**: Concrete class that implements the `TextOutput` interface and provides console-based user output.
+- #### `gui` Package
+    - **Interfaces**:
+        - `GUIInput`
+            - **Purpose**: Interface to get user input from GUI.
+        - `GUIOutput`
+            - **Purpose**: Interface to display output to user from GUI.
+    - **Classes**:
+        - `SwingInput`
+            - **Purpose**: Implements the GUIInput. Input from the user is taken using Java Swing library.
+        - `SwingOutput`
+            - **Purpose**: Implements the GUIOutput. Output to the user is displayed using the Swing library.
+- #### `components` Package
+   -  **Classes**
+     - `FeatureComponent`
+       - **Purpose**: A class that represents a feature component. This class is used to create a feature component that can be added to GUI to handle call backs and map the buttons to corresponding call backs.
+- **Interface**:
+    - `UserOutput`
+      - **Purpose**: Interface for user output. Has common outputs implemented by `TextOutput` and `GUIOutput`.
+- **Enumerable**:
+   - `DisplayMessageType`
+     - **Purpose**: Enum representing the different types of messages info or error that can be displayed to the user.
 
 ## MVC Architecture
 
@@ -186,8 +232,8 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
 2. **View**:
 - **Purpose**: Handles the presentation layer and user interface.
 - **Packages**:
-    - `view.input`: Contains interfaces and classes for user input, such as `UserInput` and `ConsoleInput`.
-    - `view.output`: Contains interfaces and classes for user output, such as `UserOutput` and `ConsoleOutput`.
+    - `view.gui`: Contains interfaces and classes for getting inputs and displaying outputs to user from GUI.
+    - `view.text`: Contains interfaces and classes for getting inputs and displaying outputs to user from text bases systems like console, file.
 
 3. **Controller**:
 - **Purpose**: Manages the flow of the application, processes user commands, and updates the model and view.
@@ -200,3 +246,9 @@ This project follows the Model-View-Controller (MVC) architecture, which helps i
 - The class diagram ![class_diagram_with_dependencies.png](res/class_diagram_with_dependencies.png) has classes with dependencies to understand how the dependencies are between classes.
 - The class diagram ![complete_class_diagram.png](res/complete_class_diagram.png) has classes,dependencies and methods to see the entire structure of the project.
 - This was done to help better understand the structure of the project and how the classes are related to each other.
+
+5. **Extra Credit**:
+- We implemented 1 Extra Credit Image Downscaling. Since this was a new image processing feature we added a new method in the Image model interface and implemented the same. 
+- We added this newer feature onto the Image interface due to the fact that this was being used throughout the program and extending to a new interface(for instance ImageWithAdditionalFeatures) would lead us using the new interface everywhere in the program. This would lead us to change existing code in other places(such as ImageMemory) even though the features added had no relation to these classes. So adding additional methods to the controller, service and model classes was the best approach.
+- Downscaling feature was done using the algorithm given in the assignment description. Refer 3.1 of: https://northeastern.instructure.com/courses/192553/assignments/2493533
+- This feature is tested in the GUIController test and is implemented only by GUIController.

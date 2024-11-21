@@ -26,10 +26,18 @@ public class StringMemory implements ImageMemory<String> {
    * @param image     the image to be added
    */
   @Override
-  public void addImage(String imageName, Image image) {
+  public void addImage(String imageName, String image) {
     this.image = Optional.of(imageName);
   }
 
+  /**
+   * Returns the name of the image in memory.
+   *
+   * @param imageName this is not used in this implementation
+   * @return Returns the name of the image in memory.
+   * @throws ImageProcessorException.NotFoundException if the image with the
+   *                                                   given name is not found
+   */
   @Override
   public String getImage(String imageName) throws ImageProcessorException.NotFoundException {
     return image.orElseThrow(

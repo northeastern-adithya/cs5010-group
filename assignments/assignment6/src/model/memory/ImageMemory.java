@@ -16,7 +16,7 @@ public interface ImageMemory<T> {
    * @param imageName the name of the image
    * @param image     the image to be added
    */
-  void addImage(String imageName, Image image);
+  void addImage(String imageName, T image);
 
   /**
    * Retrieves an image from the memory.

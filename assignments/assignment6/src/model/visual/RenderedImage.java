@@ -487,15 +487,15 @@ public class RenderedImage implements Image {
         double dx = sourceX - floorSourceX;
         double dy = sourceY - floorSourceY;
 
-        int red = bilinearInterpolate(
+        int red = computeChannelDownscale(
                 topLeft.getRed(), topRight.getRed(),
                 bottomLeft.getRed(), bottomRight.getRed(),
                 dx, dy);
-        int green = bilinearInterpolate(
+        int green = computeChannelDownscale(
                 topLeft.getGreen(), topRight.getGreen(),
                 bottomLeft.getGreen(), bottomRight.getGreen(),
                 dx, dy);
-        int blue = bilinearInterpolate(
+        int blue = computeChannelDownscale(
                 topLeft.getBlue(), topRight.getBlue(),
                 bottomLeft.getBlue(), bottomRight.getBlue(),
                 dx, dy);
@@ -508,7 +508,9 @@ public class RenderedImage implements Image {
   }
 
   /**
-   * Performs bilinear interpolation for a single color channel.
+   * Performs downscaling for a single color channel
+   * using m = (topLeftValue * (1 - dx) + topRightValue * dx)
+   * and n = (bottomLeftValue * (1 - dx) + bottomRightValue * dx).
    * @param topLeftValue top-left value
    * @param topRightValue top-right value
    * @param bottomLeftValue bottom-left value
@@ -517,9 +519,9 @@ public class RenderedImage implements Image {
    * @param dy y-axis interpolation factor
    * @return interpolated value
    */
-  private int bilinearInterpolate(int topLeftValue, int topRightValue,
-                                  int bottomLeftValue, int bottomRightValue,
-                                  double dx, double dy) {
+  private int computeChannelDownscale(int topLeftValue, int topRightValue,
+                                      int bottomLeftValue, int bottomRightValue,
+                                      double dx, double dy) {
     double mCoefficient = (topLeftValue * (1 - dx) + topRightValue * dx);
     double nCoefficient = (bottomLeftValue * (1 - dx) + bottomRightValue * dx);
     return (int) Math.round(mCoefficient * (1 - dy) + nCoefficient * dy);

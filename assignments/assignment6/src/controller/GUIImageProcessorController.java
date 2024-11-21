@@ -565,7 +565,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
     if (StringUtils.isNullOrEmpty(imageName)) {
       return;
     }
-    imageToDisplay.addImage(imageName, null);
+    imageToDisplay.addImage(imageName, imageName);
     Image image = imageProcessingService.getImage(imageName);
     guiOutput.displayImage(image, image.histogram());
   }
