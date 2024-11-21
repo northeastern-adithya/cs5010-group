@@ -36,7 +36,7 @@ public class RenderedImage implements Image {
           throws ImageProcessorException {
     Objects.requireNonNull(pixels, "Pixel array cannot be null");
     if (pixels.length == 0 || pixels[0].length == 0) {
-      throw new ImageProcessorException("Pixel array cannot be empty");
+      throw new ImageProcessorException("Cannot render image of 0 width or height");
     }
     this.pixels = pixels;
   }
@@ -464,10 +464,6 @@ public class RenderedImage implements Image {
     int newWidth = (int)(this.getWidth() * ((double) widthFactor / 100));
     int newHeight = (int)(this.getHeight() * ((double) heightFactor / 100));
 
-    if(newWidth == 0 || newHeight == 0) {
-      throw new ImageProcessorException("Cannot downscale to 0 width or height");
-    }
-
     Pixel[][] newPixels = new Pixel[newHeight][newWidth];
     double scaleX = (double) this.getWidth() / newWidth;
     double scaleY = (double) this.getHeight() / newHeight;
@@ -478,18 +474,18 @@ public class RenderedImage implements Image {
         double sourceX = x * scaleX;
         double sourceY = y * scaleY;
 
-        int x1 = (int) Math.floor(sourceX);
-        int y1 = (int) Math.floor(sourceY);
-        int x2 = Math.min(x1 + 1, this.getWidth() - 1);
-        int y2 = Math.min(y1 + 1, this.getHeight() - 1);
+        int floorSourceX = (int) Math.floor(sourceX);
+        int floorSourceY = (int) Math.floor(sourceY);
+        int ceilingSourceX = Math.min(floorSourceX + 1, this.getWidth() - 1);
+        int ceilingSourceY = Math.min(floorSourceY + 1, this.getHeight() - 1);
 
-        Pixel topLeft = this.getPixel(y1, x1);
-        Pixel topRight = this.getPixel(y1, x2);
-        Pixel bottomLeft = this.getPixel(y2, x1);
-        Pixel bottomRight = this.getPixel(y2, x2);
+        Pixel topLeft = this.getPixel(floorSourceY, floorSourceX);
+        Pixel topRight = this.getPixel(floorSourceY, ceilingSourceX);
+        Pixel bottomLeft = this.getPixel(ceilingSourceY, floorSourceX);
+        Pixel bottomRight = this.getPixel(ceilingSourceY, ceilingSourceX);
 
-        double dx = sourceX - x1;
-        double dy = sourceY - y1;
+        double dx = sourceX - floorSourceX;
+        double dy = sourceY - floorSourceY;
 
         int red = bilinearInterpolate(
                 topLeft.getRed(), topRight.getRed(),
@@ -504,7 +500,7 @@ public class RenderedImage implements Image {
                 bottomLeft.getBlue(), bottomRight.getBlue(),
                 dx, dy);
 
-        newPixels[y][x] = new RGB(red, green, blue);
+        newPixels[y][x] = Factory.createRGBPixel(red, green, blue);
       }
     }
 

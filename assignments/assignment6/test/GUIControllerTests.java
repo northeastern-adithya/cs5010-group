@@ -2047,8 +2047,6 @@ public class GUIControllerTests {
             {6645093, 8421504}
     }));
 
-    getExpectedImage(randomImage);
-
     imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
@@ -2090,7 +2088,6 @@ public class GUIControllerTests {
             {657930, 13816530},
             {6645093, 8421504}
     }));
-    getExpectedImage(randomImage);
     imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
     ImageMemory<String> stringMemory = initialiseStringMemory();
     stringMemory.addImage(INITIAL_IMAGE_NAME, null);
@@ -2107,9 +2104,6 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.levelsAdjust();
-
-    getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
-            UserCommand.LEVELS_ADJUST)));
 
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
@@ -2152,9 +2146,6 @@ public class GUIControllerTests {
             imageMemory,
             output);
     features.levelsAdjust();
-
-    getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
-            UserCommand.LEVELS_ADJUST)));
 
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
@@ -3786,7 +3777,7 @@ public class GUIControllerTests {
     features.downscaleImage();
 
     assertTrue(output.toString().contains(
-            "Downscale to 1D image is not supported"));
+            "Cannot render image of 0 width or height"));
   }
 
   private ImageMemory<Image> initialiseImageMemory() {

@@ -271,11 +271,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     updateImageToDisplay(compressImageName);
   }
 
-=======
+  /**
    * Closes the current window.
    * Prompts the user to save the current image before closing the window.
    */
->>>>>>> Stashed changes
   @Override
   public void closeWindow() {
     executeImageOperation(
