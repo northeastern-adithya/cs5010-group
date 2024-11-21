@@ -89,27 +89,27 @@ save res/image_histogram_color_corrected.png sample-image-histogram_color_correc
 save res/image_histogram_level_adjust.png sample-image-histogram_level_adjust
 
 # 20. Blur the image with 50% split view and save
-blur sample-image sample-image-blurred 50
+blur sample-image sample-image-blurred split 50
 save res/image_blur_split_50.png sample-image-blurred
 
 # 21. Sharpen the image with 50% split view and save
-sharpen sample-image sample-image-sharpened 50
+sharpen sample-image sample-image-sharpened split 50
 save res/image_sharpen_split_50.png sample-image-sharpened
 
-# 22. Red component with 50% split view and save
-red-component sample-image sample-image-red-component 50
+# 22. Red component save
+red-component sample-image sample-image-red-component
 save res/image_red_component_split_50.png sample-image-red-component
 
 # 23. Sepia component with 50% split view and save
-sepia sample-image sample-image-sepia 50
+sepia sample-image sample-image-sepia split 50
 save res/image_sepia_split_50.png sample-image-sepia
 
 # 24. Color correct the image with 50% split view and save
-color-correct sample-image sample-image-color-corrected 50
+color-correct sample-image sample-image-color-corrected split 50
 save res/image_color_corrected_split_50.png sample-image-color-corrected
 
 # 25. Level adjust the image with 50% split view and save
-levels-adjust 20 100 255 sample-image sample-image-level-adjusted 50
+levels-adjust 20 100 255 sample-image sample-image-level-adjusted split 50
 save res/image_level_adjusted_split_50.png sample-image-level-adjusted
 
 # 26. Compress the image by 50 and save
