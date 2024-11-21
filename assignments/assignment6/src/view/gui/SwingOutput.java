@@ -5,13 +5,7 @@ import exception.ImageProcessingRunTimeException;
 import model.visual.Image;
 import view.components.FeatureComponent;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
@@ -34,6 +28,13 @@ public class SwingOutput extends JFrame implements GUIOutput {
   private final JPanel imagePanel;
   private final JPanel histogramPanel;
 
+  private final JScrollPane featureScrollPane;
+  private final JScrollPane imageScrollPane;
+  private final JScrollPane histogramScrollPane;
+
+  private final static int DEFAULT_WIDTH = 400;
+  private final static int DEFAULT_HEIGHT = 600;
+
   /**
    * Constructs a SwingOutput object.
    * This will initialise the required panels and build the layout of the GUI.
@@ -47,12 +48,16 @@ public class SwingOutput extends JFrame implements GUIOutput {
     featurePanel = new FeatureComponent();
     imagePanel = new JPanel();
     histogramPanel = new JPanel();
+    featureScrollPane = new JScrollPane(featurePanel);
+    imageScrollPane = new JScrollPane(imagePanel);
+    histogramScrollPane = new JScrollPane(histogramPanel);
 
     // Building the layout
     buildMainPanel();
     buildImagePanel();
     buildCommandPanel();
     buildHistogramPanel();
+    buildScrollPanes();
     addScrollPanes();
 
     this.add(mainPanel);
@@ -74,12 +79,34 @@ public class SwingOutput extends JFrame implements GUIOutput {
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
   }
 
+  /**
+   * Builds the scroll panes of the GUI.
+   */
+  private void buildScrollPanes(){
+    setScrollPanes(featureScrollPane,DEFAULT_HEIGHT,200);
+    setScrollPanes(imageScrollPane,DEFAULT_HEIGHT,DEFAULT_WIDTH);
+    setScrollPanes(histogramScrollPane,DEFAULT_HEIGHT,DEFAULT_WIDTH);
+  }
+
+  /**
+   * Sets the scroll panes with the specified height and width.
+   *
+   * @param scrollPane the scroll pane to be set
+   * @param height     the height of the scroll pane
+   * @param width      the width of the scroll pane
+   */
+  private void setScrollPanes(JScrollPane scrollPane,int height,int width){
+    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setPreferredSize(new Dimension(width,height));
+  }
+
 
   /**
    * Builds the image panel of the GUI.
    */
   private void buildImagePanel() {
-    buildPanel(imagePanel, "Image", 400, 600);
+    buildPanel(imagePanel, "Image", DEFAULT_WIDTH, DEFAULT_HEIGHT);
   }
 
   /**
@@ -88,13 +115,14 @@ public class SwingOutput extends JFrame implements GUIOutput {
   private void buildCommandPanel() {
     featurePanel.setLayout(new BoxLayout(featurePanel, BoxLayout.Y_AXIS));
     featurePanel.setBorder(new TitledBorder("Commands"));
+    featurePanel.setPreferredSize(new Dimension(200, DEFAULT_HEIGHT));
   }
 
   /**
    * Builds the histogram panel of the GUI.
    */
   private void buildHistogramPanel() {
-    buildPanel(histogramPanel, "Histogram", 200, 600);
+    buildPanel(histogramPanel, "Histogram", 200, DEFAULT_HEIGHT);
   }
 
   /**
@@ -116,9 +144,9 @@ public class SwingOutput extends JFrame implements GUIOutput {
    * Adds scroll panes to the main panel.
    */
   private void addScrollPanes() {
-    mainPanel.add(new JScrollPane(featurePanel));
-    mainPanel.add(new JScrollPane(imagePanel));
-    mainPanel.add(new JScrollPane(histogramPanel));
+    mainPanel.add(featureScrollPane);
+    mainPanel.add(imageScrollPane);
+    mainPanel.add(histogramScrollPane);
   }
 
 
@@ -197,6 +225,11 @@ public class SwingOutput extends JFrame implements GUIOutput {
       JLabel imageLabel =
               new JLabel(new ImageIcon(IOUtils.toBufferedImage(image)));
       imageLabel.setHorizontalAlignment(JLabel.CENTER);
+      imageLabel.setVerticalAlignment(JLabel.CENTER);
+      panel.setPreferredSize(new Dimension(
+              Math.max(DEFAULT_WIDTH, image.getWidth()),
+              Math.max(DEFAULT_HEIGHT, image.getHeight())
+      ));
       panel.add(imageLabel);
       panel.revalidate();
       panel.repaint();
