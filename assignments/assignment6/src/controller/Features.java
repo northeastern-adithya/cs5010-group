@@ -58,8 +58,9 @@ public interface Features {
 
   /**
    * Compresses the image by the given percentage.
+   * @param percentage the percentage by which the image is to be compressed
    */
-  void compressImage();
+  void compressImage(Integer percentage);
 
   /**
    * Performs the required operations before closing the window.

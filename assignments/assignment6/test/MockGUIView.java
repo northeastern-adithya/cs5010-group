@@ -42,16 +42,13 @@ public class MockGUIView implements GUIView {
   @Override
   public boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException {
-    if (getSliderInput().isPresent() && Objects.nonNull(updateImageCallback)) {
-      updateImageCallback.accept(getSliderInput().get());
+    Optional<Integer> slider = Optional.ofNullable(sliderInput);
+    if (slider.isPresent() && Objects.nonNull(updateImageCallback)) {
+      updateImageCallback.accept(slider.get());
     }
     return this.confirmSplitView;
   }
 
-  @Override
-  public Optional<Integer> getSliderInput() {
-    return Optional.ofNullable(this.sliderInput);
-  }
 
 
   @Override

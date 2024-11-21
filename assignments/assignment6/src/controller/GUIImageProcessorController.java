@@ -84,6 +84,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    * Loads an image from a file system path into the application.
    * Validates that no unsaved image is currently loaded before proceeding.
    * Updates the display with the newly loaded image.
+   *
    * @param filePath the file path of the image to be loaded
    */
   @Override
@@ -135,6 +136,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   /**
    * Saves the currently displayed image to a specified file system location.
    * Clears the current image from memory after saving.
+   *
    * @param filePath the file path to save the image
    */
   @Override
@@ -229,15 +231,24 @@ public class GUIImageProcessorController implements ImageProcessorController,
   /**
    * Compresses the current image by a specified percentage.
    * Presents a slider interface for selecting the compression level.
+   *
+   * @param percentage the percentage by which to compress the image
    */
   @Override
-  public void compressImage() {
+  public void compressImage(Integer percentage) {
     executeImageOperation(
             () -> {
-              Optional<Integer> percentage = guiView.getSliderInput();
-              if (percentage.isPresent()) {
-                compressImage(percentage.get());
-              }
+              validateImageLoaded();
+              String compressImageName =
+                      createDestinationImageName(getImageToDisplay(),
+                      UserCommand.COMPRESS);
+              ImageProcessingRequest request = ImageProcessingRequest.builder()
+                      .imageName(getImageToDisplay())
+                      .destinationImageName(compressImageName)
+                      .percentage(percentage)
+                      .build();
+              imageProcessingService.compressImage(request);
+              updateImageToDisplay(compressImageName);
             }
     );
 
@@ -445,7 +456,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
    * @param percentage the percentage by which the image is to be compressed
    * @throws ImageProcessorException if there is an error compressing the image
    */
-  private void compressImage(Integer percentage) throws
+  private void compress(Integer percentage) throws
           ImageProcessorException {
     validateImageLoaded();
     String compressImageName = createDestinationImageName(getImageToDisplay(),

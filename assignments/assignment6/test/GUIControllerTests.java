@@ -2544,12 +2544,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            0,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(0);
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
                     {14618624, 2101487, 61200},
@@ -2573,12 +2573,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            25,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(25);
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
                     {16723968, 4206767, 61200},
@@ -2602,12 +2602,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            50,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(50);
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
                     {6225920, 175, 48976},
@@ -2631,12 +2631,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            75,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(75);
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
                     {0, 96, 0},
@@ -2660,12 +2660,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            100,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(100);
     Image expectedImage =
             Factory.createImage(TestUtils.createPixels(new int[][]{
                     {0, 0, 0},
@@ -2688,14 +2688,14 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              compression,
+              null,
               null,
               stringMemory,
               imageMemory,
               output);
 
       features.loadImage("test_resources/input/random.png");
-      features.compressImage();
+      features.compressImage(compression);
       features.saveImage(String.format(
               "test_resources/output/compressedImage%s.png",
               compression));
@@ -2703,14 +2703,14 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              compression,
+              null,
               null,
               stringMemory,
               imageMemory,
               output);
 
       features.loadImage("test_resources/input/random.png");
-      features.compressImage();
+      features.compressImage(compression);
       features.saveImage(String.format(
               "test_resources/output/compressedImage%s.ppm",
               compression));
@@ -2749,14 +2749,14 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              compression,
+              null,
               null,
               stringMemory,
               imageMemory,
               output);
 
       features.loadImage("test_resources/input/random.jpg");
-      features.compressImage();
+      features.compressImage(compression);
       features.saveImage(String.format(
               "test_resources/output/compressedImage%s.png",
               compression));
@@ -2764,14 +2764,14 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              compression,
+              null,
               null,
               stringMemory,
               imageMemory,
               output);
 
       features.loadImage("test_resources/input/random.jpg");
-      features.compressImage();
+      features.compressImage(compression);
       features.saveImage(String.format(
               "test_resources/output/compressedImage%s.ppm",
               compression));
@@ -2810,14 +2810,14 @@ public class GUIControllerTests {
       initialiseController(
               "",
               true,
-              compression,
+              null,
               null,
               stringMemory,
               imageMemory,
               output);
 
       features.loadImage("test_resources/input/random.ppm");
-      features.compressImage();
+      features.compressImage(compression);
       features.saveImage(String.format(
               "test_resources/output/compressedImage%s.ppm",
               compression));
@@ -2847,12 +2847,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            -1,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(-1);
     assertTrue(output.toString().contains(
             "Invalid compression percentage"));
 
@@ -2869,12 +2869,12 @@ public class GUIControllerTests {
     initialiseController(
             "",
             true,
-            101,
+            null,
             null,
             stringMemory,
             imageMemory,
             output);
-    features.compressImage();
+    features.compressImage(101);
     assertTrue(output.toString().contains(
             "Invalid compression percentage"));
   }

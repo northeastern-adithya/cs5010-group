@@ -6,7 +6,6 @@ import exception.ImageProcessorException;
 import model.enumeration.ImageType;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import view.components.SwingFeatureComponent;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -15,15 +14,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.IntConsumer;
 
 import model.enumeration.UserCommand;
 import utility.IOUtils;
 import view.DisplayMessageType;
+import view.components.SwingFeatureComponent;
 
 /**
  * Represents the gui view which is implemented using the swing library.
@@ -188,7 +186,7 @@ public class SwingView extends JFrame implements GUIView {
   public boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException {
     JLabel value = new JLabel("Value: 100");
-    JSlider slider = createSlider(value);
+    JSlider slider = SwingUtils.createSlider(value);
     slider.addChangeListener(e -> {
       if (!slider.getValueIsAdjusting()) {
         updateImageCallback.accept(slider.getValue());
@@ -202,46 +200,6 @@ public class SwingView extends JFrame implements GUIView {
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
     return result == JOptionPane.OK_OPTION;
-  }
-
-  /**
-   * Creates a slider with a value label.
-   *
-   * @param valueLabel the label to display the value of the slider
-   * @return the slider
-   */
-  private JSlider createSlider(JLabel valueLabel) {
-    JSlider slider = new JSlider(0, 100, 100);
-    slider.setMajorTickSpacing(10);
-    slider.setMinorTickSpacing(1);
-    slider.setPaintTicks(true);
-    slider.setPaintLabels(true);
-    slider.addChangeListener(e -> valueLabel.setText("Value: " + slider.getValue()));
-    return slider;
-  }
-
-  /**
-   * Displays a dialog with a slider and returns the selected value if
-   * confirmed.
-   *
-   * @return An Optional containing the selected slider value if OK is clicked,
-   * or an empty Optional if cancelled
-   */
-  @Override
-  public Optional<Integer> getSliderInput() {
-    JLabel value = new JLabel("Value: 100");
-    JSlider slider = createSlider(value);
-    JPanel panel = new JPanel();
-    panel.add(new JLabel("Enter the value"));
-    panel.add(slider);
-    panel.add(value);
-    int result = JOptionPane.showConfirmDialog(null, panel, "Slider",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-    if (result == JOptionPane.OK_OPTION) {
-      return Optional.of(slider.getValue());
-    } else {
-      return Optional.empty();
-    }
   }
 
   /**

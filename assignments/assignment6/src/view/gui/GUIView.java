@@ -72,15 +72,6 @@ public interface GUIView extends UserView {
   boolean confirmSplitView(IntConsumer updateImageCallback) throws
           ImageProcessorException;
 
-
-  /**
-   * Returns the slider input.
-   * Is present if the user has entered a value.
-   * Otherwise, empty.
-   * @return the slider input
-   */
-  Optional<Integer> getSliderInput();
-
   /**
    * Prompts the user for the levels to apply interactively.
    *

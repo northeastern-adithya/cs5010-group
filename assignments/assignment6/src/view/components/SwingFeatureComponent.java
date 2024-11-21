@@ -3,6 +3,7 @@ package view.components;
 import controller.Features;
 import model.enumeration.ImageType;
 import model.enumeration.UserCommand;
+import view.gui.SwingUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A component that maps UI button actions to Features interface methods.
+ * A component that maps UI button actions to Features interface methods
+ * using Swing.
  */
 public class SwingFeatureComponent extends JPanel {
   private final List<Features> featureListeners = new ArrayList<>();
@@ -49,7 +51,7 @@ public class SwingFeatureComponent extends JPanel {
    * Calls the features to act on closing the window.
    */
   public void closeWindow() {
-    for(Features feature : featureListeners) {
+    for (Features feature : featureListeners) {
       feature.closeWindow();
     }
   }
@@ -114,7 +116,7 @@ public class SwingFeatureComponent extends JPanel {
           feature.sharpenImage();
           break;
         case COMPRESS:
-          feature.compressImage();
+          handleCompression(feature);
           break;
         case LEVELS_ADJUST:
           feature.levelsAdjust();
@@ -130,13 +132,34 @@ public class SwingFeatureComponent extends JPanel {
   }
 
   /**
+   * Handles the compression command by calling the appropriate method in the
+   * Features interface.
+   *
+   * @param feature the feature to be handled
+   */
+  private void handleCompression(Features feature) {
+    JLabel value = new JLabel("Value: 100");
+    JSlider slider = SwingUtils.createSlider(value);
+    JPanel panel = new JPanel();
+    panel.add(new JLabel("Enter the value"));
+    panel.add(slider);
+    panel.add(value);
+    int result = JOptionPane.showConfirmDialog(null, panel, "Slider",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    if (result == JOptionPane.OK_OPTION) {
+      feature.compressImage(slider.getValue());
+    }
+  }
+
+
+  /**
    * Handles the load command by calling the appropriate method in the
    * Features interface.
    * Opens up the dialog to select the file to load.
    *
    * @param feature the feature to be handled
    */
-  private void handleLoadCommand(Features feature){
+  private void handleLoadCommand(Features feature) {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showOpenDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
@@ -152,7 +175,7 @@ public class SwingFeatureComponent extends JPanel {
    *
    * @param feature the feature to be handled
    */
-  private void handleSaveCommand(Features feature){
+  private void handleSaveCommand(Features feature) {
     JFileChooser fileChooser = createFileChooseWithFilter();
     int returnState = fileChooser.showSaveDialog(null);
     if (returnState == JFileChooser.APPROVE_OPTION) {
