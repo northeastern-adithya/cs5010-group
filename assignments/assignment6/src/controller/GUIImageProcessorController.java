@@ -241,6 +241,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void compressImage() {
     executeImageOperation(
         () -> {
+          validateImageLoaded();
           Optional<Integer> percentage = guiInput.getSliderInput();
           if (percentage.isPresent()) {
             compressImage(percentage.get());
@@ -381,6 +382,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void levelsAdjust() {
     executeImageOperation(
         () -> {
+          validateImageLoaded();
           Optional<ImageProcessingRequest.Levels> optionalLevels =
                   guiInput.interactiveThreeLevelInput();
           if (optionalLevels.isEmpty()) {
