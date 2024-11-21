@@ -1,11 +1,14 @@
 package view.components;
 
 import controller.Features;
+import model.enumeration.ImageType;
 import model.enumeration.UserCommand;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,14 +16,14 @@ import java.util.Optional;
 /**
  * A component that maps UI button actions to Features interface methods.
  */
-public class FeatureComponent extends JPanel {
+public class SwingFeatureComponent extends JPanel {
   private final List<Features> featureListeners = new ArrayList<>();
 
   /**
    * Constructs a CommandComponent object.
    * This object is used to map UI button actions to Features interface methods.
    */
-  public FeatureComponent() {
+  public SwingFeatureComponent() {
     super();
   }
 
@@ -72,10 +75,10 @@ public class FeatureComponent extends JPanel {
     for (Features feature : featureListeners) {
       switch (command) {
         case LOAD:
-          feature.loadImage();
+          handleLoadCommand(feature);
           break;
         case SAVE:
-          feature.saveImage();
+          handleSaveCommand(feature);
           break;
         case SEPIA:
           feature.applySepia();
@@ -125,4 +128,56 @@ public class FeatureComponent extends JPanel {
       }
     }
   }
+
+  /**
+   * Handles the load command by calling the appropriate method in the
+   * Features interface.
+   * Opens up the dialog to select the file to load.
+   *
+   * @param feature the feature to be handled
+   */
+  private void handleLoadCommand(Features feature){
+    JFileChooser fileChooser = createFileChooseWithFilter();
+    int returnState = fileChooser.showOpenDialog(null);
+    if (returnState == JFileChooser.APPROVE_OPTION) {
+      File f = fileChooser.getSelectedFile();
+      feature.loadImage(f.getAbsolutePath());
+    }
+  }
+
+  /**
+   * Handles the save command by calling the appropriate method in the
+   * Features interface.
+   * Opens up the dialog to select the file to save.
+   *
+   * @param feature the feature to be handled
+   */
+  private void handleSaveCommand(Features feature){
+    JFileChooser fileChooser = createFileChooseWithFilter();
+    int returnState = fileChooser.showSaveDialog(null);
+    if (returnState == JFileChooser.APPROVE_OPTION) {
+      File f = fileChooser.getSelectedFile();
+      feature.saveImage(f.getAbsolutePath());
+    }
+  }
+
+  /**
+   * Creates a file chooser with appropriate image file filters.
+   *
+   * @return A configured JFileChooser that only shows supported image file
+   * types
+   */
+  private JFileChooser createFileChooseWithFilter() {
+    JFileChooser fileChooser = new JFileChooser(".");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "Images",
+            ImageType.JPEG.getExtension(),
+            ImageType.PNG.getExtension(),
+            ImageType.PPM.getExtension(),
+            ImageType.JPG.getExtension());
+    fileChooser.setFileFilter(filter);
+    return fileChooser;
+  }
+
+
 }

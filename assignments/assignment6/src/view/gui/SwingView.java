@@ -6,7 +6,7 @@ import exception.ImageProcessorException;
 import model.enumeration.ImageType;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
-import view.components.FeatureComponent;
+import view.components.SwingFeatureComponent;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -30,7 +30,7 @@ import view.DisplayMessageType;
  */
 public class SwingView extends JFrame implements GUIView {
   private final JPanel mainPanel;
-  private final FeatureComponent featurePanel;
+  private final SwingFeatureComponent featurePanel;
   private final JPanel imagePanel;
   private final JPanel histogramPanel;
 
@@ -44,7 +44,7 @@ public class SwingView extends JFrame implements GUIView {
     this.setSize(600, 900);
     // Initialising panels
     mainPanel = new JPanel();
-    featurePanel = new FeatureComponent();
+    featurePanel = new SwingFeatureComponent();
     imagePanel = new JPanel();
     histogramPanel = new JPanel();
 
@@ -241,46 +241,6 @@ public class SwingView extends JFrame implements GUIView {
       return Optional.of(slider.getValue());
     } else {
       return Optional.empty();
-    }
-  }
-
-  /**
-   * Displays a file chooser dialog for loading an image file.
-   *
-   * @return The absolute path of the selected file
-   * @throws ImageProcessorException If no file is selected or the operation
-   * is cancelled
-   */
-  @Override
-  public String interactiveImageLoadPathInput() throws
-          ImageProcessorException {
-    JFileChooser fileChooser = createFileChooseWithFilter();
-    int returnState = fileChooser.showOpenDialog(null);
-    if (returnState == JFileChooser.APPROVE_OPTION) {
-      File f = fileChooser.getSelectedFile();
-      return f.getAbsolutePath();
-    } else {
-      throw new ImageProcessorException("Invalid file path");
-    }
-  }
-
-  /**
-   * Displays a file chooser dialog for saving an image file.
-   *
-   * @return The absolute path where the file should be saved
-   * @throws ImageProcessorException If no file location is selected or the
-   * operation is cancelled
-   */
-  @Override
-  public String interactiveImageSavePathInput() throws
-          ImageProcessorException {
-    JFileChooser fileChooser = createFileChooseWithFilter();
-    int returnState = fileChooser.showSaveDialog(null);
-    if (returnState == JFileChooser.APPROVE_OPTION) {
-      File f = fileChooser.getSelectedFile();
-      return f.getAbsolutePath();
-    } else {
-      throw new ImageProcessorException("Invalid file path");
     }
   }
 

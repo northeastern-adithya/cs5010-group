@@ -84,19 +84,19 @@ public class GUIImageProcessorController implements ImageProcessorController,
    * Loads an image from a file system path into the application.
    * Validates that no unsaved image is currently loaded before proceeding.
    * Updates the display with the newly loaded image.
+   * @param filePath the file path of the image to be loaded
    */
   @Override
-  public void loadImage() {
+  public void loadImage(String filePath) {
     executeImageOperation(
             () -> {
               if (isImageLoaded()) {
                 throw new ImageProcessorException("Save the current image "
                         + "before loading a new one");
               }
-              String imagePath = guiView.interactiveImageLoadPathInput();
-              String imageName = IOUtils.getImageNameFromPath(imagePath);
+              String imageName = IOUtils.getImageNameFromPath(filePath);
               imageProcessingService.loadImage(ImageProcessingRequest.builder()
-                      .imagePath(imagePath)
+                      .imagePath(filePath)
                       .imageName(imageName)
                       .build());
               updateImageToDisplay(imageName);
@@ -135,16 +135,15 @@ public class GUIImageProcessorController implements ImageProcessorController,
   /**
    * Saves the currently displayed image to a specified file system location.
    * Clears the current image from memory after saving.
+   * @param filePath the file path to save the image
    */
   @Override
-  public void saveImage() {
+  public void saveImage(String filePath) {
     executeImageOperation(
             () -> {
               validateImageLoaded();
-              String destinationImagePath =
-                      guiView.interactiveImageSavePathInput();
               imageProcessingService.saveImage(ImageProcessingRequest.builder()
-                      .imagePath(destinationImagePath)
+                      .imagePath(filePath)
                       .imageName(getImageToDisplay())
                       .build());
               this.reset();

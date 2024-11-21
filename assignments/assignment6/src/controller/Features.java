@@ -7,13 +7,15 @@ package controller;
 public interface Features {
   /**
    * Loads an image into memory from disk.
+   * @param filePath the path of the image file
    */
-  void loadImage();
+  void loadImage(String filePath);
 
   /**
    * Saves the image to the disk.
+   * @param filePath the path of the image file to save
    */
-  void saveImage();
+  void saveImage(String filePath);
 
   /**
    * Creates the sepia component of the image.
