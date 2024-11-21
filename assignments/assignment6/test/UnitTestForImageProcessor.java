@@ -1387,8 +1387,8 @@ public class UnitTestForImageProcessor {
               + "save image-path image-name: Save the image with the given name"
               + " to the specified path which should include the name of the "
               + "file.\n"
-              + "red-component image-name dest-image-name: Create an " +
-              "image "
+              + "red-component image-name dest-image-name: Create an "
+              + "image "
               + "with the red-component of the image with the given name, and "
               + "refer to it henceforth in the program by the given "
               + "destination name.\n"
@@ -1405,8 +1405,8 @@ public class UnitTestForImageProcessor {
               + "with the value-component of the image with the given name, and"
               + " refer to it henceforth in the program by the given "
               + "destination name.\n"
-              + "luma-component image-name dest-image-name split P: Create an" +
-              " image "
+              + "luma-component image-name dest-image-name split P: Create an"
+              + " image "
               + "with the luma-component of the image with the given name, and "
               + "refer to it henceforth in the program by the given destination"
               + " name.P is an optional parameter for split view.\n"
@@ -1434,14 +1434,14 @@ public class UnitTestForImageProcessor {
               + "Combine the three images that are individually red, green and "
               + "blue into a single image that gets its red, green and blue "
               + "components from the three images respectively.\n"
-              + "blur image-name dest-image-name split p: blur the given " +
-              "image"
+              + "blur image-name dest-image-name split p: blur the given "
+              + "image"
               + " and "
               + "store the result in another image with the given name."
               + "P is an optional parameter for split view.\n"
-              + "sharpen image-name dest-image-name split p: sharpen the " +
-              "given" +
-              " image "
+              + "sharpen image-name dest-image-name split p: sharpen the "
+              + "given"
+              + " image "
               + "and store the result in another image with the given name."
               + "P is an optional parameter for split view.\n"
               + "sepia image-name dest-image-name split p: produce a "
@@ -1455,16 +1455,14 @@ public class UnitTestForImageProcessor {
               + "histogram image-name dest-image-name: Create a histogram of "
               + "the given image "
               + "and store the result in another image with the given name.\n"
-              + "color-correct image-name dest-image-name split p: Color " +
-              "correct " +
-              "the "
+              + "color-correct image-name dest-image-name split p: Color "
+              + "correct the "
               + "given image "
               + "and store the result in another image with the given name."
               + "P is an optional parameter for split view.\n"
-              + "levels-adjust b m w image-name dest-image-name split p: " +
-              "Adjust " +
-              "the"
-              + " levels of the "
+              + "levels-adjust b m w image-name dest-image-name split p: "
+              + "Adjust the "
+              + "levels of the "
               + "given image and store the result in another image with the "
               + "given name."
               + "P is an optional parameter for split view.\n"
@@ -3304,7 +3302,7 @@ public class UnitTestForImageProcessor {
             ImageProcessorException {
       Image testImage =
               Factory.createImage(new Pixel[][]{new Pixel[]{
-                new RGB(100, 100, 100)}});
+                  new RGB(100, 100, 100)}});
       memory.addImage("original", testImage);
 
       service.createValueComponent(ImageProcessingRequest.builder().imageName(
@@ -3399,7 +3397,10 @@ public class UnitTestForImageProcessor {
   }
 
 
-  public static class TestArgumentParsers{
+  /**
+   * Test class for testing the argument parsers that parsers main arguments.
+   */
+  public static class TestArgumentParsers {
 
     @Test
     public void testArgumentParserWithNoArguments() {
@@ -3408,12 +3409,13 @@ public class UnitTestForImageProcessor {
               args
       );
       assertTrue(parser instanceof GUIArgumentParser);
-      ImageProcessorController controller =  parser.createController(args);
+      ImageProcessorController controller = parser.createController(args);
       assertTrue(controller instanceof GUIImageProcessorController);
     }
 
     @Test
-    public void testArgumentParserWithFileArgument() throws ImageProcessorException {
+    public void testArgumentParserWithFileArgument() throws
+            ImageProcessorException {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       String[] args = new String[]{"-file", "test_resources/test_valid_script"
@@ -3427,8 +3429,8 @@ public class UnitTestForImageProcessor {
       assertTrue(parser instanceof CommandLineArgumentParser);
       ImageProcessorController controller = parser.createController(args);
       assertTrue(controller instanceof CommandLineImageProcessorController);
-      Image actualImage = IOUtils.read("test_resources/output" +
-              "/saved_sample_image_red_component.png",ImageType.PNG);
+      Image actualImage = IOUtils.read("test_resources/output"
+              + "/saved_sample_image_red_component.png", ImageType.PNG);
       assertEquals(
               Factory.createImage(
                       TestUtils.createPixels(
@@ -3443,7 +3445,8 @@ public class UnitTestForImageProcessor {
 
     @Test
     public void testArgumentParserWithInteractiveArgument()
-            throws ImageProcessorException{
+            throws
+            ImageProcessorException {
       String[] args = new String[]{"-text"};
       ArgumentParser parser = Factory.getArgumentParser(
               args
@@ -3463,9 +3466,10 @@ public class UnitTestForImageProcessor {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       ImageProcessorApp.main(args);
-      assertTrue(outContent.toString().contains("Successfully created red component"));
-      Image actualImage = IOUtils.read("test_resources/output" +
-              "/saved_sample_image_red_component.png",ImageType.PNG);
+      assertTrue(outContent.toString().contains("Successfully created red "
+              + "component"));
+      Image actualImage = IOUtils.read("test_resources/output"
+              + "/saved_sample_image_red_component.png", ImageType.PNG);
       assertEquals(
               Factory.createImage(
                       TestUtils.createPixels(
@@ -3479,16 +3483,17 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
-    public void testWithInvalidArguments(){
+    public void testWithInvalidArguments() {
       String[] args = new String[]{"-invalid"};
       assertThrows(
               ImageProcessingRunTimeException.QuitException.class,
-              () -> Factory.getArgumentParser(args));
+          () -> Factory.getArgumentParser(args));
     }
 
 
     @Test
-    public void testWithInvalidFileArgument() throws ImageProcessorException{
+    public void testWithInvalidFileArgument() throws
+            ImageProcessorException {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       String[] args = new String[]{"-file", "invalid_file"};

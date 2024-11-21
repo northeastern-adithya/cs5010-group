@@ -38,7 +38,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void loadImage(ImageProcessingRequest request) throws ImageProcessorException {
+  public void loadImage(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImagePath(), request.getImageName());
     ImageType imageType =
             ImageType.getImageTypeFromPath(request.getImagePath());
@@ -47,7 +48,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void saveImage(ImageProcessingRequest request) throws ImageProcessorException {
+  public void saveImage(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImagePath(), request.getImageName());
     Image imageToSave = memory.getImage(request.getImageName());
     ImageType imageType =
@@ -57,34 +59,41 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void createRedComponent(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), image.createRedComponent());
+    memory.addImage(request.getDestinationImageName(),
+            image.createRedComponent());
   }
 
   @Override
   public void createGreenComponent(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), image.createGreenComponent());
+    memory.addImage(request.getDestinationImageName(),
+            image.createGreenComponent());
   }
 
   @Override
   public void createBlueComponent(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), image.createBlueComponent());
+    memory.addImage(request.getDestinationImageName(),
+            image.createBlueComponent());
   }
 
   @Override
   public void createValueComponent(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -93,20 +102,23 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void createLumaComponent(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
     Image finalImage = image.getLuma();
-    if(request.getPercentage().isPresent()) {
-      finalImage = finalImage.combineImages(image, request.getPercentage().get());
+    if (request.getPercentage().isPresent()) {
+      finalImage = finalImage.combineImages(image,
+              request.getPercentage().get());
     }
     memory.addImage(request.getDestinationImageName(), finalImage);
   }
 
   @Override
   public void createIntensityComponent(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -115,7 +127,8 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void horizontalFlip(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -125,7 +138,8 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void verticalFlip(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -134,7 +148,8 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void brighten(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -143,7 +158,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void rgbSplit(ImageProcessingRequest request) throws ImageProcessorException {
+  public void rgbSplit(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(
             request.getImageName(),
             request.getRedImageName(),
@@ -157,7 +173,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void rgbCombine(ImageProcessingRequest request) throws ImageProcessorException {
+  public void rgbCombine(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getRedImageName(),
             request.getGreenImageName(),
@@ -172,7 +189,8 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void blurImage(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -188,7 +206,8 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void sharpenImage(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -204,7 +223,8 @@ public class FileImageProcessingService implements ImageProcessingService {
 
   @Override
   public void sepiaImage(ImageProcessingRequest request)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -219,7 +239,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void compressImage(ImageProcessingRequest request) throws ImageProcessorException {
+  public void compressImage(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -229,7 +250,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void histogram(ImageProcessingRequest request) throws ImageProcessorException {
+  public void histogram(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -237,7 +259,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void colorCorrect(ImageProcessingRequest request) throws ImageProcessorException {
+  public void colorCorrect(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -252,7 +275,8 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void levelsAdjust(ImageProcessingRequest request) throws ImageProcessorException {
+  public void levelsAdjust(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
@@ -273,19 +297,23 @@ public class FileImageProcessingService implements ImageProcessingService {
   }
 
   @Override
-  public void downscaleImage(ImageProcessingRequest request) throws ImageProcessorException {
+  public void downscaleImage(ImageProcessingRequest request) throws
+          ImageProcessorException {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    ImageProcessingRequest.ScalingFactors factors = request.getScalingFactors().orElseThrow(
-        () -> new ImageProcessorException("Scaling factors not provided")
+    ImageProcessingRequest.ScalingFactors factors =
+            request.getScalingFactors().orElseThrow(
+              () -> new ImageProcessorException("Scaling factors not provided")
     );
     memory.addImage(request.getDestinationImageName(),
-            image.downscale(factors.getWidthFactor(), factors.getHeightFactor()));
+            image.downscale(factors.getWidthFactor(),
+                    factors.getHeightFactor()));
   }
 
   @Override
-  public Image getImage(String imageName) throws ImageProcessorException {
+  public Image getImage(String imageName) throws
+          ImageProcessorException {
     return memory.getImage(imageName);
   }
 
@@ -302,7 +330,8 @@ public class FileImageProcessingService implements ImageProcessingService {
    *                                 or empty
    */
   private void validateStringParams(String... strings)
-          throws ImageProcessorException {
+          throws
+          ImageProcessorException {
     if (StringUtils.isNullOrEmpty(strings)) {
       throw new ImageProcessorException("Received input as null or empty");
     }

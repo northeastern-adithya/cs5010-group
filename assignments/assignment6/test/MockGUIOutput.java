@@ -1,13 +1,9 @@
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.function.IntConsumer;
 
 import controller.Features;
 import exception.ImageProcessingRunTimeException;
-import exception.ImageProcessorException;
 import model.enumeration.UserCommand;
-import model.request.ImageProcessingRequest;
 import model.visual.Image;
 import view.DisplayMessageType;
 import view.gui.GUIOutput;
@@ -20,13 +16,6 @@ public class MockGUIOutput implements GUIOutput {
 
   /**
    * Constructor for the MockInput class.
-   *
-   * @param readable                      the readable input
-   * @param confirmSplitView              the confirm split view input
-   * @param sliderInput                   the slider input
-   * @param interactiveImageLoadPathInput the interactive image load path input
-   * @param interactiveImageSavePathInput the interactive image save path input
-   * @param interactiveThreeLevelInput    the interactive three level input
    * @param log                           the log to log the output
    */
   public MockGUIOutput(StringBuilder log) {
@@ -49,7 +38,7 @@ public class MockGUIOutput implements GUIOutput {
 
   @Override
   public void addFeatures(Features features) {
-
+    // Do nothing as this is mock output
   }
 
   @Override

@@ -3702,7 +3702,8 @@ public class ControllerIntegrationTest {
   public void testLumaWithZeroPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = TestUtils.randomRectangleImage();
-    initialiseController(String.format("luma-component %s lumaImage split 0", INITIAL_IMAGE_NAME), output, randomImage);
+    initialiseController(String.format("luma-component %s "
+            + "lumaImage split 0", INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
     assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{
@@ -3728,7 +3729,8 @@ public class ControllerIntegrationTest {
   public void testLumaWithHundredPercentageSplitView() throws ImageProcessorException {
     StringBuilder output = new StringBuilder();
     Image randomImage = TestUtils.randomRectangleImage();
-    initialiseController(String.format("luma-component %s lumaImage split 100", INITIAL_IMAGE_NAME), output, randomImage);
+    initialiseController(String.format("luma-component %s "
+            + "lumaImage split 100", INITIAL_IMAGE_NAME), output, randomImage);
 
     controller.processCommands();
     assertEquals(Factory.createImage(TestUtils.createPixels(new int[][]{

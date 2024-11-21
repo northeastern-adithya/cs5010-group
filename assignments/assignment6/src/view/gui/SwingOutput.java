@@ -5,10 +5,17 @@ import exception.ImageProcessingRunTimeException;
 import model.visual.Image;
 import view.components.FeatureComponent;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -50,12 +57,12 @@ public class SwingOutput extends JFrame implements GUIOutput {
 
     this.add(mainPanel);
     addWindowListener(
-            new WindowAdapter() {
-              @Override
-              public void windowClosing(WindowEvent e) {
-                featurePanel.closeWindow();
-              }
+          new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+              featurePanel.closeWindow();
             }
+          }
     );
     this.setVisible(true);
   }

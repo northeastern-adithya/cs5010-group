@@ -373,6 +373,7 @@ public class RenderedImage implements Image {
             - black * (255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2));
   }
 
+  @Override
   public Image downscale(int widthFactor, int heightFactor) throws ImageProcessorException {
     if (widthFactor <= 0 || heightFactor <= 0 || widthFactor > 100 || heightFactor > 100) {
       throw new ImageProcessorException("Scaling factors must be within 0 and 100");
@@ -381,7 +382,7 @@ public class RenderedImage implements Image {
     int newWidth = (int)(this.getWidth() * ((double) widthFactor / 100));
     int newHeight = (int)(this.getHeight() * ((double) heightFactor / 100));
 
-    if(newWidth == 0 || newHeight == 0) {
+    if (newWidth == 0 || newHeight == 0) {
       throw new ImageProcessorException("Downscale to 1D image is not supported");
     }
 

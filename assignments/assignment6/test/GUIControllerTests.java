@@ -2046,7 +2046,6 @@ public class GUIControllerTests {
             {657930, 13816530},
             {6645093, 8421504}
     }));
-    ;
 
     getExpectedImage(randomImage);
 
@@ -2091,8 +2090,6 @@ public class GUIControllerTests {
             {657930, 13816530},
             {6645093, 8421504}
     }));
-    ;
-    ;
     getExpectedImage(randomImage);
     imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
     ImageMemory<String> stringMemory = initialiseStringMemory();

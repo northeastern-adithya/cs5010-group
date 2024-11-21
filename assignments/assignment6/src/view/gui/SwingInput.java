@@ -1,11 +1,17 @@
 package view.gui;
 
-import java.awt.*;
+import java.awt.GridLayout;
 import java.io.File;
 import java.util.Optional;
 import java.util.function.IntConsumer;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.enumeration.ImageType;
@@ -21,6 +27,7 @@ public class SwingInput implements GUIInput {
    * Constructs a SwingInput object to be used to interact with user.
    */
   public SwingInput() {
+    // Does not take any parameters.
   }
 
   @Override
@@ -140,7 +147,7 @@ public class SwingInput implements GUIInput {
    * Creates a file chooser with appropriate image file filters.
    *
    * @return A configured JFileChooser that only shows supported image file
-   * types
+   *         types
    */
   private JFileChooser createFileChooseWithFilter() {
     JFileChooser fileChooser = new JFileChooser(".");

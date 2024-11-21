@@ -10,9 +10,7 @@ import exception.ImageProcessorException;
 import factories.Factory;
 import model.enumeration.PixelType;
 import model.pixels.Pixel;
-import model.pixels.RGB;
 import model.visual.Image;
-import model.visual.RenderedImage;
 
 /**
  * Utility class for testing.
@@ -38,6 +36,12 @@ public class TestUtils {
     return Factory.createImage(createPixels(redArray));
   }
 
+  /**
+   * Creates a uniform offset image.
+   *
+   * @return the uniform offset image
+   * @throws ImageProcessorException if the image cannot be created
+   */
   public static Image uniformOffsetImage() throws ImageProcessorException {
     int[][] uniformArray = new int[][]{
             {6579558, 9869208},
@@ -48,6 +52,12 @@ public class TestUtils {
   }
 
 
+  /**
+   * Creates a random greyscale image.
+   *
+   * @return the random greyscale image
+   * @throws ImageProcessorException if the image cannot be created
+   */
   public static Image randomGreyscaleImage() throws ImageProcessorException {
     int[][] uniformArray = new int[][]{
             {6579300, 9868950},
@@ -57,6 +67,12 @@ public class TestUtils {
     return Factory.createImage(createPixels(uniformArray));
   }
 
+  /**
+   * Creates a random image with edge distributed pixels.
+   *
+   * @return the random image with edge distributed pixels
+   * @throws ImageProcessorException if the image cannot be created
+   */
   public static Image randomImageWithEdgeDistributedPixels() throws ImageProcessorException {
     int[][] uniformArray = new int[][]{
             {622847, 8355969, 622847}

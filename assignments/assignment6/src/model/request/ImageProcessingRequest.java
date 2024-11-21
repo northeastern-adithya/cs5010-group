@@ -250,11 +250,26 @@ public class ImageProcessingRequest {
       return this;
     }
 
+    /**
+     * Sets the levels of the image.
+     *
+     * @param black the black level
+     * @param mid   the mid level
+     * @param white the white level
+     * @return the ImageProcessingRequestBuilder
+     */
     public ImageProcessingRequestBuilder levels(int black, int mid, int white) {
       this.levels = new Levels(black, mid, white);
       return this;
     }
 
+    /**
+     * Sets the scaling factors of the image.
+     *
+     * @param widthFactor  the width factor
+     * @param heightFactor the height factor
+     * @return the ImageProcessingRequestBuilder
+     */
     public ImageProcessingRequestBuilder scalingFactors(int widthFactor, int heightFactor) {
       this.scalingFactors = new ScalingFactors(widthFactor, heightFactor);
       return this;
@@ -333,19 +348,44 @@ public class ImageProcessingRequest {
     }
   }
 
+  /**
+   * Represents the scaling factors of the image.
+   */
   public static class ScalingFactors {
+    /**
+     * The width factor to reduce the wide by.
+     */
     private final int widthFactor;
+    /**
+     * The height factor to reduce the height by.
+     */
     private final int heightFactor;
 
+    /**
+     * Constructor to initialize the scaling factors.
+     *
+     * @param widthFactor  the width factor to reduce the wide by
+     * @param heightFactor the height factor to reduce the height by
+     */
     public ScalingFactors(int widthFactor, int heightFactor) {
       this.widthFactor = widthFactor;
       this.heightFactor = heightFactor;
     }
 
+    /**
+     * Returns the width factor.
+     *
+     * @return the width factor
+     */
     public int getWidthFactor() {
       return widthFactor;
     }
 
+    /**
+     * Returns the height factor.
+     *
+     * @return the height factor
+     */
     public int getHeightFactor() {
       return heightFactor;
     }

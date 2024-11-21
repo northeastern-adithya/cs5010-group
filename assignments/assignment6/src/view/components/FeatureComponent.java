@@ -3,12 +3,14 @@ package view.components;
 import controller.Features;
 import model.enumeration.UserCommand;
 
-import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.JPanel;
+import javax.swing.JButton;
 
 /**
  * A component that maps UI button actions to Features interface methods.
@@ -46,7 +48,7 @@ public class FeatureComponent extends JPanel {
    * Calls the features to act on closing the window.
    */
   public void closeWindow() {
-    for(Features feature : featureListeners) {
+    for (Features feature : featureListeners) {
       feature.closeWindow();
     }
   }
