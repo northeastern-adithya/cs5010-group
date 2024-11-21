@@ -98,7 +98,8 @@ public class SwingInput implements GUIInput {
   /**
    * Prompts the user to input a path to load an image.
    *
-   * @return an Optional containing the path if the user confirms, or an empty Optional if the user cancels
+   * @return an Optional containing the path if the user confirms,
+   * or an empty Optional if the user cancels
    */
   @Override
   public Optional<String> interactiveImageLoadPathInput() {
@@ -115,7 +116,8 @@ public class SwingInput implements GUIInput {
   /**
    * Prompts the user to input a path to save an image.
    *
-   * @return an Optional containing the path if the user confirms, or an empty Optional if the user cancels
+   * @return an Optional containing the path if the user confirms,
+   * or an empty Optional if the user cancels
    */
   @Override
   public Optional<String> interactiveImageSavePathInput() {
@@ -132,7 +134,8 @@ public class SwingInput implements GUIInput {
   /**
    * Prompts the user to input levels for black, mid, and white points using sliders.
    *
-   * @return an Optional containing the levels if the user confirms, or an empty Optional if the user cancels
+   * @return an Optional containing the levels if the user confirms,
+   * or an empty Optional if the user cancels
    */
   @Override
   public Optional<ImageProcessingRequest.Levels> interactiveThreeLevelInput() {
@@ -266,7 +269,8 @@ public class SwingInput implements GUIInput {
   /**
    * Prompts the user to input scaling factors for width and height using sliders.
    *
-   * @return an Optional containing the scaling factors if the user confirms, or an empty Optional if the user cancels
+   * @return an Optional containing the scaling factors if the user confirms,
+   * or an empty Optional if the user cancels
    */
   @Override
   public Optional<ImageProcessingRequest.ScalingFactors> interactiveScalingFactorsInput() {

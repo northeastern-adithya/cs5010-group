@@ -1,12 +1,10 @@
 package utility;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -82,7 +80,7 @@ public class IOUtils {
     int height = scanner.nextInt();
     int maxValue = scanner.nextInt();
     Pixel[][] pixelArray = new Pixel[height][width];
-    for(int i = 0; i < height; i++) {
+    for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         int r = scanner.nextInt();
         int g = scanner.nextInt();

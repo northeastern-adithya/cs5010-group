@@ -5,7 +5,14 @@ import exception.ImageProcessingRunTimeException;
 import model.visual.Image;
 import view.components.FeatureComponent;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
@@ -32,8 +39,8 @@ public class SwingOutput extends JFrame implements GUIOutput {
   private final JScrollPane imageScrollPane;
   private final JScrollPane histogramScrollPane;
 
-  private final static int DEFAULT_WIDTH = 400;
-  private final static int DEFAULT_HEIGHT = 600;
+  private static final int DEFAULT_WIDTH = 400;
+  private static final int DEFAULT_HEIGHT = 600;
 
   /**
    * Constructs a SwingOutput object.
@@ -82,7 +89,7 @@ public class SwingOutput extends JFrame implements GUIOutput {
   /**
    * Builds the scroll panes of the GUI.
    */
-  private void buildScrollPanes(){
+  private void buildScrollPanes() {
     setScrollPanes(featureScrollPane,DEFAULT_HEIGHT,200);
     setScrollPanes(imageScrollPane,DEFAULT_HEIGHT,DEFAULT_WIDTH);
     setScrollPanes(histogramScrollPane,DEFAULT_HEIGHT,DEFAULT_WIDTH);
@@ -95,7 +102,7 @@ public class SwingOutput extends JFrame implements GUIOutput {
    * @param height     the height of the scroll pane
    * @param width      the width of the scroll pane
    */
-  private void setScrollPanes(JScrollPane scrollPane,int height,int width){
+  private void setScrollPanes(JScrollPane scrollPane,int height,int width) {
     scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setPreferredSize(new Dimension(width,height));

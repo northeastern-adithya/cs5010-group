@@ -1,7 +1,6 @@
 package model.memory;
 
 import exception.ImageProcessorException;
-import model.visual.Image;
 
 /**
  * A class that represents a memory that stores images.

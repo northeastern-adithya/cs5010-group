@@ -3,7 +3,6 @@ package model.memory;
 import java.util.Optional;
 
 import exception.ImageProcessorException;
-import model.visual.Image;
 
 /**
  * A class that represents a memory that stores images in a String.
