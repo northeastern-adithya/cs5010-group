@@ -291,6 +291,7 @@ public class UnitTestForImageProcessor {
 
       assertEquals(new RGB(10, 128, 254), colorCorrectedImage.getPixel(0, 0));
       assertEquals(new RGB(128, 128, 128), colorCorrectedImage.getPixel(0, 1));
+      assertEquals(new RGB(10, 128, 254), colorCorrectedImage.getPixel(0, 2));
     }
 
     @Test

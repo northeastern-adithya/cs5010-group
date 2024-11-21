@@ -19,8 +19,10 @@ import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.memory.StringMemory;
 import model.pixels.Pixel;
+import model.pixels.RGB;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
+import model.visual.RenderedImage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -1085,6 +1087,1128 @@ public class GUIControllerTests {
             expectedImage.histogram().toString()));
   }
 
+  @Test
+  public void testVerticalFlipWithNoImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.verticalFlip();
+
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+              UserCommand.VERTICAL_FLIP));
+    });
+    assertTrue(output.toString().contains(
+            "No image loaded"));
+  }
+
+  @Test
+  public void testVerticalFlipWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.verticalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {65280, 8421504},
+            {16711680, 255}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.VERTICAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testVerticalFlipWithRandomImage_ConsistentImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.redImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.verticalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 16711680},
+            {16711680, 16711680}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.VERTICAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testVerticalFlipWithRandomImage_BlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blackImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.verticalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.VERTICAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testVerticalFlipWithRandomImage_WhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.whiteImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.verticalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.VERTICAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testHorizontalFlipWithNoImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.horizontalFlip();
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+              UserCommand.HORIZONTAL_FLIP));
+    });
+    assertTrue(output.toString().contains(
+            "No image loaded"));
+  }
+
+  @Test
+  public void testHorizontalFlipWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.horizontalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {255, 16711680},
+            {8421504, 65280}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.HORIZONTAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testHorizontalFlipWithRandomImage_ConsistentImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blueImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.horizontalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {255, 255},
+            {255, 255}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.HORIZONTAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testHorizontalFlipWithRandomImage_BlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blackImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.horizontalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.HORIZONTAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testHorizontalFlipWithRandomImage_WhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.whiteImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.horizontalFlip();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16777215, 16777215},
+            {16777215, 16777215}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.HORIZONTAL_FLIP)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetLumaWithNoImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.getLuma();
+
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+              UserCommand.LUMA_COMPONENT));
+    });
+    assertTrue(output.toString().contains(
+            "No image loaded"));
+  }
+
+  @Test
+  public void testGetLumaWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.getLuma();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {3552822, 1184274},
+            {11974326, 8421504}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LUMA_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetLumaWithRandomImage_BlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blackImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.getLuma();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LUMA_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetLumaWithRandomImage_WhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.whiteImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.getLuma();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711422, 16711422},
+            {16711422, 16711422}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LUMA_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetLumaWithRandomImage_RedImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.redImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            false,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.getLuma();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {3552822, 3552822},
+            {3552822, 3552822}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LUMA_COMPONENT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetSepiaWithNomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+              UserCommand.SEPIA));
+    });
+    assertTrue(output.toString().contains(
+            "No image loaded"));
+  }
+
+  @Test
+  public void testGetSepiaWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6576197, 3156513},
+            {12889736, 11311479}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SEPIA)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetSepiaWithBlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blackImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SEPIA)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetSepiaWithWhiteImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.whiteImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16777198, 16777198},
+            {16777198, 16777198}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SEPIA)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testGetSepiaWithBlueImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blueImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {3156513, 3156513},
+            {3156513, 3156513}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.SEPIA)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testColorCorrectionWithNoImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+              UserCommand.COLOR_CORRECT));
+    });
+    assertTrue(output.toString().contains(
+            "No image loaded"));
+  }
+
+  @Test
+  public void testColorCorrectionWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 255},
+            {65280, 8421504}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testColorCorrectionWithBlackImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.blackImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testColorCorrectionWithRedImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.redImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 16711680},
+            {16711680, 16711680}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testColorCorrectionWithUniformImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.uniformOffsetImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6645093, 9934743},
+            {9934743, 16514043}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testColorCorrectionPreservesNaturalGreyImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomGreyscaleImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    // color correction does not impact natural greys
+    Image expectedImage = TestUtils.randomGreyscaleImage();
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testColorCorrectionWithEdgeDistribution() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImageWithEdgeDistributedPixels();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            null,
+            stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    // color correction does not impact natural greys
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {688382, 8421504, 688382}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+
+  @Test
+  public void testLevelsAdjustWithNoImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(20, 100, 255);
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            levels,
+            stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    assertThrows(ImageProcessorException.NotFoundException.class, () -> {
+      imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+              UserCommand.LEVELS_ADJUST));
+    });
+    assertTrue(output.toString().contains(
+            "No image loaded"));
+  }
+
+  @Test
+  public void testLevelsAdjustWithRandomImage() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(20, 100, 255);
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            levels,
+            stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680, 255},
+            {65280, 10724259}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LEVELS_ADJUST)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testLevelsAdjustWithRandomImage_ClampingAt0() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+
+    Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {657930, 16777215},
+            {1315860, 8421504}
+    }));
+
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(10, 20, 50);
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            levels,
+            stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 0},
+            {8421504, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LEVELS_ADJUST)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testLevelsAdjustWithRandomImage_ClampingAt255() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+
+    Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {657930, 13816530},
+            {6645093, 8421504}
+    }));;
+
+    getExpectedImage(randomImage);
+
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(100, 200, 210);
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            levels,
+            stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16777215, 16777215},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LEVELS_ADJUST)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testLevelsAdjustWithRandomImage_AdjacentPoints() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+
+    Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {657930, 13816530},
+            {6645093, 8421504}
+    }));;;
+    getExpectedImage(randomImage);
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(128, 129, 130);
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            levels,
+            stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+            UserCommand.LEVELS_ADJUST)));
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 16777215},
+            {0, 0}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LEVELS_ADJUST)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testLevelsAdjustWithRandomImage_PointsMatchCurve() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+
+    Image randomImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {657930, 8421504},
+            {15461355, 16777215}
+    }));
+
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels = new ImageProcessingRequest.Levels(10, 128, 235);
+    initialiseController(
+            "",
+            true,
+            null,
+            null,
+            null,
+            levels,
+            stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    getExpectedImage(imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+            UserCommand.LEVELS_ADJUST)));
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {0, 8421504},
+            {16777215, 16777215}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LEVELS_ADJUST)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
 
   private void initialiseController(String input, boolean confirmSplitView,
                                     Integer sliderInput,

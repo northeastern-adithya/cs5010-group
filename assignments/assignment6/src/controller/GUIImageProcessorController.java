@@ -264,6 +264,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void verticalFlip() {
     executeImageOperation(
             () -> {
+            validateImageLoaded();
               String verticalFlipImageName = createDestinationImageName(
                       getImageToDisplay(), UserCommand.VERTICAL_FLIP);
               ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -283,6 +284,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   public void horizontalFlip() {
     executeImageOperation(
             () -> {
+            validateImageLoaded();
               String horizontalFlipImageName = createDestinationImageName(
                       getImageToDisplay(), UserCommand.HORIZONTAL_FLIP);
               ImageProcessingRequest request = ImageProcessingRequest.builder()
@@ -361,7 +363,6 @@ public class GUIImageProcessorController implements ImageProcessorController,
   private String handleLevelsAdjustment(int percentage, int blackLevel,
                                         int midLevel, int whiteLevel) throws
           ImageProcessorException {
-    validateImageLoaded();
     String levelsImageName = createDestinationImageName(getImageToDisplay(),
             UserCommand.LEVELS_ADJUST);
 
