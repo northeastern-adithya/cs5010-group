@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -102,7 +103,34 @@ public class InteractiveImageProcessorController implements ImageProcessorContro
    * Displays the commands to the user.
    */
   private void displayCommands() {
-    textOutput.displayCommands(List.of(UserCommand.values()));
+    textOutput.displayCommands(
+            List.of(
+                    UserCommand.LOAD,
+                    UserCommand.SAVE,
+                    UserCommand.RED_COMPONENT,
+                    UserCommand.GREEN_COMPONENT,
+                    UserCommand.BLUE_COMPONENT,
+                    UserCommand.VALUE_COMPONENT,
+                    UserCommand.LUMA_COMPONENT,
+                    UserCommand.INTENSITY_COMPONENT,
+                    UserCommand.HORIZONTAL_FLIP,
+                    UserCommand.VERTICAL_FLIP,
+                    UserCommand.BRIGHTEN,
+                    UserCommand.RGB_SPLIT,
+                    UserCommand.RGB_COMBINE,
+                    UserCommand.BLUR,
+                    UserCommand.SHARPEN,
+                    UserCommand.SEPIA,
+                    UserCommand.RUN,
+                    UserCommand.COMPRESS,
+                    UserCommand.HISTOGRAM,
+                    UserCommand.COLOR_CORRECT,
+                    UserCommand.LEVELS_ADJUST,
+                    UserCommand.RESET,
+                    UserCommand.HELP,
+                    UserCommand.QUIT
+            )
+    );
   }
 
   @Override
