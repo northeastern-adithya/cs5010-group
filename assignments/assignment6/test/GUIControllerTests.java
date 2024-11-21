@@ -3792,21 +3792,4 @@ public class GUIControllerTests {
                                             UserCommand command) {
     return command.getCommand() + "_" + imageName;
   }
-
-  // TODO: remove it
-  private void getExpectedImage(Image image) {
-    int[][] array = new int[image.getHeight()][image.getWidth()];
-    for (int i = 0; i < image.getHeight(); i++) {
-      for (int j = 0; j < image.getWidth(); j++) {
-        Pixel pixel = image.getPixel(i, j);
-        int red = pixel.getRed();
-        int green = pixel.getGreen();
-        int blue = pixel.getBlue();
-        array[i][j] =
-                (red << 16) | (green << 8) | blue;
-      }
-    }
-    System.out.println(Arrays.deepToString(array));
-  }
-
 }
