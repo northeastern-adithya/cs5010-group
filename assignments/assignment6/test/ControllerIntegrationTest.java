@@ -3794,5 +3794,4 @@ public class ControllerIntegrationTest {
     })), imageMemory.getImage("lumaImage"));
     assertTrue(output.toString().contains("Successfully created luma component"));
   }
-
 }

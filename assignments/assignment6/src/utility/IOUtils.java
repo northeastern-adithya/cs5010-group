@@ -4,9 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -56,30 +59,38 @@ public class IOUtils {
    * @throws ImageProcessorException if the image cannot be read.
    */
   private static Image readImageForPPM(String path) throws ImageProcessorException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-      String format = reader.readLine();
-      if (!"P3".equals(format)) {
-        throw new ImageProcessorException(String.format("Unsupported PPM "
-                + "format: %s", format));
-      }
-      String[] dimensions = reader.readLine().split(" ");
-      int width = Integer.parseInt(dimensions[0]);
-      int height = Integer.parseInt(dimensions[1]);
-      Pixel[][] pixelArray = new Pixel[height][width];
-      for (int row = 0; row < height; row++) {
-        for (int col = 0; col < width; col++) {
-          int red = Integer.parseInt(reader.readLine());
-          int green = Integer.parseInt(reader.readLine());
-          int blue = Integer.parseInt(reader.readLine());
-          pixelArray[row][col] = Factory.createRGBPixel(red, green, blue);
-        }
-      }
-
-      return Factory.createImage(pixelArray);
-    } catch (IOException e) {
-      throw new ImageProcessorException(String.format("Error reading PPM "
-              + "file: %s", path), e);
+    Scanner scanner;
+    try {
+      scanner = new Scanner(new FileInputStream(path));
     }
+    catch (FileNotFoundException e) {
+      throw new ImageProcessorException(String.format("File %s not found!", path));
+    }
+    StringBuilder builder = new StringBuilder();
+    while (scanner.hasNextLine()) {
+      String line = scanner.nextLine();
+      if (line.charAt(0) != '#') {
+        builder.append(line).append(System.lineSeparator());
+      }
+    }
+    scanner = new Scanner(builder.toString());
+    String token = scanner.next();
+    if (!token.equals("P3")) {
+      throw new ImageProcessorException("Invalid PPM file: plain RAW file should begin with P3");
+    }
+    int width = scanner.nextInt();
+    int height = scanner.nextInt();
+    int maxValue = scanner.nextInt();
+    Pixel[][] pixelArray = new Pixel[height][width];
+    for(int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        int r = scanner.nextInt();
+        int g = scanner.nextInt();
+        int b = scanner.nextInt();
+        pixelArray[i][j] = Factory.createRGBPixel(r, g, b);
+      }
+    }
+    return Factory.createImage(pixelArray);
   }
 
   /**
@@ -194,13 +205,15 @@ public class IOUtils {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
       writer.write("P3\n");
       writer.write(image.getWidth() + " " + image.getHeight() + "\n");
+      writer.write("255\n"); // max color value
       for (int row = 0; row < image.getHeight(); row++) {
         for (int col = 0; col < image.getWidth(); col++) {
           Pixel pixel = image.getPixel(row, col);
-          writer.write(pixel.getRed() + "\n");
-          writer.write(pixel.getGreen() + "\n");
-          writer.write(pixel.getBlue() + "\n");
+          writer.write(pixel.getRed() + " ");
+          writer.write(pixel.getGreen() + " ");
+          writer.write(pixel.getBlue() + " ");
         }
+        writer.write("\n");
       }
     } catch (IOException e) {
       throw new ImageProcessorException("Error writing PPM file: " + path, e);
