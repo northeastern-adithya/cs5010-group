@@ -1,5 +1,6 @@
 # Image Processor User Manual
 
+# Image Processor Interactive User Manual
 ## Table of Contents
 - [Overview](#overview)
 - [Basic Operations](#basic-operations)
@@ -38,27 +39,27 @@ save image-path image-name
 
 ### Color Components
 ```
-red-component image-name dest-image-name [p]
-green-component image-name dest-image-name [p]
-blue-component image-name dest-image-name [p]
+red-component image-name dest-image-name 
+green-component image-name dest-image-name
+blue-component image-name dest-image-name 
 ```
 - **Purpose**: Extract individual RGB color components
 - **Parameters**:
     - `image-name`: Source image name
     - `dest-image-name`: Name for the resulting image
-    - `p`: Optional parameter for split view
 - **Example**: `red-component beach1 beach1-red`
 
 ### Value Components
 ```
-value-component image-name dest-image-name
-luma-component image-name dest-image-name
+value-component image-name dest-image-name 
+luma-component image-name dest-image-name split [p]
 intensity-component image-name dest-image-name
 ```
 - **Purpose**: Create different representations of image brightness
 - **Parameters**:
     - `image-name`: Source image name
     - `dest-image-name`: Name for the resulting image
+    - p: Optional parameter for split view
 - **Example**: `luma-component beach1 beach1-luma`
 
 ## Image Transformations
@@ -110,9 +111,9 @@ rgb-combine image-name red-image green-image blue-image
 
 ### Image Effects
 ```
-blur image-name dest-image-name [p]
-sharpen image-name dest-image-name [p]
-sepia image-name dest-image-name [p]
+blur image-name dest-image-name split [p]
+sharpen image-name dest-image-name split [p]
+sepia image-name dest-image-name split [p]
 ```
 - **Purpose**: Apply various image effects
 - **Parameters**:
@@ -146,7 +147,7 @@ histogram image-name dest-image-name
 
 ### Color Adjustments
 ```
-color-correct image-name dest-image-name [p]
+color-correct image-name dest-image-name split [p]
 ```
 - **Purpose**: Perform automatic color correction
 - **Parameters**:
@@ -156,7 +157,7 @@ color-correct image-name dest-image-name [p]
 - **Example**: `color-correct beach1 beach1-corrected`
 
 ```
-levels-adjust b m w image-name dest-image-name [p]
+levels-adjust b m w image-name dest-image-name split [p]
 ```
 - **Purpose**: Adjust image levels
 - **Parameters**:
@@ -186,6 +187,121 @@ quit
 - **Purpose**: Exit the program
 
 ```
+reset
+```
+- **Purpose**: Reset the program memory and removes all in memory images.
+
+```
 help
 ```
 - **Purpose**: Display help message with command information
+
+# Image Processor GUI User Manual
+
+## Table of Contents
+- [Getting Started](#getting-started)
+- [Basic Operations](#basic-operations)
+- [Image Components](#image-components)
+- [Image Transformations](#image-transformations)
+- [Effects and Filters](#effects-and-filters)
+- [Color Adjustments](#color-adjustments)
+- [Advanced Features](#advanced-features)
+
+## Getting Started
+
+### Loading an Image
+1. Click the "load" button in the command panel
+2. Use the file chooser dialog to select an image file
+3. Supported formats: JPEG, JPG, PNG, PPM
+
+### Saving an Image
+1. Click the "save" button
+2. Choose a destination location and filename
+3. Click "save" to confirm
+- **Note**: You must save your current image before loading a new one
+
+## Basic Operations
+
+### Reset
+- Click "reset" to clear the current image from memory
+- This allows you to load a new image without saving
+
+### Image Preview
+- The main window displays the current image
+- A histogram showing color distribution appears below the image
+- For many operations, you'll see a preview before confirming changes
+
+## Image Components
+- **Note**: Ensure an image is loaded before performing any of the following operations.
+### Color Components
+Extract individual color channels:
+- Red Component: Click "red-component"
+- Green Component: Click "green-component"
+- Blue Component: Click "blue-component"
+- Luma Component: Click "luma-component"
+
+## Image Transformations
+
+### Flipping
+- Vertical Flip: Click "vertical-flip" to mirror the image top-to-bottom
+- Horizontal Flip: Click "horizontal-flip" to mirror the image left-to-right
+
+### Downscaling
+1. Click "Downscale"
+2. Use the sliders to set width and height scaling percentages
+3. Click "OK" to apply or "Cancel" to abort
+
+## Effects and Filters
+
+### Blur and Sharpen
+- Blur: Click "blur" to apply a Gaussian blur effect
+- Sharpen: Click "sharpen" to enhance image details
+- Both effects show a split preview:
+  1. Use the slider to adjust the preview split position
+  2. Click "OK" to apply or "Cancel" to revert
+
+### Sepia
+1. Click "sepia" to preview the sepia tone effect
+2. Use the slider to compare original and sepia versions
+3. Click "OK" to apply or "Cancel" to revert
+
+### Compression
+1. Click "compress"
+2. Use the slider to set compression percentage (0-100)
+3. Click "OK" to apply or "Cancel" to abort
+
+## Color Adjustments
+
+### Color Correction
+1. Click "Color Correct"
+2. Preview shows split view of original vs corrected
+3. Use slider to adjust preview
+4. Click "OK" to apply or "Cancel" to revert
+
+### Levels Adjustment
+1. Click "levels-adjust"
+2. Set three points using spinners:
+  - Black Point (0-255)
+  - Mid Point (between black and white points)
+  - White Point (0-255)
+3. Preview shows split view of original vs corrected
+4. Use slider to adjust preview
+5. Click "OK" to apply or "Cancel" to revert
+
+## Advanced Features
+
+### Split View Preview
+Many operations offer a split view preview:
+1. The slider controls the split position
+2. Left side shows original image
+3. Right side shows the effect
+4. Move slider to compare results
+5. Click "OK" to apply or "Cancel" to revert
+
+### Histogram
+- Shows distribution of color values
+- Updates automatically with each operation
+- Helps visualize image characteristics and changes
+
+## Keyboard Shortcuts
+- No keyboard shortcuts are currently implemented
