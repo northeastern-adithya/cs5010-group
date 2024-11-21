@@ -61,14 +61,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image finalImage = image.createRedComponent();
-    // If percentage is provided, combines the red image with the
-    // original image.
-    if (request.getPercentage().isPresent()) {
-      finalImage = finalImage.combineImages(image,
-              request.getPercentage().get());
-    }
-    memory.addImage(request.getDestinationImageName(), finalImage);
+    memory.addImage(request.getDestinationImageName(), image.createRedComponent());
   }
 
   @Override
@@ -77,14 +70,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image finalImage = image.createGreenComponent();
-    // If percentage is provided, combines the green image with the
-    // original image.
-    if (request.getPercentage().isPresent()) {
-      finalImage = finalImage.combineImages(image,
-              request.getPercentage().get());
-    }
-    memory.addImage(request.getDestinationImageName(), finalImage);
+    memory.addImage(request.getDestinationImageName(), image.createGreenComponent());
   }
 
   @Override
@@ -93,14 +79,7 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    Image finalImage = image.createBlueComponent();
-    // If percentage is provided, combines the blue image with the
-    // original image.
-    if (request.getPercentage().isPresent()) {
-      finalImage = finalImage.combineImages(image,
-              request.getPercentage().get());
-    }
-    memory.addImage(request.getDestinationImageName(), finalImage);
+    memory.addImage(request.getDestinationImageName(), image.createBlueComponent());
   }
 
   @Override
@@ -118,7 +97,11 @@ public class FileImageProcessingService implements ImageProcessingService {
     validateStringParams(request.getImageName(),
             request.getDestinationImageName());
     Image image = memory.getImage(request.getImageName());
-    memory.addImage(request.getDestinationImageName(), image.getLuma());
+    Image finalImage = image.getLuma();
+    if(request.getPercentage().isPresent()) {
+      finalImage = finalImage.combineImages(image, request.getPercentage().get());
+    }
+    memory.addImage(request.getDestinationImageName(), finalImage);
   }
 
   @Override

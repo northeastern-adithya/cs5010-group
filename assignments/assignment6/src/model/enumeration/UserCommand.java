@@ -17,19 +17,17 @@ public enum UserCommand {
           + "Save the image with the given name to the specified path "
           + "which should include the name of the file."),
   RED_COMPONENT("red-component", "red-component image-name dest-image-name "
-          + "split p: "
           + "Create an image with the red-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
           + "destination name.P is an optional parameter for split view."),
   GREEN_COMPONENT("green-component", "green-component image-name "
-          + "dest-image-name split p: "
+          + "dest-image-name "
           + "Create an image with the green-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
           + "destination name.P is an optional parameter for split view."),
   BLUE_COMPONENT("blue-component", "blue-component image-name dest-image-name"
-          + " split p: "
           + "Create an image with the blue-component of the image with the "
           + "given name, "
           + "and refer to it henceforth in the program by the given "
