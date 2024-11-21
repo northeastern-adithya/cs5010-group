@@ -157,6 +157,13 @@ public class IOUtils {
     return bufferedImage;
   }
 
+  /**
+   * Writes an image to a file using the ImageIO class.
+   *
+   * @param image the image to write.
+   * @param path  the path to the file.
+   * @throws ImageProcessorException if the image cannot be written.
+   */
   private static void writeImageUsingImageIO(Image image, String path)
           throws ImageProcessorException {
     try {
@@ -175,6 +182,13 @@ public class IOUtils {
     }
   }
 
+  /**
+   * Writes an image to a PPM file.
+   *
+   * @param image the image to write.
+   * @param path  the path to the file.
+   * @throws ImageProcessorException if the image cannot be written.
+   */
   private static void writeImageForPPM(Image image, String path)
           throws ImageProcessorException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
@@ -220,6 +234,12 @@ public class IOUtils {
     return imagePath.substring(imagePath.lastIndexOf('.') + 1);
   }
 
+  /**
+   * Get the name of the image from the path.
+   *
+   * @param imagePath the path of the image.
+   * @return the name of the image.
+   */
   public static String getImageNameFromPath(String imagePath) {
     return imagePath.substring(imagePath.lastIndexOf('/') + 1);
   }

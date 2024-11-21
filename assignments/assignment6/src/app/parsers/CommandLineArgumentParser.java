@@ -29,6 +29,8 @@ public class CommandLineArgumentParser extends AbstractArgumentParser {
 
   /**
    * Gets the file name from the command line arguments.
+   * The file name is the second argument in the command line.
+   * If there is no file name provided, an exception is thrown.
    *
    * @param args The command line arguments.
    * @return The file name.

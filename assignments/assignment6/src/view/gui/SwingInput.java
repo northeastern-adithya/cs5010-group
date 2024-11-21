@@ -30,6 +30,12 @@ public class SwingInput implements GUIInput {
     // Does not take any parameters.
   }
 
+  /**
+   * Prompts the user to confirm the split view.
+   *
+   * @param updateImageCallback the callback function to update the image
+   * @return true if the user confirms the split view false otherwise
+   */
   @Override
   public boolean confirmSplitView(IntConsumer updateImageCallback) {
     JLabel value = new JLabel("Value: 100");
@@ -65,6 +71,13 @@ public class SwingInput implements GUIInput {
     return slider;
   }
 
+  /**
+   * Returns the slider input.
+   * Is present if the user has entered a value.
+   * Otherwise, empty.
+   *
+   * @return the slider input
+   */
   @Override
   public Optional<Integer> getSliderInput() {
     JLabel value = new JLabel("Value: 100");
@@ -82,7 +95,11 @@ public class SwingInput implements GUIInput {
     }
   }
 
-
+  /**
+   * Prompts the user to input a path to load an image.
+   *
+   * @return an Optional containing the path if the user confirms, or an empty Optional if the user cancels
+   */
   @Override
   public Optional<String> interactiveImageLoadPathInput() {
     JFileChooser fileChooser = createFileChooseWithFilter();
@@ -95,7 +112,11 @@ public class SwingInput implements GUIInput {
     }
   }
 
-
+  /**
+   * Prompts the user to input a path to save an image.
+   *
+   * @return an Optional containing the path if the user confirms, or an empty Optional if the user cancels
+   */
   @Override
   public Optional<String> interactiveImageSavePathInput() {
     JFileChooser fileChooser = createFileChooseWithFilter();
@@ -108,6 +129,11 @@ public class SwingInput implements GUIInput {
     }
   }
 
+  /**
+   * Prompts the user to input levels for black, mid, and white points using sliders.
+   *
+   * @return an Optional containing the levels if the user confirms, or an empty Optional if the user cancels
+   */
   @Override
   public Optional<ImageProcessingRequest.Levels> interactiveThreeLevelInput() {
     JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
@@ -237,6 +263,11 @@ public class SwingInput implements GUIInput {
     ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
   }
 
+  /**
+   * Prompts the user to input scaling factors for width and height using sliders.
+   *
+   * @return an Optional containing the scaling factors if the user confirms, or an empty Optional if the user cancels
+   */
   @Override
   public Optional<ImageProcessingRequest.ScalingFactors> interactiveScalingFactorsInput() {
     JLabel widthValue = new JLabel("Width: 100%");

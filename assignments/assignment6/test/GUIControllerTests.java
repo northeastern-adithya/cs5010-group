@@ -3692,6 +3692,103 @@ public class GUIControllerTests {
             expectedSplitViewImage.histogram().toString()));
   }
 
+  @Test
+  public void testDownscaleImage_100_100() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.ScalingFactors factors =
+            new ImageProcessingRequest.ScalingFactors(100, 100);
+    initialiseController(
+            true,
+            null,
+            null,
+            null,
+            null,
+            factors,
+            stringMemory,
+            imageMemory,
+            output);
+    features.downscaleImage();
+
+    Image expectedImage = randomImage;
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.DOWNSCALE)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testDownscaleImage_50_50() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.ScalingFactors factors =
+            new ImageProcessingRequest.ScalingFactors(50, 50);
+    initialiseController(
+            true,
+            null,
+            null,
+            null,
+            null,
+            factors,
+            stringMemory,
+            imageMemory,
+            output);
+    features.downscaleImage();
+
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {16711680}
+    }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.DOWNSCALE)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testDownscaleImage_20_20() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.ScalingFactors factors =
+            new ImageProcessingRequest.ScalingFactors(20, 20);
+    initialiseController(
+            true,
+            null,
+            null,
+            null,
+            null,
+            factors,
+            stringMemory,
+            imageMemory,
+            output);
+    features.downscaleImage();
+
+    assertTrue(output.toString().contains(
+            "Downscale to 1D image is not supported"));
+  }
+
   private ImageMemory<Image> initialiseImageMemory() {
     return new HashMapMemory();
   }

@@ -97,6 +97,9 @@ public class RenderedImage implements Image {
     return transformImage(Pixel::getValue);
   }
 
+  /**
+   * Converts the image to a string representation.
+   */
   @Override
   public String toString() {
     return "RenderedImage{"
@@ -104,6 +107,10 @@ public class RenderedImage implements Image {
             + '}';
   }
 
+  /**
+   * Flips the image horizontally.
+   * The image is flipped by reversing the columns of the image.
+   */
   @Override
   public Image horizontalFlip() throws ImageProcessorException {
     int height = this.getHeight();
@@ -118,6 +125,10 @@ public class RenderedImage implements Image {
     return Factory.createImage(newPixelArray);
   }
 
+  /**
+   * Flips the image vertically.
+   * The image is flipped by reversing the rows of the image.
+   */
   @Override
   public Image verticalFlip() throws ImageProcessorException {
     int height = this.getHeight();
@@ -131,6 +142,10 @@ public class RenderedImage implements Image {
     return Factory.createImage(newPixelArray);
   }
 
+  /**
+   * Applies the given filter to the image.
+   * The filter is applied to each pixel in the image.
+   */
   @Override
   public Image applyFilter(FilterOption filterOption) throws ImageProcessorException {
     return FilterUtils.applyFilter(this, filterOption);
@@ -185,6 +200,11 @@ public class RenderedImage implements Image {
     return channelArray;
   }
 
+  /**
+   * Compares this image with another object.
+   * If the object is an instance of RenderedImage, compares the pixel arrays.
+   * Otherwise, compares the object with this image.
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -204,11 +224,21 @@ public class RenderedImage implements Image {
     return Arrays.deepEquals(this.pixels, that.pixels);
   }
 
+  /**
+   * Returns the hash code of the image.
+   */
   @Override
   public int hashCode() {
     return Arrays.deepHashCode(pixels);
   }
 
+  /**
+   * Applies color correction to the image.
+   * The color correction is done by adjusting the color levels of the image.
+   * The levels are adjusted based on the peak values of the color channels.
+   * The peak values are calculated by finding the most frequent color values.
+   * The peak values are then adjusted to a common value.
+   */
   @Override
   public Image colorCorrect() throws ImageProcessorException {
     int width = getWidth();
@@ -321,6 +351,14 @@ public class RenderedImage implements Image {
     return Factory.combineImage(this, image, percentage);
   }
 
+  /**
+   * Compresses the image by the given percentage.
+   *
+   * @param type       the type of compression
+   * @param percentage the percentage to compress by
+   * @return the compressed image
+   * @throws ImageProcessorException if the percentage is out of range
+   */
   @Override
   public Image compress(CompressionType type, int percentage) throws ImageProcessorException {
     return Factory.createCompression(type).compress(
@@ -328,6 +366,12 @@ public class RenderedImage implements Image {
     );
   }
 
+  /**
+   * Extracts the histogram of the image.
+   *
+   * @return the histogram of the image
+   * @throws ImageProcessorException if the histogram cannot be created
+   */
   @Override
   public Image histogram() throws ImageProcessorException {
     return ExtractUtility.createHistogram(this);
@@ -353,37 +397,75 @@ public class RenderedImage implements Image {
     }
   }
 
+  /**
+   * Calculates the fitting coefficient A for the quadratic transformation.
+   *
+   * @param black the black point value
+   * @param mid   the mid point value
+   * @param white the white point value
+   * @return the fitting coefficient A
+   */
   private double fittingCoefficientA(int black, int mid, int white) {
     return Math.pow(black, 2) * (mid - white)
             - black * (Math.pow(mid, 2) - Math.pow(white, 2))
             + Math.pow(mid, 2) * white - Math.pow(white, 2) * mid;
   }
 
+  /**
+   * Calculates the fitting coefficient Aa for the quadratic transformation.
+   *
+   * @param black the black point value
+   * @param mid   the mid point value
+   * @param white the white point value
+   * @return the fitting coefficient Aa
+   */
   private double fittingCoefficientAa(int black, int mid, int white) {
     return (-black) * (128 - 255) + 128 * white - 255 * mid;
   }
 
+  /**
+   * Calculates the fitting coefficient Ab for the quadratic transformation.
+   *
+   * @param black the black point value
+   * @param mid   the mid point value
+   * @param white the white point value
+   * @return the fitting coefficient Ab
+   */
   private double fittingCoefficientAb(int black, int mid, int white) {
     return Math.pow(black, 2) * (128 - 255)
             + 255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2);
   }
 
+  /**
+   * Calculates the fitting coefficient Ac for the quadratic transformation.
+   *
+   * @param black the black point value
+   * @param mid   the mid point value
+   * @param white the white point value
+   * @return the fitting coefficient Ac
+   */
   private double fittingCoefficientAc(int black, int mid, int white) {
     return Math.pow(black, 2) * (255 * mid - 128 * white)
             - black * (255 * Math.pow(mid, 2) - 128 * Math.pow(white, 2));
   }
 
+  /**
+   * Downscale the image by the given width and height factors.
+   *
+   * @param widthFactor  the width scaling factor
+   * @param heightFactor the height scaling factor
+   * @return the downscaled image
+   * @throws ImageProcessorException if the factors are out of range
+   */
   @Override
   public Image downscale(int widthFactor, int heightFactor) throws ImageProcessorException {
-    if (widthFactor <= 0 || heightFactor <= 0 || widthFactor > 100 || heightFactor > 100) {
-      throw new ImageProcessorException("Scaling factors must be within 0 and 100");
-    }
+    validateScale(widthFactor, heightFactor);
 
     int newWidth = (int)(this.getWidth() * ((double) widthFactor / 100));
     int newHeight = (int)(this.getHeight() * ((double) heightFactor / 100));
 
-    if (newWidth == 0 || newHeight == 0) {
-      throw new ImageProcessorException("Downscale to 1D image is not supported");
+    if(newWidth == 0 || newHeight == 0) {
+      throw new ImageProcessorException("Cannot downscale to 0 width or height");
     }
 
     Pixel[][] newPixels = new Pixel[newHeight][newWidth];
@@ -431,18 +513,31 @@ public class RenderedImage implements Image {
 
   /**
    * Performs bilinear interpolation for a single color channel.
-   * @param c00 top-left value
-   * @param c10 top-right value
-   * @param c01 bottom-left value
-   * @param c11 bottom-right value
+   * @param topLeftValue top-left value
+   * @param topRightValue top-right value
+   * @param bottomLeftValue bottom-left value
+   * @param bottomRightValue bottom-right value
    * @param dx x-axis interpolation factor
    * @param dy y-axis interpolation factor
    * @return interpolated value
    */
-  private int bilinearInterpolate(int c00, int c10, int c01, int c11,
+  private int bilinearInterpolate(int topLeftValue, int topRightValue,
+                                  int bottomLeftValue, int bottomRightValue,
                                   double dx, double dy) {
-    double m = (c00 * (1 - dx) + c10 * dx);
-    double n = (c01 * (1 - dx) + c11 * dx);
-    return (int) Math.round(m * (1 - dy) + n * dy);
+    double mCoefficient = (topLeftValue * (1 - dx) + topRightValue * dx);
+    double nCoefficient = (bottomLeftValue * (1 - dx) + bottomRightValue * dx);
+    return (int) Math.round(mCoefficient * (1 - dy) + nCoefficient * dy);
+  }
+
+  /**
+   * Validates the scale factors for downscaling.
+   * @param widthFactor the width scaling factor
+   * @param heightFactor the height scaling factor
+   * @throws ImageProcessorException if the factors are out of range
+   */
+  private void validateScale(int widthFactor, int heightFactor) throws ImageProcessorException {
+    if (widthFactor <= 0 || heightFactor <= 0 || widthFactor > 100 || heightFactor > 100) {
+      throw new ImageProcessorException("Scaling factors must be within 0 and 100");
+    }
   }
 }
