@@ -13,6 +13,12 @@ import view.gui.SwingOutput;
  * based on the arguments required for GUI mode.
  */
 public class GUIArgumentParser extends AbstractArgumentParser {
+
+  /**
+   * Constructs a GUIArgumentParser.
+   * No arguments are passed.
+   *
+   */
   @Override
   public ImageProcessorController createController(String[] args) throws
           ImageProcessingRunTimeException.QuitException {

@@ -1924,6 +1924,15 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
+    public void testMultiScaling() throws ImageProcessorException {
+      Image randomImage = TestUtils.randomRectangleImage();
+      Image result = randomImage.downscale(100, 50)
+                                .downscale(50, 100);
+
+      assertEquals(Factory.createImage(new Pixel[][]{{new RGB(255, 0, 0)}}), result);
+    }
+
+    @Test
     public void testCreateRedComponent() throws
             ImageProcessorException {
       Image redImage = image.createRedComponent();

@@ -15,6 +15,10 @@ import view.text.ConsoleOutput;
  */
 public class InteractiveArgumentParser extends AbstractArgumentParser {
 
+  /**
+   * Constructs an InteractiveArgumentParser.
+   * No arguments are passed.
+   */
   @Override
   public ImageProcessorController createController(String[] args) throws
           ImageProcessingRunTimeException.QuitException {

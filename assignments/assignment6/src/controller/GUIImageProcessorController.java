@@ -252,6 +252,7 @@ public class GUIImageProcessorController implements ImageProcessorController,
   }
 
   /**
+<<<<<<< Updated upstream
    * Compresses the image by the given percentage.
    *
    * @param percentage the percentage by which the image is to be compressed
@@ -271,6 +272,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
     updateImageToDisplay(compressImageName);
   }
 
+  /**
+   * Closes the current window.
+   * Prompts the user to save the current image before closing the window.
+   */
   @Override
   public void closeWindow() {
     executeImageOperation(
@@ -287,7 +292,10 @@ public class GUIImageProcessorController implements ImageProcessorController,
 
   }
 
-
+  /**
+   * Downscale the current image by a specified factor.
+   * The user is prompted to enter the scaling factors.
+   */
   @Override
   public void downscaleImage() {
     executeImageOperation(() -> {
@@ -481,6 +489,13 @@ public class GUIImageProcessorController implements ImageProcessorController,
     );
   }
 
+  /**
+   * Creates the component of the image.
+   * The component can be red, green, or blue.
+   *
+   * @param command the command to be applied
+   * @throws ImageProcessorException if there is an error creating the component
+   */
   private void createComponent(UserCommand command) throws
           ImageProcessorException {
     String componentImageName = createDestinationImageName(
@@ -566,6 +581,8 @@ public class GUIImageProcessorController implements ImageProcessorController,
 
   /**
    * Shows the split view of the image.
+   * The split view is shown with the given percentage of the image.
+   * The user can confirm the split view or cancel it.
    *
    * @param splitView the split view operation to be applied
    * @throws ImageProcessorException if there is an error displaying the split
@@ -606,7 +623,12 @@ public class GUIImageProcessorController implements ImageProcessorController,
     return command.getCommand() + "_" + imageName;
   }
 
-
+  /**
+   * Processes the commands.
+   *
+   * @throws ImageProcessingRunTimeException.QuitException if the application
+   *                                                      is to be quit
+   */
   @Override
   public void processCommands() throws
           ImageProcessingRunTimeException.QuitException {

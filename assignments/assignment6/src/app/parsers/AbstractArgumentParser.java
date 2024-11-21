@@ -18,7 +18,8 @@ public abstract class AbstractArgumentParser implements ArgumentParser {
   }
 
   /**
-   * Creates am image processing service.
+   * This method is used to create an image processing service.
+   * The memory used by the service is a HashMapMemory.
    *
    * @return The service that was created.
    */
