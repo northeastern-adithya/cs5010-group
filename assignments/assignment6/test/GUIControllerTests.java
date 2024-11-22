@@ -1757,6 +1757,41 @@ public class GUIControllerTests {
   }
 
   @Test
+  public void testColorCorrectionWithRandomImage_Split50() throws
+          ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            50,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.colorCorrect();
+
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255},
+                    {65280, 8421504}
+            }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.COLOR_CORRECT)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
   public void testColorCorrectionWithBlackImage() throws
           ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
@@ -2037,6 +2072,43 @@ public class GUIControllerTests {
 
   @Test
   public void testLevelsAdjustWithRandomImage_ClampingAt255() throws
+  ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    Image randomImage = TestUtils.randomImage();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    ImageProcessingRequest.Levels levels =
+            new ImageProcessingRequest.Levels(20, 100, 255);
+    initialiseController(
+            true,
+            50,
+            null,
+            null,
+            levels,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.levelsAdjust();
+
+    Image expectedImage =
+            Factory.createImage(TestUtils.createPixels(new int[][]{
+                    {16711680, 255},
+                    {65280, 10724259}
+            }));
+
+    assertEquals(expectedImage,
+            imageMemory.getImage(createDestinationImageName(INITIAL_IMAGE_NAME,
+                    UserCommand.LEVELS_ADJUST)));
+    assertTrue(output.toString().contains(
+            expectedImage.toString()));
+    assertTrue(output.toString().contains(
+            expectedImage.histogram().toString()));
+  }
+
+  @Test
+  public void testLevelsAdjustWithRandomImage_Split50() throws
           ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
 
