@@ -3956,6 +3956,62 @@ public class GUIControllerTests {
             "Cannot render image of 0 width or height"));
   }
 
+
+  @Test
+  public void testSaveImageWithNoImageInMemoryLoaded(){
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            50,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.saveImage();
+    assertTrue(output.toString().contains("No image loaded"));
+  }
+
+  @Test
+  public void testSepiaImageWithNoImageInMemoryLoaded(){
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            50,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+    assertTrue(output.toString().contains("No image loaded"));
+  }
+
+
+  @Test
+  public void testLumaImageWithNoImageInMemoryLoaded(){
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            50,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.getLuma();
+    assertTrue(output.toString().contains("No image loaded"));
+  }
+
   private ImageMemory<Image> initialiseImageMemory() {
     return new HashMapMemory();
   }
