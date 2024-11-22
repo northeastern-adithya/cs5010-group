@@ -3609,6 +3609,112 @@ public class GUIControllerTests {
   }
 
   @Test
+  public void testSepiaWithSpiltViewForGreaterThan100() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            101,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+    assertTrue(output.toString().contains("The percentage must be between 0 and 100"));
+  }
+
+  @Test
+  public void testSepiaWithSpiltViewForGreaterThanNegative() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            -1,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+    assertTrue(output.toString().contains("The percentage must be between 0 and 100"));
+  }
+
+  @Test
+  public void testSepiaWithSplitViewForFifty() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            50,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6576197, 3156513, 12889736},
+            {11311479, 6576197, 3156513}
+    }));
+
+    assertEquals(expectedImage, imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(expectedImage.toString()));
+
+    Image expectedSplitViewImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6576197, 255, 65280},
+            {11311479, 16711680, 255}
+    }));
+    assertTrue(output.toString().contains(expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(expectedSplitViewImage.histogram().toString()));
+  }
+
+  @Test
+  public void testSepiaWithSplitViewForSeventyFive() throws ImageProcessorException {
+    ImageMemory<Image> imageMemory = initialiseImageMemory();
+    imageMemory.addImage(INITIAL_IMAGE_NAME, TestUtils.randomRectangleImage());
+    ImageMemory<String> stringMemory = initialiseStringMemory();
+    stringMemory.addImage(INITIAL_IMAGE_NAME, null);
+    StringBuilder output = new StringBuilder();
+    initialiseController(
+            true,
+            75,
+            null,
+            null,
+            null,
+            null, stringMemory,
+            imageMemory,
+            output);
+    features.applySepia();
+    Image expectedImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6576197, 3156513, 12889736},
+            {11311479, 6576197, 3156513}
+    }));
+
+    assertEquals(expectedImage, imageMemory.getImage(stringMemory.getImage("")));
+    assertTrue(output.toString().contains(expectedImage.toString()));
+
+    Image expectedSplitViewImage = Factory.createImage(TestUtils.createPixels(new int[][]{
+            {6576197, 3156513, 65280},
+            {11311479, 6576197, 255}
+    }));
+    assertTrue(output.toString().contains(expectedSplitViewImage.toString()));
+    assertFalse(output.toString().contains(expectedSplitViewImage.histogram().toString()));
+  }
+
+  @Test
   public void testLumaWithFiftyPercentageSplitView() throws
           ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
