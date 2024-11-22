@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 import controller.Features;
 import controller.GUIImageProcessorController;
@@ -17,7 +16,6 @@ import model.enumeration.UserCommand;
 import model.memory.HashMapMemory;
 import model.memory.ImageMemory;
 import model.memory.StringMemory;
-import model.pixels.Pixel;
 import model.request.ImageProcessingRequest;
 import model.visual.Image;
 

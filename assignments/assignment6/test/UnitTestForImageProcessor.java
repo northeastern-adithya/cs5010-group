@@ -1881,11 +1881,11 @@ public class UnitTestForImageProcessor {
     public void setUp() throws
             ImageProcessorException {
       Pixel[][] pixels = new Pixel[2][2];
-      image = new RenderedImage(pixels);
       pixels[0][0] = new RGB(100, 150, 200);
       pixels[0][1] = new RGB(50, 100, 150);
       pixels[1][0] = new RGB(200, 100, 50);
       pixels[1][1] = new RGB(150, 200, 100);
+      image = new RenderedImage(pixels);
     }
 
     @Test
@@ -1930,6 +1930,107 @@ public class UnitTestForImageProcessor {
                                 .downscale(50, 100);
 
       assertEquals(Factory.createImage(new Pixel[][]{{new RGB(255, 0, 0)}}), result);
+    }
+
+    // 1. Input Validation Tests
+    @Test(expected = ImageProcessorException.class)
+    public void testNegativeWidthFactor() throws ImageProcessorException {
+      image.downscale(-50, 50);
+    }
+
+    @Test(expected = ImageProcessorException.class)
+    public void testNegativeHeightFactor() throws ImageProcessorException {
+      image.downscale(50, -50);
+    }
+
+    @Test(expected = ImageProcessorException.class)
+    public void testZeroWidthFactor() throws ImageProcessorException {
+      image.downscale(0, 50);
+    }
+
+    @Test(expected = ImageProcessorException.class)
+    public void testZeroHeightFactor() throws ImageProcessorException {
+      image.downscale(50, 0);
+    }
+
+    @Test(expected = ImageProcessorException.class)
+    public void testWidthFactorOver100() throws ImageProcessorException {
+      image.downscale(101, 50);
+    }
+
+    @Test(expected = ImageProcessorException.class)
+    public void testHeightFactorOver100() throws ImageProcessorException {
+      image.downscale(50, 101);
+    }
+
+    @Test
+    public void testNoChange() throws ImageProcessorException {
+      Image result = image.downscale(100, 100);
+
+      assertEquals(2, result.getWidth());
+      assertEquals(2, result.getHeight());
+
+      // Verify all pixels remain unchanged
+      assertEquals(100, result.getPixel(0, 0).getRed());
+      assertEquals(150, result.getPixel(0, 0).getGreen());
+      assertEquals(200, result.getPixel(0, 0).getBlue());
+
+      assertEquals(50, result.getPixel(0, 1).getRed());
+      assertEquals(100, result.getPixel(0, 1).getGreen());
+      assertEquals(150, result.getPixel(0, 1).getBlue());
+
+      assertEquals(200, result.getPixel(1, 0).getRed());
+      assertEquals(100, result.getPixel(1, 0).getGreen());
+      assertEquals(50, result.getPixel(1, 0).getBlue());
+
+      assertEquals(150, result.getPixel(1, 1).getRed());
+      assertEquals(200, result.getPixel(1, 1).getGreen());
+      assertEquals(100, result.getPixel(1, 1).getBlue());
+    }
+
+    @Test
+    public void testHorizontalOnlyDownscale() throws ImageProcessorException {
+      Image result = image.downscale(50, 100);
+
+      assertEquals(1, result.getWidth());
+      assertEquals(2, result.getHeight());
+
+      Pixel topPixel = result.getPixel(0, 0);
+      assertEquals(new RGB(100, 150, 200), topPixel);
+
+      Pixel bottomPixel = result.getPixel(1, 0);
+      assertEquals(new RGB(200, 100, 50), bottomPixel);
+    }
+
+    @Test
+    public void testVerticalOnlyDownscale() throws ImageProcessorException {
+      Image result = image.downscale(100, 50);
+
+      assertEquals(2, result.getWidth());
+      assertEquals(1, result.getHeight());
+
+      Pixel leftPixel = result.getPixel(0, 0);
+      assertEquals(new RGB(100, 150, 200), leftPixel);
+
+      Pixel rightPixel = result.getPixel(0, 1);
+      assertEquals(new RGB(50, 100, 150), rightPixel);
+    }
+
+    // 5. Non-Standard Scale Tests
+    @Test
+    public void test75PercentScale() throws ImageProcessorException {
+      Image result = image.downscale(75, 75);
+
+      // Should round down to 1x1 since 2 * 0.75 = 1.5
+      assertEquals(1, result.getWidth());
+      assertEquals(1, result.getHeight());
+
+      // Values should be weighted average based on area coverage
+      Pixel resultPixel = result.getPixel(0, 0);
+      // Verify the interpolation results
+      assertTrue(resultPixel.getRed() >= 100 && resultPixel.getRed() <= 200);
+      assertTrue(resultPixel.getGreen() >= 100 && resultPixel.getGreen() <= 200);
+      assertTrue(resultPixel.getBlue() >= 50 && resultPixel.getBlue() <= 200);
     }
 
     @Test
@@ -2164,6 +2265,14 @@ public class UnitTestForImageProcessor {
     }
 
     @Test
+    public void testMultiScaling() throws ImageProcessorException {
+      Image result = whiteImage.downscale(100, 50)
+              .downscale(50, 100);
+
+      assertEquals(Factory.createImage(new Pixel[][]{{new RGB(255, 255, 255)}}), result);
+    }
+
+    @Test
     public void testGetPixel() {
       assertEquals(new RGB(255, 255, 255), whiteImage.getPixel(0, 0));
       assertEquals(new RGB(255, 255, 255), whiteImage.getPixel(0, 1));
@@ -2313,6 +2422,28 @@ public class UnitTestForImageProcessor {
       Pixel retrievedPixel = singlePixelImage.getPixel(0, 0);
       assertEquals("Original pixel should match retrieved pixel",
               originalPixel, retrievedPixel);
+    }
+
+    @Test
+    public void testDownscale() throws ImageProcessorException {
+      Image result = singlePixelImage.downscale(100, 100);
+
+      assertEquals(Factory.createImage(new Pixel[][]{{new RGB(120, 180, 240)}}), result);
+    }
+
+    @Test
+    public void testDownscaleMulti() throws ImageProcessorException {
+      Image result = singlePixelImage.downscale(100, 100)
+              .downscale(100, 100);
+
+      assertEquals(Factory.createImage(new Pixel[][]{{new RGB(120, 180, 240)}}), result);
+    }
+
+    @Test(expected = exception.ImageProcessorException.class)
+    public void testDownscale_50() throws ImageProcessorException {
+      Image result = singlePixelImage.downscale(50, 50);
+
+      assertEquals(Factory.createImage(new Pixel[][]{{new RGB(120, 180, 240)}}), result);
     }
 
     @Test
