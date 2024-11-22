@@ -2072,7 +2072,7 @@ public class GUIControllerTests {
 
   @Test
   public void testLevelsAdjustWithRandomImage_ClampingAt255() throws
-    ImageProcessorException {
+      ImageProcessorException {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     Image randomImage = TestUtils.randomImage();
     imageMemory.addImage(INITIAL_IMAGE_NAME, randomImage);
