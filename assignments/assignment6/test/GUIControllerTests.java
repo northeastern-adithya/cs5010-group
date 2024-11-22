@@ -3958,7 +3958,7 @@ public class GUIControllerTests {
 
 
   @Test
-  public void testSaveImageWithNoImageInMemoryLoaded(){
+  public void testSaveImageWithNoImageInMemoryLoaded() {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
@@ -3976,7 +3976,7 @@ public class GUIControllerTests {
   }
 
   @Test
-  public void testSepiaImageWithNoImageInMemoryLoaded(){
+  public void testSepiaImageWithNoImageInMemoryLoaded() {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
@@ -3995,7 +3995,7 @@ public class GUIControllerTests {
 
 
   @Test
-  public void testLumaImageWithNoImageInMemoryLoaded(){
+  public void testLumaImageWithNoImageInMemoryLoaded() {
     ImageMemory<Image> imageMemory = initialiseImageMemory();
     ImageMemory<String> stringMemory = initialiseStringMemory();
     StringBuilder output = new StringBuilder();
