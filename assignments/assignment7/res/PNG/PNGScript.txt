@@ -1,0 +1,164 @@
+# 1. Load the original image from the absolute path
+load PNG/flower.png original
+
+# 2. Visualize the red component and save as PNG
+red-component original red-component
+save PNG/Output/red-component.png red-component
+
+# 3. Visualize the green component and save as PNG
+green-component original green-component
+save PNG/Output/green-component.png green-component
+
+# 4. Visualize the blue component and save as PNG
+blue-component original blue-component
+save PNG/Output/blue-component.png blue-component
+
+# 5. Visualize the value component (max of RGB) and save as PNG
+value-component original value-component
+save PNG/Output/value-component.png value-component
+
+# 6. Visualize the luma component (weighted RGB sum) and save as PNG
+luma-component original luma-component
+save PNG/Output/luma-component.png luma-component
+
+# 7. Visualize the intensity component (average of RGB) and save as PNG
+intensity-component original intensity-component
+save PNG/Output/intensity-component.png intensity-component
+
+# 8. Apply greyscale tone and save as PNG
+greyscale original greyscale-tone
+save PNG/Output/greyscale-tone.png greyscale-tone
+
+# 9. Apply split greyscale and save as PNG
+greyscale original flower_grey split 50.0
+save PNG/Output/flower_grey.png flower_grey
+
+# 10. Brighten the image by 50 and save as PNG
+brighten 50 original brightened
+save PNG/Output/brightened.png brightened
+
+# 11. Darken the image by -50 and save (negative increment darkens the image)
+brighten -50 original darkened
+save PNG/Output/darkened.png darkened
+
+# 12. Blur the image and save as PNG
+blur original blurred
+save PNG/Output/blurred.png blurred
+
+# 13. Apply split blur and save as PNG
+blur original flower_blurred split 50.0
+save PNG/Output/flower_blurred.png flower_blurred
+
+# 14. Sharpen the image and save as PNG
+sharpen original sharpened
+save PNG/Output/sharpened.png sharpened
+
+# 15. Apply split sharpen and save as PNG
+sharpen original flower_sharpen split 50.0
+save PNG/Output/flower_sharpen.png flower_sharpen
+
+# 16. Save the original image to another location as a copy
+save PNG/Output/original-copy.png original
+
+# 17. Split the original image into RGB components
+rgb-split original red-split green-split blue-split
+save PNG/Output/red-split.png red-split
+save PNG/Output/green-split.png green-split
+save PNG/Output/blue-split.png blue-split
+
+# 18. Combine the RGB split images back into a single image
+rgb-combine combined red-split green-split blue-split
+save PNG/Output/combined.png combined
+
+# 19. Apply compression and save as PNG
+compress 50.0 original flower_compressed
+save PNG/Output/flower_compressed.png flower_compressed
+
+# 20. Get histogram and save as PNG
+histogram original display_histogram
+save PNG/Output/display_histogram.png histogram
+
+# 21. Apply color correction and save as PNG
+color-correct original corrected_image
+save PNG/Output/corrected_image.png corrected_image
+
+# 22. Apply split color correction and save as PNG
+color-correct original corrected_image split 50.0
+save PNG/Output/corrected_image.png corrected_image
+
+# 23. Apply split levels adjust and save as PNG
+levels-adjust 30 50 100 original flower_adjust split 50.0
+save PNG/Output/flower_adjust.png flower_adjust
+
+# 24. Apply levels adjust and save as PNG
+levels-adjust 30 50 100 original flower_adjust
+save PNG/Output/flower_adjust.png flower_adjust
+
+# 25. Apply split sepia and save as PNG
+sepia original flower_sepia split 50.0
+save PNG/Output/flower_sepia.png flower_sepia
+
+# 26. Horizontal flip and save as PNG
+horizontal-flip original flower_horizontal
+save PNG/Output/flower_horizontal.png flower_horizontal
+
+# 27. Vertical flip and save as PNG
+vertical-flip original flipped-vertical
+save PNG/Output/flipped-vertical.png flipped-vertical
+
+# 28. Apply sepia tone and save as PNG
+sepia original sepia-tone
+save PNG/Output/sepia-tone.png sepia-tone
+
+# 28. Apply sepia tone and save as PNG
+sepia original sepia-tone split 50.0
+save PNG/Output/sepia-tone.png sepia-tone
+
+#Extra-Credit 1
+# 29. Apply downscaling operation to the entire image
+downscale 30 30 original original_downscale
+save PNG/Output/downscale_flower.png original_downscale
+
+#Extra-Credit 2
+# 30. Load the mask image from the absolute path
+load PNG/flower-mask.png mask-image
+
+# 31. Apply red component operation to the entire image
+red-component original mask-image masked_red_image
+save PNG/Output/Partial_Image_Output/partialRed.png masked_red_image
+
+# 32. Apply green component operation with a mask
+green-component original mask-image masked_green_image
+save PNG/Output/Partial_Image_Output/partialGreen.png masked_green_image
+
+# 33. Apply blue component operation to the entire image
+blue-component original mask-image masked_blue_image
+save PNG/Output/Partial_Image_Output/partialBlue.png masked_blue_image
+
+# 34. Apply value component with masking
+value-component original mask-image masked_value_image
+save PNG/Output/Partial_Image_Output/partialValue.png masked_value_image
+
+# 35. Apply intensity component with masking
+intensity-component original mask-image masked_intensity_image
+save PNG/Output/Partial_Image_Output/partialIntensity.png masked_intensity_image
+
+# 36. Apply luma component with masking
+luma-component original mask-image masked_luma_image
+save PNG/Output/Partial_Image_Output/partialLuma.png masked_luma_image
+
+# 37. Apply blur using a mask and save as PNG
+blur original mask-image blur_masked_image
+save PNG/Output/Partial_Image_Output/partialBlur.png blur_masked_image
+
+# 38. Apply sharpen using a mask and save as PNG
+sharpen original mask-image sharpen_masked_image
+save PNG/Output/Partial_Image_Output/partialSharpen.png sharpen_masked_image
+
+# 39. Apply greyscale using a mask and save as PNG
+greyscale original mask-image greyscale_masked_image
+save PNG/Output/Partial_Image_Output/partialGreyScale.png greyscale_masked_image
+
+# 40. Apply sepia using a mask and save as PNG
+sepia original mask-image sepia_masked_image
+save PNG/Output/Partial_Image_Output/partialSepia.png sepia_masked_image

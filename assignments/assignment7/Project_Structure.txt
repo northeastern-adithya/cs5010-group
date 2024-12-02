@@ -1,0 +1,27 @@
+﻿Project Directory Structure Overview:
+1. .res/:
+1. Contains resource files used for the project such as images in different formats.
+                     i) JPG/: Contains an output folder with images in JPG format and JPG Script.
+                     ii) PNG/: Contains output images in PNG format, including a mask and PNG Script.                                                                                          
+                    iii)PPM/: Contains PPM format images and related PPM script.
+
+
+2. src/:
+1. Contains source code files organized into packages.
+2. controller/: Contains all classes responsible for controlling the logic of the application.
+i) Includes the main controller class ImageController, ImageProcessingGUIController for GUI operations, and mock controllers for testing.
+ii) Features/: Might contain additional functionality or feature-related classes.
+3. model/: Contains the classes related to the image model, such as image processing and pixel manipulation.
+                    i) Includes ImageImplementation, ImageMaskProcessor, and ImageModel.
+4. view/: Contains the classes related to the view in MVC, responsible for displaying the UI.
+                        i) Includes ImageProcessingGUI, ImageView, and interface classes for various            views.
+
+
+3. test/:
+1. Contains unit tests for the project, organized by controller and model subdirectories for easier testing and maintenance.
+
+
+4. Other Files:
+        ◦ assignment-6_new.jar: The compiled JAR file for running the application.
+        ◦ class_diagram.png: A class diagram image for the project structure.
+        ◦ GUI_SCREENSHOT.png: A screenshot of the GUI layout for reference.
