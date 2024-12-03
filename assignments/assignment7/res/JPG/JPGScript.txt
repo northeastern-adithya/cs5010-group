@@ -1,0 +1,5 @@
+# Load the original image from the absolute path
+load JPG/building.jpg building
+
+color-correct building building_corrected
+save JPG/Output/building_corrected.jpg building_corrected

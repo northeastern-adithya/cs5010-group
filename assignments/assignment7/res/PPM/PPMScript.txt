@@ -1,0 +1,71 @@
+# Load the original image from the absolute path
+load res/PPM/dummy_image.ppm dummy
+
+# Visualize the red component and save as PPM
+red-component dummy dummy_red
+save res/PPM/Output/dummy_red.ppm dummy_red
+
+# Visualize the green component and save as PPM
+green-component dummy dummy_green
+save res/PPM/Output/dummy_green.ppm dummy_green
+
+# Visualize the blue component and save as PPM
+blue-component dummy dummy_blue
+save res/PPM/Output/dummy_blue.ppm dummy_blue
+
+# Visualize the value component (max of RGB) and save as PPM
+value-component dummy dummy_value
+save res/PPM/Output/dummy_value.ppm dummy_value
+
+# Visualize the luma component (weighted RGB sum) and save as PPM
+luma-component dummy dummy_luma
+save res/PPM/Output/dummy_luma.ppm dummy_luma
+
+# Visualize the intensity component (average of RGB) and save as PPM
+intensity-component dummy dummy_component
+save res/PPM/Output/dummy_component.ppm dummy_component
+
+# Apply greyscale tone and save as PPM
+greyscale dummy dummy_greyscale
+save res/PPM/Output/dummy_greyscale.ppm dummy_greyscale
+
+# Brighten the image by 50 and save as PPM
+brighten 50 dummy dummy_brightened
+save res/PPM/Output/dummy_brightened.ppm dummy_brightened
+
+# Darken the image by -50 and save (negative increment darkens the image)
+brighten -50 dummy darkened_dummy
+save res/PPM/Output/darkened_dummy.ppm darkened_dummy
+
+# Blur the image and save as PPM
+blur dummy blurred_dummy
+save res/PPM/Output/blurred_dummy.ppm blurred_dummy
+
+# Sharpen the image and save as PPM
+sharpen dummy sharpened_dummy
+save res/PPM/Output/sharpened_dummy.ppm sharpened_dummy
+
+# Save the original image to another location as a copy
+save res/PPM/Output/dummy_copy.ppm dummy_copy
+
+# Split the original image into RGB components
+rgb-split dummy red_dummy_split green_dummy_split blue_dummy_split
+save res/PPM/Output/red_dummy_split.ppm red_dummy_split
+save res/PPM/Output/green_dummy_split.ppm green_dummy_split
+save res/PPM/Output/blue_dummy_split.ppm blue_dummy_split
+
+# Combine the RGB split images back into a single image
+rgb-combine combined_dummy red_dummy_split green_dummy_split blue_dummy_split
+save res/PPM/Output/combined_dummy.ppm combined_dummy
+
+# Horizontal flip and save as PPM
+horizontal-flip dummy dummy_horizontal
+save res/PPM/Output/dummy_horizontal.ppm dummy_horizontal
+
+# Vertical flip and save as PPM
+vertical-flip dummy dummy_vertical
+save res/PPM/Output/dummy_vertical.ppm dummy_vertical
+
+# Apply sepia tone and save as PPM
+sepia dummy dummy_sepia
+save res/PPM/Output/dummy_sepia.ppm dummy_sepia
