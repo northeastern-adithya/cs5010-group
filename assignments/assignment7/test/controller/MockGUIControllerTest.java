@@ -163,4 +163,12 @@ public class MockGUIControllerTest {
     assertTrue(mockController.getLog().contains("visualizeBlueComponent called"));
   }
 
+  @Test
+  public void testApplyDither() {
+    // Act
+    mockController.applyDither();
+
+    // Assert
+    assertTrue(mockController.getLog().contains("applyDither called"));
+  }
 }
