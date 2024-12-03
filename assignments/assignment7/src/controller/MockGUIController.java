@@ -101,5 +101,8 @@ public class MockGUIController implements Features {
     log.add("visualizeBlueComponent called");
   }
 
-
+  @Override
+  public void applyDither() {
+    log.add("applyDither called");
+  }
 }

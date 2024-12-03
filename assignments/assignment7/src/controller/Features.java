@@ -100,5 +100,11 @@ public interface Features {
    */
   void visualizeBlueComponent();
 
-
+  /**
+   * Applies a dithering effect to the image.
+   * This operation breaks down an image that has many colors into
+   * an image that is made of dots from just a few colors.
+   * Takes in split value through UI.
+   */
+  void applyDither();
 }

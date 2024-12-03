@@ -67,6 +67,7 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     JButton redButton;
     JButton greenButton;
     JButton blueButton;
+    JButton ditherButton;
     ImageModel model = new ImageImplementation();
     ViewInterface viewInterface = this;
     ImageController imageController = new ImageController(model, viewInterface);
@@ -117,6 +118,7 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     redButton = new JButton("Red");
     greenButton = new JButton("Green");
     blueButton = new JButton("Blue");
+    ditherButton = new JButton("Dither");
 
     // Add buttons to the button panel
     buttonPanel.add(loadButton);
@@ -135,6 +137,7 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     buttonPanel.add(redButton);
     buttonPanel.add(greenButton);
     buttonPanel.add(blueButton);
+    buttonPanel.add(ditherButton);
 
     // Initialize the GUI controller and pass the view and the main controller
     guiController = new ImageProcessingGUIController(this, imageController, model);
@@ -156,6 +159,7 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     redButton.addActionListener(e -> guiController.visualizeRedComponent());
     greenButton.addActionListener(e -> guiController.visualizeGreenComponent());
     blueButton.addActionListener(e -> guiController.visualizeBlueComponent());
+    ditherButton.addActionListener(e -> guiController.applyDither());
   }
 
   /**
