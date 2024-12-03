@@ -294,6 +294,10 @@ The application supports various image processing operations, including:
 5. Image downscaling
 
 6. Partial Image Manipulation
+7. Dithering
+   - Apply dithering to images to reduce the number of colors while maintaining visual quality.
+
+
 
 ----------------------------------------------------------------------------------------------------
 Advanced Features - Extra Credit
@@ -493,3 +497,17 @@ Any other command-line arguments are invalid: in these cases the program should 
 message suitably and quit.
 
 ----------------------------------------------------------------------------------------------------
+Update: Notes on Implementation of Dithering
+----------------------------------------------------------------------------------------------------
+
+We received a project where the preview functionality for the application was not implemented. Specifically, every split-compatible operation simply takes in the Split % and directly renders the operation for that percentage without offering a preview or cancellation option.
+
+Given the tight project timeline, we engaged in discussions with the development team and reached a mutual understanding that implementing split view functionality before proceeding with the dithering feature would delay project completion significantly.
+
+To ensure progress, we prioritized the implementation of dithering:
+
+1. Interactive Mode: Fully implemented with all intended functionalities. 
+2. GUI Mode: Implemented without preview functionality, as it relies on the unavailable split view implementation.
+
+This decision allowed us to deliver a functional dithering feature while adhering to the project timeline.
+
