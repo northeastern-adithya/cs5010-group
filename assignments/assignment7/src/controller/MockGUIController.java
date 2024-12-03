@@ -101,9 +101,5 @@ public class MockGUIController implements Features {
     log.add("visualizeBlueComponent called");
   }
 
-  @Override
-  public void revertImage() {
-    log.add("revertImage called");
-  }
 
 }

@@ -463,9 +463,5 @@ public class ImageProcessingGUIController implements Features {
     }
   }
 
-  @Override
-  public void revertImage() {
-
-  }
 
 }

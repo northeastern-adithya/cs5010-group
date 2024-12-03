@@ -163,9 +163,4 @@ public class MockGUIControllerTest {
     assertTrue(mockController.getLog().contains("visualizeBlueComponent called"));
   }
 
-  @Test
-  public void testRevertImageLogsCorrectly() {
-    mockController.revertImage();
-    assertTrue(mockController.getLog().contains("revertImage called"));
-  }
 }

@@ -67,7 +67,6 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     JButton redButton;
     JButton greenButton;
     JButton blueButton;
-    JButton revertButton;
     ImageModel model = new ImageImplementation();
     ViewInterface viewInterface = this;
     ImageController imageController = new ImageController(model, viewInterface);
@@ -76,7 +75,6 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     frame = new JFrame("Image Processing Application");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(1000, 800);
-    frame.add(revertButton = new JButton("Revert"));
 
     // Initialize the image label and scroll pane
     imageLabel = new JLabel();

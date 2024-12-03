@@ -100,10 +100,5 @@ public interface Features {
    */
   void visualizeBlueComponent();
 
-  /**
-   * Reverts the image to the original image which was loaded.
-   */
-  void revertImage();
-
 
 }
