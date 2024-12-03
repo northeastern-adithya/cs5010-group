@@ -37,11 +37,6 @@ public class ImageImplementation implements ImageModel {
    */
   @Override
   public void saveImage(String filepath, Pixel[][] image) {
-    // Check for null or empty filepath
-    if (filepath == null || filepath.isEmpty()) {
-      throw new IllegalArgumentException("Filepath cannot be null or empty.");
-    }
-
     if (filepath.endsWith(".ppm")) {
       ImageUtil.savePPM(filepath, image);
     } else {
@@ -85,7 +80,7 @@ public class ImageImplementation implements ImageModel {
    * three integers corresponding to red, green, and blue values.
    *
    * @return a 3D array containing the RGB components of each pixel in the image. If no image is
-   *         loaded, returns an empty 3D array.
+   * loaded, returns an empty 3D array.
    */
   @Override
   public int[][][] getRGBComponents() {
@@ -299,8 +294,9 @@ public class ImageImplementation implements ImageModel {
    */
   @Override
   public void splitChannels() {
-    if (image == null || image.length == 0 || image[0].length == 0) {
-      throw new IllegalStateException("No image loaded.");
+    if (image == null) {
+      System.out.println("No image loaded.");
+      return;
     }
 
     int height = image.length;
@@ -388,7 +384,7 @@ public class ImageImplementation implements ImageModel {
     int width = red[0].length;
 
     if (green.length != height || blue.length != height || green[0].length != width
-        || blue[0].length != width) {
+            || blue[0].length != width) {
       throw new IllegalArgumentException("All channel arrays must have the same dimensions.");
     }
 
@@ -397,8 +393,8 @@ public class ImageImplementation implements ImageModel {
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
         this.image[row][col] = new Pixel(Math.min(Math.max(red[row][col], 0), 255),
-            Math.min(Math.max(green[row][col], 0), 255),
-            Math.min(Math.max(blue[row][col], 0), 255));
+                Math.min(Math.max(green[row][col], 0), 255),
+                Math.min(Math.max(blue[row][col], 0), 255));
       }
     }
   }
@@ -410,8 +406,8 @@ public class ImageImplementation implements ImageModel {
    * @param channel an integer representing the color channel to extract: 0 for Red, 1 for Green,
    *                and 2 for Blue.
    * @return a 2D integer array containing the values of the specified color channel. Each element
-   * corresponds to the color intensity of the given channel at that position in the original
-   * image.
+   * corresponds to the color intensity of the given channel at that position in the
+   * original image.
    * @throws IllegalArgumentException if the specified channel is not 0, 1, or 2.
    */
   @Override
@@ -558,14 +554,9 @@ public class ImageImplementation implements ImageModel {
 
   /**
    * Applies a blur filter to the current image. Uses a predefined kernel to blur the image.
-   *
-   * @throws IllegalStateException if the image is null.
    */
   @Override
   public void applyBlur() {
-    if (image == null) {
-      throw new IllegalStateException("Image is not loaded.");
-    }
     applyBlur(100);
   }
 
@@ -589,9 +580,9 @@ public class ImageImplementation implements ImageModel {
     int splitPoint = (int) (width * (p / 100));
 
     double[][] blurKernel = {
-        {1.0 / 16, 1.0 / 8, 1.0 / 16},
-        {1.0 / 8, 1.0 / 4, 1.0 / 8},
-        {1.0 / 16, 1.0 / 8, 1.0 / 16}
+            {1.0 / 16, 1.0 / 8, 1.0 / 16},
+            {1.0 / 8, 1.0 / 4, 1.0 / 8},
+            {1.0 / 16, 1.0 / 8, 1.0 / 16}
     };
 
     applyFilterToPart(blurKernel, splitPoint);
@@ -599,16 +590,12 @@ public class ImageImplementation implements ImageModel {
 
   /**
    * Applies a sharpen filter to the current image. Uses a predefined kernel to sharpen the image.
-   *
-   * @throws IllegalStateException if the image is null.
    */
   @Override
   public void applySharpen() {
-    if (image == null) {
-      throw new IllegalStateException("Image is not loaded.");
-    }
     applySharpen(100);
   }
+
   /**
    * Applies a sharpening filter to a specified percentage of the image, from the left edge up to
    * the specified split percentage. The sharpening effect is applied only to the left portion of
@@ -629,25 +616,21 @@ public class ImageImplementation implements ImageModel {
     int splitPoint = (int) (width * (p / 100));
 
     double[][] sharpenKernel = {{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8},
-        {-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
-        {-1.0 / 8, 1.0 / 4, 1.0, 1.0 / 4, -1.0 / 8},
-        {-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
-        {-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}};
+            {-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
+            {-1.0 / 8, 1.0 / 4, 1.0, 1.0 / 4, -1.0 / 8},
+            {-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
+            {-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}};
     applyFilterToPart(sharpenKernel, splitPoint);
   }
 
   /**
    * Converts the current image to grayscale using the luma formula.
-   *
-   * @throws IllegalStateException when the image is null.
    */
   @Override
   public void applyGreyScale() {
-    if (image == null) {
-      throw new IllegalStateException("Image is not loaded.");
-    }
     applyGreyScale(100);
   }
+
   /**
    * Applies the grayscale filter to the specified percentage of the image from the left edge up to
    * the original according to a given split percentage. The grayscale effect applies only from the
@@ -697,9 +680,6 @@ public class ImageImplementation implements ImageModel {
    */
   @Override
   public void applySepia() {
-    if (image == null) {
-      throw new IllegalStateException("Image is not loaded.");
-    }
     applySepia(100);
   }
 
@@ -757,9 +737,6 @@ public class ImageImplementation implements ImageModel {
    */
   @Override
   public void colorCorrect() {
-    if (image == null) {
-      throw new IllegalStateException("Image is not loaded.");
-    }
     colorCorrect(100);
   }
 
@@ -853,8 +830,8 @@ public class ImageImplementation implements ImageModel {
    * graph for each channel, allowing visual analysis of color distribution.
    *
    * @return a BufferedImage object representing the histogram of the loaded image. Each color
-   * channel (Red, Green, and Blue) is represented with its respective color on the graph. Returns
-   * null if no image is loaded.
+   * channel (Red, Green, and Blue) is represented with its respective color on the graph.
+   * Returns null if no image is loaded.
    */
   @Override
   public BufferedImage calculateHistogram() {
@@ -907,7 +884,7 @@ public class ImageImplementation implements ImageModel {
   }
 
   private void drawChannelHistogram(Graphics2D g2d, int[] channelData, int max, Color color,
-      int width, int height) {
+                                    int width, int height) {
     g2d.setColor(color);
     for (int i = 0; i < channelData.length - 1; i++) {
       int x1 = i;
@@ -939,28 +916,10 @@ public class ImageImplementation implements ImageModel {
    *                  255. Affects the mid-brightness areas of the image.
    * @param highlight the intensity value representing the highlight level, typically between 0 and
    *                  255. Affects the bright areas of the image.
-   * @throws IllegalStateException    if no image is loaded before applying levels adjustment.
-   * @throws IllegalArgumentException if the shadow, mid, and highlight values are not in ascending order,
-   *                                   or if any of them are not between 0 and 255.
+   * @throws IllegalStateException if no image is loaded before applying levels adjustment.
    */
   @Override
   public void levelsAdjust(int shadow, int mid, int highlight) {
-    if (image == null) {
-      throw new IllegalStateException("Image is not loaded.");
-    }
-
-    // Check if shadow, mid, and highlight are in ascending order
-    if (shadow >= mid || mid >= highlight) {
-      throw new IllegalArgumentException("Shadow, mid, and highlight must be in ascending order.");
-    }
-
-    // Check if shadow, mid, and highlight are between 0 and 255
-    if (shadow < 0 || shadow > 255 || mid < 0 || mid > 255 || highlight < 0 || highlight > 255) {
-      throw new IllegalArgumentException(
-          "Shadow, mid, and highlight values must be between 0 and 255.");
-    }
-
-    // Call the overloaded levelsAdjust method
     levelsAdjust(shadow, mid, highlight, 100);
   }
 
@@ -995,14 +954,14 @@ public class ImageImplementation implements ImageModel {
     int splitPoint = (int) (width * (p / 100));
 
     double a =
-        Math.pow(shadow, 2) * (mid - highlight) - shadow * (Math.pow(mid, 2) - Math.pow(highlight,
-            2)) + highlight * Math.pow(mid, 2) - mid * Math.pow(highlight, 2);
+            Math.pow(shadow, 2) * (mid - highlight) - shadow * (Math.pow(mid, 2) - Math.pow(highlight,
+                    2)) + highlight * Math.pow(mid, 2) - mid * Math.pow(highlight, 2);
     double aA = -shadow * (128 - 255) + 128 * highlight - 255 * mid;
     double aB =
-        Math.pow(shadow, 2) * (128 - 255) + 255 * Math.pow(mid, 2) - 128 * Math.pow(highlight, 2);
+            Math.pow(shadow, 2) * (128 - 255) + 255 * Math.pow(mid, 2) - 128 * Math.pow(highlight, 2);
     double aC =
-        Math.pow(shadow, 2) * (255 * mid - 128 * highlight) - shadow * (255 * Math.pow(mid, 2)
-            - 128 * Math.pow(highlight, 2));
+            Math.pow(shadow, 2) * (255 * mid - 128 * highlight) - shadow * (255 * Math.pow(mid, 2)
+                    - 128 * Math.pow(highlight, 2));
 
     double a1 = aA / a;
     double b1 = aB / a;
@@ -1015,11 +974,11 @@ public class ImageImplementation implements ImageModel {
         if (col < splitPoint) {
           Pixel pixel = image[row][col];
           pixel.set(0,
-              clamp((int) (a1 * pixel.get(0) * pixel.get(0) + b1 * pixel.get(0) + c1)));
+                  clamp((int) (a1 * pixel.get(0) * pixel.get(0) + b1 * pixel.get(0) + c1)));
           pixel.set(1,
-              clamp((int) (a1 * pixel.get(1) * pixel.get(1) + b1 * pixel.get(1) + c1)));
+                  clamp((int) (a1 * pixel.get(1) * pixel.get(1) + b1 * pixel.get(1) + c1)));
           pixel.set(2,
-              clamp((int) (a1 * pixel.get(2) * pixel.get(2) + b1 * pixel.get(2) + c1)));
+                  clamp((int) (a1 * pixel.get(2) * pixel.get(2) + b1 * pixel.get(2) + c1)));
         } else if (col == splitPoint) {
           image[row][col] = new Pixel(0, 0, 0);
         }
@@ -1060,7 +1019,7 @@ public class ImageImplementation implements ImageModel {
     // Ensure the flattened array size is correct (should be height * width * 3 for RGB)
     if (flattened.length != height * width * 3) {
       throw new IllegalArgumentException(
-          "Flattened array size does not match the expected size of the image.");
+              "Flattened array size does not match the expected size of the image.");
     }
 
     for (int row = 0; row < height; row++) {
@@ -1148,7 +1107,7 @@ public class ImageImplementation implements ImageModel {
     decompressedImage = downSampleImage(decompressedImage, threshold);
 
     decompressedImage = upSampleImage(decompressedImage, image[0].length / 8, image.length / 8,
-        image[0].length, image.length);
+            image[0].length, image.length);
 
     reshapeImage(decompressedImage);
   }
@@ -1201,7 +1160,7 @@ public class ImageImplementation implements ImageModel {
 
 
   private double[] upSampleImage(double[] downsampledImage, int downsampledWidth,
-      int downsampledHeight, int originalWidth, int originalHeight) {
+                                 int downsampledHeight, int originalWidth, int originalHeight) {
     double[] upsampledImage = new double[originalWidth * originalHeight * 3];  // 3 channels for RGB
     int index = 0;
 
@@ -1212,7 +1171,7 @@ public class ImageImplementation implements ImageModel {
         int srcCol = Math.min((col * downsampledWidth) / originalWidth, downsampledWidth - 1);
 
         int pixelIndex =
-            (srcRow * downsampledWidth + srcCol) * 3;
+                (srcRow * downsampledWidth + srcCol) * 3;
 
         if (pixelIndex < downsampledImage.length) {
 
@@ -1276,5 +1235,92 @@ public class ImageImplementation implements ImageModel {
     this.image = downscaledImage;  // Update the image to the downscaled version
   }
 
+  /**
+   * applies the dithering effect to the current image, reducing it to a greyscale.
+   */
+  @Override
+  public void applyDithering() {
+    applyDithering(100);
+  }
 
+  /**
+   * Applies Floyd-Steinberg dithering to the current image, reducing it to a greyscale image.
+   */
+  public void applyDithering(double p) {
+    if (image == null) {
+      System.out.println("No image loaded.");
+      return;
+    }
+
+    if (p < 0 || p > 100) {
+      throw new IllegalArgumentException("Split Percentage must be between 0 and 100.");
+    }
+
+    Pixel[][] ditheredImage = computeDitheredImage();
+
+    // replace pixels in split with dithered Image
+    int width = image[0].length;
+    int splitPoint = (int) (width * (p / 100));
+    int height = image.length;
+
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        if (col < splitPoint) {
+          image[row][col] = ditheredImage[row][col];
+        } else if (col == splitPoint) {
+          image[row][col] = new Pixel(0, 0, 0);
+        } else {
+          // leave the same image
+        }
+      }
+    }
+  }
+
+  private Pixel[][] computeDitheredImage() {
+    Pixel[][] intensity = this.getIntensity();
+
+    for(int row = 0; row < intensity.length; row++) {
+      for(int col = 0; col < intensity[0].length; col++) {
+        Pixel pixel = intensity[row][col];
+
+        int oldColor = pixel.get(0);
+        int newColor = oldColor < 128 ? 0 : 255;
+
+        pixel.set(0, newColor);
+        pixel.set(1, newColor);
+        pixel.set(2, newColor);
+
+        int error = oldColor - newColor;
+
+        if (col + 1 < intensity[0].length) {
+          adjustPixel(intensity[row][col + 1], (7 * error) / 16);
+        }
+        if (row + 1 < intensity.length) {
+          adjustPixel(intensity[row + 1][col], (5 * error) / 16);
+        }
+        if (row + 1 < intensity.length && col > 0) {
+          adjustPixel(intensity[row + 1][col - 1],(3 * error) / 16);
+        }
+        if (row + 1 < intensity.length && col + 1 < intensity[0].length) {
+          adjustPixel(intensity[row + 1][col + 1], (1 * error) / 16);
+        }
+      }
+    }
+    return intensity;
+  }
+
+
+  /**
+   * Adjusts the grayscale value of a pixel by adding the specified error,
+   * ensuring it stays within [0, 255].
+   *
+   * @param pixel the pixel to adjust
+   * @param error the error value to add
+   */
+  private void adjustPixel(Pixel pixel, int error) {
+    int newGray = clamp(pixel.get(0) + error);
+    pixel.set(0, newGray);
+    pixel.set(1, newGray);
+    pixel.set(2, newGray);
+  }
 }

@@ -101,9 +101,9 @@ public interface Features {
   void visualizeBlueComponent();
 
   /**
-   * Reverts the image to the original image which was loaded.
+   * Applies a dithering effect to the image.
+   * This operation breaks down an image that has many colors into
+   * an image that is made of dots from black and white.
    */
-  void revertImage();
-
-
+  void applyDither();
 }

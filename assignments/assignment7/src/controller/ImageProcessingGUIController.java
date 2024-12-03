@@ -463,9 +463,25 @@ public class ImageProcessingGUIController implements Features {
     }
   }
 
+  /**
+   * Applies a dithering effect to the image.
+   */
   @Override
-  public void revertImage() {
-
+  public void applyDither() {
+    if (isImageLoaded()) {
+      int splitPercentage = getSplitPercentage();
+      model.applyDithering(splitPercentage);
+      Pixel[][] ditheredImage = model.getImage();
+      if (ditheredImage != null) {
+        view.displayImage(ditheredImage);
+        BufferedImage histogram = model.calculateHistogram();
+        if (histogram != null) {
+          view.displayHistogram(histogram);
+        }
+      } else {
+        view.displayError("Dithering failed.");
+      }
+    }
   }
 
 }

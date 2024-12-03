@@ -139,6 +139,9 @@ public class ImageController implements ControllerInterface {
       case "downscale":
         handleDownscale(tokens);
         break;
+      case "dither":
+        handleDitherCommand(tokens);
+        break;
       default:
         System.out.println("Unknown command: " + command);
     }
@@ -749,4 +752,33 @@ public class ImageController implements ControllerInterface {
     }
   }
 
+  /**
+   * Processes the dither command and applies dithering to the image.
+   *
+   * @param tokens the command tokens
+   */
+  private void handleDitherCommand(String[] tokens) {
+    if (tokens.length == 3 || (tokens.length == 5 && tokens[3].equals("split"))) {
+      String imageName = tokens[1];
+      String destName = tokens[2];
+      Pixel[][] image = imageStore.get(imageName);
+      if (image != null) {
+        model.setImage(image);
+        if(tokens.length == 3) {
+          model.applyDithering();
+        } else {
+          double splitPercentage = Double.parseDouble(tokens[4]);
+          model.setImage(image);
+          model.applyDithering(splitPercentage);
+        }
+        Pixel[][] ditheredImage = model.getImage();
+        imageStore.put(destName, ditheredImage);
+        System.out.println("Dithered image saved as: " + destName);
+      } else {
+        System.out.println("Image not found: " + imageName);
+      }
+    } else {
+      System.out.println("Invalid number of arguments for dither.");
+    }
+  }
 }
