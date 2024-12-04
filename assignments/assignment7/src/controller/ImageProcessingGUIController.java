@@ -83,9 +83,9 @@ public class ImageProcessingGUIController implements Features {
       int highlightValue = Integer.parseInt(highlight);
 
       // Validate values are within the range [0, 255]
-      if (shadowValue < 0 || shadowValue > 255 ||
-          midValue < 0 || midValue > 255 ||
-          highlightValue < 0 || highlightValue > 255) {
+      if (shadowValue < 0 || shadowValue > 255
+              || midValue < 0 || midValue > 255
+              || highlightValue < 0 || highlightValue > 255) {
         view.displayError("Shadow, mid, and highlight values must be between 0 and 255.");
         return null;
       }
