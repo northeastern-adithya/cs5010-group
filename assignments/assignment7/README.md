@@ -7,7 +7,7 @@ Rida Sameer.
 
 *Update*
 - Testing image for assignment7 `res/dithering/sample_input.png` was taken from [dummyimage.com](https://dummyimage.com/)
-- Images `res/dithering/sample_input_dithered_50.png` and `res/dithering/sample_input_dithered_100.png` are results of dithering operation on `res/dithering/sample_input.png` with 50% and 100% split respectively.
+- Images `res/dithering/sample_input_dithered_50.png` and `res/dithering/sample_input_dithered_100.png` are results of dithering operation on `res/dithering/sample_input.png` with 50% and 100% split respectively which were generated using the Image Processing Application.
 
 ----------------------------------------------------------------------------------------------------
 Update: Notes on limitations of Implementation of Dithering
