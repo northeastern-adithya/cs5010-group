@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -70,7 +71,8 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     JButton ditherButton;
     ImageModel model = new ImageImplementation();
     ViewInterface viewInterface = this;
-    ImageController imageController = new ImageController(model, viewInterface);
+    ImageController imageController = new ImageController(model,
+            viewInterface,new HashMap<>());
 
     // Set up the frame and layout
     frame = new JFrame("Image Processing Application");

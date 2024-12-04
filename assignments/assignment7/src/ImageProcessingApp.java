@@ -5,6 +5,7 @@ import view.ImageProcessingGUI;
 import controller.ImageProcessingGUIController;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -24,7 +25,7 @@ public class ImageProcessingApp {
     ImageModel model = new ImageImplementation(); // Model for image processing
     ImageProcessingGUI view = new ImageProcessingGUI(); // View for displaying the UI
     ImageController controller = new ImageController(model,
-        view); // ImageController handles image processing
+        view,new HashMap<>()); // ImageController handles image processing
 
     // Initialize the new ImageProcessingGUIController to link the view and controller
     ImageProcessingGUIController guiController = new ImageProcessingGUIController(view, controller,
