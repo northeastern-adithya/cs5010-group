@@ -18,6 +18,7 @@ public class ImageProcessingGUIController implements Features {
   private ImageModel model;
   private ImageProcessingGUI view;
 
+  private static final int DEFAULT_SPLIT_PERCENTAGE = 100;
   /**
    * Constructs an ImageProcessingGUIController with the specified view, controller, and model.
    *
@@ -50,17 +51,20 @@ public class ImageProcessingGUIController implements Features {
    * @return The split percentage value, or 100 if the input is invalid.
    */
   private int getSplitPercentage() {
-    int splitPercentage = 100;
+    int splitPercentage;
     String splitPercentageStr = view.getSplitPercentageFromUser();
 
     try {
       if (splitPercentageStr != null && !splitPercentageStr.isEmpty()) {
+        throw new NumberFormatException("Split percentage is empty.");
+      } else {
         splitPercentage = Integer.parseInt(splitPercentageStr);
         if (splitPercentage < 0 || splitPercentage > 100) {
           throw new NumberFormatException("Split percentage must be between 0 and 100.");
         }
       }
     } catch (NumberFormatException e) {
+      splitPercentage = DEFAULT_SPLIT_PERCENTAGE;
       view.displayError("Invalid split percentage value. Using default value (100%).");
     }
 
@@ -470,6 +474,7 @@ public class ImageProcessingGUIController implements Features {
   public void applyDither() {
     if (isImageLoaded()) {
       int splitPercentage = getSplitPercentage();
+      System.out.println(splitPercentage);
       model.applyDithering(splitPercentage);
       Pixel[][] ditheredImage = model.getImage();
       if (ditheredImage != null) {
