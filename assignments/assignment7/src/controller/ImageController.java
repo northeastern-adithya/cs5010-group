@@ -72,6 +72,14 @@ public class ImageController implements ControllerInterface {
       return;
     }
 
+    try {
+      handleProcessCommand(tokens);
+    } catch (IllegalArgumentException e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+  }
+
+  private void handleProcessCommand(String[] tokens) {
     switch (tokens[0]) {
       case "load":
         handleLoadCommand(tokens);
@@ -143,7 +151,7 @@ public class ImageController implements ControllerInterface {
         handleDitherCommand(tokens);
         break;
       default:
-        System.out.println("Unknown command: " + command);
+        System.out.println("Unknown command: " + tokens[0]);
     }
   }
 
