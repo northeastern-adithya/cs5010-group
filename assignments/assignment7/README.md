@@ -24,8 +24,6 @@ Additionally, the other bugs identified in the code were fixed promptly, ensurin
 This decision allowed us to deliver a functional dithering feature while adhering to the project timeline.
 
 ----------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------------------
 How Dithering was Implemented
 ----------------------------------------------------------------------------------------------------
 
@@ -37,17 +35,15 @@ Implementation Steps:
    - applyDithering(double p): This method applies dithering to a specified percentage of the image.
 2) We then implemented these methods in the ImageImplementation class.
 3) We added a new command to the ImageController class to handle the dithering operation through CLI.
-   1) if the command contains the right arguments and the applyDithering method is called.
-   2) If the command is right and contains a percentage, the applyDithering(double p) method is called.
+   1) if the command contains the right arguments, the applyDithering method is called.
+   2) If the command is right and contains a percentage along with the "split" keyword, the applyDithering(double p) method is called.
 4) We added a new method to the Features interface called applyDither and implemented it in the ImageProcessingGUIController class.
    1) When this method is called by the view we display a UI pop-up (as used by other implementations) to get the percentage of the image to apply dithering to.
-   2) We take the percentage and call the applyDithering(double p) method with the percentage.
+   2) We take the percentage pass it as input to the applyDithering(double p) method call.
 5) We added a new button to the ImageProcessingGUI class to trigger the dithering operation.
    - This calls the applyDither method of the feature interface. 
 
-
 ----------------------------------------------------------------------------------------------------
-
 Description:
 ----------------------------------------------------------------------------------------------------
 
