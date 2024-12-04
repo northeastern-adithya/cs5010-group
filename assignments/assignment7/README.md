@@ -5,6 +5,10 @@ Image Manipulation & Enhancement Application
 Citation: All images used in this project are original photographs taken by Khushee Vakil and
 Rida Sameer.
 
+*Update*
+- Testing image for assignment7 `res/dithering/sample_input.png` was taken from [dummyimage.com](https://dummyimage.com/)
+- Images `res/dithering/sample_input_dithered_50.png` and `res/dithering/sample_input_dithered_100.png` are results of dithering operation on `res/dithering/sample_input.png` with 50% and 100% split respectively which were generated using the Image Processing Application.
+
 ----------------------------------------------------------------------------------------------------
 Update: Notes on limitations of Implementation of Dithering
 ----------------------------------------------------------------------------------------------------
@@ -42,6 +46,26 @@ Implementation Steps:
    2) We take the percentage pass it as input to the applyDithering(double p) method call.
 5) We added a new button to the ImageProcessingGUI class to trigger the dithering operation.
    - This calls the applyDither method of the feature interface. 
+
+**Alternative Approach**:
+
+We developed a prototype for implementing the dithering feature using new classes and interfaces to adhere to the Open-Close Principle. 
+Here ImageModelV2 was an extension of ImageModel with the dithering methods signatures and ImageImplementationV2 implemented the ImageModelV2 interface along with extending the older ImageImplementation class.
+
+This approach required significant changes including replacing ImageImplementation with ImageImplementationV2 in various components, such as the controllers (ImageController and ImageProcessingGUIController), and GUI (ImageProcessingGUI). 
+This resulted in changes across the codebase and required extensive testing to ensure the new implementation did not break existing functionalities. 
+
+Therefore, we decided to implement the dithering feature directly in the existing ImageModel and ImageImplementation classes to avoid unnecessary complexity and potential bugs.
+
+----------------------------------------------------------------------------------------------------
+Changes From Assignment 6 to Assignment 7
+----------------------------------------------------------------------------------------------------
+Additional methods for dithering were added to the ImageModel interface and implemented in the ImageImplementation class to support the dithering feature. The ImageController class was updated to handle the dithering operation through the command line interface. 
+The ImageProcessingGUIController class was updated to handle the dithering operation through the graphical user interface. 
+A new button was added to the ImageProcessingGUI class to trigger the dithering operation. 
+The Features interface was updated to include the applyDither method, which was implemented in the ImageProcessingGUIController class. 
+Tests were added to verify the dithering feature's functionality.
+
 
 ----------------------------------------------------------------------------------------------------
 Description:

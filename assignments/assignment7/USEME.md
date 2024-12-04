@@ -334,6 +334,24 @@ Example:
 sepia original mask-image sepia_masked_image
 ```
 
+### 31. Dithering 
+Command: `dither <input_image> <output_image>`
+Description: Applies a dithering effect to the input image and saves it as the output image.
+Example:
+
+```
+dither original dithered_image
+```
+
+### 32. Dithering with split
+Command: `dither <input_image> <output_image> split <split_percentage>`
+Description: Applies a dithering effect to the input image and saves it as the output image. The effect will only apply to the specified portion of the image.
+Example:
+
+```
+dither original dithered_image split 50
+```
+
 ### How to run the application:
 
 ### Three command-line inputs are valid:
@@ -354,4 +372,10 @@ sepia original mask-image sepia_masked_image
 - When using commands that modify an image (e.g., `compress`, `sharpen`), the command should refer
   to a previously loaded image.
 
+### GUI Interface (How to use)
+- Dithering
+   1. Load an image.
+   2. Select the image to be loaded and hit "Open".
+   3. Once image is loaded click on the "Dither" button.
+   4. A pop-up box will appear. Enter the split % in the pop-up box and hit OK.
 
