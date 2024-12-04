@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
+
+import model.ImageModelV2;
 import model.Pixel;
 import view.ImageProcessingGUI;
 import model.ImageModel;
@@ -15,7 +17,7 @@ import java.io.File;
  */
 public class ImageProcessingGUIController implements Features {
 
-  private ImageModel model;
+  private ImageModelV2 model;
   private ImageProcessingGUI view;
 
   /**
@@ -26,7 +28,7 @@ public class ImageProcessingGUIController implements Features {
    * @param model      The ImageModel instance that holds and processes the image data.
    */
   public ImageProcessingGUIController(ImageProcessingGUI view, ImageController controller,
-      ImageModel model) {
+      ImageModelV2 model) {
     this.view = view;
     this.model = model;
   }

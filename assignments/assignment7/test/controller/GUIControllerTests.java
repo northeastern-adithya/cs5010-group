@@ -5,7 +5,9 @@ import org.junit.Test;
 import javax.swing.*;
 
 import model.ImageImplementation;
+import model.ImageImplementationV2;
 import model.ImageModel;
+import model.ImageModelV2;
 import model.Pixel;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -26,7 +28,7 @@ public class GUIControllerTests {
   @Test
   public void testImageDithering() {
     StringBuilder log = new StringBuilder();
-    ImageModel model = new ImageImplementation();
+    ImageModelV2 model = new ImageImplementationV2();
     Pixel[][] pixels = getRandomImage();
     model.setImage(pixels);
     String imageName = "testImage";
@@ -51,7 +53,7 @@ public class GUIControllerTests {
                                       String loadImagePath,
                                       String saveImagePath,
                                       String splitPercentage,
-                                      ImageModel model) {
+                                      ImageModelV2 model) {
     return new ImageProcessingGUIController(
             new MockImageProcessingGUI(
                     log, currentImageName, frame, loadImagePath,
