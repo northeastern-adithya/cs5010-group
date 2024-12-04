@@ -2,7 +2,7 @@ package controller;
 
 import org.junit.Test;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import model.ImageImplementation;
 import model.ImageModel;

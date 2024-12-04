@@ -112,7 +112,7 @@ public class ImageImplementation implements ImageModel {
    * calculated as a weighted sum of the red, green, and blue values.
    *
    * @return a 2D array of Pixels where each pixel is set to its luma value. If no image is loaded,
-   * returns an empty 2D array.
+   *         returns an empty 2D array.
    */
   @Override
   public Pixel[][] getLuma() {
@@ -142,7 +142,7 @@ public class ImageImplementation implements ImageModel {
    * the average of the red, green, and blue values.
    *
    * @return a 2D array of Pixels where each pixel is set to its intensity value. If no image is
-   * loaded, returns an empty 2D array.
+   *         loaded, returns an empty 2D array.
    */
   @Override
   public Pixel[][] getIntensity() {
@@ -172,7 +172,7 @@ public class ImageImplementation implements ImageModel {
    * of the red, green, and blue values.
    *
    * @return a 2D array of Pixels where each pixel is set to its value. If no image is loaded,
-   * returns an empty 2D array.
+   *         returns an empty 2D array.
    */
   @Override
   public Pixel[][] getValue() {
@@ -410,8 +410,8 @@ public class ImageImplementation implements ImageModel {
    * @param channel an integer representing the color channel to extract: 0 for Red, 1 for Green,
    *                and 2 for Blue.
    * @return a 2D integer array containing the values of the specified color channel. Each element
-   * corresponds to the color intensity of the given channel at that position in the original
-   * image.
+   *         corresponds to the color intensity of the given channel at that position
+   *         in the original image.
    * @throws IllegalArgumentException if the specified channel is not 0, 1, or 2.
    */
   @Override
@@ -609,6 +609,7 @@ public class ImageImplementation implements ImageModel {
     }
     applySharpen(100);
   }
+
   /**
    * Applies a sharpening filter to a specified percentage of the image, from the left edge up to
    * the specified split percentage. The sharpening effect is applied only to the left portion of
@@ -648,6 +649,7 @@ public class ImageImplementation implements ImageModel {
     }
     applyGreyScale(100);
   }
+
   /**
    * Applies the grayscale filter to the specified percentage of the image from the left edge up to
    * the original according to a given split percentage. The grayscale effect applies only from the
@@ -853,8 +855,8 @@ public class ImageImplementation implements ImageModel {
    * graph for each channel, allowing visual analysis of color distribution.
    *
    * @return a BufferedImage object representing the histogram of the loaded image. Each color
-   * channel (Red, Green, and Blue) is represented with its respective color on the graph. Returns
-   * null if no image is loaded.
+   *         channel (Red, Green, and Blue) is represented with its respective color on the graph.
+   *         Returns null if no image is loaded.
    */
   @Override
   public BufferedImage calculateHistogram() {
@@ -937,11 +939,12 @@ public class ImageImplementation implements ImageModel {
    *                  255. Affects the dark areas of the image.
    * @param mid       the intensity value representing the midtone level, typically between 0 and
    *                  255. Affects the mid-brightness areas of the image.
-   * @param highlight the intensity value representing the highlight level, typically between 0 and
-   *                  255. Affects the bright areas of the image.
+   * @param highlight the intensity value representing the highlight level, typically between 0
+   *                  and 255. Affects the bright areas of the image.
    * @throws IllegalStateException    if no image is loaded before applying levels adjustment.
-   * @throws IllegalArgumentException if the shadow, mid, and highlight values are not in ascending order,
-   *                                   or if any of them are not between 0 and 255.
+   * @throws IllegalArgumentException if the shadow, mid, and highlight values
+   *                                  are not in ascending order,
+   *                                  or if any of them are not between 0 and 255.
    */
   @Override
   public void levelsAdjust(int shadow, int mid, int highlight) {
@@ -1321,8 +1324,8 @@ public class ImageImplementation implements ImageModel {
   private Pixel[][] computeDitheredImage() {
     Pixel[][] intensity = this.getIntensity();
 
-    for(int row = 0; row < intensity.length; row++) {
-      for(int col = 0; col < intensity[0].length; col++) {
+    for (int row = 0; row < intensity.length; row++) {
+      for (int col = 0; col < intensity[0].length; col++) {
         Pixel pixel = intensity[row][col];
 
         int oldColor = pixel.get(0);

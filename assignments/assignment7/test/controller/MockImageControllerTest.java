@@ -45,7 +45,7 @@ public class MockImageControllerTest {
     System.out.println("Log contents: " + mockController.getLog());
 
     // Assert: check if both commands were logged correctly
-    String logContents = String.join(" ", mockController.getLog()).trim();  // Join list elements and trim
+    String logContents = String.join(" ", mockController.getLog()).trim();
 
     assertTrue(logContents.contains("Processing command: load res/JPG/building.jpg"));
     assertTrue(logContents.contains("Processing command: sepia building building_sepia"));

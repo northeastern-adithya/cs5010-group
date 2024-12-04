@@ -1,4 +1,5 @@
 package model;
+
 import controller.ImageUtil;
 import org.junit.Test;
 
@@ -29,8 +30,8 @@ public class PNGTest {
             { new Pixel(0, 0, 0), new Pixel(0, 0, 0), new Pixel(0, 0, 0) }
     };
 
-    for(int i = 0; i < randomPixels.length; i++) {
-      for(int j = 0; j < randomPixels[0].length; j++) {
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
         assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
         assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
         assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
@@ -55,8 +56,8 @@ public class PNGTest {
             { new Pixel(0, 0, 0), new Pixel(0, 0, 0), new Pixel(0, 0, 0) }
     };
 
-    for(int i = 0; i < randomPixels.length; i++) {
-      for(int j = 0; j < randomPixels[0].length; j++) {
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
         assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
         assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
         assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
@@ -81,8 +82,8 @@ public class PNGTest {
             { new Pixel(0, 0, 0), new Pixel(0, 0, 0), new Pixel(12, 34, 56) }
     };
 
-    for(int i = 0; i < randomPixels.length; i++) {
-      for(int j = 0; j < randomPixels[0].length; j++) {
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
         assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
         assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
         assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
@@ -107,8 +108,8 @@ public class PNGTest {
             { new Pixel(0, 0, 0), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
     };
 
-    for(int i = 0; i < randomPixels.length; i++) {
-      for(int j = 0; j < randomPixels[0].length; j++) {
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
         assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
         assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
         assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
@@ -133,8 +134,8 @@ public class PNGTest {
             { new Pixel(0, 0, 0), new Pixel(0, 0, 0), new Pixel(0, 0, 0) }
     };
 
-    for(int i = 0; i < randomPixels.length; i++) {
-      for(int j = 0; j < randomPixels[0].length; j++) {
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
         assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
         assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
         assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
@@ -154,8 +155,8 @@ public class PNGTest {
 
     Pixel[][] actual = imgImpl.getImage();
 
-    for(int i = 0; i < randomPixels.length; i++) {
-      for(int j = 0; j < randomPixels[0].length; j++) {
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
         assertEquals(randomPixels[i][j].get(0), actual[i][j].get(0));
         assertEquals(randomPixels[i][j].get(1), actual[i][j].get(1));
         assertEquals(randomPixels[i][j].get(2), actual[i][j].get(2));
