@@ -4,7 +4,50 @@ Image Manipulation & Enhancement Application
 
 Citation: All images used in this project are original photographs taken by Khushee Vakil and
 Rida Sameer.
+
 ----------------------------------------------------------------------------------------------------
+Update: Notes on limitations of Implementation of Dithering
+----------------------------------------------------------------------------------------------------
+
+We received a project where the preview functionality for the application was not implemented. Specifically, every split-compatible operation simply takes in the Split % and directly renders the resulting image for that percentage (and operation) without offering a preview or cancellation option. The only way around this is to load an image, perform the operations, and then discard the image and redo the process until the point you want the operations to be applied.
+
+Given the tight project timeline, we engaged in discussions with the development team and reached a mutual understanding that implementing split view functionality before proceeding with the dithering feature would delay project completion significantly.
+
+To ensure progress, we prioritized the implementation of dithering.
+
+Task Completion:
+1) **Interactive Mode**: Yes, implemented with all intended functionalities including the split command.
+2) **GUI Mode**: Yes, but partially. Implemented without preview functionality, as it relies on the unavailable split view implementation.
+
+Additionally, the other bugs identified in the code were fixed promptly, ensuring a smoother development process overall.
+
+This decision allowed us to deliver a functional dithering feature while adhering to the project timeline.
+
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+How Dithering was Implemented
+----------------------------------------------------------------------------------------------------
+
+This process did not require a lot of effort as the code is readable and well documented.
+
+Implementation Steps:
+1) We added 2 new methods to the ImageModel interface.
+   - applyDithering: This method applies dithering to the entire image.
+   - applyDithering(double p): This method applies dithering to a specified percentage of the image.
+2) We then implemented these methods in the ImageImplementation class.
+3) We added a new command to the ImageController class to handle the dithering operation through CLI.
+   1) if the command contains the right arguments and the applyDithering method is called.
+   2) If the command is right and contains a percentage, the applyDithering(double p) method is called.
+4) We added a new method to the Features interface called applyDither and implemented it in the ImageProcessingGUIController class.
+   1) When this method is called by the view we display a UI pop-up (as used by other implementations) to get the percentage of the image to apply dithering to.
+   2) We take the percentage and call the applyDithering(double p) method with the percentage.
+5) We added a new button to the ImageProcessingGUI class to trigger the dithering operation.
+   - This calls the applyDither method of the feature interface. 
+
+
+----------------------------------------------------------------------------------------------------
+
 Description:
 ----------------------------------------------------------------------------------------------------
 
@@ -495,19 +538,3 @@ Three command-line inputs are valid:
 
 Any other command-line arguments are invalid: in these cases the program should display an error
 message suitably and quit.
-
-----------------------------------------------------------------------------------------------------
-Update: Notes on Implementation of Dithering
-----------------------------------------------------------------------------------------------------
-
-We received a project where the preview functionality for the application was not implemented. Specifically, every split-compatible operation simply takes in the Split % and directly renders the operation for that percentage without offering a preview or cancellation option.
-
-Given the tight project timeline, we engaged in discussions with the development team and reached a mutual understanding that implementing split view functionality before proceeding with the dithering feature would delay project completion significantly.
-
-To ensure progress, we prioritized the implementation of dithering:
-
-1. Interactive Mode: Fully implemented with all intended functionalities. 
-2. GUI Mode: Implemented without preview functionality, as it relies on the unavailable split view implementation.
-
-This decision allowed us to deliver a functional dithering feature while adhering to the project timeline.
-
