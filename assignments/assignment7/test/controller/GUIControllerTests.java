@@ -8,7 +8,9 @@ import model.ImageImplementation;
 import model.ImageModel;
 import model.Pixel;
 
+import static controller.TestUtils.getRandomImage;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertThrows;
 
 /**
  * JUnit test class for GUIController to see if controller is working as
@@ -16,15 +18,102 @@ import static org.junit.Assert.assertArrayEquals;
  */
 public class GUIControllerTests {
 
-  private static Pixel[][] getRandomImage() {
-    return new Pixel[][]{
-            {new Pixel(255, 0, 0), new Pixel(0, 0, 255)},
-            {new Pixel(0, 255, 0), new Pixel(128, 128, 128)}
-    };
+  @Test
+  public void testImageDitheringWithLessThanZero() {
+    StringBuilder log = new StringBuilder();
+    ImageModel model = new ImageImplementation();
+    Pixel[][] pixels = getRandomImage();
+    model.setImage(pixels);
+    String imageName = "testImage";
+    Features features = initialiseFeatures(
+            log, imageName, null,
+            null, null,
+            "-1",
+            model
+    );
+    features.applyDither();
+    // If passed less than 0, it should be same as 100
+    assertArrayEquals(
+            new Pixel[][]{
+                    {new Pixel(0, 0, 0), new Pixel(0, 0, 0)},
+                    {new Pixel(255, 255, 255), new Pixel(0, 0, 0)}
+            },
+            model.getImage()
+    );
   }
 
   @Test
-  public void testImageDithering() {
+  public void testImageDitheringWithGreaterThanHundred() {
+    StringBuilder log = new StringBuilder();
+    ImageModel model = new ImageImplementation();
+    Pixel[][] pixels = getRandomImage();
+    model.setImage(pixels);
+    String imageName = "testImage";
+    Features features = initialiseFeatures(
+            log, imageName, null,
+            null, null,
+            "101",
+            model
+    );
+    features.applyDither();
+    // If passed 101, it should be same as 100
+    assertArrayEquals(
+            new Pixel[][]{
+                    {new Pixel(0, 0, 0), new Pixel(0, 0, 0)},
+                    {new Pixel(255, 255, 255), new Pixel(0, 0, 0)}
+            },
+            model.getImage()
+    );
+  }
+
+  @Test
+  public void testImageDitheringWithZeroPercentage() {
+    StringBuilder log = new StringBuilder();
+    ImageModel model = new ImageImplementation();
+    Pixel[][] pixels = getRandomImage();
+    model.setImage(pixels);
+    String imageName = "testImage";
+    Features features = initialiseFeatures(
+            log, imageName, null,
+            null, null,
+            "0",
+            model
+    );
+    features.applyDither();
+    assertArrayEquals(
+            new Pixel[][]{
+                    {new Pixel(0, 0, 0), new Pixel(0, 0, 255)},
+                    {new Pixel(0, 0, 0), new Pixel(128, 128, 128)}
+            },
+            model.getImage()
+    );
+  }
+
+  @Test
+  public void testImageDitheringWithHundredPercentage() {
+    StringBuilder log = new StringBuilder();
+    ImageModel model = new ImageImplementation();
+    Pixel[][] pixels = getRandomImage();
+    model.setImage(pixels);
+    String imageName = "testImage";
+    Features features = initialiseFeatures(
+            log, imageName, null,
+            null, null,
+            "100",
+            model
+    );
+    features.applyDither();
+    assertArrayEquals(
+            new Pixel[][]{
+                    {new Pixel(0, 0, 0), new Pixel(0, 0, 0)},
+                    {new Pixel(255, 255, 255), new Pixel(0, 0, 0)}
+            },
+            model.getImage()
+    );
+  }
+
+  @Test
+  public void testImageDitheringWithFiftyPercentage() {
     StringBuilder log = new StringBuilder();
     ImageModel model = new ImageImplementation();
     Pixel[][] pixels = getRandomImage();
@@ -45,6 +134,7 @@ public class GUIControllerTests {
             model.getImage()
     );
   }
+
 
   private Features initialiseFeatures(StringBuilder log,
                                       String currentImageName, JFrame frame,

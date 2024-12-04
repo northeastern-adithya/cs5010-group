@@ -33,10 +33,12 @@ public class ImageController implements ControllerInterface {
    * Constructs an ImageController with a specified ImageModel.
    *
    * @param model the ImageModel used to perform image operations
+   * @param view the ViewInterface used to display output
+   * @param imageStore the store of images used to keep track of images in memory
    */
-  public ImageController(ImageModel model, ViewInterface view) {
+  public ImageController(ImageModel model, ViewInterface view,Map<String, Pixel[][]> imageStore) {
     this.model = model;
-    this.imageStore = new HashMap<>();
+    this.imageStore = imageStore;
   }
 
   /**
@@ -771,7 +773,6 @@ public class ImageController implements ControllerInterface {
           model.applyDithering();
         } else {
           double splitPercentage = Double.parseDouble(tokens[4]);
-          model.setImage(image);
           model.applyDithering(splitPercentage);
         }
         Pixel[][] ditheredImage = model.getImage();
