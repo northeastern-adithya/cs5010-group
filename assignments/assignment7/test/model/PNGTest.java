@@ -14,7 +14,7 @@ public class PNGTest {
 
   @Test
   public void testDithering() {
-    ImageImplementation imgImpl = new ImageImplementation();
+    ImageModelV2 imgImpl = new ImageImplementationV2();
     Pixel[][] randomPixels = new Pixel[][] {
             { new Pixel(123, 234, 45), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
             { new Pixel(90, 123, 234), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
@@ -40,7 +40,7 @@ public class PNGTest {
 
   @Test
   public void testDitheringWithSplit100() {
-    ImageImplementation imgImpl = new ImageImplementation();
+    ImageModelV2 imgImpl = new ImageImplementationV2();
     Pixel[][] randomPixels = new Pixel[][] {
             { new Pixel(123, 234, 45), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
             { new Pixel(90, 123, 234), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
@@ -66,7 +66,7 @@ public class PNGTest {
 
   @Test
   public void testDitheringWithSplit50() {
-    ImageImplementation imgImpl = new ImageImplementation();
+    ImageModelV2 imgImpl = new ImageImplementationV2();
     Pixel[][] randomPixels = new Pixel[][] {
             { new Pixel(123, 234, 45), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
             { new Pixel(90, 123, 234), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
@@ -92,7 +92,7 @@ public class PNGTest {
 
   @Test
   public void testDitheringWithSplit25() {
-    ImageImplementation imgImpl = new ImageImplementation();
+    ImageModelV2 imgImpl = new ImageImplementationV2();
     Pixel[][] randomPixels = new Pixel[][] {
             { new Pixel(123, 234, 45), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
             { new Pixel(90, 123, 234), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
@@ -118,7 +118,7 @@ public class PNGTest {
 
   @Test
   public void testDitheringWithSplit75() {
-    ImageImplementation imgImpl = new ImageImplementation();
+    ImageModelV2 imgImpl = new ImageImplementationV2();
     Pixel[][] randomPixels = new Pixel[][] {
             { new Pixel(123, 234, 45), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
             { new Pixel(90, 123, 234), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
@@ -144,7 +144,7 @@ public class PNGTest {
 
   @Test
   public void testDitheringWithSplit0() {
-    ImageImplementation imgImpl = new ImageImplementation();
+    ImageModelV2 imgImpl = new ImageImplementationV2();
     Pixel[][] randomPixels = new Pixel[][] {
             { new Pixel(123, 234, 45), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
             { new Pixel(90, 123, 234), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }

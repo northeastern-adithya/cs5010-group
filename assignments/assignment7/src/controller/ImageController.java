@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import model.ImageMaskProcessor;
 import model.ImageModel;
+import model.ImageModelV2;
 import model.MaskInterface;
 import model.Pixel;
 
@@ -24,7 +25,7 @@ import view.ViewInterface;
 public class ImageController implements ControllerInterface {
 
 
-  public ImageModel model;
+  public ImageModelV2 model;
   public MaskInterface mask1;
   public final Map<String, Pixel[][]> imageStore;
   private BufferedImage histogramImage;
@@ -34,7 +35,7 @@ public class ImageController implements ControllerInterface {
    *
    * @param model the ImageModel used to perform image operations
    */
-  public ImageController(ImageModel model, ViewInterface view) {
+  public ImageController(ImageModelV2 model, ViewInterface view) {
     this.model = model;
     this.imageStore = new HashMap<>();
   }

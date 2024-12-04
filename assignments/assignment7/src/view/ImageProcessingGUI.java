@@ -25,7 +25,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import controller.ImageController;
 import controller.ImageProcessingGUIController;
 import model.ImageImplementation;
+import model.ImageImplementationV2;
 import model.ImageModel;
+import model.ImageModelV2;
 import model.Pixel;
 
 /**
@@ -68,7 +70,7 @@ public class ImageProcessingGUI extends JFrame implements ImageProcessingView {
     JButton greenButton;
     JButton blueButton;
     JButton ditherButton;
-    ImageModel model = new ImageImplementation();
+    ImageModelV2 model = new ImageImplementationV2();
     ViewInterface viewInterface = this;
     ImageController imageController = new ImageController(model, viewInterface);
 

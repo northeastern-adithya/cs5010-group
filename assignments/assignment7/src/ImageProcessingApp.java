@@ -1,6 +1,6 @@
 import controller.ImageController;
-import model.ImageImplementation;
-import model.ImageModel;
+import model.ImageImplementationV2;
+import model.ImageModelV2;
 import view.ImageProcessingGUI;
 import controller.ImageProcessingGUIController;
 
@@ -21,7 +21,7 @@ public class ImageProcessingApp {
    */
   public static void main(String[] args) {
     // Initialize the model, view, and controller
-    ImageModel model = new ImageImplementation(); // Model for image processing
+    ImageModelV2 model = new ImageImplementationV2(); // Model for image processing
     ImageProcessingGUI view = new ImageProcessingGUI(); // View for displaying the UI
     ImageController controller = new ImageController(model,
         view); // ImageController handles image processing
