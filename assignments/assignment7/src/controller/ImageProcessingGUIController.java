@@ -55,7 +55,7 @@ public class ImageProcessingGUIController implements Features {
     String splitPercentageStr = view.getSplitPercentageFromUser();
 
     try {
-      if (splitPercentageStr != null && !splitPercentageStr.isEmpty()) {
+      if (splitPercentageStr == null || splitPercentageStr.isEmpty()) {
         throw new NumberFormatException("Split percentage is empty.");
       } else {
         splitPercentage = Integer.parseInt(splitPercentageStr);

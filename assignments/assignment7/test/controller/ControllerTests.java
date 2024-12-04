@@ -18,10 +18,15 @@ public class ControllerTests {
     ControllerInterface controller = initialiseController(
             model
     );
-    assertThrows(IllegalArgumentException.class,
-            () -> controller.processCommand(
+   controller.processCommand(
                     "dither testImage dithering split -1"
-            ));
+            );
+    // Equals to the original image without dithering since the split
+    // percentage is less than 0
+    assertEquals(new Pixel[][]{
+            {new Pixel(255, 0, 0), new Pixel(0, 0, 255)},
+            {new Pixel(0, 255, 0), new Pixel(128, 128, 128)}
+    }, model.getImage());
   }
 
   @Test
@@ -30,10 +35,15 @@ public class ControllerTests {
     ControllerInterface controller = initialiseController(
             model
     );
-    assertThrows(IllegalArgumentException.class,
-            () -> controller.processCommand(
+    controller.processCommand(
                     "dither testImage dithering split 101"
-            ));
+            );
+    // Equals to the original image without dithering since the split
+    // percentage is greater than 100
+    assertEquals(new Pixel[][]{
+            {new Pixel(255, 0, 0), new Pixel(0, 0, 255)},
+            {new Pixel(0, 255, 0), new Pixel(128, 128, 128)}
+    }, model.getImage());
   }
 
   @Test
@@ -102,8 +112,9 @@ public class ControllerTests {
     ControllerInterface controller = initialiseController(
             model
     );
-    assertThrows(NumberFormatException.class,()->controller.processCommand(
-            "dither testImage dithering split split"));
+    controller.processCommand(
+            "dither testImage dithering split split");
+    assertEquals(null, model.getImage());
   }
 
   @Test

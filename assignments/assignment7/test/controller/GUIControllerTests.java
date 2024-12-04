@@ -31,7 +31,15 @@ public class GUIControllerTests {
             "-1",
             model
     );
-    assertThrows(IllegalArgumentException.class, () -> features.applyDither());
+    features.applyDither();
+    // If passed less than 0, it should be same as 100
+    assertArrayEquals(
+            new Pixel[][]{
+                    {new Pixel(0, 0, 0), new Pixel(0, 0, 0)},
+                    {new Pixel(255, 255, 255), new Pixel(0, 0, 0)}
+            },
+            model.getImage()
+    );
   }
 
   @Test
@@ -47,7 +55,15 @@ public class GUIControllerTests {
             "101",
             model
     );
-    assertThrows(IllegalArgumentException.class, () -> features.applyDither());
+    features.applyDither();
+    // If passed 101, it should be same as 100
+    assertArrayEquals(
+            new Pixel[][]{
+                    {new Pixel(0, 0, 0), new Pixel(0, 0, 0)},
+                    {new Pixel(255, 255, 255), new Pixel(0, 0, 0)}
+            },
+            model.getImage()
+    );
   }
 
   @Test

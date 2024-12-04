@@ -766,8 +766,8 @@ public class ImageController implements ControllerInterface {
       String destName = tokens[2];
       Pixel[][] image = imageStore.get(imageName);
       if (image != null) {
-        model.setImage(image);
         if (tokens.length == 3) {
+          model.setImage(image);
           model.applyDithering();
         } else {
           double splitPercentage = Double.parseDouble(tokens[4]);
