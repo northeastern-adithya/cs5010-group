@@ -545,16 +545,18 @@ The project is organized into the following directories:
 How to Run the Application:
 ----------------------------------------------------------------------------------------------------
 
+From the command line, navigate to the project directory's res folder and run any of the following commands
+
 Three command-line inputs are valid:
 
-1. java -jar Program.jar -file path-of-script-file : when invoked in this manner the program should
+1. java -jar assignment7.jar -file path-of-script-file : when invoked in this manner the program should
    open the script file, execute it and then shut down.
 
-2. java -jar Program.jar -text : when invoked in this manner the program should open in an
+2. java -jar assignment7.jar -text : when invoked in this manner the program should open in an
    interactive text mode, allowing the user to type the script and execute it one line at a time.
    This is how the program worked in the last assignment.
 
-3. java -jar Program.jar : when invoked in this manner the program should open the graphical user
+3. java -jar assignment7.jar : when invoked in this manner the program should open the graphical user
    interface. This is what will happen if you simply double-click on the jar file.
 
 Any other command-line arguments are invalid: in these cases the program should display an error

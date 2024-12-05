@@ -153,13 +153,18 @@ public class PNGTest {
     imgImpl.setImage(randomPixels);
     imgImpl.applyDithering(0);
 
+    Pixel[][] expectedResult = new Pixel[][] {
+            { new Pixel(0, 0, 0), new Pixel(67, 89, 12), new Pixel(34, 56, 78) },
+            { new Pixel(0, 0, 0), new Pixel(56, 78, 90), new Pixel(12, 34, 56) }
+    };
+
     Pixel[][] actual = imgImpl.getImage();
 
     for (int i = 0; i < randomPixels.length; i++) {
       for (int j = 0; j < randomPixels[0].length; j++) {
-        assertEquals(randomPixels[i][j].get(0), actual[i][j].get(0));
-        assertEquals(randomPixels[i][j].get(1), actual[i][j].get(1));
-        assertEquals(randomPixels[i][j].get(2), actual[i][j].get(2));
+        assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
+        assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
+        assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
       }
     }
   }

@@ -80,6 +80,10 @@ public class ImageController implements ControllerInterface {
     }
   }
 
+  /**
+   * Processes the given command tokens and performs the corresponding action on the ImageModel.
+   * @param tokens
+   */
   private void handleProcessCommand(String[] tokens) {
     switch (tokens[0]) {
       case "load":
@@ -156,7 +160,6 @@ public class ImageController implements ControllerInterface {
     }
   }
 
-  // Helper methods for command processing
   private void handleLoadCommand(String[] tokens) {
     if (tokens.length == 3) {
       String filepath = tokens[1];
