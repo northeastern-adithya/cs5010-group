@@ -11,8 +11,11 @@ import model.Pixel;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
+/**
+ * JUnit test class for ImageController to see if controller is working as
+ * expected.
+ */
 public class ControllerTests {
 
   @Test
@@ -23,9 +26,7 @@ public class ControllerTests {
             model,
             imageStore
     );
-   controller.processCommand(
-                    "dither testImage dithering split -1"
-            );
+    controller.processCommand("dither testImage dithering split -1");
     // Equals to the original image without dithering since the split
     // percentage is less than 0
     assertEquals(null, imageStore.get("dithering"));
@@ -39,9 +40,7 @@ public class ControllerTests {
             model,
             imageStore
     );
-    controller.processCommand(
-                    "dither testImage dithering split 101"
-            );
+    controller.processCommand("dither testImage dithering split 101");
     // Equals to the original image without dithering since the split
     // percentage is greater than 100
     assertEquals(null, imageStore.get("dithering"));
@@ -164,8 +163,8 @@ public class ControllerTests {
                                                    Map<String,Pixel[][]> imageStore) {
     ControllerInterface controllerInterface = new ImageController(model,
             null,imageStore);
-    controllerInterface.processCommand("load test_resources/random.png " +
-            "testImage");
+    controllerInterface.processCommand("load test_resources/random.png "
+            + "testImage");
     return controllerInterface;
   }
 }

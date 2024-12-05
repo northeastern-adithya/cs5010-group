@@ -10,7 +10,6 @@ import model.Pixel;
 
 import static controller.TestUtils.getRandomImage;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertThrows;
 
 /**
  * JUnit test class for GUIController to see if controller is working as

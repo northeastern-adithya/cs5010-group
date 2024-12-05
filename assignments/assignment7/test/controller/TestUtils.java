@@ -2,6 +2,9 @@ package controller;
 
 import model.Pixel;
 
+/**
+ * A utility class to provide a method to generate a random image for testing purposes.
+ */
 public class TestUtils {
 
   private TestUtils(){

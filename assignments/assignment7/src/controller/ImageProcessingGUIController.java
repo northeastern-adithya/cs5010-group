@@ -19,6 +19,7 @@ public class ImageProcessingGUIController implements Features {
   private ImageProcessingGUI view;
 
   private static final int DEFAULT_SPLIT_PERCENTAGE = 100;
+  
   /**
    * Constructs an ImageProcessingGUIController with the specified view, controller, and model.
    *
@@ -27,7 +28,7 @@ public class ImageProcessingGUIController implements Features {
    * @param model      The ImageModel instance that holds and processes the image data.
    */
   public ImageProcessingGUIController(ImageProcessingGUI view, ImageController controller,
-      ImageModel model) {
+                                      ImageModel model) {
     this.view = view;
     this.model = model;
   }
