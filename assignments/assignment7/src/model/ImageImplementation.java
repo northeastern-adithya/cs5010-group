@@ -855,6 +855,11 @@ public class ImageImplementation implements ImageModel {
     return peak;
   }
 
+  /**
+   * Restricts the value to the range [0, 255].
+   * @param value
+   * @return
+   */
   private int clamp(int value) {
     return Math.min(Math.max(value, 0), 255);
   }

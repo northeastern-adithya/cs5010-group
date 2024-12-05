@@ -9,7 +9,6 @@ import org.junit.Test;
  * JUnit test class for MockImageController to verify that runScript and processCommand log the
  * expected actions.
  */
-
 public class MockImageControllerTest {
 
   @Test

@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * A JUnit test class for the PNG Image testing.
  */
@@ -159,6 +158,54 @@ public class PNGTest {
     };
 
     Pixel[][] actual = imgImpl.getImage();
+
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
+        assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
+        assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
+        assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
+      }
+    }
+  }
+
+  @Test
+  public void testDitheringFor1PixelImage() {
+    ImageImplementation imgImpl = new ImageImplementation();
+    Pixel[][] randomPixels = new Pixel[][] {
+            { new Pixel(123, 234, 45) }
+    };
+    imgImpl.setImage(randomPixels);
+    imgImpl.applyDithering();
+
+    Pixel[][] actual = imgImpl.getImage();
+
+    Pixel[][] expectedResult = new Pixel[][] {
+            { new Pixel(255, 255, 255) }
+    };
+
+    for (int i = 0; i < randomPixels.length; i++) {
+      for (int j = 0; j < randomPixels[0].length; j++) {
+        assertEquals(expectedResult[i][j].get(0), actual[i][j].get(0));
+        assertEquals(expectedResult[i][j].get(1), actual[i][j].get(1));
+        assertEquals(expectedResult[i][j].get(2), actual[i][j].get(2));
+      }
+    }
+  }
+
+  @Test
+  public void testDitheringFor1PixelImageSplit0() {
+    ImageImplementation imgImpl = new ImageImplementation();
+    Pixel[][] randomPixels = new Pixel[][] {
+            { new Pixel(123, 234, 45) }
+    };
+    imgImpl.setImage(randomPixels);
+    imgImpl.applyDithering(0);
+
+    Pixel[][] actual = imgImpl.getImage();
+
+    Pixel[][] expectedResult = new Pixel[][] {
+            { new Pixel(0, 0, 0) }
+    };
 
     for (int i = 0; i < randomPixels.length; i++) {
       for (int j = 0; j < randomPixels[0].length; j++) {

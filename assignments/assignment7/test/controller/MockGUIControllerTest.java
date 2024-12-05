@@ -9,7 +9,6 @@ import org.junit.Test;
  * JUnit test class for MockGUIController to verify that the correct methods log the expected
  * actions.
  */
-
 public class MockGUIControllerTest {
 
   private MockGUIController mockController;
