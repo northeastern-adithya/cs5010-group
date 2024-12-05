@@ -1290,7 +1290,8 @@ public class ImageImplementation implements ImageModel {
   }
 
   /**
-   * applies the dithering effect to the current image, reducing it to a greyscale.
+   * applies the dithering effect to the current image, reducing it to an image containing black and
+   * white pixels only. The dithering effect is applied to the entire image.
    */
   @Override
   public void applyDithering() {
@@ -1298,7 +1299,10 @@ public class ImageImplementation implements ImageModel {
   }
 
   /**
-   * Applies Floyd-Steinberg dithering to the current image, reducing it to a greyscale image.
+   * Applies Floyd-Steinberg dithering to the current image, reducing it to an image containing
+   * black and white pixels only. The dithering effect is applied to the left part of the image,
+   *
+   * @param p the percentage of the image width up to which the dithering effect will be applied.
    */
   @Override
   public void applyDithering(double p) {
