@@ -77,7 +77,17 @@ public class ImageImplementation implements ImageModel {
    * @param image the 2D array of Pixel objects representing the image to be set.
    */
   public void setImage(Pixel[][] image) {
-    this.image = image;
+    // perform deep copy
+    int height = image.length;
+    int width = image[0].length;
+
+    this.image = new Pixel[height][width];
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        this.image[row][col] = new Pixel(image[row][col].get(0), image[row][col].get(1),
+            image[row][col].get(2));
+      }
+    }
   }
 
   /**
